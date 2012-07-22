@@ -10,23 +10,39 @@ import util.SystemTimer;
  *
  */
 public class SystemConfig implements Serializable {
+	
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
-	public static SystemConfig getInstance(){
-		return instance;
-	}
-	private static SystemConfig instance = new SystemConfig();
-	private SystemConfig() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 游戏区id
+	 */
+	private static int gameDistrict = 1001;
+	/**
+	 * 
+	 */
+//	private static final long	serialVersionUID	= 1L;
+//	public static SystemConfig getInstance(){
+//		return instance;
+//	}
+//	private static SystemConfig instance = new SystemConfig();
+//	private SystemConfig() {
+//		// TODO Auto-generated constructor stub
+//	}
+//	
+//	
 	/**
 	 * 系统本次启动时间
 	 */
 	public final static long START_MILS = SystemTimer.currentTimeMillis();
 	
+	/**
+	 * 返回游戏的区id
+	 * @return
+	 */
+	public static int getGameDistrict(){
+		return gameDistrict;
+	}
 
 }

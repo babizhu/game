@@ -116,7 +116,7 @@ public class UserInfo {
 		
 		sb.toString();
 		
-		//logger.info( sb.toString() );
+		logger.info( sb.toString() );
 	}
 	
 //	private log(){
