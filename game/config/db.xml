@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+
+<game>
+	<url>jdbc:mysql://192.168.1.246:3306/game</url>
+	<user>root</user>
+	<password>shangjie</password>	
+</game>
