@@ -3,21 +3,23 @@ package game;
 import java.util.HashMap;
 import java.util.Map;
 
+import user.UserInfo;
+
 
 /**
- * ¸÷ÖÖ½±ÀøÀàÐÍ
+ * ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * @author admin
  *
  */
 public enum ObjectType {
 
 	/**
-	 * ½ð±Ò
+	 * ï¿½ï¿½ï¿½
 	 */
 	MONEY(0),
 	
 	/**
-	 * ÌåÁ¦£¬¿ØÖÆÍæ¼ÒµÄÕ½¶·Ê±¼ä
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½Õ½ï¿½ï¿½Ê±ï¿½ï¿½
 	 */
 	STRENGTH(1); 
 	
@@ -47,5 +49,12 @@ public enum ObjectType {
 		System.out.println( at );
 		ObjectType at1 = ObjectType.valueOf( "STRENGTH" );
 		System.out.println( at1.toInt() );
+		
+		UserInfo u = new UserInfo();
+		UserInfo u1 = u;
+		System.out.println( u1 );
+		u = null;
+	
+		System.out.println( u1 );
 	}
 }
