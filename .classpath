@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="game/src"/>
+	<classpathentry kind="src" path="game/test"/>
+	<classpathentry kind="lib" path="game/lib/dom4j.jar"/>
+	<classpathentry kind="lib" path="game/lib/druid-0.2.4.jar"/>
+	<classpathentry kind="lib" path="game/lib/logback-access-1.0.6.jar"/>
+	<classpathentry kind="lib" path="game/lib/logback-classic-1.0.6.jar"/>
+	<classpathentry kind="lib" path="game/lib/logback-core-1.0.6.jar"/>
+	<classpathentry kind="lib" path="game/lib/mysql-connector-java-5.1.9-bin.jar"/>
+	<classpathentry kind="lib" path="game/lib/slf4j-api-1.6.6.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
