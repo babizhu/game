@@ -5,7 +5,7 @@ import java.io.Serializable;
 import util.SystemTimer;
 
 /**
- * ±£ÁôÏµÍ³ÐÅÏ¢£¬ÖîÈçÆô¶¯Ê±¼ä£¬¿ª·þÊ±¼äµÈÒ»ÏµÁÐ²ÎÊý
+ * ï¿½ï¿½ï¿½ï¿½ÏµÍ³ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ò»Ïµï¿½Ð²ï¿½ï¿½ï¿½
  * @author admin
  *
  */
@@ -16,7 +16,7 @@ public class SystemConfig implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
-	 * ÓÎÏ·Çøid
+	 * ï¿½ï¿½Ï·ï¿½ï¿½id
 	 */
 	private static int gameDistrict = 1001;
 	/**
@@ -33,16 +33,20 @@ public class SystemConfig implements Serializable {
 //	
 //	
 	/**
-	 * ÏµÍ³±¾´ÎÆô¶¯Ê±¼ä
+	 * ÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	 */
 	public final static long START_MILS = SystemTimer.currentTimeMillis();
 	
 	/**
-	 * ·µ»ØÓÎÏ·µÄÇøid
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½id
 	 * @return
 	 */
 	public static int getGameDistrict(){
 		return gameDistrict;
+		
+		
+		
+		
 	}
 
 }
