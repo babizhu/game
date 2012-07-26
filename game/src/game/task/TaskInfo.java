@@ -1,30 +1,63 @@
 package game.task;
 
 /**
- * ±£´æÍæ¼ÒµÄÈÎÎñbeanĞÅÏ¢
+ * ä¿å­˜ç©å®¶çš„ä»»åŠ¡beanä¿¡æ¯
+ * 
  * @author liukun
- *
+ * 
  */
 public class TaskInfo {
 	/**
-	 * Ëù½ÓÈÎÎñµÄ×´Ì¬
+	 * æ‰€æ¥ä»»åŠ¡çš„çŠ¶æ€
 	 */
-	private TaskStatus 		status;
-	
+	private TaskStatus status;
+
 	/**
-	 * Î¨Ò»id
+	 * å”¯ä¸€id
 	 */
-	private long			id;
-	
+	private long id;
+
 	/**
-	 *  ¹ØÁªµÄÈÎÎñÄ£°æid
+	 * å…³è”çš„ä»»åŠ¡æ¨¡ç‰ˆid
 	 */
-	private TaskTemplet		templet;
-	
+	private TaskTemplet templet;
+
 	/**
-	 * Èç¹ûÊÇÍ³¼ÆÈÎÎñ£¬ÕâÀï¼ÇÂ¼µ±Ç°Íê³ÉµÄÊı×Ö
+	 * å¦‚æœæ˜¯ç»Ÿè®¡ä»»åŠ¡ï¼Œè¿™é‡Œè®°å½•å½“å‰å®Œæˆçš„æ•°å­—
 	 */
-	private	int				count;
+	private int count;
+
 	
+	public TaskStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(TaskStatus status) {
+		this.status = status;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public TaskTemplet getTemplet() {
+		return templet;
+	}
+
+	public void setTemplet(TaskTemplet templet) {
+		this.templet = templet;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
 
 }

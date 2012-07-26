@@ -1,9 +1,10 @@
 package game.task;
 
 /**
- * ÈÎÎñÄ£°æ£¬´ÓÅäÖÃ±íµ±ÖĞ¶ÁÈ¡
+ * ä»»åŠ¡æ¨¡ç‰ˆï¼Œä»é…ç½®è¡¨å½“ä¸­è¯»å–
+ * 
  * @author liukun
- *
+ * 
  */
 public class TaskTemplet {
 

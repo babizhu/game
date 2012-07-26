@@ -12,12 +12,12 @@ import java.util.logging.Logger;
 
 /**
  * 
- * ÃèÊö£ºÒ»¸ö»ùÓÚÊ±¼ähashµÄwheel³¬Ê±Æ÷
+ * æè¿°ï¼šä¸€ä¸ªåŸºäºæ—¶é—´hashçš„wheelè¶…æ—¶å™¨
  * 
- * ×¢ÒâÊÂÏî£º
- * 1¡¢ËùÓĞµÄÊ±¼äµ¥Î»½ÔÎªºÁÃë
+ * æ³¨æ„äº‹é¡¹ï¼š
+ * 1ã€æ‰€æœ‰çš„æ—¶é—´å•ä½çš†ä¸ºæ¯«ç§’
  * 
- * ´´½¨Ê±¼ä£º2012-6-4ÉÏÎç11:44:02
+ * åˆ›å»ºæ—¶é—´ï¼š2012-6-4ä¸Šåˆ11:44:02
  * @author babi liu
  *
  */
@@ -27,25 +27,25 @@ public class HashedWheelTimer implements ITimer {
 
 	private final int							ticksPerWheel;
 	private final long							tickDuration;
-	private final long							roundDuration;														// ×ßÒ»ÕûÈ¦£¬ËùĞèÒªµÄÊ±¼ä
+	private final long							roundDuration;														// èµ°ä¸€æ•´åœˆï¼Œæ‰€éœ€è¦çš„æ—¶é—´
 	private final List<HashedWheelTimeout>[]	wheel;
 	private final ReadWriteLock					lock		= new ReentrantReadWriteLock();
 	private final int							mask;
 	private volatile int						wheelCursor	= 0;
 
-	private final Thread						workerThread;														// ¹¤×÷Ïß³Ì
+	private final Thread						workerThread;														// å·¥ä½œçº¿ç¨‹
 	private final AtomicBoolean					shutdown	= new AtomicBoolean();
 
 	public HashedWheelTimer() {
-		// È±Ê¡ Ò»È¦ÓĞ512¸öticks
-		// È±Ê¡ Ã¿100ºÁÃëÂÖÑ¯Ò»´Î£¨Ò»¸ötick£©
+		// ç¼ºçœ ä¸€åœˆæœ‰512ä¸ªticks
+		// ç¼ºçœ æ¯100æ¯«ç§’è½®è¯¢ä¸€æ¬¡ï¼ˆä¸€ä¸ªtickï¼‰
 		this( 512, 10 );
 		// this( 3, 1 );
 	}
 
 	/**
 	 * 
-	 * @param ticksPerWheel Ò»È¦¶àÉÙtick
+	 * @param ticksPerWheel ä¸€åœˆå¤šå°‘tick
 	 */
 	public HashedWheelTimer(int ticksPerWheel, long tickDuration) {
 		this.ticksPerWheel = ticksPerWheel;
@@ -79,7 +79,7 @@ public class HashedWheelTimer implements ITimer {
 
 			wheel[i] = new LinkedList<HashedWheelTimeout>();
 			// List list = Collections.synchronizedList( new
-			// LinkedList<HashedWheelTimeout>() );Í¬²½°æ±¾£¬ÊÇ·ñÓĞ±ØÒª£¿
+			// LinkedList<HashedWheelTimeout>() );åŒæ­¥ç‰ˆæœ¬ï¼Œæ˜¯å¦æœ‰å¿…è¦ï¼Ÿ
 
 			// ConcurrentIdentityHashMap<HashedWheelTimeout, Boolean>(16, 0.95f,
 			// 4) );
@@ -90,10 +90,10 @@ public class HashedWheelTimer implements ITimer {
 	}
 
 	/**
-	 * Ìí¼ÓÒ»¸öÈÎÎñµ½¶¨Ê±Æ÷µ±ÖĞ
+	 * æ·»åŠ ä¸€ä¸ªä»»åŠ¡åˆ°å®šæ—¶å™¨å½“ä¸­
 	 * 
 	 * @param task
-	 * @param delayMillis		ÑÓ³ÙµÄºÁÃëÊı£¬Ò»µ©³¬¹ı´ËºÁÃëÊı£¬½«»áÖ´ĞĞ´ËÈÎÎñ
+	 * @param delayMillis		å»¶è¿Ÿçš„æ¯«ç§’æ•°ï¼Œä¸€æ—¦è¶…è¿‡æ­¤æ¯«ç§’æ•°ï¼Œå°†ä¼šæ‰§è¡Œæ­¤ä»»åŠ¡
 	 * @return
 	 */
 	@Override
@@ -105,7 +105,7 @@ public class HashedWheelTimer implements ITimer {
 
 		final long currentTime = System.currentTimeMillis();
 		HashedWheelTimeout timeout = new HashedWheelTimeout( task, currentTime + delayMillis );
-		// System.out.println( "timeout.deadline£º" + timeout.deadline +
+		// System.out.println( "timeout.deadlineï¼š" + timeout.deadline +
 		// "(currentTime + delayMillis:" + currentTime + "+" + delayMillis + ")"
 		// );
 		scheduleTimeout( timeout, delayMillis );
@@ -113,7 +113,7 @@ public class HashedWheelTimer implements ITimer {
 	}
 
 	/**
-	 * °ÑÒ»¸öĞÂµÄtimeoutÊÂ¼ş²åÈëµ½ÊÂ¼ş¶ÓÁĞÖĞ
+	 * æŠŠä¸€ä¸ªæ–°çš„timeoutäº‹ä»¶æ’å…¥åˆ°äº‹ä»¶é˜Ÿåˆ—ä¸­
 	 * 
 	 * @param timeout
 	 * @param delayMillis
@@ -126,16 +126,16 @@ public class HashedWheelTimer implements ITimer {
 		}
 
 		// Prepare the required parameters to schedule the timeout object.
-		final long lastRoundDelay = delayMillis % roundDuration;// ¼ÆËãĞ¡È¦ÄÚ×Ü¹²ËùĞèÒªµÄÊ±¼ä,Ã»ÓĞ×ª»»Îª¾ßÌåµÄÍ°µÄÊıÄ¿£¨×îÍâ²ãµÄ´óÈ¦ÏÂÃæ¿¼ÂÇ£©20
-		final long lastTickDelay = delayMillis % tickDuration;// ¼ÆËãĞ¡È¦ÄÚÊÇ·ñĞèÒª¼Ó¶îÍâ1¸öÍ°£¬Èç¹ûÕıºÃ³ı¾¡Ôò²»ĞèÒª¶îÍâ¼Ó0
-		final long relativeIndex = lastRoundDelay / tickDuration + (lastTickDelay != 0 ? 1 : 0);// ×¼È·¼ÆËãĞ¡È¦ÄÚµÄÍ°
+		final long lastRoundDelay = delayMillis % roundDuration;// è®¡ç®—å°åœˆå†…æ€»å…±æ‰€éœ€è¦çš„æ—¶é—´,æ²¡æœ‰è½¬æ¢ä¸ºå…·ä½“çš„æ¡¶çš„æ•°ç›®ï¼ˆæœ€å¤–å±‚çš„å¤§åœˆä¸‹é¢è€ƒè™‘ï¼‰20
+		final long lastTickDelay = delayMillis % tickDuration;// è®¡ç®—å°åœˆå†…æ˜¯å¦éœ€è¦åŠ é¢å¤–1ä¸ªæ¡¶ï¼Œå¦‚æœæ­£å¥½é™¤å°½åˆ™ä¸éœ€è¦é¢å¤–åŠ 0
+		final long relativeIndex = lastRoundDelay / tickDuration + (lastTickDelay != 0 ? 1 : 0);// å‡†ç¡®è®¡ç®—å°åœˆå†…çš„æ¡¶
 
-		final long remainingRounds = delayMillis / roundDuration - (delayMillis % roundDuration == 0 ? 1 : 0);// ¼ÆËãĞèÒª×îÍâ²ãËùĞèÒªµÄ´óÈ¦Êı
+		final long remainingRounds = delayMillis / roundDuration - (delayMillis % roundDuration == 0 ? 1 : 0);// è®¡ç®—éœ€è¦æœ€å¤–å±‚æ‰€éœ€è¦çš„å¤§åœˆæ•°
 
 		// Add the timeout to the wheel.
 		lock.readLock().lock();
 		try {
-			int stopIndex = (int) (wheelCursor + relativeIndex & mask);// ¸ù¾İµ±Ç°ËùÔÚµÄÍ°Ôö¼Ó´ËÊÂ¼şµ½ÊÊµ±Î»ÖÃ
+			int stopIndex = (int) (wheelCursor + relativeIndex & mask);// æ ¹æ®å½“å‰æ‰€åœ¨çš„æ¡¶å¢åŠ æ­¤äº‹ä»¶åˆ°é€‚å½“ä½ç½®
 			timeout.stopIndex = stopIndex;
 			timeout.remainingRounds = remainingRounds;
 
@@ -148,9 +148,9 @@ public class HashedWheelTimer implements ITimer {
 	}
 
 	/**
-	 * È·±£ticksPerWheelÎª2µÄn´Î·½£¬ÕâÊÇÎªÁËÈ·±£ÒÔÏÂ´úÂëÄÜÕı³£ÔËĞĞ
+	 * ç¡®ä¿ticksPerWheelä¸º2çš„næ¬¡æ–¹ï¼Œè¿™æ˜¯ä¸ºäº†ç¡®ä¿ä»¥ä¸‹ä»£ç èƒ½æ­£å¸¸è¿è¡Œ
 	 * int newWheelCursor = wheelCursor = wheelCursor + 1 & mask;
-	 * Èç²»Àí½â£¬¿É½«maskĞŞ¸Ä¶ş½øÖÆÒÔ0£¨2,4µÈ£©½áÎ²µÄÊı×Ö½øĞĞ²âÊÔ
+	 * å¦‚ä¸ç†è§£ï¼Œå¯å°†maskä¿®æ”¹äºŒè¿›åˆ¶ä»¥0ï¼ˆ2,4ç­‰ï¼‰ç»“å°¾çš„æ•°å­—è¿›è¡Œæµ‹è¯•
 	 * 
 	 * @param ticksPerWheel
 	 * @return
@@ -333,7 +333,7 @@ public class HashedWheelTimer implements ITimer {
 			try {
 				long s = System.currentTimeMillis() - deadline; 
 				if( s > 0 ){
-					System.out.println( "timeout£º" + s );
+					System.out.println( "timeoutï¼š" + s );
 				}
 				task.run( this );
 			} catch (Throwable t) {

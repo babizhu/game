@@ -1,10 +1,21 @@
 package game.task;
 
+import user.UserInfo;
+import util.ErrorCode;
+
 public interface ITask {
 	/**
-	 * ½øĞĞÒ»´ÎÈÎÎñ
+	 * è¿›è¡Œä¸€æ¬¡ä»»åŠ¡
 	 * @param id
 	 */
 	void doTask( long templetId );
+	
+	/**
+	 * ç©å®¶æ¥å—ä»»åŠ¡
+	 * @param templetId
+	 * @param user
+	 * @return
+	 */
+	ErrorCode acceptTask( long templetId, UserInfo user );
 
 }

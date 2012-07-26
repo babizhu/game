@@ -16,83 +16,93 @@ import java.util.List;
 import java.util.Random;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-/**
- * ¶¯Ì¬¼ÓÔØËùÓĞµÄ±³°ü
- * @author admin
- *
- */
 
+/**
+ * åŠ¨æ€åŠ è½½æ‰€æœ‰çš„èƒŒåŒ…
+ * 
+ * @author admin
+ * 
+ */
 
 public class PackageUtil {
 
 	/**
-	 * ´Ó°üpackageÖĞ»ñÈ¡ËùÓĞµÄClass
+	 * ä»åŒ…packageä¸­è·å–æ‰€æœ‰çš„Class
 	 * 
 	 * @param pack
 	 * @return
 	 */
-	public static List<Class<?>> getClasses ( String pack ) {
+	public static List<Class<?>> getClasses(String pack) {
 
-		// µÚÒ»¸öclassÀàµÄ¼¯ºÏ
+		// ç¬¬ä¸€ä¸ªclassç±»çš„é›†åˆ
 		List<Class<?>> classes = new ArrayList<Class<?>>();
 
-		boolean recursive = true;// ÊÇ·ñÑ­»·µü´ú
+		boolean recursive = true;// æ˜¯å¦å¾ªç¯è¿­ä»£
 
-		String packageName = pack;// »ñÈ¡°üµÄÃû×Ö ²¢½øĞĞÌæ»»
-		String packageDirName = packageName.replace( '.', '/' );// ¶¨ÒåÒ»¸öÃ¶¾ÙµÄ¼¯ºÏ
-																// ²¢½øĞĞÑ­»·À´´¦ÀíÕâ¸öÄ¿Â¼ÏÂµÄthings
+		String packageName = pack;// è·å–åŒ…çš„åå­— å¹¶è¿›è¡Œæ›¿æ¢
+		String packageDirName = packageName.replace('.', '/');// å®šä¹‰ä¸€ä¸ªæšä¸¾çš„é›†åˆ
+		// å¹¶è¿›è¡Œå¾ªç¯æ¥å¤„ç†è¿™ä¸ªç›®å½•ä¸‹çš„things
 
 		Enumeration<URL> dirs;
 		try {
-			dirs = Thread.currentThread().getContextClassLoader().getResources( packageDirName );
+			dirs = Thread.currentThread().getContextClassLoader()
+					.getResources(packageDirName);
 			while (dirs.hasMoreElements()) {
 
 				URL url = dirs.nextElement();
-				String protocol = url.getProtocol();// µÃµ½Ğ­ÒéµÄÃû³Æ
+				String protocol = url.getProtocol();// å¾—åˆ°åè®®çš„åç§°
 
-				if ("file".equals( protocol )) {// Èç¹ûÊÇÒÔÎÄ¼şµÄĞÎÊ½±£´æÔÚ·şÎñÆ÷ÉÏ
-					System.err.println( "fileÀàĞÍµÄÉ¨Ãè" );
-					String filePath = URLDecoder.decode( url.getFile(), "UTF-8" );// »ñÈ¡°üµÄÎïÀíÂ·¾¶
-					findAndAddClassesInPackageByFile( packageName, filePath, recursive, classes );// ÒÔÎÄ¼şµÄ·½Ê½É¨ÃèÕû¸ö°üÏÂµÄÎÄ¼ş
-																									// ²¢Ìí¼Óµ½¼¯ºÏÖĞ
-				} else if ("jar".equals( protocol )) {
+				if ("file".equals(protocol)) {// å¦‚æœæ˜¯ä»¥æ–‡ä»¶çš„å½¢å¼ä¿å­˜åœ¨æœåŠ¡å™¨ä¸Š
+					System.err.println("fileç±»å‹çš„æ‰«æ");
+					String filePath = URLDecoder.decode(url.getFile(), "UTF-8");// è·å–åŒ…çš„ç‰©ç†è·¯å¾„
+					findAndAddClassesInPackageByFile(packageName, filePath,
+							recursive, classes);// ä»¥æ–‡ä»¶çš„æ–¹å¼æ‰«ææ•´ä¸ªåŒ…ä¸‹çš„æ–‡ä»¶
+					// å¹¶æ·»åŠ åˆ°é›†åˆä¸­
+				} else if ("jar".equals(protocol)) {
 
-					System.err.println( "jarÀàĞÍµÄÉ¨Ãè" );
+					System.err.println("jarç±»å‹çš„æ‰«æ");
 					JarFile jar;
 					try {
 
-						jar = ((JarURLConnection) url.openConnection()).getJarFile();// ´Ó´Ëjar°ü µÃµ½Ò»¸öÃ¶¾ÙÀà
+						jar = ((JarURLConnection) url.openConnection())
+								.getJarFile();// ä»æ­¤jaråŒ… å¾—åˆ°ä¸€ä¸ªæšä¸¾ç±»
 
-						Enumeration<JarEntry> entries = jar.entries();// Í¬ÑùµÄ½øĞĞÑ­»·µü´ú
+						Enumeration<JarEntry> entries = jar.entries();// åŒæ ·çš„è¿›è¡Œå¾ªç¯è¿­ä»£
 
 						while (entries.hasMoreElements()) {
 
 							JarEntry entry = entries.nextElement();
 							String name = entry.getName();
 
-							if (name.charAt( 0 ) == '/') {// Èç¹ûÊÇÒÔ/¿ªÍ·µÄ
-								name = name.substring( 1 );
+							if (name.charAt(0) == '/') {// å¦‚æœæ˜¯ä»¥/å¼€å¤´çš„
+								name = name.substring(1);
 							}
-							// Èç¹ûÇ°°ë²¿·ÖºÍ¶¨ÒåµÄ°üÃûÏàÍ¬
-							if (name.startsWith( packageDirName )) {
-								int idx = name.lastIndexOf( '/' );
-								// Èç¹ûÒÔ"/"½áÎ² ÊÇÒ»¸ö°ü
+							// å¦‚æœå‰åŠéƒ¨åˆ†å’Œå®šä¹‰çš„åŒ…åç›¸åŒ
+							if (name.startsWith(packageDirName)) {
+								int idx = name.lastIndexOf('/');
+								// å¦‚æœä»¥"/"ç»“å°¾ æ˜¯ä¸€ä¸ªåŒ…
 								if (idx != -1) {
-									// »ñÈ¡°üÃû °Ñ"/"Ìæ»»³É"."
-									packageName = name.substring( 0, idx ).replace( '/', '.' );
+									// è·å–åŒ…å æŠŠ"/"æ›¿æ¢æˆ"."
+									packageName = name.substring(0, idx)
+											.replace('/', '.');
 								}
-								// Èç¹û¿ÉÒÔµü´úÏÂÈ¥ ²¢ÇÒÊÇÒ»¸ö°ü
+								// å¦‚æœå¯ä»¥è¿­ä»£ä¸‹å» å¹¶ä¸”æ˜¯ä¸€ä¸ªåŒ…
 								if ((idx != -1) || recursive) {
-									// Èç¹ûÊÇÒ»¸ö.classÎÄ¼ş ¶øÇÒ²»ÊÇÄ¿Â¼
-									if (name.endsWith( ".class" ) && !entry.isDirectory()) {
-										// È¥µôºóÃæµÄ".class" »ñÈ¡ÕæÕıµÄÀàÃû
-										String className = name.substring( packageName.length() + 1, name.length() - 6 );
+									// å¦‚æœæ˜¯ä¸€ä¸ª.classæ–‡ä»¶ è€Œä¸”ä¸æ˜¯ç›®å½•
+									if (name.endsWith(".class")
+											&& !entry.isDirectory()) {
+										// å»æ‰åé¢çš„".class" è·å–çœŸæ­£çš„ç±»å
+										String className = name.substring(
+												packageName.length() + 1,
+												name.length() - 6);
 										try {
-											// Ìí¼Óµ½classes
-											classes.add( Class.forName( packageName + '.' + className ) );
+											// æ·»åŠ åˆ°classes
+											classes.add(Class
+													.forName(packageName + '.'
+															+ className));
 										} catch (ClassNotFoundException e) {
 											// log
-											// .error("Ìí¼ÓÓÃ»§×Ô¶¨ÒåÊÓÍ¼Àà´íÎó ÕÒ²»µ½´ËÀàµÄ.classÎÄ¼ş");
+											// .error("æ·»åŠ ç”¨æˆ·è‡ªå®šä¹‰è§†å›¾ç±»é”™è¯¯ æ‰¾ä¸åˆ°æ­¤ç±»çš„.classæ–‡ä»¶");
 											e.printStackTrace();
 										}
 									}
@@ -100,7 +110,7 @@ public class PackageUtil {
 							}
 						}
 					} catch (IOException e) {
-						// log.error("ÔÚÉ¨ÃèÓÃ»§¶¨ÒåÊÓÍ¼Ê±´Ójar°ü»ñÈ¡ÎÄ¼ş³ö´í");
+						// log.error("åœ¨æ‰«æç”¨æˆ·å®šä¹‰è§†å›¾æ—¶ä»jaråŒ…è·å–æ–‡ä»¶å‡ºé”™");
 						e.printStackTrace();
 					}
 				}
@@ -113,35 +123,40 @@ public class PackageUtil {
 	}
 
 	/**
-	 * ÒÔÎÄ¼şµÄĞÎÊ½À´»ñÈ¡°üÏÂµÄËùÓĞClass
+	 * ä»¥æ–‡ä»¶çš„å½¢å¼æ¥è·å–åŒ…ä¸‹çš„æ‰€æœ‰Class
 	 * 
 	 * @param packageName
 	 * @param packagePath
 	 * @param recursive
 	 * @param classes
 	 */
-	public static void findAndAddClassesInPackageByFile ( String packageName, String packagePath, final boolean recursive, List<Class<?>> classes ) {
-		// »ñÈ¡´Ë°üµÄÄ¿Â¼ ½¨Á¢Ò»¸öFile
-		File dir = new File( packagePath );
+	public static void findAndAddClassesInPackageByFile(String packageName,
+			String packagePath, final boolean recursive, List<Class<?>> classes) {
+		// è·å–æ­¤åŒ…çš„ç›®å½• å»ºç«‹ä¸€ä¸ªFile
+		File dir = new File(packagePath);
 
 		if (!dir.exists() || !dir.isDirectory()) {
-			// log.warn("ÓÃ»§¶¨Òå°üÃû " + packageName + " ÏÂÃ»ÓĞÈÎºÎÎÄ¼ş");
+			// log.warn("ç”¨æˆ·å®šä¹‰åŒ…å " + packageName + " ä¸‹æ²¡æœ‰ä»»ä½•æ–‡ä»¶");
 			return;
 		}
 
 		File[] dirfiles = dir.listFiles();
 		for (File file : dirfiles) {
 			if (file.isDirectory()) {
-				findAndAddClassesInPackageByFile( packageName + "." + file.getName(), file.getAbsolutePath(), recursive, classes );
+				findAndAddClassesInPackageByFile(
+						packageName + "." + file.getName(),
+						file.getAbsolutePath(), recursive, classes);
 			} else {
-				String className = file.getName().substring( 0, file.getName().length() - 6 );// Èç¹ûÊÇjavaÀàÎÄ¼ş
-																								// È¥µôºóÃæµÄ.class
-																								// Ö»ÁôÏÂÀàÃû
+				String className = file.getName().substring(0,
+						file.getName().length() - 6);// å¦‚æœæ˜¯javaç±»æ–‡ä»¶
+				// å»æ‰åé¢çš„.class
+				// åªç•™ä¸‹ç±»å
 				try {
 					// classes.add(Class.forName(packageName + '.' +
 					// className));
-					// ¾­¹ı»Ø¸´Í¬Ñ§µÄÌáĞÑ£¬ÕâÀïÓÃforNameÓĞÒ»Ğ©²»ºÃ£¬»á´¥·¢static·½·¨£¬Ã»ÓĞÊ¹ÓÃclassLoaderµÄload¸É¾»
-					classes.add( Thread.currentThread().getContextClassLoader().loadClass( packageName + '.' + className ) );
+					// ç»è¿‡å›å¤åŒå­¦çš„æé†’ï¼Œè¿™é‡Œç”¨forNameæœ‰ä¸€äº›ä¸å¥½ï¼Œä¼šè§¦å‘staticæ–¹æ³•ï¼Œæ²¡æœ‰ä½¿ç”¨classLoaderçš„loadå¹²å‡€
+					classes.add(Thread.currentThread().getContextClassLoader()
+							.loadClass(packageName + '.' + className));
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
@@ -149,72 +164,73 @@ public class PackageUtil {
 		}
 	}
 
-
 	/**
-	 * ´òÓ¡ËùÓĞµÄ°üÇé¿ö
+	 * æ‰“å°æ‰€æœ‰çš„åŒ…æƒ…å†µ
 	 */
-	static void printAllPakcets( AbstractPacket[] packets ){
-		Formatter f = new Formatter( System.out );
-		f.format( "%-15s %-127s %-150s \n", "°üºÅ", "Àà±ğ", "¹¦ÄÜËµÃ÷" );
-		f.format( "%-15s %-127s %-150s \n", "£­£­", "£­£­", "£­£­£­£­" );
+	static void printAllPakcets(AbstractPacket[] packets) {
+		Formatter f = new Formatter(System.out);
+		f.format("%-15s %-127s %-150s \n", "åŒ…å·", "ç±»åˆ«", "åŠŸèƒ½è¯´æ˜");
+		f.format("%-15s %-127s %-150s \n", "ï¼ï¼", "ï¼ï¼", "ï¼ï¼ï¼ï¼");
 		for (AbstractPacket ap : packets) {
 
 			if (ap != null) {
 				Class<?> c = ap.getClass();
-				PacketDescrip desc = c.getAnnotation( PacketDescrip.class );
-				f.format( "%-8s %-50s %-150s \n", ap.getPacketNo(), c.getName(), desc.desc() );
-				
+				PacketDescrip desc = c.getAnnotation(PacketDescrip.class);
+				f.format("%-8s %-50s %-150s \n", ap.getPacketNo(), c.getName(),
+						desc.desc());
+
 			}
 		}
 	}
 
-	public static void main ( String[] args ) throws InstantiationException, IllegalAccessException, SecurityException, NoSuchFieldException {
+	public static void main(String[] args) throws InstantiationException,
+			IllegalAccessException, SecurityException, NoSuchFieldException {
 		AbstractPacket p1 = null;
-		//String p = "PacketTest";
-		String p = "game.packages";//°üÎÄ¼ş¼Ğ
-		List<Class<?>> list = getClasses( p );
+		// String p = "PacketTest";
+		String p = "game.packages";// åŒ…æ–‡ä»¶å¤¹
+		List<Class<?>> list = getClasses(p);
 		int max = 1000;
-		final AbstractPacket[] packets = new AbstractPacket[max];//²»´æÔÚ0ºÅ°ü
+		final AbstractPacket[] packets = new AbstractPacket[max];// ä¸å­˜åœ¨0å·åŒ…
 
-		// Éú³ÉËùÓĞ°üµÄÊµÀıÊı×é£¬¹©ºóÃæµ÷ÓÃ
+		// ç”Ÿæˆæ‰€æœ‰åŒ…çš„å®ä¾‹æ•°ç»„ï¼Œä¾›åé¢è°ƒç”¨
 		for (Class<?> c : list) {
-			if (!c.isInterface() && !c.getName().contains( "Abstract" )) {
+			if (!c.isInterface() && !c.getName().contains("Abstract")) {
 
 				p1 = (AbstractPacket) c.newInstance();
-				//System.out.println( c.getName() + " £º" + p1.getPacketNo() );
+				// System.out.println( c.getName() + " ï¼š" + p1.getPacketNo() );
 
 				int packetNo = p1.getPacketNo();
 				AbstractPacket ip = packets[packetNo];
 				if (ip == null) {
 					packets[packetNo] = p1;
-					
+
 				} else {
-					System.out.println( packetNo + " ÖØ¸´ÁË" );
+					System.out.println(packetNo + " é‡å¤äº†");
 				}
 			}
 		}
 
-		System.out.println( "---------------------------------------------------" );
+		System.out
+				.println("---------------------------------------------------");
 		for (int i = 0; i < 100; i++) {
-			int packetNo = new Random().nextInt( packets.length );
+			int packetNo = new Random().nextInt(packets.length);
 			IPacket ap = packets[packetNo];
-			System.out.print( i + ":\t" );
+			System.out.print(i + ":\t");
 			if (ap == null) {
-				System.out.println( packetNo + "£º²»´æÔÚ¶ÔÓ¦µÄ°üºÅ" );
+				System.out.println(packetNo + "ï¼šä¸å­˜åœ¨å¯¹åº”çš„åŒ…å·");
 			} else {
-				ap.run( null, null );
-				
-				if( ap.getPacketNo() == 4 ){
-					//((ShowBattle)ap).run( null, true, 234 );
+				ap.run(null, null);
+
+				if (ap.getPacketNo() == 4) {
+					// ((ShowBattle)ap).run( null, true, 234 );
 				}
-			}		
+			}
 
 		}
-		System.out.println( "---------------------------------------------------" );
+		System.out
+				.println("---------------------------------------------------");
 
-		printAllPakcets( packets );
-		
-		
-		
+		printAllPakcets(packets);
+
 	}
 }

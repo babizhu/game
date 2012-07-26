@@ -2,12 +2,12 @@ package game.task;
 
 public enum TaskStatus {
 	/**
-	 * мЙЁихннЯ
-	 */
+	* Е╝▄Ф┬░Д╩╩Е┼║
+	*/
 	FINISH,
 	/**
-	 * ╫сйэхннЯё╛ипн╢мЙЁи
-	 */
+	* Ф▌╔Е▐≈Д╩╩Е┼║О╪▄Е╟ Ф°╙Е╝▄Ф┬░
+	*/
 	ACCEPT,
 	NO_REWARD;
 	
