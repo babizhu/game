@@ -19,21 +19,21 @@ public class UserInfo {
 
 
 	/**
-	 * ½ð±Ò
+	 * ï¿½ï¿½ï¿½
 	 */
-	int			money;
+	int			moneyinnn;
 	
 	/**
-	 * ÌåÁ¦
+	 * ï¿½ï¿½ï¿½ï¿½
 	 */
 	int			strength;
 	
 	/**
-	 * êÇ³Æ
+	 * ï¿½Ç³ï¿½
 	 */
 	String		nickName;
 	/**
-	 * ÓÃ»§Ãû
+	 * ï¿½Ã»ï¿½ï¿½ï¿½
 	 */
 	String		name;
 	
@@ -53,16 +53,16 @@ public class UserInfo {
 	}
 	
 	/**
-	 * Ôö¼Ó½ð±Ò
-	 * @param add		Ôö¼ÓµÄ½ð±Ò
-	 * @param funcName	µ÷ÓÃµÄº¯Êý
+	 * ï¿½ï¿½ï¿½Ó½ï¿½ï¿½
+	 * @param add		ï¿½ï¿½ï¿½ÓµÄ½ï¿½ï¿½
+	 * @param funcName	ï¿½ï¿½ï¿½ÃµÄºï¿½ï¿½ï¿½
 	 * 
-	 * @return µ±Ç°ËùÓÐµÄ½ð±Ò
+	 * @return ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ÐµÄ½ï¿½ï¿½
 	 */
 	public int addMoney( int moneyAdd, String funcName ){
 		money += moneyAdd;
 		
-		//TODO ´¦Àí·À³ÁÃÔÏµÍ³
+		//TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÍ³
 		
 //		Thread thr = Thread.currentThread();
 //      StackTraceElement[] ele = thr.getStackTrace();
@@ -74,10 +74,10 @@ public class UserInfo {
 	}
 	
 	/**
-	 * ¿Û³ý½ð±Ò
-	 * @param moneyReduce	¿Û³ýµÄ½ð±Ò
+	 * ï¿½Û³ï¿½ï¿½ï¿½
+	 * @param moneyReduce	ï¿½Û³ï¿½Ä½ï¿½ï¿½
 	 * 
-	 * @return µ±Ç°½ð±Ò
+	 * @return ï¿½ï¿½Ç°ï¿½ï¿½ï¿½
 	 */
 	public int reduceMoney( int moneyReduce, String funcName ){
 		if( money < moneyReduce ){
@@ -103,15 +103,15 @@ public class UserInfo {
 //		log += funcName;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append( name );		//ÓÃ»§Ãû
+		sb.append( name );		//ï¿½Ã»ï¿½ï¿½ï¿½
 		sb.append( "," );
-		sb.append( at );		//ÎïÆ·ÀàÐÍ
+		sb.append( at );		//ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½
 		sb.append( "," );
-		sb.append( change );	//±ä»¯Öµ
+		sb.append( change );	//ï¿½ä»¯Öµ
 		sb.append( "," );
-		sb.append( current );	//µ±Ç°Öµ
+		sb.append( current );	//ï¿½ï¿½Ç°Öµ
 		sb.append( "," );
-		sb.append( funcName );	//µ÷ÓÃµÄ·½·¨Ãû
+		sb.append( funcName );	//ï¿½ï¿½ï¿½ÃµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½
 		
 		
 		sb.toString();
@@ -133,8 +133,8 @@ public class UserInfo {
 		user.addMoney( 20, "main" );
 		user.reduceMoney( 20, "main" );
 		
-		user.addStrength( 500, "Á·¹¦" );
-		user.reduceStrength( 200, "É¨µ´" );
+		user.addStrength( 500, "ï¿½ï¿½ï¿½ï¿½" );
+		user.reduceStrength( 200, "É¨ï¿½ï¿½" );
 		}
 	}
 
