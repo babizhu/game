@@ -4,20 +4,28 @@ import define.SystemConfig;
 
 public class GameUtil {
 
-	private static final long ID_PREFIX = SystemConfig.getGameDistrict() * 100000000000l;//À©´ó1000ÒÚ
+	private static final long ID_PREFIX = SystemConfig.getGameDistrict() * 100000000000l;//
+
 	/**
-	 * Éú³É´øÓĞÓÎÏ·ÇøĞÅÏ¢µÄID
+	 * ç”Ÿæˆå¸¦æœ‰æ¸¸æˆåŒºä¿¡æ¯çš„ID
+	 * æ–¹æ³•ä¸ºï¼šæŠŠé…ç½®è¡¨ä¸­çš„åŒºid * 1000äº¿
+	 * 
 	 * @param id
 	 * @return
 	 */
 	public static long buildIdWithDistrict( long id ){
 		return ID_PREFIX + id;
 	}
+	
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		long begin = System.nanoTime();
 		for( int i = 0; i < 100; i++ ){
 			System.out.println( buildIdWithDistrict( i ) );
 		}
-		System.out.println( "ºÄÊ±£º" + (System.nanoTime() - begin) / 1000000000f );
+		System.out.println( "è€—æ—¶" + (System.nanoTime() - begin) / 1000000000f );
 	}
 }

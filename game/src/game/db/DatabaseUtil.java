@@ -26,9 +26,9 @@ public class DatabaseUtil {
 	}
 	
 	/**
-	 * ´ÓÁ¬½Ó³Ø»ñÈ¡Ò»¸ö¿ÉÓÃµÄÁ¬½Ó
+	 *	ä»è¿æ¥æ± ä¸­è·å–ä¸€ä¸ªæœ‰æ•ˆè¿æ¥ 
 	 * @return
-	 * 		·µ»ØÒ»¸ö¿ÉÓÃÊı¾İ¿âÁ¬½Ó
+	 * 		è¿”å›ä¸€ä¸ªå¯ç”¨æ•°æ®åº“è¿æ¥
 	 */
 	public Connection getConnection(){
 		Connection conn = null;
@@ -42,12 +42,12 @@ public class DatabaseUtil {
 	}
 
 	/**
-	 * ÅäÖÃÎÄ¼şµÄÂ·¾¶
+	 * é…ç½®æ–‡ä»¶çš„è·¯å¾„
 	 */
 	private static String	filePath	= "config/db.xml";
 
 	/**
-	 * ´ÓÅäÖÃ±íÖĞ¶ÁÈ¡ÏàÓ¦µÄÁ¬½Ó²ÎÊı£¬³õÊ¼»¯Êı¾İ¿âÁ¬½Ó
+	 * ä»é…ç½®è¡¨ä¸­è¯»å–ç›¸åº”çš„è¿æ¥å‚æ•°ï¼Œåˆå§‹åŒ–æ•°æ®åº“è¿æ¥æ± 
 	 */
 	public void init () {
 		String 	user = null;

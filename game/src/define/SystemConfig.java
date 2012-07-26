@@ -5,7 +5,7 @@ import java.io.Serializable;
 import util.SystemTimer;
 
 /**
- * ����ϵͳ��Ϣ����������ʱ�䣬����ʱ���һϵ�в���
+ *  保留系统信息，诸如启动时间，开服时间等一系列参数
  * @author admin
  *
  */
@@ -16,7 +16,7 @@ public class SystemConfig implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
-	 * ��Ϸ��id
+	 * 游戏区id
 	 */
 	private static int gameDistrict = 1001;
 	/**
@@ -33,20 +33,16 @@ public class SystemConfig implements Serializable {
 //	
 //	
 	/**
-	 * ϵͳ��������ʱ��
+	 * 系统本次启动时间
 	 */
 	public final static long START_MILS = SystemTimer.currentTimeMillis();
 	
 	/**
-	 * ������Ϸ����id
+	 * 返回游戏的区id
 	 * @return
 	 */
 	public static int getGameDistrict(){
 		return gameDistrict;
-		
-		
-		
-		
 	}
 
 }

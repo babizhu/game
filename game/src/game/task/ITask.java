@@ -1,10 +1,12 @@
 package game.task;
 
+
 public interface ITask {
 	/**
-	 * ½øĞĞÒ»´ÎÈÎÎñ
+	 * è¿›è¡Œä¸€æ¬¡ä»»åŠ¡
 	 * @param id
 	 */
 	void doTask( long templetId );
-
+	
+	
 }

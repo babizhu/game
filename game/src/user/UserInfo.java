@@ -19,21 +19,21 @@ public class UserInfo {
 
 
 	/**
-	 * ���
+	 * 金币
 	 */
 	int			money;
 	
 	/**
-	 * ����
+	 * 体力
 	 */
 	int			strength;
 	
 	/**
-	 * �ǳ�
+	 * 昵称
 	 */
 	String		nickName;
 	/**
-	 * �û���
+	 * 用户名
 	 */
 	String		name;
 	
@@ -53,16 +53,16 @@ public class UserInfo {
 	}
 	
 	/**
-	 * ���ӽ��
-	 * @param add		���ӵĽ��
-	 * @param funcName	���õĺ���
+	 * 增加金币
+	 * @param add		增加的金币
+	 * @param funcName	调用的函数
 	 * 
-	 * @return ��ǰ���еĽ��
+	 * @return 当前所有的金币
 	 */
 	public int addMoney( int moneyAdd, String funcName ){
 		money += moneyAdd;
 		
-		//TODO ���������ϵͳ
+		//TODO 处理防沉迷系统
 		
 //		Thread thr = Thread.currentThread();
 //      StackTraceElement[] ele = thr.getStackTrace();
@@ -74,10 +74,10 @@ public class UserInfo {
 	}
 	
 	/**
-	 * �۳���
-	 * @param moneyReduce	�۳�Ľ��
+	 * 扣除金币
+	 * @param moneyReduce	扣除的金币
 	 * 
-	 * @return ��ǰ���
+	 * @return 当前金币
 	 */
 	public int reduceMoney( int moneyReduce, String funcName ){
 		if( money < moneyReduce ){
@@ -103,15 +103,15 @@ public class UserInfo {
 //		log += funcName;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append( name );		//�û���
+		sb.append( name );		//用户名
 		sb.append( "," );
-		sb.append( at );		//��Ʒ����
+		sb.append( at );		//物品类型
 		sb.append( "," );
-		sb.append( change );	//�仯ֵ
+		sb.append( change );	//变化值
 		sb.append( "," );
-		sb.append( current );	//��ǰֵ
+		sb.append( current );	//当前值
 		sb.append( "," );
-		sb.append( funcName );	//���õķ�����
+		sb.append( funcName );	//调用的方法名
 		
 		
 		sb.toString();
@@ -133,8 +133,8 @@ public class UserInfo {
 		user.addMoney( 20, "main" );
 		user.reduceMoney( 20, "main" );
 		
-		user.addStrength( 500, "����" );
-		user.reduceStrength( 200, "ɨ��" );
+		user.addStrength( 500, "练功" );
+		user.reduceStrength( 200, "扫荡" );
 		}
 	}
 

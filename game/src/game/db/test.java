@@ -23,160 +23,169 @@ import com.alibaba.druid.stat.JdbcStatManager;
 
 public class test {
 
-	static void test5() throws SQLException{
-		JdbcStatManager.getInstance().reset(); // ÷ÿ÷√º∆ ˝∆˜  
-		System.out.println( JdbcStatManager.getInstance().getConnectionstat().getConnectCount() );
-		System.out.println( JdbcStatManager.getInstance().getConnectionstat().getCloseCount() );
+	static void test5() throws SQLException {
+		JdbcStatManager.getInstance().reset(); // ÈáçÁΩÆËÆ°Êï∞Âô®
+		System.out.println(JdbcStatManager.getInstance().getConnectionstat()
+				.getConnectCount());
+		System.out.println(JdbcStatManager.getInstance().getConnectionstat()
+				.getCloseCount());
 		String url = "jdbc:wrap-jdbc:filters=default:name=preCallTest:jdbc:derby:memory:Demo1;create=true";
 		Connection conn = DriverManager.getConnection(url);
-		System.out.println( JdbcStatManager.getInstance().getConnectionstat().getConnectCount() );
-		System.out.println( JdbcStatManager.getInstance().getConnectionstat().getCloseCount() );
+		System.out.println(JdbcStatManager.getInstance().getConnectionstat()
+				.getConnectCount());
+		System.out.println(JdbcStatManager.getInstance().getConnectionstat()
+				.getCloseCount());
 		conn.close();
-		System.out.println( JdbcStatManager.getInstance().getConnectionstat().getConnectCount() );
+		System.out.println(JdbcStatManager.getInstance().getConnectionstat()
+				.getConnectCount());
 
 	}
-	
-	static void test4(){
+
+	static void test4() {
 		String sql = "SELECT UUID()";
-			// parserµ√µΩAST 
-			SQLStatementParser parser = new MySqlStatementParser(sql);
-			List<SQLStatement> stmtList = parser.parseStatementList(); //
-			// Ω´ASTÕ®π˝visitor ‰≥ˆ 
-			StringBuilder out = new StringBuilder(); 
-			MySqlOutputVisitor visitor = new MySqlOutputVisitor(out); 
-			for (SQLStatement stmt : stmtList) {
-				stmt.accept(visitor); 
-				out.append(";");
-			}
-			System.out.println(out.toString()); 
+		// parserÂæóÂà∞AST
+		SQLStatementParser parser = new MySqlStatementParser(sql);
+		List<SQLStatement> stmtList = parser.parseStatementList(); //
+		// Â∞ÜASTÈÄöËøávisitorËæìÂá∫
+		StringBuilder out = new StringBuilder();
+		MySqlOutputVisitor visitor = new MySqlOutputVisitor(out);
+		for (SQLStatement stmt : stmtList) {
+			stmt.accept(visitor);
+			out.append(";");
+		}
+		System.out.println(out.toString());
 
 	}
-	static void test3(){
-//		String sql = "SELECT * FROM T WHERE F1 = ? ORDER BY F2";
+
+	static void test3() {
+		// String sql = "SELECT * FROM T WHERE F1 = ? ORDER BY F2";
 		String sql = "SELECT rank,uname from city_elite order by rank";
 		Lexer lexer = new Lexer(sql);
 		for (;;) {
 			lexer.nextToken();
 			Token tok = lexer.token();
 			if (tok == Token.IDENTIFIER) {
-				System.out.println(tok.name() + "\t\t" + lexer.stringVal()); 
+				System.out.println(tok.name() + "\t\t" + lexer.stringVal());
 			} else {
 				System.out.println(tok.name() + "\t\t\t" + tok.name);
 			}
-			if (tok == Token.EOF) { 
+			if (tok == Token.EOF) {
 				break;
 			}
-		} 
+		}
 
 	}
-	static void test1(){
-		DataFactory db = new DataFactory("com.mysql.jdbc.Driver", "jdbc:mysql://192.168.1.56:3306/game", "root", "", 10, 5 * 1000);
+
+	static void test1() {
+		DataFactory db = new DataFactory("com.mysql.jdbc.Driver",
+				"jdbc:mysql://192.168.1.56:3306/game", "root", "", 10, 5 * 1000);
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		
 
 		long begin = System.nanoTime();
-		for( int i = 0; i < 10000; i++ ){
+		for (int i = 0; i < 10000; i++) {
 			try {
-	
+
 				pst = db.getPst("SELECT rank,uname from city_elite order by rank");
-			   
-	
-			    rs = pst.executeQuery();
-			    
-			    while(rs != null && rs.next()){
-					
-					int rank = rs.getInt( "rank" );
-					String uname = rs.getString( "uname" );
-					
-					System.out.println( "rank:" + rank + "\t\t uname:" + uname );		
-					
+
+				rs = pst.executeQuery();
+
+				while (rs != null && rs.next()) {
+
+					int rank = rs.getInt("rank");
+					String uname = rs.getString("uname");
+
+					System.out.println("rank:" + rank + "\t\t uname:" + uname);
+
 				}
-			}
-			catch( Exception e ){
-				
-			}
-			finally{
+			} catch (Exception e) {
+
+			} finally {
 				try {
 					rs.close();
 					db.closePst(pst);
-					
-					
+
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					//e.printStackTrace();
+					// e.printStackTrace();
 				}
-				
+
 			}
 		}
-		System.out.println( "∫ƒ ±£∫" + (System.nanoTime() - begin) / 1000000000f + "√Î" );    
+		System.out.println("ËÄóÊó∂Ôºö" + (System.nanoTime() - begin) / 1000000000f	+ "Áßí" );
 	}
-	static void test6() throws SQLException, JMException{
-		JdbcStatManager.getInstance().reset(); 
+
+	static void test6() throws SQLException, JMException {
+		JdbcStatManager.getInstance().reset();
 		String url = "jdbc:wrap-jdbc:filters=default:jdbc:mysql://192.168.1.246:3306/game?user=root&password=shangjie";
 
 		Connection conn = DriverManager.getConnection(url);
 		conn.close();
-		System.out.println( JdbcStatManager.getInstance().getConnectionstat().getConnectCount() );
-		System.out.println( JdbcStatManager.getInstance().getDataSourceList() );
+		System.out.println(JdbcStatManager.getInstance().getConnectionstat()
+				.getConnectCount());
+		System.out.println(JdbcStatManager.getInstance().getDataSourceList());
 
 	}
+
 	@SuppressWarnings("unused")
-	static void test2() throws SQLException{
-		//String jdbcUrl = "jdbc:mysql://192.168.1.246:3306/game";
+	static void test2() throws SQLException {
+		// String jdbcUrl = "jdbc:mysql://192.168.1.246:3306/game";
 		String jdbcUrl = "jdbc:wrap-jdbc:filters=default:jdbc:mysql://192.168.1.246:3306/game";
 		String user = "root";
 		String password = "shangjie";
 
 		DruidDataSource dataSource = new DruidDataSource();
-		dataSource.setUrl( jdbcUrl );
-		dataSource.setUsername( user );
-		dataSource.setPassword( password );
-		dataSource.setFilters( "stat" );
-		
-		//JdbcStatManager.getInstance().reset(); // ÷ÿ÷√º∆ ˝∆˜  
-		
-		
+		dataSource.setUrl(jdbcUrl);
+		dataSource.setUsername(user);
+		dataSource.setPassword(password);
+		dataSource.setFilters("stat");
+
+		// JdbcStatManager.getInstance().reset(); // ÈáçÁΩÆËÆ°Êï∞Âô®
+
 		long begin = System.nanoTime();
-		for( int i = 0; i < 10000; i++ ){
+		for (int i = 0; i < 10000; i++) {
 			Connection conn = dataSource.getConnection();
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery( "SELECT rank,uname from city_elite order by rank" );
-			
-			while(rs != null && rs.next()){
-				
-				int rank = rs.getInt( "rank" );
-				String uname = rs.getString( "uname" );
-				
-			//	System.out.println( "rank:" + rank + "\t\t uname:" + uname );
-				
-				
-			
-				
+			ResultSet rs = stmt
+					.executeQuery("SELECT rank,uname from city_elite order by rank");
+
+			while (rs != null && rs.next()) {
+
+				int rank = rs.getInt("rank");
+				String uname = rs.getString("uname");
+
+				// System.out.println( "rank:" + rank + "\t\t uname:" + uname );
+
 			}
-			//System.out.println( i );
+			// System.out.println( i );
 			rs.close();
 			stmt.close();
 			conn.close();
 		}
-		
-		System.out.println( "∫ƒ ±£∫" + (System.nanoTime() - begin) / 1000000000f + "√Î" );
-		System.out.println( "ªÒ»°¡¨Ω”" + JdbcStatManager.getInstance().getConnectionstat().getConnectCount() + "¥Œ£°" );
-		System.out.println( "πÿ±’¡¨Ω”" + JdbcStatManager.getInstance().getConnectionstat().getCloseCount() + "¥Œ£°" );
-		
+
+		System.out.println("ËÄóÊó∂Ôºö" + (System.nanoTime() - begin) / 1000000000f
+				+ "Áßí");
+		System.out.println("Ëé∑ÂèñËøûÊé•"
+				+ JdbcStatManager.getInstance().getConnectionstat()
+						.getConnectCount() + "Ê¨°ÔºÅ");
+		System.out.println("ÂÖ≥Èó≠ËøûÊé•"
+				+ JdbcStatManager.getInstance().getConnectionstat()
+						.getCloseCount() + "Ê¨°ÔºÅ");
+
 	}
-	static void test7(){
+
+	static void test7() {
 		int count = 1000000;
 		UserInfo user = new UserInfo();
 		long begin = System.nanoTime();
-		for( int i = 0; i < count; i++ ){
-			user.addMoney( 500, "test7" );
+		for (int i = 0; i < count; i++) {
+			user.addMoney(500, "test7");
 		}
-		System.out.println( "÷¥––" + count + "¥Œ£¨∫ƒ ±£∫" + (System.nanoTime() - begin) / 1000000000f + "√Î" );
+		System.out.println("ÊâßË°å" + count + "Ê¨°ÔºåËÄóÊó∂Ôºö" + (System.nanoTime() - begin)
+				/ 1000000000f + "Áßí");
 	}
-	
-	public static void main ( String[] args ) throws SQLException, JMException {
-		
+
+	public static void main(String[] args) throws SQLException, JMException {
 
 		test7();
 	}
