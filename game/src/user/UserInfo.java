@@ -21,7 +21,7 @@ public class UserInfo {
 	/**
 	 * ���
 	 */
-	int			moneyinnn;
+	int			money;
 	
 	/**
 	 * ����
