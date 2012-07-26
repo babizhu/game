@@ -1,5 +1,7 @@
 package util;
 
-public class ErrorCode {
+public enum ErrorCode {
 
+	SUCCESS,
+	UNKNOW_ERROR;
 }
