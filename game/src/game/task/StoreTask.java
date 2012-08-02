@@ -1,5 +1,6 @@
 package game.task;
 
+
 import game.task.enums.TaskType;
 
 /**
@@ -20,6 +21,5 @@ public class StoreTask implements ITask{
 		return TaskType.STORE;
 	}
 
-	
 	
 }

@@ -10,11 +10,12 @@ public interface ITask {
 	 * @param id
 	 */
 	void doTask( Object obj );
+
 	
 	/**
 	 * 返回此任务的类型
 	 * @return
 	 */
 	TaskType getTaskType();
-	
+
 }

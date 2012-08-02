@@ -1,5 +1,6 @@
 package game.task;
 
+
 import game.task.enums.TaskType;
 import game.task.templet.PackageTaskTemplet;
 
@@ -11,7 +12,6 @@ import game.task.templet.PackageTaskTemplet;
  */
 public class PackageTask extends BaseTask {
 
-	private static final TaskType	type	= TaskType.PACKAGE;
 	private PackageTaskTemplet 	templet;
 	
 	@Override
@@ -27,5 +27,5 @@ public class PackageTask extends BaseTask {
 		return TaskType.PACKAGE;
 	}
 
-			
+
 }

@@ -1,5 +1,6 @@
 package game.task;
 
+
 import game.task.enums.TaskStatus;
 import util.SystemTimer;
 
@@ -87,6 +88,4 @@ public abstract class BaseTask implements ITask{
 		setFinishTime( SystemTimer.currentTimeMillis() );
 	}
 	
-	
-
 }
