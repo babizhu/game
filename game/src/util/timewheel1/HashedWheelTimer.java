@@ -8,8 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 
- * ÃèÊö£ºÒ»¸ö»ùÓÚÊ±¼ähashµÄwheel³¬Ê±Æ÷
- * ´´½¨Ê±¼ä£º2011-9-16ÉÏÎç11:44:02
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½hashï¿½ï¿½wheelï¿½ï¿½Ê±ï¿½ï¿½
+ * ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2011-9-16ï¿½ï¿½ï¿½ï¿½11:44:02
  * @author yq76034150
  *
  */
@@ -24,8 +24,8 @@ public class HashedWheelTimer {
 	//private long roundDuration;
 	
 	/**
-	 * ÃèÊö£º
-	 * @param ticksPerWheel Ò»È¦¶àÉÙtick
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * @param ticksPerWheel Ò»È¦ï¿½ï¿½ï¿½ï¿½tick
 	 */
 	public HashedWheelTimer(int ticksPerWheel, long tickDuration, long delay){
 		mask = ticksPerWheel - 1;
@@ -38,7 +38,7 @@ public class HashedWheelTimer {
 	
 	/**
 	 * 
-	 * ÃèÊö£ºwheelÖÐÌî³äÊý¾Ý
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½wheelï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param timeout
 	 */
 	public void newTimeOut(TimeOut timeout){
@@ -51,10 +51,10 @@ public class HashedWheelTimer {
 	
 	/**
 	 * 
-	 * ÃèÊö£ºÍâ²¿Ïß³Ìµ÷ÓÃ£¬Íâ²¿Ïß³Ìµ÷ÓÃ¼ä¸ô±ØÐëºÍtickDurationÒ»ÖÂ
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â²¿ï¿½ß³Ìµï¿½ï¿½Ã£ï¿½ï¿½â²¿ï¿½ß³Ìµï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½tickDurationÒ»ï¿½ï¿½
 	 */
 	public void run(long start){
-		//Ä£ÄâÍâ²¿Ö´ÐÐÏß³ÌÖ´ÐÐ¼ä¸ôÊý
+		//Ä£ï¿½ï¿½ï¿½â²¿Ö´ï¿½ï¿½ï¿½ß³ï¿½Ö´ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½
 		try {
 			Thread.sleep(tickDuration);
 		} catch (InterruptedException e) {
@@ -80,9 +80,10 @@ public class HashedWheelTimer {
 
 	/**
 	 * 
-	 * ÃèÊö£º³õÊ¼»¯wheel
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½wheel
 	 * @param ticksPerWheel
 	 */
+	@SuppressWarnings("unchecked")
 	private void createWheel(int ticksPerWheel) {
 		wheel = new Map[ticksPerWheel];
 		for(int i = 0; i < ticksPerWheel; i++){
@@ -91,7 +92,7 @@ public class HashedWheelTimer {
 	}
 
 	/**
-	 * ÃèÊö£º
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -104,7 +105,7 @@ public class HashedWheelTimer {
 		timer.newTimeOut(timeout);
 		timer.run(start);
 		
-		//4sºó ±£Ö¤ºÍÖ®Ç°µÄÂäÔÚÒ»¸öÇø¼ä
+		//4sï¿½ï¿½ ï¿½ï¿½Ö¤ï¿½ï¿½Ö®Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½
 		for(int i = 0; i < 3; i++){
 			timer.run(start);
 		}
@@ -114,7 +115,7 @@ public class HashedWheelTimer {
 		timer.newTimeOut(timeout2);
 		timer.run(start);
 			
-		//¸ü¸Ä±íÍ·µÄÊ±¼ä queue½á¹¹µÄ¾Í»á×èÈû
+		//ï¿½ï¿½Ä±ï¿½Í·ï¿½ï¿½Ê±ï¿½ï¿½ queueï¿½á¹¹ï¿½Ä¾Í»ï¿½ï¿½ï¿½ï¿½ï¿½
 		//timeout.setTime(start + 30000);
 		//timeout.setDeadline(start + 30000 + delay);
 		timer.newTimeOut(timeout);
