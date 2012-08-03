@@ -6,8 +6,18 @@ package game.task.enums;
  *
  */
 public enum TaskType {
+	
+	/**
+	 * 直接完成类任务
+	 */
 	DIRECT,
-	STORE,
-	PACKAGE;
+	/**
+	 * 数据检测类任务
+	 */
+	CHECK,
+	/**
+	 * 数据采集类任务
+	 */
+	COUNT;
 
 }

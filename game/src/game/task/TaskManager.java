@@ -24,11 +24,13 @@ public class TaskManager {
 	ErrorCode doTask( TaskType type, Object obj ){
 		for( BaseTask t : tasks ){
 			if( t.getStatus() == TaskStatus.ACCEPT && t.getTaskType() == type ){
+				
 				t.doTask( obj );
-				if( t.getStatus() == TaskStatus.FINISH ){
-					finishTask( t );
+				finishTask( t );
+				
+				if( type != TaskType.DIRECT ){//假设同类任务只有一个，直接跳出循环（直接完成类的任务例外）。这属于一个优化，一旦发现问题，马上去掉
+					break;
 				}
-				break;//假设同类任务只有一个，这属于一个优化，一旦发现问题，马上去掉
 			}
 		}
 		return null;
@@ -41,6 +43,9 @@ public class TaskManager {
 	 */
 	private void finishTask( BaseTask task ){
 		
+		if( task.getStatus() == TaskStatus.FINISH ){
+			//开启下一级任务，放到玩家的可领任务中
+		}
 	}
 	
 	

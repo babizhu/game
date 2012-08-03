@@ -73,13 +73,6 @@ public abstract class BaseTask implements ITask{
 		this.awardTime = awardTime;
 	}
 
-	@Override
-	public void doTask ( Object obj ) {
-		setStatus( TaskStatus.FINISH );
-		setFinishTime( SystemTimer.currentTimeMillis() );
-		
-	}
-
 	/**
 	 * 完成任务时候需要做的通用任务
 	 */

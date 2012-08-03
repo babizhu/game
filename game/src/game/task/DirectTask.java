@@ -11,7 +11,7 @@ public class DirectTask extends BaseTask {
 	public void doTask ( Object obj ) {
 		int taskId = (Integer) obj;
 		if( taskId == templet.getTempletId() ){
-			super.doTask(obj);
+			super.finishTask();
 		}
 	}
 

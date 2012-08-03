@@ -7,7 +7,7 @@ import game.task.enums.TaskType;
 public interface ITask {
 	/**
 	 * 进行一次任务
-	 * @param id
+	 * @param obj		进行任务所需要的参数
 	 */
 	void doTask( Object obj );
 

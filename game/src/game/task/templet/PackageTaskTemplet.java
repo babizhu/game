@@ -2,9 +2,14 @@ package game.task.templet;
 
 import game.task.ITask;
 import game.task.PackageTask;
+import game.task.enums.CheckTaskType;
 
 public class PackageTaskTemplet  extends BaseTaskTemplet {
 
+	/**
+	 * 检测类任务所需要检测的类型
+	 */
+	CheckTaskType	objectType			=	CheckTaskType.PACKAGE;
 	/**
 	 * 所需要收集的道具ID的数量
 	 */
