@@ -14,10 +14,7 @@ public enum TaskType {
 	/**
 	 * 数据检测类任务
 	 */
-	CHECK,
-	/**
-	 * 数据采集类任务
-	 */
+
 	COUNT,
 	/**
 	 * 道具检测类任务
@@ -27,5 +24,4 @@ public enum TaskType {
 	 * 玩家自定义任务
 	 */
 	CUSTOM;
-
 }
