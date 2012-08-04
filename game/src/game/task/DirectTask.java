@@ -1,23 +1,39 @@
 package game.task;
 
+import user.UserInfo;
 import game.task.enums.TaskType;
+import game.task.templet.BaseTaskTemplet;
 import game.task.templet.DirectTaskTemplet;
 
 public class DirectTask extends BaseTask {
 
 	private DirectTaskTemplet 	templet;
 	
+	public DirectTask(DirectTaskTemplet templet) {
+		this.templet = templet; 
+	}
+
 	@Override
-	public void doTask ( Object obj ) {
+	public boolean doTask( UserInfo user, Object obj ) {
 		int taskId = (Integer) obj;
 		if( taskId == templet.getTempletId() ){
-			super.doTask(obj);
+			super.finishTask();
+			return true;
 		}
+		
+		return false;
 	}
 
 	@Override
 	public TaskType getTaskType() {
 		return TaskType.DIRECT;
 	}
+
+	@Override
+	public BaseTaskTemplet getTemplet() {
+		return templet;
+	}
+	
+	
 
 }

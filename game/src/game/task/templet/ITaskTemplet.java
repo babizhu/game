@@ -1,6 +1,6 @@
 package game.task.templet;
 
-import game.task.ITask;
+import game.task.BaseTask;
 
 public interface ITaskTemplet {
 
@@ -8,7 +8,7 @@ public interface ITaskTemplet {
 	 * 根据模板返回相应的任务类
 	 * @return
 	 */
-	ITask createTask();
+	BaseTask createTask();
 	
 	/**
 	 * 从配置表读取相应字符串并解析

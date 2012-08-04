@@ -1,28 +1,25 @@
 package game.task.templet;
 
 import game.task.BaseTask;
-import game.task.DirectTask;
+import game.task.CustomTask;
 
 /**
- * 直接完成任务的模板
+ * 玩家定制任务
  * @author liukun
  *
  */
-public class DirectTaskTemplet extends BaseTaskTemplet {
+public class CustomTaskTemplet extends BaseTaskTemplet {
 
-	
 	@Override
 	public BaseTask createTask() {
-		return new DirectTask( this );
+		return new CustomTask( this );
 	}
-
 
 
 	@Override
 	public void parseParam(String param) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
-	
 }
