@@ -14,6 +14,8 @@ public interface ITask {
 	 * 		如输入参数就是此任务，返回true，否则 false
 =======
 >>>>>>> branch 'master' of https://github.com/babizhu/game.git
+=======
+>>>>>>> branch 'master' of https://github.com/babizhu/game.git
 	 */
 	boolean doTask( UserInfo user, Object obj );
 
