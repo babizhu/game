@@ -14,7 +14,10 @@ public class GameUtil {
 	 * @return
 	 */
 	public static long buildIdWithDistrict( long id ){
-		return ID_PREFIX + id;
+		if( id < ID_PREFIX ){
+			return ID_PREFIX + id;
+		}
+		return id;
 	}
 	
 	/**

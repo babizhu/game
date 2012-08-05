@@ -5,7 +5,6 @@ import game.task.enums.TaskStatus;
 import util.SystemTimer;
 
 
-
 /**
  * 保存玩家的任务bean信息
  * 
@@ -14,6 +13,10 @@ import util.SystemTimer;
  */
 public abstract class BaseTask implements ITask{
 	
+	/**
+	 * 任务流水id
+	 */
+	private long	id;
 	/**
 	 * 接任务的时间
 	 */
@@ -31,9 +34,12 @@ public abstract class BaseTask implements ITask{
 	
 	
 	/**
-	 * 所接任务的状态
+	 * 此任务的状态
 	 */
 	private TaskStatus status;
+	
+	
+//	private BaseTaskTemplet	templet;
 
 //	/**
 //	 * 唯一id
@@ -41,8 +47,15 @@ public abstract class BaseTask implements ITask{
 //	private long id;
 
 	
+	
 	public TaskStatus getStatus() {
 		return status;
+	}
+
+	public BaseTask() {
+		super();
+		this.status = TaskStatus.CAN_ACCEPT;
+		//this.templet = templet;
 	}
 
 	public void setStatus(TaskStatus status) {
@@ -63,6 +76,14 @@ public abstract class BaseTask implements ITask{
 
 	public void setFinishTime ( long finishTime ) {
 		this.finishTime = finishTime;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public long getAwardTime () {
