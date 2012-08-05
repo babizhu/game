@@ -5,8 +5,8 @@ import game.task.PropTask;
 
 public class PropTaskTemplet extends BaseTaskTemplet{
 
-	int				propId;
-	int				needCount;
+	private int				propId;
+	private int				needCount;
 	@Override
 	public BaseTask createTask() {
 		return new PropTask( this );
