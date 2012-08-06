@@ -2,6 +2,7 @@ package game.task.templet;
 
 import game.task.BaseTask;
 import game.task.PropTask;
+import game.task.enums.TaskType;
 
 public class PropTaskTemplet extends BaseTaskTemplet{
 
@@ -29,17 +30,15 @@ public class PropTaskTemplet extends BaseTaskTemplet{
 		return propId;
 	}
 
-//	public void setPropId(int propId) {
-//		this.propId = propId;
-//	}
 
 	public int getNeedCount() {
 		return needCount;
 	}
 
-//	public void setNeedCount(int needCount) {
-//		this.needCount = needCount;
-//	}
+	public PropTaskTemplet() {
+		this.setTaskType( TaskType.PROP );
+	}
 
+	
 	
 }

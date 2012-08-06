@@ -33,7 +33,7 @@ public class DatabaseUtilTest {
 	}
 
 	/**
-	 * ²âÊÔ´Ó»º³å³Ø»ñÈ¡µÄÁ¬½ÓÊÇ·ñÎªnull
+	 * æµ‹è¯•ä»ç¼“å†²æ± è·å–çš„è¿æ¥æ˜¯å¦ä¸ºnull
 	 */
 	@Test
 	public void testGetConnection () {
@@ -44,10 +44,10 @@ public class DatabaseUtilTest {
 	@SuppressWarnings("unused")
 	@Test
 	/**
-	 * ²âÊÔÊı¾İ¿âµÄÁ¬½Ó³Ø
+	 * æµ‹è¯•æ•°æ®åº“çš„è¿æ¥æ± 
 	 */
 	public void testPerfomance() throws SQLException{
-		int count = 10000;//²âÊÔ´ÎÊı
+		int count = 10000;////æµ‹è¯•æ¬¡æ•°
 		
 		long begin = System.nanoTime();
 		for( int i = 0; i < count; i++ ){
@@ -65,7 +65,7 @@ public class DatabaseUtilTest {
 			conn.close();
 		}
 		
-		System.out.println( "ºÄÊ±£º" + (System.nanoTime() - begin) / 1000000000f + "Ãë" );
+		System.out.println( "è€—æ—¶ï¼š" + (System.nanoTime() - begin) / 1000000000f + "ç§’" );
 	}
 
 	

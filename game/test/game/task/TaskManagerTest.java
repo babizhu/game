@@ -7,9 +7,12 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import user.UserInfo;
+
 public class TaskManagerTest {
 
-	TaskManager manager = new TaskManager();
+	UserInfo user = new UserInfo();
+	TaskManager manager = new TaskManager( user );
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tasks>
+	<task>
+		<id>10000</id>
+		<name>寻找刘老爷</name>
+		<desc>去风之眼寻找世外高人刘大爷</desc>
+		<task_type>DIRECT</task_type>
+		<successor>10001,10002</successor>
+		<task_prop>MAIN</task_prop>
+		<npc>100900</npc>
+		<award>MONEY,10000</award>
+		<level>1</level>
+	</task>	
+	<task>
+		<id>10001</id>
+		<name>消灭巨狼</name>
+		<desc>去北寒极地消灭变种巨狼</desc>
+		<task_type>DIRECT</task_type>
+		<successor>10003</successor>
+		<task_prop>MAIN</task_prop>
+		<npc>100900</npc>
+		<award>MONEY,10000</award>
+		<level>1</level>
+	</task>
+	<task>
+		<id>10002</id>
+		<name>消灭10头巨狼</name>
+		<desc>去狼窝消灭10头变种巨狼</desc>
+		<task_type>DIRECT</task_type>
+		<successor></successor>
+		<task_prop>BRANCH</task_prop>
+		<npc>100900</npc>
+		<award>MONEY,10000</award>
+		<level>1</level>
+	</task>
+	<task>
+		<id>10003</id>
+		<name>搜集10件白霜之刃</name>
+		<desc>去暴风只眼收集10件白霜之刃</desc>
+		<task_type>PROP</task_type>
+		<successor></successor>
+		<task_prop>MAIN</task_prop>
+		<npc>100900</npc>
+		<award>MONEY,10000</award>
+		<level>1</level>
+	</task>
+</tasks>

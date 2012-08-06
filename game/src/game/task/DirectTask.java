@@ -9,7 +9,7 @@ public class DirectTask extends BaseTask {
 
 	private DirectTaskTemplet 	templet;
 	
-	public DirectTask(DirectTaskTemplet templet) {
+	public DirectTask( DirectTaskTemplet templet ) {
 		this.templet = templet; 
 	}
 

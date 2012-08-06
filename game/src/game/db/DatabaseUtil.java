@@ -14,6 +14,11 @@ import com.alibaba.druid.pool.DruidDataSource;
 
 public class DatabaseUtil {
 
+	/**
+	 * 配置文件的路径
+	 */
+	private static final String	FILE	= "config/db.xml";
+
 	
 	private DatabaseUtil() {
 	}
@@ -41,11 +46,7 @@ public class DatabaseUtil {
 		return conn;
 	}
 
-	/**
-	 * 配置文件的路径
-	 */
-	private static String	filePath	= "config/db.xml";
-
+	
 	/**
 	 * 从配置表中读取相应的连接参数，初始化数据库连接池
 	 */
@@ -55,7 +56,7 @@ public class DatabaseUtil {
 		String	url = null;
 		try {
 
-			File file = new File( filePath );
+			File file = new File( FILE );
 			SAXReader saxReader = new SAXReader();
 
 			Document doc = saxReader.read( file );

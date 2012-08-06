@@ -17,6 +17,11 @@ public class TaskManager {
 	private UserInfo		user;
 
 
+	public TaskManager(UserInfo user) {
+		super();
+		this.user = user;
+	}
+
 	public ErrorCode changeStatus( long taskId, TaskStatus status ){
 		BaseTask task = getTaskById( taskId );
 		if( task == null ){
@@ -67,8 +72,8 @@ public class TaskManager {
 	 * @param templet
 	 */
 	private void addNewTask( BaseTaskTemplet templet ){
-		if( templet.getOpenTemplet() != null ){
-			for( BaseTaskTemplet t : templet.getOpenTemplet() ){
+		if( templet.getSuccessorTemplet() != null ){
+			for( BaseTaskTemplet t : templet.getSuccessorTemplet() ){
 				this.tasks.add( t.createTask() );
 				//TODO 写入数据库
 				//TODO 通知客户端
