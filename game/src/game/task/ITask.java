@@ -8,14 +8,9 @@ public interface ITask {
 	/**
 	 * 进行一次任务
 	 * @param obj		进行任务所需要的参数
-<<<<<<< HEAD
 	 * 
 	 * @return
 	 * 		如输入参数就是此任务，返回true，否则 false
-=======
->>>>>>> branch 'master' of https://github.com/babizhu/game.git
-=======
->>>>>>> branch 'master' of https://github.com/babizhu/game.git
 	 */
 	boolean doTask( UserInfo user, Object obj );
 

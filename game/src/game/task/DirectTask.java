@@ -17,7 +17,7 @@ public class DirectTask extends BaseTask {
 	public boolean doTask( UserInfo user, Object obj ) {
 		int templetId = (Integer) obj;
 		if( templetId == templet.getTempletId() ){
-			super.finishTask();
+			super.doneTask();
 			return true;
 		}
 		

@@ -4,16 +4,17 @@ import game.task.enums.TaskStatus;
 import game.task.enums.TaskType;
 import game.task.templet.BaseTaskTemplet;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import user.UserInfo;
 import util.ErrorCode;
+import util.SystemTimer;
 
 public class TaskManager {
 
 //	private Map<Integer,BaseTask> task = new HashMap<Integer, BaseTask>();
-	private List<BaseTask> 	tasks = new ArrayList<BaseTask>();
+	private List<BaseTask> 	tasks = new LinkedList<BaseTask>();
 	private UserInfo		user;
 
 
@@ -21,16 +22,47 @@ public class TaskManager {
 		super();
 		this.user = user;
 	}
-
-	public ErrorCode changeStatus( long taskId, TaskStatus status ){
-		BaseTask task = getTaskById( taskId );
+	/**
+	 * 从可接任务中，接一个新任务
+	 * @param taskId
+	 * @return
+	 */
+	public ErrorCode acceptTask( long taskId ){
+		BaseTask task = this.getTaskById( taskId );
 		if( task == null ){
 			return ErrorCode.TASK_NOT_FOUND;
 		}
-		task.setStatus( status );
+		if( task.getStatus() != TaskStatus.CAN_ACCEPT ){
+			return ErrorCode.UNKNOW_ERROR;
+		}
+		if( user.getLevel() < task.getTemplet().getNeedLevel() ){
+			return ErrorCode.LEVEL_NOT_ENOUGH;
+		}
+		
+		task.setStatus( TaskStatus.ACCEPT );
+		//TODO 写入数据库
+		//TODO 通知前端
 		return ErrorCode.SUCCESS;
+		
 	}
 	
+	public ErrorCode AcceptAward( long taskId ){
+		BaseTask task = this.getTaskById( taskId );
+		if( task == null ){
+			return ErrorCode.TASK_NOT_FOUND;
+		}
+		if( task.getStatus() != TaskStatus.NO_REWARD ){
+			return ErrorCode.UNKNOW_ERROR;
+		}
+		task.setStatus( TaskStatus.FINISH );
+		task.setAcceptTime( SystemTimer.currentTimeMillis() );
+		
+		//TODO 领奖
+		//TODO 写入数据库
+		//TODO 通知前端
+		return ErrorCode.SUCCESS;
+		
+	}
 	/**
 	 * 完成一次任务
 	 * @param type
@@ -38,48 +70,78 @@ public class TaskManager {
 	 * @return
 	 */
 	ErrorCode doTask( TaskType type, Object obj ){
+		BaseTask task = null;
 		for( BaseTask t : tasks ){
 			if( t.getStatus() == TaskStatus.ACCEPT && t.getTaskType() == type ){
 				
-				if( t.doTask( user, obj ) ){
+				if( t.doTask( user, obj ) ){//限制：一次只允许完成一个任务，请策划确保不会出现两个需求相同的任务
+					task = t;
 					finishTask( t );
-					if( type != TaskType.DIRECT ){//假设同类任务只有一个，直接跳出循环（直接完成类的任务例外）。这属于一个优化，一旦发现问题，马上去掉
-						break;
-					}
+					break;					
 				}
 			}
+		}
+		if( task != null && task.getStatus() == TaskStatus.NO_REWARD ){
+			addSuccessorTask( task.getTemplet() );
 		}
 		return ErrorCode.SUCCESS;
 	}
 
+	/**
+	 * 添加第一个初始任务
+	 */
+	public void addFirstTask( BaseTaskTemplet templet ){
+		BaseTask task = templet.createTask();
+		task.setStatus( TaskStatus.ACCEPT );//第一个任务缺省设置为已接状态
+		//TODO 写入数据库，填充id字段
+		tasks.add( task );
+	}
+	
+	public List<BaseTask> getTasks(){
+		return tasks;
+	}
+	
+	
+//	private ErrorCode changeStatus( long taskId, TaskStatus status ){
+//		BaseTask task = getTaskById( taskId );
+//		if( task == null ){
+//			return ErrorCode.TASK_NOT_FOUND;
+//		}
+//		task.setStatus( status );
+//		return ErrorCode.SUCCESS;
+//	}
 	
 	/**
-	 * 某个任务完成之后的后续工作，例如，打开新的可接任务，发送信息到客户端，etc
+	 * 某个任务完成之后的后续工作，例如发送信息到客户端，etc
 	 * @param task
 	 */
 	private void finishTask( BaseTask task ){
-		BaseTaskTemplet templet = task.getTemplet();
+//		BaseTaskTemplet templet = task.getTemplet();
 		
-		if( task.getStatus() == TaskStatus.FINISH ){
-			addNewTask( templet );
-		}
 		
-		//TODO通知客户端计数类任务+1
+		
+		//TODO通知客户端计数类任务的计数+1
 	}
 	
 	/**
-	 * 添加可接任务
+	 * 完成一个任务之后，添加此任务的后继可接任务
 	 * @param templet
+	 * 
+	 * @return
+	 * 		返回此任务的后继任务，如果没有则返回一个长度为0的List
 	 */
-	private void addNewTask( BaseTaskTemplet templet ){
+	private void addSuccessorTask( BaseTaskTemplet templet ){
+		
 		if( templet.getSuccessorTemplet() != null ){
 			for( BaseTaskTemplet t : templet.getSuccessorTemplet() ){
-				this.tasks.add( t.createTask() );
+				tasks.add( t.createTask() );
 				//TODO 写入数据库
 				//TODO 通知客户端
 			}
 		}
 	}
+	
+	
 	private BaseTask getTaskById(long taskId) {
 		for( BaseTask task : tasks ){
 			if( task.getId() == taskId ){
@@ -88,4 +150,21 @@ public class TaskManager {
 		}
 		return null;
 	}
+	
+	@Override
+	public String toString () {
+		StringBuilder sb = new StringBuilder( "user=" + user.getName() );
+		sb.append( ", task=[" );
+		for( BaseTask t : tasks ){
+			sb.append( "[id=" + t.getTemplet().getTempletId() );
+			sb.append( ", name=" + t.getTemplet().getName() );
+			sb.append( ",status=" + t.getStatus() );
+			sb.append( "]" );
+		}
+		
+		sb.append( "]" );
+		return sb.toString();
+	}
+	
+		
 }

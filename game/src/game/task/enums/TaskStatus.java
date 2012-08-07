@@ -13,16 +13,15 @@ public enum TaskStatus {
 	/**
 	* 接受任务，尚未完成的状态
 	*/
-	ACCEPT,
-	/**
-	* 完成任务，尚未领奖状态
-	*/
-	FINISH,
+	ACCEPT,	
 	/**
 	 * 完成任务，尚未领奖的状态
 	 */
-	NO_REWARD;
+	NO_REWARD,
 	
-	
+	/**
+	* 领奖，任务彻底完成状态
+	*/
+	FINISH;
 
 }

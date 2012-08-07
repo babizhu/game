@@ -24,7 +24,7 @@ public class PropTask extends BaseTask {
 		if( templet.getPropId() == propId ){
 			int count = 50;//50从背包中获取
 			if( count >= templet.getNeedCount() ){//任务完成
-				finishTask();
+				doneTask();
 				return true;
 			}			
 		}	

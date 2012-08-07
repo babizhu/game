@@ -45,13 +45,19 @@ public class TaskTempletCfg {
 			
 			for( int i = 0; i < taskList.size(); i++ ){
 				Element element = (Element) taskList.get( i );
-				TaskType type = TaskType.valueOf(	 element.getChildText( "task_type" ) );
+				TaskType type = TaskType.valueOf( element.getChildText( "task_type" ) );
 				BaseTaskTemplet templet = type.createNewTemplet();
 				templet.setTempletId( Integer.parseInt( element.getChildText( "id" ) ) );
 				templet.setSuccessorTempletId( element.getChildText( "successor" ) );
 				templet.setName( element.getChildText( "name" ) );
 				templet.setTaskProperty( TaskProperty.valueOf( element.getChildText( "task_prop" ) ) );
-				System.out.println( templet );
+				templet.parseParam( element.getChildText( "param" ) );
+				templet.setNeedLevel( Byte.parseByte( element.getChildText( "need_level" ) ) );
+				
+				/*******************关闭打印****************************
+							System.out.println( templet );
+				********************************************************/
+				
 				taskTemplets.put( templet.getTempletId(), templet );
 				
 			}
@@ -72,7 +78,7 @@ public class TaskTempletCfg {
 	}
 	
 	/**
-	 * 所有任务模板从配置表读取后，才能初始化后继任务
+	 * 所有任务模板从配置表读取后，才能初始化后继任务，否则后继任务为空会出问题
 	 */
 	private static void buildOpenTemplet(){
 		for( Entry<Integer, BaseTaskTemplet> e : taskTemplets.entrySet() ){

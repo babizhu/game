@@ -14,7 +14,7 @@ public class CustomTask extends BaseTask implements ITask {
 	public boolean doTask(UserInfo user, Object obj) {
 		long taskId = (Long)obj;
 		if( taskId == this.getId() ){
-			finishTask();
+			doneTask();
 		}
 		return true;
 	}

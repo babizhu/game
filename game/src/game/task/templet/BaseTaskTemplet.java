@@ -9,6 +9,11 @@ import game.task.enums.TaskType;
 public abstract class BaseTaskTemplet implements ITaskTemplet {
 
 	/**
+	 * 接此任务所需要的等级
+	 */
+	
+	byte			needLevel;
+	/**
 	 * 任务名称
 	 */
 	String			name;
@@ -37,7 +42,7 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 	int[]		successorTempletId;
 	
 	/**
-	 * 本任务完成后，要开启的任务，如果不存在则为null
+	 * 本任务完成后，要开启的后继任务，如果不存在则为null
 	 */
 	BaseTaskTemplet[]			successorTemplet;
 
@@ -116,11 +121,22 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 			successorTempletId[i] = Integer.parseInt( str[i] );
 		}
 	}
+	
+	
+
+	public byte getNeedLevel () {
+		return needLevel;
+	}
+
+	public void setNeedLevel ( byte needLevel ) {
+		this.needLevel = needLevel;
+	}
 
 	@Override
 	public String toString() {
 		return "BaseTaskTemplet [name=" + name + ", type=" + taskType
 				+ ", templetId=" + templetId + ", taskProperty=" + taskProperty
+				+ ", needLevel=" + needLevel
 				+ ", successorTempletId=" + Arrays.toString(successorTempletId)
 				+ ", successorTemplet="
 				+ formatSuccessor()
@@ -131,11 +147,11 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 		if( successorTemplet == null ){
 			return null;
 		}
-		String s = "[";
+		StringBuilder sb = new StringBuilder( "[" );
 		for( BaseTaskTemplet t : successorTemplet ){
-			s += t.name;
-			s += ",";
+			sb.append( t.name + "," );
 		}
+		String s = sb.toString();
 		s = s.substring( 0, s.length() - 1 );//去掉最后一个","
 		s += "]";
 		return s;

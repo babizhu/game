@@ -20,6 +20,9 @@ public class PropTaskTemplet extends BaseTaskTemplet{
 	 */
 	@Override
 	public void parseParam( String param ) {
+		if( param.isEmpty() ){
+			return;
+		}
 		String p[] = param.split( "," );
 		propId = Integer.parseInt( p[0] );
 		needCount = Integer.parseInt( p[1] );
@@ -39,6 +42,11 @@ public class PropTaskTemplet extends BaseTaskTemplet{
 		this.setTaskType( TaskType.PROP );
 	}
 
-	
+	@Override
+	public String toString () {
+		String s = super.toString();
+		s = s.substring( 0, s.length() - 1 );//去掉"]"
+		return s + ", propId=" + propId + ", needCount=" + needCount + "]";
+	}
 	
 }

@@ -7,9 +7,10 @@
 		<task_type>DIRECT</task_type>
 		<successor>10001,10002</successor>
 		<task_prop>MAIN</task_prop>
+		<param></param>
 		<npc>100900</npc>
 		<award>MONEY,10000</award>
-		<level>1</level>
+		<need_level>1</need_level>
 	</task>	
 	<task>
 		<id>10001</id>
@@ -18,9 +19,10 @@
 		<task_type>DIRECT</task_type>
 		<successor>10003</successor>
 		<task_prop>MAIN</task_prop>
+		<param></param>
 		<npc>100900</npc>
 		<award>MONEY,10000</award>
-		<level>1</level>
+		<need_level>1</need_level>
 	</task>
 	<task>
 		<id>10002</id>
@@ -29,9 +31,10 @@
 		<task_type>DIRECT</task_type>
 		<successor></successor>
 		<task_prop>BRANCH</task_prop>
+		<param></param>
 		<npc>100900</npc>
 		<award>MONEY,10000</award>
-		<level>1</level>
+		<need_level>1</need_level>
 	</task>
 	<task>
 		<id>10003</id>
@@ -40,8 +43,9 @@
 		<task_type>PROP</task_type>
 		<successor></successor>
 		<task_prop>MAIN</task_prop>
+		<param>100020345,10</param>
 		<npc>100900</npc>
 		<award>MONEY,10000</award>
-		<level>1</level>
+		<need_level>1</need_level>
 	</task>
 </tasks>

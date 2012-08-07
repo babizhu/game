@@ -32,12 +32,30 @@ public class UserInfo {
 	 * 昵称
 	 */
 	String		nickName;
+	
 	/**
 	 * 用户名
 	 */
 	String		name;
 	
+	/**
+	 * 等级
+	 */
+	byte		level;
 	
+	
+	public byte getLevel () {
+		return level;
+	}
+	public void setLevel ( byte level ) {
+		this.level = level;
+	}
+	/**
+	 * 增加体力
+	 * @param strengthAdd
+	 * @param funcName
+	 * @return
+	 */	
 	public int addStrength( int strengthAdd, String funcName ){
 		strength += strengthAdd;
 		buildLog( ObjectType.STRENGTH, strengthAdd, strength, funcName );
@@ -93,6 +111,13 @@ public class UserInfo {
 		
 	}
 	
+	/**
+	 * 构造关键数据的日志文件
+	 * @param at
+	 * @param change
+	 * @param current
+	 * @param funcName
+	 */
 	private void buildLog( ObjectType at, int change, int current, String funcName ){
 //		String log = at.toString();
 //		log += ",";
@@ -119,9 +144,20 @@ public class UserInfo {
 		logger.info( sb.toString() );
 	}
 	
-//	private log(){
-//		
-//	}
+	public String getNickName () {
+		return nickName;
+	}
+	public void setNickName ( String nickName ) {
+		this.nickName = nickName;
+	}
+	public String getName () {
+		return name;
+	}
+	public void setName ( String name ) {
+		this.name = name;
+	}
+	
+	
 	public static void main ( String[] args ) {
 		
 		for( int i = 0; i < 10000; i++ ){
