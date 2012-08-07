@@ -4,23 +4,30 @@
 		<id>10000</id>
 		<name>寻找刘老爷</name>
 		<desc>去风之眼寻找世外高人刘大爷</desc>
+		<dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
+        <button>我这就去</button>
 		<task_type>DIRECT</task_type>
 		<successor>10001,10002</successor>
 		<task_prop>MAIN</task_prop>
 		<param></param>
 		<npc>100900</npc>
-		<award>MONEY,10000</award>
+		<location_id>1000301</location_id>
+		<auto_track>1</auto_track>
+		<award>MONEY,10000</award>		
 		<need_level>1</need_level>
 	</task>	
 	<task>
 		<id>10001</id>
 		<name>消灭巨狼</name>
-		<desc>去北寒极地消灭变种巨狼</desc>
+		<desc>去北寒极地消灭变种巨狼</desc><dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
+        <button>我这就去</button>		
 		<task_type>DIRECT</task_type>
 		<successor>10003</successor>
 		<task_prop>MAIN</task_prop>
 		<param></param>
 		<npc>100900</npc>
+		<location_id>1000301</location_id>
+		<auto_track>1</auto_track>
 		<award>MONEY,10000</award>
 		<need_level>1</need_level>
 	</task>
@@ -28,11 +35,15 @@
 		<id>10002</id>
 		<name>消灭10头巨狼</name>
 		<desc>去狼窝消灭10头变种巨狼</desc>
+		<dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
+        <button>我这就去</button>
 		<task_type>DIRECT</task_type>
 		<successor></successor>
 		<task_prop>BRANCH</task_prop>
 		<param></param>
 		<npc>100900</npc>
+		<location_id>1000301</location_id>
+		<auto_track>1</auto_track>
 		<award>MONEY,10000</award>
 		<need_level>1</need_level>
 	</task>
@@ -40,11 +51,15 @@
 		<id>10003</id>
 		<name>搜集10件白霜之刃</name>
 		<desc>去暴风只眼收集10件白霜之刃</desc>
+		<dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
+        <button>我这就去</button>
 		<task_type>PROP</task_type>
 		<successor></successor>
 		<task_prop>MAIN</task_prop>
 		<param>100020345,10</param>
 		<npc>100900</npc>
+		<location_id>1000301</location_id>
+		<auto_track>1</auto_track>
 		<award>MONEY,10000</award>
 		<need_level>1</need_level>
 	</task>
