@@ -9,32 +9,42 @@ import java.util.Map;
  * @author admin
  * 
  */
-public enum ObjectType {
+public enum AwardType {
 
 	/**
 	 * 金币
 	 */
-	MONEY(0),
+	MONEY(1),
 
 	/**
 	 * 体力，控制玩家的战斗时间
 	 */
-	STRENGTH(1);
+	STRENGTH(2),
+	
+	/**
+	 * 经验
+	 */
+	EXP(3),
+	
+	/**
+	 * 道具
+	 */
+	PROP(4);
 
 	private final int number;
 
-	ObjectType(int n) {
+	AwardType(int n) {
 		number = n;
 	}
 
-	private static final Map<Integer, ObjectType> intToEnum = new HashMap<Integer, ObjectType>();
+	private static final Map<Integer, AwardType> intToEnum = new HashMap<Integer, AwardType>();
 	static {
-		for (ObjectType a : values()) {
+		for (AwardType a : values()) {
 			intToEnum.put(a.number, a);
 		}
 	}
 
-	public static ObjectType fromInt(int n) {
+	public static AwardType fromInt(int n) {
 		return intToEnum.get(n);
 	}
 
@@ -43,9 +53,9 @@ public enum ObjectType {
 	}
 
 	public static void main(String[] args) {
-		ObjectType at = ObjectType.MONEY;
+		AwardType at = AwardType.MONEY;
 		System.out.println(at);
-		ObjectType at1 = ObjectType.valueOf("STRENGTH");
+		AwardType at1 = AwardType.valueOf("STRENGTH");
 		System.out.println(at1.toInt());
 	}
 }

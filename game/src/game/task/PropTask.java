@@ -20,7 +20,9 @@ public class PropTask extends BaseTask {
 
 	@Override
 	public boolean doTask( UserInfo user, Object obj ) {
-		int propId = (Integer) obj;
+		
+		int propId = (obj == null) ? templet.getPropId() : (Integer) obj;
+		
 		if( templet.getPropId() == propId ){
 			int count = 50;//50从背包中获取
 			if( count >= templet.getNeedCount() ){//任务完成
@@ -30,6 +32,8 @@ public class PropTask extends BaseTask {
 		}	
 		return false;
 	}
+	
+	
 
 	@Override
 	public TaskType getTaskType() {

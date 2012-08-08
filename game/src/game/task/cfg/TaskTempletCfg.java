@@ -22,10 +22,10 @@ import org.jdom2.input.SAXBuilder;
  *
  */
 public class TaskTempletCfg {
-	private static final Map<Integer,BaseTaskTemplet> taskTemplets;
+	private static final Map<Short,BaseTaskTemplet> taskTemplets;
 	
 	static{
-		taskTemplets = new HashMap<Integer, BaseTaskTemplet>();
+		taskTemplets = new HashMap<Short, BaseTaskTemplet>();
 		init();
 		
 	}
@@ -47,12 +47,14 @@ public class TaskTempletCfg {
 				Element element = (Element) taskList.get( i );
 				TaskType type = TaskType.valueOf( element.getChildText( "task_type" ) );
 				BaseTaskTemplet templet = type.createNewTemplet();
-				templet.setTempletId( Integer.parseInt( element.getChildText( "id" ) ) );
+				templet.setTempletId( Short.parseShort( element.getChildText( "id" ) ) );
 				templet.setSuccessorTempletId( element.getChildText( "successor" ) );
 				templet.setName( element.getChildText( "name" ) );
 				templet.setTaskProperty( TaskProperty.valueOf( element.getChildText( "task_prop" ) ) );
 				templet.parseParam( element.getChildText( "param" ) );
 				templet.setNeedLevel( Byte.parseByte( element.getChildText( "need_level" ) ) );
+				String checkNow = element.getChildText( "check_now" );
+				templet.setCheckNow( ( checkNow.isEmpty() || checkNow.equals( "0" ) ? false : true ) );
 				
 				/*******************关闭打印****************************
 							System.out.println( templet );
@@ -78,23 +80,24 @@ public class TaskTempletCfg {
 	}
 	
 	/**
-	 * 所有任务模板从配置表读取后，才能初始化后继任务，否则后继任务为空会出问题
+	 * 所有任务模板从配置表读取后，才能初始化后继任务，否则后继任务因为尚未被初始化为空会出问题
 	 */
 	private static void buildOpenTemplet(){
-		for( Entry<Integer, BaseTaskTemplet> e : taskTemplets.entrySet() ){
+		for( Entry<Short, BaseTaskTemplet> e : taskTemplets.entrySet() ){
 			e.getValue().buildSuccessorTemplet();
 		}
 	}
 	/**
 	 * 通过模板id获取模板
-	 * @param id
+	 * @param templetId
 	 * @return
 	 */
-	public static BaseTaskTemplet getTempletById( int id ){
-		return taskTemplets.get( id );
+	public static BaseTaskTemplet getTempletById( short templetId ){
+		return taskTemplets.get( templetId );
 	}
 	public static void main(String[] args) {
-			System.out.println( TaskTempletCfg.getTempletById( 10000 ) );
+		short id = 10001;
+		System.out.println( TaskTempletCfg.getTempletById( id ) );
 	}
 
 }

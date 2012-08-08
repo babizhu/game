@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--comment-->
 <tasks>
 	<task>
 		<id>10000</id>
 		<name>寻找刘老爷</name>
 		<desc>去风之眼寻找世外高人刘大爷</desc>
-		<dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
+		<dialogue>我知道一个人，他可以帮助你。他名叫刘大爷，常在风之眼出没。</dialogue>
         <button>我这就去</button>
 		<task_type>DIRECT</task_type>
 		<successor>10001,10002</successor>
@@ -15,6 +16,7 @@
 		<auto_track>1</auto_track>
 		<award>MONEY,10000</award>		
 		<need_level>1</need_level>
+		<check_now>0</check_now>
 	</task>	
 	<task>
 		<id>10001</id>
@@ -30,6 +32,7 @@
 		<auto_track>1</auto_track>
 		<award>MONEY,10000</award>
 		<need_level>1</need_level>
+		<check_now>0</check_now>
 	</task>
 	<task>
 		<id>10002</id>
@@ -46,6 +49,7 @@
 		<auto_track>1</auto_track>
 		<award>MONEY,10000</award>
 		<need_level>1</need_level>
+		<check_now>0</check_now>
 	</task>
 	<task>
 		<id>10003</id>
@@ -62,5 +66,6 @@
 		<auto_track>1</auto_track>
 		<award>MONEY,10000</award>
 		<need_level>1</need_level>
+		<check_now>1</check_now>
 	</task>
 </tasks>

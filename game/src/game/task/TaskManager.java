@@ -18,7 +18,7 @@ public class TaskManager {
 	private UserInfo		user;
 
 
-	public TaskManager(UserInfo user) {
+	public TaskManager( UserInfo user ) {
 		super();
 		this.user = user;
 	}
@@ -27,8 +27,8 @@ public class TaskManager {
 	 * @param taskId
 	 * @return
 	 */
-	public ErrorCode acceptTask( long taskId ){
-		BaseTask task = this.getTaskById( taskId );
+	public ErrorCode acceptTask( short templetId ){
+		BaseTask task = this.getTaskByTempletId( templetId );
 		if( task == null ){
 			return ErrorCode.TASK_NOT_FOUND;
 		}
@@ -40,6 +40,12 @@ public class TaskManager {
 		}
 		
 		task.setStatus( TaskStatus.ACCEPT );
+		task.setAcceptTime( SystemTimer.currentTimeMillis() );
+		
+		if( task.getTemplet().isCheckNow() ){
+			doTask( task, null );
+			
+		}
 		
 		//TODO 写入数据库
 		//TODO 通知前端
@@ -47,8 +53,8 @@ public class TaskManager {
 		
 	}
 	
-	public ErrorCode AcceptAward( long taskId ){
-		BaseTask task = this.getTaskById( taskId );
+	public ErrorCode AcceptAward( short templetId ){
+		BaseTask task = this.getTaskByTempletId( templetId );
 		if( task == null ){
 			return ErrorCode.TASK_NOT_FOUND;
 		}
@@ -56,13 +62,15 @@ public class TaskManager {
 			return ErrorCode.UNKNOW_ERROR;
 		}
 		task.setStatus( TaskStatus.FINISH );
-		task.setAcceptTime( SystemTimer.currentTimeMillis() );
+		task.setAcceptAwardTime( SystemTimer.currentTimeMillis() );
+		
+		tasks.remove( task );
 		
 		//TODO 领奖
 		//TODO 写入数据库
 		//TODO 通知前端
-		return ErrorCode.SUCCESS;
 		
+		return ErrorCode.SUCCESS;		
 	}
 	/**
 	 * 完成一次任务
@@ -70,20 +78,14 @@ public class TaskManager {
 	 * @param obj		完成任务所需要的参数
 	 * @return
 	 */
-	ErrorCode doTask( TaskType type, Object obj ){
-		BaseTask task = null;
+	public ErrorCode doTask( TaskType type, Object obj ){
 		for( BaseTask t : tasks ){
 			if( t.getStatus() == TaskStatus.ACCEPT && t.getTaskType() == type ){
 				
-				if( t.doTask( user, obj ) ){//限制：一次只允许完成一个任务，请策划确保不会出现两个需求相同的任务
-					task = t;
-					finishTask( t );
+				if( doTask( t, obj ) ){//限制：一次只允许完成一个任务，请策划确保不会出现两个需求相同的任务
 					break;					
 				}
 			}
-		}
-		if( task != null && task.getStatus() == TaskStatus.NO_REWARD ){
-			addSuccessorTask( task.getTemplet() );
 		}
 		return ErrorCode.SUCCESS;
 	}
@@ -102,6 +104,23 @@ public class TaskManager {
 		return tasks;
 	}
 	
+	/**
+	 * 执行一个具体的任务
+	 * @param task
+	 * @param obj
+	 * @return
+	 * 		true	命中任务
+	 * 		flase	未命中任务
+	 */
+	private boolean doTask( BaseTask task, Object obj ){
+		if( task.doTask( user, obj ) ){
+			if( task.getStatus() == TaskStatus.NO_REWARD ){
+				finishTask( task );
+			}
+			return true;
+		}
+		return false;
+	}
 	
 //	private ErrorCode changeStatus( long taskId, TaskStatus status ){
 //		BaseTask task = getTaskById( taskId );
@@ -117,19 +136,14 @@ public class TaskManager {
 	 * @param task
 	 */
 	private void finishTask( BaseTask task ){
-//		BaseTaskTemplet templet = task.getTemplet();
-		
-		
-		
-		//TODO通知客户端计数类任务的计数+1
+		BaseTaskTemplet templet = task.getTemplet();
+		addSuccessorTask( templet );
 	}
 	
 	/**
 	 * 完成一个任务之后，添加此任务的后继可接任务
 	 * @param templet
 	 * 
-	 * @return
-	 * 		返回此任务的后继任务，如果没有则返回一个长度为0的List
 	 */
 	private void addSuccessorTask( BaseTaskTemplet templet ){
 		
@@ -143,9 +157,9 @@ public class TaskManager {
 	}
 	
 	
-	private BaseTask getTaskById(long taskId) {
+	public BaseTask getTaskByTempletId( short templetId ) {
 		for( BaseTask task : tasks ){
-			if( task.getId() == taskId ){
+			if( task.getTemplet().getTempletId() == templetId ){
 				return task;
 			}
 		}
@@ -155,7 +169,7 @@ public class TaskManager {
 	@Override
 	public String toString () {
 		StringBuilder sb = new StringBuilder( "user=" + user.getName() );
-		sb.append( ", task=[" );
+		sb.append( ", tasks=[" );
 		for( BaseTask t : tasks ){
 			sb.append( "[id=" + t.getTemplet().getTempletId() );
 			sb.append( ", name=" + t.getTemplet().getName() );
@@ -165,7 +179,5 @@ public class TaskManager {
 		
 		sb.append( "]" );
 		return sb.toString();
-	}
-	
-		
+	}		
 }
