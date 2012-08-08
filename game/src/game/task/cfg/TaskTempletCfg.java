@@ -53,6 +53,8 @@ public class TaskTempletCfg {
 				templet.setTaskProperty( TaskProperty.valueOf( element.getChildText( "task_prop" ) ) );
 				templet.parseParam( element.getChildText( "param" ) );
 				templet.setNeedLevel( Byte.parseByte( element.getChildText( "need_level" ) ) );
+				String checkNow = element.getChildText( "check_now" );
+				templet.setCheckNow( ( checkNow.isEmpty() || checkNow.equals( "0" ) ? false : true ) );
 				
 				/*******************关闭打印****************************
 							System.out.println( templet );

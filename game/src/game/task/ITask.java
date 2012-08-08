@@ -11,9 +11,18 @@ public interface ITask {
 	 * 
 	 * @return
 	 * 		如输入参数就是此任务，返回true，否则 false
+	 * 
+	 * 注意：如果obj == null意味着此此任务为
 	 */
 	boolean doTask( UserInfo user, Object obj );
 
+//	/**
+//	 * 有些任务，在接任务后需要立即进行检测任务是否完成
+//	 * 例如道具收集类
+//	 * @param user
+//	 */
+//	void doTaskNow ( UserInfo user );
+	
 	
 	/**
 	 * 返回此任务的类型

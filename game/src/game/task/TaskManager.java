@@ -18,7 +18,7 @@ public class TaskManager {
 	private UserInfo		user;
 
 
-	public TaskManager(UserInfo user) {
+	public TaskManager( UserInfo user ) {
 		super();
 		this.user = user;
 	}
@@ -41,6 +41,13 @@ public class TaskManager {
 		
 		task.setStatus( TaskStatus.ACCEPT );
 		
+		if( task.getTemplet().isCheckNow() ){
+			task.doTask( user, null );
+			if( task != null && task.getStatus() == TaskStatus.NO_REWARD ){
+				finishTask( task );
+			}
+		}
+		
 		//TODO 写入数据库
 		//TODO 通知前端
 		return ErrorCode.SUCCESS;
@@ -61,8 +68,8 @@ public class TaskManager {
 		//TODO 领奖
 		//TODO 写入数据库
 		//TODO 通知前端
-		return ErrorCode.SUCCESS;
 		
+		return ErrorCode.SUCCESS;		
 	}
 	/**
 	 * 完成一次任务
@@ -70,20 +77,20 @@ public class TaskManager {
 	 * @param obj		完成任务所需要的参数
 	 * @return
 	 */
-	ErrorCode doTask( TaskType type, Object obj ){
+	public ErrorCode doTask( TaskType type, Object obj ){
 		BaseTask task = null;
 		for( BaseTask t : tasks ){
 			if( t.getStatus() == TaskStatus.ACCEPT && t.getTaskType() == type ){
 				
 				if( t.doTask( user, obj ) ){//限制：一次只允许完成一个任务，请策划确保不会出现两个需求相同的任务
 					task = t;
-					finishTask( t );
+					//finishTask( t );
 					break;					
 				}
 			}
 		}
 		if( task != null && task.getStatus() == TaskStatus.NO_REWARD ){
-			addSuccessorTask( task.getTemplet() );
+			finishTask( task );
 		}
 		return ErrorCode.SUCCESS;
 	}
@@ -117,19 +124,14 @@ public class TaskManager {
 	 * @param task
 	 */
 	private void finishTask( BaseTask task ){
-//		BaseTaskTemplet templet = task.getTemplet();
-		
-		
-		
-		//TODO通知客户端计数类任务的计数+1
+		BaseTaskTemplet templet = task.getTemplet();
+		addSuccessorTask( templet );
 	}
 	
 	/**
 	 * 完成一个任务之后，添加此任务的后继可接任务
 	 * @param templet
 	 * 
-	 * @return
-	 * 		返回此任务的后继任务，如果没有则返回一个长度为0的List
 	 */
 	private void addSuccessorTask( BaseTaskTemplet templet ){
 		
@@ -143,7 +145,7 @@ public class TaskManager {
 	}
 	
 	
-	private BaseTask getTaskById(long taskId) {
+	private BaseTask getTaskById( long taskId ) {
 		for( BaseTask task : tasks ){
 			if( task.getId() == taskId ){
 				return task;
@@ -165,7 +167,5 @@ public class TaskManager {
 		
 		sb.append( "]" );
 		return sb.toString();
-	}
-	
-		
+	}		
 }

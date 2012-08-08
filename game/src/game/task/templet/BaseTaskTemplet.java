@@ -46,6 +46,29 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 	 * 本任务完成后，要开启的后继任务，如果不存在则为null
 	 */
 	BaseTaskTemplet[]			successorTemplet;
+	
+	/**
+	 * 判断非触发类任务是否可以直接完成
+	 * 大多数的状态选择类任务都是如此，例如：
+	 * 判断背包内的物品数量，在接任务的同时就有必要判断一次
+	 * 是否领取工商执照
+	 * 某某技能升级到某某级
+	 * 
+	 */
+	private	boolean	checkNow;	
+	
+	/**
+	 * 判断此任务在玩家接受的同时是否有必要立即检查一下
+	 * @return
+	 */
+	public boolean isCheckNow () {
+		return checkNow;
+	}
+
+	public void setCheckNow ( boolean checkNow ) {
+		this.checkNow = checkNow;
+	}
+
 
 	public int getTempletId() {
 		return templetId;
@@ -138,12 +161,17 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 		return "BaseTaskTemplet [name=" + name + ", type=" + taskType
 				+ ", templetId=" + templetId + ", taskProperty=" + taskProperty
 				+ ", needLevel=" + needLevel
+				+ ", checkNow=" + checkNow
 				+ ", successorTempletId=" + Arrays.toString(successorTempletId)
 				+ ", successorTemplet="
 				+ formatSuccessor()
 				+ "]";
 	}
 	
+	/**
+	 * 避免toString()函数中的递归调用，导致字符串很长打印出来没法看
+	 * @return
+	 */
 	private String formatSuccessor(){
 		if( successorTemplet == null ){
 			return null;

@@ -1,6 +1,6 @@
 package user;
 
-import game.ObjectType;
+import game.AwardType;
 
 import java.nio.ByteBuffer;
 
@@ -58,7 +58,7 @@ public class UserInfo {
 	 */	
 	public int addStrength( int strengthAdd, String funcName ){
 		strength += strengthAdd;
-		buildLog( ObjectType.STRENGTH, strengthAdd, strength, funcName );
+		buildLog( AwardType.STRENGTH, strengthAdd, strength, funcName );
 		return strength;
 	}
 	public int reduceStrength( int strengthReduce, String funcName ){
@@ -66,7 +66,7 @@ public class UserInfo {
 			throw new IllegalArgumentException();
 		}
 		strength -= strengthReduce;
-		buildLog( ObjectType.STRENGTH, -strengthReduce, strength, funcName );
+		buildLog( AwardType.STRENGTH, -strengthReduce, strength, funcName );
 		return strength;
 	}
 	
@@ -87,7 +87,7 @@ public class UserInfo {
 //      String func = ele[2].getMethodName();
 //      System.out.println(func);
 
-		buildLog( ObjectType.MONEY, moneyAdd, money, funcName );
+		buildLog( AwardType.MONEY, moneyAdd, money, funcName );
 		return money;
 	}
 	
@@ -102,7 +102,7 @@ public class UserInfo {
 			throw new IllegalArgumentException();
 		}
 		money -= moneyReduce;
-		buildLog( ObjectType.MONEY, -moneyReduce, money, funcName );
+		buildLog( AwardType.MONEY, -moneyReduce, money, funcName );
 		return money;
 	}
 	
@@ -118,7 +118,7 @@ public class UserInfo {
 	 * @param current
 	 * @param funcName
 	 */
-	private void buildLog( ObjectType at, int change, int current, String funcName ){
+	private void buildLog( AwardType at, int change, int current, String funcName ){
 //		String log = at.toString();
 //		log += ",";
 //		log += change;
