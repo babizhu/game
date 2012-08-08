@@ -38,6 +38,15 @@ public abstract class BaseTask implements ITask{
 	 */
 	private TaskStatus status;
 	
+	/**
+	 * 判断在接任务的同时就必须检查任务是否完成
+	 * 大多数的状态选择类任务都是如此，例如：
+	 * 判断背包内的物品数量
+	 * 是否领取工商执照
+	 * 
+	 */
+	private	boolean	isCheckNow;	
+	
 	public TaskStatus getStatus() {
 		return status;
 	}

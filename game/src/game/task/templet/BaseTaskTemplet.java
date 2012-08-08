@@ -3,6 +3,7 @@ package game.task.templet;
 import java.util.Arrays;
 
 import game.task.cfg.TaskTempletCfg;
+import game.task.enums.TaskProperty;
 import game.task.enums.TaskType;
 
 

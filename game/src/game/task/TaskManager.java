@@ -40,6 +40,7 @@ public class TaskManager {
 		}
 		
 		task.setStatus( TaskStatus.ACCEPT );
+		
 		//TODO 写入数据库
 		//TODO 通知前端
 		return ErrorCode.SUCCESS;

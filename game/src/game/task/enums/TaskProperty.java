@@ -1,4 +1,4 @@
-package game.task.templet;
+package game.task.enums;
 
 public enum TaskProperty {
 	/**

@@ -1,9 +1,9 @@
 package game.task.cfg;
 
 import static org.junit.Assert.*;
+import game.task.enums.TaskProperty;
 import game.task.enums.TaskType;
 import game.task.templet.BaseTaskTemplet;
-import game.task.templet.TaskProperty;
 
 import org.junit.Test;
 

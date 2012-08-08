@@ -1,8 +1,8 @@
 package game.task.cfg;
 
+import game.task.enums.TaskProperty;
 import game.task.enums.TaskType;
 import game.task.templet.BaseTaskTemplet;
-import game.task.templet.TaskProperty;
 
 import java.io.IOException;
 import java.util.HashMap;
