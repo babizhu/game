@@ -2,6 +2,7 @@ package game.task.enums;
 
 import game.task.templet.BaseTaskTemplet;
 import game.task.templet.DirectTaskTemplet;
+import game.task.templet.MissionTaskTemplet;
 import game.task.templet.PropTaskTemplet;
 
 /**
@@ -41,6 +42,18 @@ public enum TaskType {
 		public BaseTaskTemplet createNewTemplet() {
 			return new PropTaskTemplet();
 		}
+	},
+	
+	/**
+	 * 关卡任务
+	 */
+	MISSION{
+
+		@Override
+		public BaseTaskTemplet createNewTemplet() {
+			return new MissionTaskTemplet();
+		}
+		
 	},
 	
 	/**
