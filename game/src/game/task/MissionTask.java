@@ -5,28 +5,41 @@ import game.task.templet.BaseTaskTemplet;
 import game.task.templet.MissionTaskTemplet;
 import user.UserInfo;
 
+/**
+ * 闯关任务
+ * @author admin
+ *
+ */
 public class MissionTask extends BaseTask {
 
+	MissionTaskTemplet templet;
 	public MissionTask(MissionTaskTemplet missionTaskTemplet) {
-		// TODO Auto-generated constructor stub
+		templet = missionTaskTemplet;
 	}
 
 	@Override
 	public boolean doTask(UserInfo user, Object obj) {
-		// TODO Auto-generated method stub
+		int missionId = (Integer) obj;
+		if( missionId == templet.getMissionId() ){
+			super.doneTask();
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public TaskType getTaskType() {
-		// TODO Auto-generated method stub
-		return null;
+		return TaskType.MISSION;
 	}
 
 	@Override
 	public BaseTaskTemplet getTemplet() {
-		// TODO Auto-generated method stub
-		return null;
+		return templet;
+	}
+	
+	public static void main ( String[] args ) {
+//		Object obj = null;
+//		int i = (Integer) obj;
 	}
 
 }

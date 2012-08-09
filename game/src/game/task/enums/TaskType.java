@@ -62,7 +62,6 @@ public enum TaskType {
 	CUSTOM {
 		@Override
 		public BaseTaskTemplet createNewTemplet() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 	};

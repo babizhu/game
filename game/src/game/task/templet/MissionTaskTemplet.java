@@ -24,7 +24,6 @@ public class MissionTaskTemplet extends BaseTaskTemplet{
 	@Override
 	public BaseTask createTask() {
 		return new MissionTask( this );
-	
 	}
 	
 	/**
@@ -34,8 +33,7 @@ public class MissionTaskTemplet extends BaseTaskTemplet{
 	 */
 	@Override
 	public void parseParam(String param) {
-		missionId = Integer.parseInt( param );
-		
+		missionId = Integer.parseInt( param );		
 	}
 	
 	

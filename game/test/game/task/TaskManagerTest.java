@@ -40,10 +40,18 @@ public class TaskManagerTest {
 //		
 		
 	}
+	/**
+	 * @测试用的任务规则，不符合此规则无法完成此测试
+	 * 1、任务模板id必须从10000开始<br>
+	 * 2、10000号任务本身为一个DIRECT任务，可一次性完成<br>
+	 * 3、10000号任务必须有2个后继任务，10001,10002<br>
+	 * 4、10001号任务也必须是一个DIRECT任务，其后继任务10003<br>
+	 * 5、10003号任务为接的时候就需要检查一遍的任务，并保证在接的时候直接完成，并开启10004<br>
+	 */
 	@Test
 	public void testDoTask() {
 		
-		manager.AcceptAward( (short) -1 );//试图为一个尚未完成的任务领奖
+		manager.acceptAward( (short) -1 );//试图为一个尚未完成的任务领奖
 		
 		
 		int taskCount = 0;
@@ -63,19 +71,26 @@ public class TaskManagerTest {
 		assertEquals( taskCount, manager.getTasks().size() );
 		//System.out.println( manager );
 		
-		ErrorCode code = manager.AcceptAward( (short) 100001 );//试图为一个尚未完成的任务领奖
+		/********************************************************测试领奖内容*********************************************************/
+		ErrorCode code = manager.acceptAward( (short) 100001 );//试图为一个未找到的任务领奖
 		assertEquals( ErrorCode.TASK_NOT_FOUND, code );//返回任务未找到错误
 		
-		code = manager.AcceptAward( (short) 10000 );//为完成的任务领奖，任务数量减少1个
+		code = manager.acceptAward( (short) 10000 );//为完成的任务领奖，任务数量减少1个，变为2个
 		assertEquals( ErrorCode.SUCCESS, code );//返回成功
 		taskCount = 2;
 		assertEquals( taskCount, manager.getTasks().size() );
 		
-		manager.doTask( TaskType.DIRECT , 10000 );//做一个已经完成但尚未领奖的任务，玩家依然拥有2个任务，10000任务已经完成，其余两个处于待接状态
+		code = manager.acceptAward( (short) 10000 );//为完成的任务再领一次奖
+		assertEquals( ErrorCode.TASK_NOT_FOUND, code );//返回任务未找到错误
+		/********************************************************测试领奖内容*********************************************************/
+		
+		code = manager.doTask( TaskType.DIRECT , 10000 );//做一个已经完成所有流程的任务，玩家依然拥有2个任务，其余两个处于待接状态
 		taskCount = 2;
 		assertEquals( taskCount, manager.getTasks().size() );
 		//System.out.println( manager );
 		
+		
+		/********************************************************测试接任务*********************************************************/
 		code = manager.acceptTask( (short) 10001 );
 		assertEquals( ErrorCode.LEVEL_NOT_ENOUGH, code );//接一个新任务,报等级不够
 		
@@ -85,14 +100,19 @@ public class TaskManagerTest {
 		assertEquals( ErrorCode.SUCCESS, code );//成功接一个任务
 		
 		code = manager.acceptTask( (short) 10001 );
-		assertEquals( ErrorCode.UNKNOW_ERROR, code );//接一个已经接过了的任务
-		
+		assertEquals( ErrorCode.UNKNOW_ERROR, code );//接一个已经接过了的任务,报未知错误
+		/********************************************************测试接任务*********************************************************/
 
 		
+		/********************************************************测试一接就完成的任务************************************************/
 		manager.doTask( TaskType.DIRECT , 10001 );//直接完成10001号任务，开启一个可接新任务10003
-		code = manager.acceptTask( (short) 10003 );//接10003任务，目前程序设定是开启的同时即完成该道具收集任务
+		code = manager.acceptTask( (short) 10003 );//接10003任务，目前程序设定是开启的同时即完成该道具收集任务，并开启后继任务10004
 		assertEquals( ErrorCode.SUCCESS, code );
 		assertEquals( TaskStatus.NO_REWARD, manager.getTaskByTempletId((short) 10003).getStatus() );//检测该任务是否完成
+		/********************************************************测试一接就完成的任务************************************************/
+		
+		taskCount = 4;
+		assertEquals( taskCount, manager.getTasks().size() );
 		
 		System.out.println( manager );
 		/**

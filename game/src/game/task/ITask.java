@@ -36,5 +36,23 @@ public interface ITask {
 	 * @return
 	 */
 	BaseTaskTemplet	getTemplet();
+	
+	/**
+	 * 还原数据库保存的任务的额外参数信息<br>
+	 * 例如 对于收集打怪任务，用于保存当前已经打了多少次怪<br>
+	 * 对于扔十次垃圾，保留当前已经扔了多少次垃圾<br>
+	 * @param str
+	 */
+	void parseParam( String str );
+	
+	
+	/**
+	 * 构建任务的额外需要保存的信息为一个字符串，格式:parm1,parm2,parm3<br>
+	 * 方便保存到数据库中<br>
+	 * 例如 对于收集打怪任务，用于保存当前已经打了多少次怪<br>
+	 * 对于扔十次垃圾，保留当前已经扔了多少次垃圾<br>
+	 * @param str
+	 */
+	String buildParam( );
 
 }

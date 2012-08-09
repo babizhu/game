@@ -1,5 +1,6 @@
 package game.task;
 
+import game.task.cfg.TaskTempletCfg;
 import game.task.enums.TaskStatus;
 import game.task.enums.TaskType;
 import game.task.templet.BaseTaskTemplet;
@@ -53,7 +54,7 @@ public class TaskManager {
 		
 	}
 	
-	public ErrorCode AcceptAward( short templetId ){
+	public ErrorCode acceptAward( short templetId ){
 		BaseTask task = this.getTaskByTempletId( templetId );
 		if( task == null ){
 			return ErrorCode.TASK_NOT_FOUND;
@@ -169,15 +170,23 @@ public class TaskManager {
 	@Override
 	public String toString () {
 		StringBuilder sb = new StringBuilder( "user=" + user.getName() );
-		sb.append( ", tasks=[" );
+		sb.append( ", tasks=[\n" );
 		for( BaseTask t : tasks ){
-			sb.append( "[id=" + t.getTemplet().getTempletId() );
+			sb.append( "\t[id=" + t.getTemplet().getTempletId() );
 			sb.append( ", name=" + t.getTemplet().getName() );
 			sb.append( ",status=" + t.getStatus() );
-			sb.append( "]" );
+			sb.append( "]\n" );
 		}
 		
 		sb.append( "]" );
 		return sb.toString();
-	}		
+	}
+	public static void main ( String[] args ) {
+		short templetId = 10000;
+		BaseTaskTemplet t = TaskTempletCfg.getTempletById( templetId );
+		BaseTask task = t.createTask();
+		task.parseParam( "" );
+	}
 }
+
+

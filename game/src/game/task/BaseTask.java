@@ -2,6 +2,7 @@ package game.task;
 
 
 import game.task.enums.TaskStatus;
+import user.UserInfo;
 import util.SystemTimer;
 
 
@@ -93,6 +94,29 @@ public abstract class BaseTask implements ITask{
 		setDoneTime( SystemTimer.currentTimeMillis() );
 	}
 
+	@Override
+	public boolean doTask ( UserInfo user, Object obj ) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void parseParam ( String str ) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * 不存在特殊参数则返回null
+	 */
+	@Override
+	public String buildParam () {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
+	
 	
 	
 }

@@ -55,11 +55,11 @@
 	<task>
 		<id>10003</id>
 		<name>搜集10件白霜之刃</name>
-		<desc>去暴风只眼收集10件白霜之刃</desc>
+		<desc>去暴风之眼收集10件白霜之刃</desc>
 		<dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
         <button>我这就去</button>
 		<task_type>PROP</task_type>
-		<successor></successor>
+		<successor>10004</successor>
 		<task_prop>MAIN</task_prop>
 		<param>100020345,10</param>
 		<npc>100900</npc>
@@ -68,5 +68,22 @@
 		<award>MONEY,10000</award>
 		<need_level>1</need_level>
 		<check_now>1</check_now>
+	</task>
+	<task>
+		<id>10004</id>
+		<name>挑战邪恶的双子星长老</name>
+		<desc>去暴风之眼挑战挑战邪恶的双子星长老</desc>
+		<dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
+        <button>我这就去</button>
+		<task_type>MISSION</task_type>
+		<successor></successor>
+		<task_prop>MAIN</task_prop>
+		<param>10000</param>
+		<npc>100900</npc>
+		<location_id>1000301</location_id>
+		<auto_track>1</auto_track>
+		<award>MONEY,10000</award>
+		<need_level>1</need_level>
+		<check_now>0</check_now>
 	</task>
 </tasks>
