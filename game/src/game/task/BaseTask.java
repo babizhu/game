@@ -101,7 +101,7 @@ public abstract class BaseTask implements ITask{
 	}
 
 	@Override
-	public void parseParam ( String str ) {
+	public void parseParamFromDb ( String str ) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -110,8 +110,7 @@ public abstract class BaseTask implements ITask{
 	 * 不存在特殊参数则返回null
 	 */
 	@Override
-	public String buildParam () {
-		// TODO Auto-generated method stub
+	public Object getParam( ){
 		return null;
 	}
 	
