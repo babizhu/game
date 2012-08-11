@@ -5,8 +5,10 @@ import game.task.enums.TaskStatus;
 import game.task.enums.TaskType;
 import game.task.templet.BaseTaskTemplet;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import user.UserInfo;
 import util.ErrorCode;
@@ -14,8 +16,8 @@ import util.SystemTimer;
 
 public class TaskManager {
 
-//	private Map<Integer,BaseTask> task = new HashMap<Integer, BaseTask>();
-	private List<BaseTask> 	tasks = new LinkedList<BaseTask>();
+	private Map<Short,BaseTask> tasks = new HashMap<Short, BaseTask>();//为什么要用map，不用list，请参看@see PerfomanceTest测试情况
+//	private List<BaseTask> 	tasks = new LinkedList<BaseTask>();
 	private UserInfo		user;
 
 
@@ -65,7 +67,7 @@ public class TaskManager {
 		task.setStatus( TaskStatus.FINISH );
 		task.setAcceptAwardTime( SystemTimer.currentTimeMillis() );
 		
-		tasks.remove( task );
+		tasks.remove( templetId );
 		
 		//TODO 领奖
 		//TODO 写入数据库
@@ -80,15 +82,16 @@ public class TaskManager {
 	 * @return
 	 */
 	public ErrorCode doTask( TaskType type, Object obj ){
-		for( BaseTask t : tasks ){
+		for( Entry<Short,BaseTask> e : tasks.entrySet() ){
+			BaseTask t = e.getValue();
 			if( t.getStatus() == TaskStatus.ACCEPT && t.getTaskType() == type ){
 				
 				if( doTask( t, obj ) ){//限制：一次只允许完成一个任务，请策划确保不会出现两个需求相同的任务
-					break;					
+					return ErrorCode.SUCCESS;					
 				}
 			}
 		}
-		return ErrorCode.SUCCESS;
+		return ErrorCode.TASK_NOT_FOUND;
 	}
 
 	/**
@@ -98,10 +101,10 @@ public class TaskManager {
 		BaseTask task = templet.createTask();
 		task.setStatus( TaskStatus.ACCEPT );//第一个任务缺省设置为已接状态
 		//TODO 写入数据库，填充id字段
-		tasks.add( task );
+		tasks.put( templet.getTempletId(), task );
 	}
 	
-	public List<BaseTask> getTasks(){
+	public Map<Short,BaseTask> getTasks(){
 		return tasks;
 	}
 	
@@ -150,7 +153,7 @@ public class TaskManager {
 		
 		if( templet.getSuccessorTemplet() != null ){
 			for( BaseTaskTemplet t : templet.getSuccessorTemplet() ){
-				tasks.add( t.createTask() );
+				tasks.put( t.getTempletId(), t.createTask() );
 				//TODO 写入数据库
 				//TODO 通知客户端
 			}
@@ -159,22 +162,24 @@ public class TaskManager {
 	
 	
 	public BaseTask getTaskByTempletId( short templetId ) {
-		for( BaseTask task : tasks ){
-			if( task.getTemplet().getTempletId() == templetId ){
-				return task;
-			}
-		}
-		return null;
+		return tasks.get( templetId );
 	}
 	
 	@Override
-	public String toString () {
+	public String toString () {	
+		
+		Object[] key_arr = tasks.keySet().toArray();  
+		Arrays.sort( key_arr );  //排序先，否则打印出来顺序不对
+		
 		StringBuilder sb = new StringBuilder( "user=" + user.getName() );
 		sb.append( ", tasks=[\n" );
-		for( BaseTask t : tasks ){
+		for( Object key : key_arr ) {  
+		    
+			BaseTask t = tasks.get( key );
 			sb.append( "\t[id=" + t.getTemplet().getTempletId() );
 			sb.append( ", name=" + t.getTemplet().getName() );
 			sb.append( ",status=" + t.getStatus() );
+			sb.append( ",taskType=" + t.getTemplet().getTaskType() );
 			sb.append( "]\n" );
 		}
 		
@@ -185,7 +190,7 @@ public class TaskManager {
 		short templetId = 10000;
 		BaseTaskTemplet t = TaskTempletCfg.getTempletById( templetId );
 		BaseTask task = t.createTask();
-		task.parseParam( "" );
+		task.parseParamFromDb( "" );
 	}
 }
 
