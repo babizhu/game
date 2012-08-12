@@ -1,5 +1,6 @@
 package game.task;
 
+
 import game.task.templet.BaseTaskTemplet;
 import game.task.templet.DirectCountTaskTemplet;
 import user.UserInfo;

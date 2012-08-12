@@ -2,6 +2,7 @@ package game.task.templet;
 
 import game.task.BaseTask;
 import game.task.DirectCountTask;
+
 import game.task.enums.TaskType;
 
 /**
@@ -36,8 +37,5 @@ public class DirectCountTaskTemplet extends BaseTaskTemplet {
 	public int getNeedCount() {
 		return needCount;
 	}
-
-	
-	
 
 }

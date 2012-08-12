@@ -136,6 +136,7 @@ public class TaskManagerTest {
 		manager.doTask( TaskType.DIRECT_COUNT, 10005 );//做一次任务
 		assertEquals( TaskStatus.ACCEPT, manager.getTaskByTempletId( (short) 10005 ).getStatus() );
 		
+
 		int count = (Integer) manager.getTaskByTempletId( (short) 10005 ).getParam();
 		assertEquals( 1, count );
 		
@@ -147,6 +148,7 @@ public class TaskManagerTest {
 		assertEquals( ErrorCode.TASK_NOT_FOUND, code );
 		
 		count = (Integer) manager.getTaskByTempletId( (short) 10005 ).getParam();
+
 		assertEquals( 10, count );
 		/********************************************************测试DIRECT_COUNT任务************************************************/
 
