@@ -7,8 +7,8 @@ import user.UserInfo;
 import game.packages.*;
 
 
-@PacketDescrip(desc = "ÏÔÊ¾¾«Ó¢Ãæ°å")
-public class CopyOfPacket2 extends AbstractPacket {
+@PacketDescrip(desc = "ï¿½ï¿½Ê¾ï¿½ï¿½Ó¢ï¿½ï¿½ï¿½")
+public class CopyOfPacket2 extends BasePacket {
 
 	
 	public short packetNo = 1;

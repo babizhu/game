@@ -49,6 +49,12 @@ public class DirectCountTask extends BaseTask {
 		return count;
 	}
 	
+	@Override
+	public String toString() {
+		String s = super.toString();
+		s = s.substring( 0, s.length() - 1 );//去掉"]"
+		return s + ", count=" + count + "]";
+	}
 	public static void main(String[] args) {
 		DirectCountTask t = new DirectCountTask(null);
 		Object ot = t;

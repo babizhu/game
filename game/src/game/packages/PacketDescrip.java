@@ -5,8 +5,8 @@ import java.lang.annotation.RetentionPolicy;
 
 
 /**
- * 对包文件进行描述，方便打印出来
- * @author admin
+ * 鐢ㄦ敞瑙ｇ殑鏂瑰紡澶勭悊鍖呯殑鎻忚堪淇℃伅
+ * @author liukun 
  *
  */
 //@Target (value = { ElementType.PACKAGE })

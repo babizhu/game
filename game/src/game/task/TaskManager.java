@@ -25,6 +25,7 @@ public class TaskManager {
 		super();
 		this.user = user;
 	}
+	
 	/**
 	 * 从可接任务中，接一个新任务
 	 * @param taskId
@@ -47,13 +48,11 @@ public class TaskManager {
 		
 		if( task.getTemplet().isCheckNow() ){
 			doTask( task, null );
-			
 		}
 		
 		//TODO 写入数据库
 		//TODO 通知前端
 		return ErrorCode.SUCCESS;
-		
 	}
 	
 	public ErrorCode acceptAward( short templetId ){
@@ -69,7 +68,7 @@ public class TaskManager {
 		
 		tasks.remove( templetId );
 		
-		//TODO 领奖
+		//TODO 玩家领奖
 		//TODO 写入数据库
 		//TODO 通知前端
 		
@@ -126,15 +125,6 @@ public class TaskManager {
 		return false;
 	}
 	
-//	private ErrorCode changeStatus( long taskId, TaskStatus status ){
-//		BaseTask task = getTaskById( taskId );
-//		if( task == null ){
-//			return ErrorCode.TASK_NOT_FOUND;
-//		}
-//		task.setStatus( status );
-//		return ErrorCode.SUCCESS;
-//	}
-	
 	/**
 	 * 某个任务完成之后的后续工作，例如发送信息到客户端，etc
 	 * @param task
@@ -160,16 +150,14 @@ public class TaskManager {
 		}
 	}
 	
-	
 	public BaseTask getTaskByTempletId( short templetId ) {
 		return tasks.get( templetId );
 	}
 	
 	@Override
 	public String toString () {	
-		
 		Object[] key_arr = tasks.keySet().toArray();  
-		Arrays.sort( key_arr );  //排序先，否则打印出来顺序不对
+		Arrays.sort( key_arr );  //排序先，否则打印出来顺序是乱的
 		
 		StringBuilder sb = new StringBuilder( "user=" + user.getName() );
 		sb.append( ", tasks=[\n" );
@@ -193,5 +181,3 @@ public class TaskManager {
 		task.parseParamFromDb( "" );
 	}
 }
-
-
