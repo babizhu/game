@@ -51,9 +51,7 @@ public class TaskManagerTest {
 	}
 	@Test
 	public void testAddNewTask() {
-		user.setName( "bbz" );
-		BaseTaskTemplet templet = TaskTempletCfg.getTempletById( (short) 10000 );
-		manager.addFirstTask( templet );
+		init();
 		assertEquals( 1, manager.getTasks().size() );
 //		
 		
@@ -71,7 +69,6 @@ public class TaskManagerTest {
 	public void testDoTask() {
 		
 		manager.acceptAward( (short) -1 );//试图为一个尚未完成的任务领奖
-		
 		
 		int taskCount = 0;
 		init();
@@ -175,8 +172,5 @@ public class TaskManagerTest {
 		assertEquals( TaskStatus.NO_REWARD, manager.getTaskByTempletId((short) 10002).getStatus() );//检测该任务是否完成
 		
 	}
-		
-	
-	
 
 }

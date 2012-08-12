@@ -53,7 +53,6 @@ public interface ITask {
 	 * 对于扔十次垃圾的任务，保留当前已经扔了多少次垃圾<br>
 	 * 
 	 * @注意：如果有其他更复杂的数据结构，请自行在内部建立合适的bean类来保存，并在bean类中建立合适toString函数
-	 * @param str
 	 */
 	Object getParam( );
 

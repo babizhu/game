@@ -113,6 +113,13 @@ public abstract class BaseTask implements ITask{
 	public Object getParam( ){
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return "BaseTask [id=" + id + ", acceptTime=" + acceptTime
+				+ ", doneTime=" + doneTime + ", acceptAwardTime="
+				+ acceptAwardTime + ", status=" + status + "]";
+	}
 	
 
 	
