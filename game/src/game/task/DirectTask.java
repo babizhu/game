@@ -1,9 +1,8 @@
 package game.task;
 
-import user.UserInfo;
-import game.task.enums.TaskType;
 import game.task.templet.BaseTaskTemplet;
 import game.task.templet.DirectTaskTemplet;
+import user.UserInfo;
 
 public class DirectTask extends BaseTask {
 
@@ -20,13 +19,7 @@ public class DirectTask extends BaseTask {
 			super.doneTask();
 			return true;
 		}
-		
 		return false;
-	}
-
-	@Override
-	public TaskType getTaskType() {
-		return TaskType.DIRECT;
 	}
 
 	@Override

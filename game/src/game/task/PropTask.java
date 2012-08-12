@@ -1,6 +1,5 @@
 package game.task;
 
-import game.task.enums.TaskType;
 import game.task.templet.BaseTaskTemplet;
 import game.task.templet.PropTaskTemplet;
 import user.UserInfo;
@@ -31,13 +30,6 @@ public class PropTask extends BaseTask {
 			}			
 		}	
 		return false;
-	}
-	
-	
-
-	@Override
-	public TaskType getTaskType() {
-		return TaskType.PROP;
 	}
 
 	@Override

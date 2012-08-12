@@ -12,40 +12,38 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 	/**
 	 * 接此任务所需要的等级
 	 */
+	byte				needLevel;
 	
-	byte			needLevel;
 	/**
 	 * 任务名称
 	 */
-	String			name;
+	String				name;
+	
 	/**
 	 * 任务类型
 	 */
-	TaskType		taskType;
+	TaskType			taskType;
 	
 	/**
 	 * 任务模版id
 	 */
 	short				templetId;
 	
-	/**
-	 * 后继任务的id数组，不存在为null
-	 */
 	
 	/**
 	 * 任务属性
 	 */
-	TaskProperty	taskProperty;
+	TaskProperty		taskProperty;
 	
 	/**
-	 * 作为中间变量保存后继任务的id
+	 * 作为中间变量保存后继任务的id，不存在为null
 	 */
-	short[]		successorTempletId;
+	short[]				successorTempletId;
 	
 	/**
 	 * 本任务完成后，要开启的后继任务，如果不存在则为null
 	 */
-	BaseTaskTemplet[]			successorTemplet;
+	BaseTaskTemplet[]	successorTemplet;
 	
 	/**
 	 * 判断此任务是否应该接了之后立刻检测是否完成
@@ -69,12 +67,11 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 		this.checkNow = checkNow;
 	}
 
-
 	public short getTempletId() {
 		return templetId;
 	}
 
-	public void setTempletId( short templetId) {
+	public void setTempletId( short templetId ) {
 		this.templetId = templetId;
 	}
 
@@ -96,13 +93,13 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 	public void buildSuccessorTemplet() {
 		if( successorTempletId != null ){
 			successorTemplet = new BaseTaskTemplet[successorTempletId.length];
-			for( int i = 0; i < successorTempletId.length; i++ ){
-				BaseTaskTemplet t = TaskTempletCfg.getTempletById( successorTempletId[i] );
+			int i = 0;
+			for( short s : successorTempletId ){
+				BaseTaskTemplet t = TaskTempletCfg.getTempletById( s );
 				if( t == null ){
-					throw new IllegalArgumentException( "模板id为" + successorTempletId[i] + "的后继任务无法找到" );
+					throw new IllegalArgumentException( "模板id为" + s + "的后继任务无法找到" );
 				}
-				successorTemplet[i] = t;
-				
+				successorTemplet[i++] = t;
 			}
 		}
 	}

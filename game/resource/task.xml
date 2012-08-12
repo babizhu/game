@@ -59,7 +59,7 @@
 		<dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
         <button>我这就去</button>
 		<task_type>PROP</task_type>
-		<successor>10004</successor>
+		<successor>10004,10005</successor>
 		<task_prop>MAIN</task_prop>
 		<param>100020345,10</param>
 		<npc>100900</npc>
@@ -79,6 +79,23 @@
 		<successor></successor>
 		<task_prop>MAIN</task_prop>
 		<param>10000</param>
+		<npc>100900</npc>
+		<location_id>1000301</location_id>
+		<auto_track>1</auto_track>
+		<award>MONEY,10000</award>
+		<need_level>1</need_level>
+		<check_now>0</check_now>
+	</task>
+	<task>
+		<id>10005</id>
+		<name>挑战英雄榜10次</name>
+		<desc>连续挑战英雄榜上的英雄10次</desc>
+		<dialogue>我知道一个人，他可以帮助你挑战10次英雄榜上的英雄。</dialogue>
+        <button>我这就去</button>
+		<task_type>DIRECT_COUNT</task_type>
+		<successor></successor>
+		<task_prop>MAIN</task_prop>
+		<param>10</param>
 		<npc>100900</npc>
 		<location_id>1000301</location_id>
 		<auto_track>1</auto_track>

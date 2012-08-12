@@ -1,6 +1,5 @@
 package game.task;
 
-import game.task.enums.TaskType;
 import game.task.templet.BaseTaskTemplet;
 import user.UserInfo;
 
@@ -17,11 +16,6 @@ public class CustomTask extends BaseTask implements ITask {
 			doneTask();
 		}
 		return true;
-	}
-
-	@Override
-	public TaskType getTaskType() {
-		return TaskType.CUSTOM;
 	}
 
 	@Override

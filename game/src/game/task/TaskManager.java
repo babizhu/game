@@ -84,7 +84,7 @@ public class TaskManager {
 	public ErrorCode doTask( TaskType type, Object obj ){
 		for( Entry<Short,BaseTask> e : tasks.entrySet() ){
 			BaseTask t = e.getValue();
-			if( t.getStatus() == TaskStatus.ACCEPT && t.getTaskType() == type ){
+			if( t.getStatus() == TaskStatus.ACCEPT && t.getTemplet().getTaskType() == type ){
 				
 				if( doTask( t, obj ) ){//限制：一次只允许完成一个任务，请策划确保不会出现两个需求相同的任务
 					return ErrorCode.SUCCESS;					

@@ -11,13 +11,14 @@ import game.task.enums.TaskType;
  */
 public class DirectTaskTemplet extends BaseTaskTemplet {
 
+	public DirectTaskTemplet() {
+		this.setTaskType( TaskType.DIRECT );
+	}
 	
 	@Override
 	public BaseTask createTask() {
 		return new DirectTask( this );
 	}
-
-
 
 	@Override
 	public void parseParam(String param) {
@@ -27,9 +28,7 @@ public class DirectTaskTemplet extends BaseTaskTemplet {
 
 
 
-	public DirectTaskTemplet() {
-		this.setTaskType( TaskType.DIRECT );
-	}
+	
 
 	
 	

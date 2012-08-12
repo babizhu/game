@@ -1,6 +1,7 @@
 package game.task.enums;
 
 import game.task.templet.BaseTaskTemplet;
+import game.task.templet.DirectCountTaskTemplet;
 import game.task.templet.DirectTaskTemplet;
 import game.task.templet.MissionTaskTemplet;
 import game.task.templet.PropTaskTemplet;
@@ -52,6 +53,18 @@ public enum TaskType {
 		@Override
 		public BaseTaskTemplet createNewTemplet() {
 			return new MissionTaskTemplet();
+		}
+		
+	},
+	
+	/**
+	 *直接完成类的计数任务
+	 */
+	DIRECT_COUNT{
+
+		@Override
+		public BaseTaskTemplet createNewTemplet() {
+			return new DirectCountTaskTemplet();
 		}
 		
 	},

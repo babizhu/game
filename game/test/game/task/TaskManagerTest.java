@@ -6,7 +6,9 @@ import game.task.enums.TaskStatus;
 import game.task.enums.TaskType;
 import game.task.templet.BaseTaskTemplet;
 
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -31,6 +33,22 @@ public class TaskManagerTest {
 	public void testChangeStatus() {
 		//fail("Not yet implemented");
 	}
+	
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+	
+	
+	private void init(){
+		user.setName( "bbz" );
+		BaseTaskTemplet templet = TaskTempletCfg.getTempletById( (short) 10000 );
+		manager.addFirstTask( templet );//初始化，添加第一个任务
+		
+	}
 	@Test
 	public void testAddNewTask() {
 		user.setName( "bbz" );
@@ -46,7 +64,8 @@ public class TaskManagerTest {
 	 * 2、10000号任务本身为一个DIRECT任务，可一次性完成<br>
 	 * 3、10000号任务必须有2个后继任务，10001,10002<br>
 	 * 4、10001号任务也必须是一个DIRECT任务，其后继任务10003<br>
-	 * 5、10003号任务为接的时候就需要检查一遍的任务，并保证在接的时候直接完成，并开启10004<br>
+	 * 5、10003号任务为接的时候就需要检查一遍的任务，并保证在接的时候直接完成，并开启10004，10005<br>
+	 * 6、10005号任务是一个DIRECT_COUNT任务，需执行10次完成
 	 */
 	@Test
 	public void testDoTask() {
@@ -55,10 +74,7 @@ public class TaskManagerTest {
 		
 		
 		int taskCount = 0;
-		user.setName( "bbz" );
-		BaseTaskTemplet templet = TaskTempletCfg.getTempletById( (short) 10000 );
-		manager.addFirstTask( templet );//初始化，添加第一个任务
-		
+		init();
 		//System.out.println( manager );
 		
 		manager.doTask( TaskType.DIRECT , 10000001 );//做一个不存在的任务，玩家拥有任务数不变，依然为1
@@ -71,7 +87,7 @@ public class TaskManagerTest {
 		assertEquals( taskCount, manager.getTasks().size() );
 		//System.out.println( manager );
 		
-		/********************************************************测试领奖内容*********************************************************/
+		/********************************************************测试领奖10000号任务***********************************************/
 		ErrorCode code = manager.acceptAward( (short) 100001 );//试图为一个未找到的任务领奖
 		assertEquals( ErrorCode.TASK_NOT_FOUND, code );//返回任务未找到错误
 		
@@ -82,9 +98,9 @@ public class TaskManagerTest {
 		
 		code = manager.acceptAward( (short) 10000 );//为完成的任务再领一次奖
 		assertEquals( ErrorCode.TASK_NOT_FOUND, code );//返回任务未找到错误
-		/********************************************************测试领奖内容*********************************************************/
+		/********************************************************测试领奖*********************************************************/
 		
-		code = manager.doTask( TaskType.DIRECT , 10000 );//做一个已经完成所有流程的任务，玩家依然拥有2个任务，其余两个处于待接状态
+		code = manager.doTask( TaskType.DIRECT , 10000 );//做一个已经完成所有流程的任务，玩家依然拥有2个任务，都处于待接状态
 		taskCount = 2;
 		assertEquals( taskCount, manager.getTasks().size() );
 		//System.out.println( manager );
@@ -111,16 +127,53 @@ public class TaskManagerTest {
 		assertEquals( TaskStatus.NO_REWARD, manager.getTaskByTempletId((short) 10003).getStatus() );//检测该任务是否完成
 		/********************************************************测试一接就完成的任务************************************************/
 		
-		taskCount = 4;
+		taskCount = 5;
 		assertEquals( taskCount, manager.getTasks().size() );
 		
+		
+		/********************************************************测试DIRECT_COUNT任务************************************************/
+		manager.acceptTask( (short) 10005 );
+		manager.doTask( TaskType.DIRECT_COUNT, 10005 );//做一次任务
+		assertEquals( TaskStatus.ACCEPT, manager.getTaskByTempletId( (short) 10005 ).getStatus() );
+		
+		int count = (Integer) manager.getTaskByTempletId( (short) 10005 ).getParam();
+		assertEquals( 1, count );
+		
+		for( int i = 0; i < 9; i++ ){
+			manager.doTask( TaskType.DIRECT_COUNT, 10005 );//循环做剩下的9次任务
+		}
+		assertEquals( TaskStatus.NO_REWARD, manager.getTaskByTempletId( (short) 10005 ).getStatus() );//任务已经完成
+		code = manager.doTask( TaskType.DIRECT_COUNT, 10005 );//做第11次任务,已经无法找到此任务，
+		assertEquals( ErrorCode.TASK_NOT_FOUND, code );
+		
+		count = (Integer) manager.getTaskByTempletId( (short) 10005 ).getParam();
+		assertEquals( 10, count );
+		/********************************************************测试DIRECT_COUNT任务************************************************/
+
 		System.out.println( manager );
-		/**
-		 * 存在2个未完成的直接任务，此时做后一个直接任务（list意义上的后），确保能成功
-		 */
-		//TODO 代码慢慢加
+		
 		
 	}
+	
+	@Test
+	/**
+	 * 如果存在2个类型相同的(如DIRECT)任务，此时做后一个直接任务（tasks循环意义上的后），确保能成功
+	 */
+	public void testDoSameTask() {
+		init();
+		manager.doTask( TaskType.DIRECT, 10000 );//做一个直接完成任务，此任务拥有2个后继任务，都属于DIRECT任务
+		
+		user.setLevel( TaskTempletCfg.getTempletById( (short) 10001 ).getNeedLevel() );//赋值合适的用户等级
+		//分别接这两个后继任务
+		manager.acceptTask( (short) 10001 );
+		manager.acceptTask( (short) 10002 );
+		//System.out.println( manager );
+		manager.doTask( TaskType.DIRECT, 10002 );
+		
+		assertEquals( TaskStatus.NO_REWARD, manager.getTaskByTempletId((short) 10002).getStatus() );//检测该任务是否完成
+		
+	}
+		
 	
 	
 

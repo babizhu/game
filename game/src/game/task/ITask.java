@@ -1,8 +1,7 @@
 package game.task;
 
-import user.UserInfo;
-import game.task.enums.TaskType;
 import game.task.templet.BaseTaskTemplet;
+import user.UserInfo;
 
 public interface ITask {
 	/**
@@ -10,9 +9,9 @@ public interface ITask {
 	 * @param obj		进行任务所需要的参数
 	 * 
 	 * @return
-	 * 		true:	命中任务
+	 * 		true:	命中任务,无论是否完成<br>
 	 * 		flase:	未命中任务
-	 * <br>
+	 * 
 	 * @注意：如果该任务模板的checkNow属性true，一定要记住考虑@obj为null的情况
 	 */
 	boolean doTask( UserInfo user, Object obj );
@@ -29,7 +28,7 @@ public interface ITask {
 	 * 返回此任务的类型
 	 * @return
 	 */
-	TaskType getTaskType();
+//	TaskType getTaskType();
 	
 	/**
 	 * 返回此任务关联的模板
@@ -43,16 +42,19 @@ public interface ITask {
 	 * 对于扔十次垃圾，保留当前已经扔了多少次垃圾<br>
 	 * @param str
 	 */
-	void parseParam( String str );
+	void parseParamFromDb( String str ); 
 	
 	
 	/**
-	 * 构建任务的额外需要保存的信息为一个字符串，格式:parm1,parm2,parm3<br>
-	 * 方便保存到数据库中<br>
+	 * 把此任务所需要的内部参数以Object方式返回，有利于：<br>
+	 * 1、客户端显示<br>
+	 * 2、保存到数据库，由于数据库的特性，通常这里需要Objce对象提供相应的toString函数<br>
 	 * 例如 对于收集打怪任务，用于保存当前已经打了多少次怪<br>
-	 * 对于扔十次垃圾，保留当前已经扔了多少次垃圾<br>
+	 * 对于扔十次垃圾的任务，保留当前已经扔了多少次垃圾<br>
+	 * 
+	 * @注意：如果有其他更复杂的数据结构，请自行在内部建立合适的bean类来保存，并在bean类中建立合适toString函数
 	 * @param str
 	 */
-	String buildParam( );
+	Object getParam( );
 
 }
