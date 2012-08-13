@@ -8,6 +8,7 @@ import game.packages.*;
 
 @PacketDescrip(desc = "测试1")
 
+
 public class Bpacket2 extends BasePackage {
 
 	private final short packetNo = 2;
