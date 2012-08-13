@@ -1,7 +1,7 @@
 package game.util;
 
-import game.packages.BasePacket;
-import game.packages.IPacket;
+import game.packages.BasePackage;
+import game.packages.IPackage;
 import game.packages.PacketDescrip;
 
 import java.io.File;
@@ -148,11 +148,11 @@ public class PackageUtil {
 	/**
 	 * 打印所有的包情况
 	 */
-	static void printAllPakcets(BasePacket[] packets) {
+	public static void printAllPakcets(BasePackage[] packages) {
 		Formatter f = new Formatter(System.out);
 		f.format("%-15s %-127s %-150s \n", "包号", "类别", "功能说明");
 		f.format("%-15s %-127s %-150s \n", "－－", "－－", "－－－－");
-		for (BasePacket ap : packets) {
+		for (BasePackage ap : packages) {
 
 			if (ap != null) {
 				Class<?> c = ap.getClass();
@@ -165,22 +165,22 @@ public class PackageUtil {
 	}
 
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, SecurityException, NoSuchFieldException {
-		BasePacket p1 = null;
+		BasePackage p1 = null;
 		// String p = "PacketTest";
 		String s = "game.packages";// 包文件夹
 		List<Class<?>> list = getClasses(s);
 		int max = 1000;
-		final BasePacket[] packets = new BasePacket[max];// 不存在0号包
+		final BasePackage[] packets = new BasePackage[max];// 不存在0号包
 
 		// 生成所有包的实例数组，供后面调用
 		for (Class<?> c : list) {
 			if (!c.isInterface() && !c.getName().contains("Base")) {
 
-				p1 = (BasePacket) c.newInstance();
+				p1 = (BasePackage) c.newInstance();
 				// System.out.println( c.getName() + " ：" + p1.getPacketNo() );
 
 				int packetNo = p1.getPacketNo();
-				BasePacket ip = packets[packetNo];
+				BasePackage ip = packets[packetNo];
 				if( ip == null ) {
 					packets[packetNo] = p1;
 
@@ -193,7 +193,7 @@ public class PackageUtil {
 		System.out.println("---------------------------------------------------");
 		for (int i = 0; i < 100; i++) {
 			int packetNo = new Random().nextInt( packets.length );
-			IPacket ap = packets[packetNo];
+			IPackage ap = packets[packetNo];
 			System.out.print(i + ":\t");
 			if (ap == null) {
 				System.out.println(packetNo + "：不存在对应的包号");

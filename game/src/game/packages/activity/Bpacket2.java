@@ -6,16 +6,13 @@ import user.UserInfo;
 
 import game.packages.*;
 
+@PacketDescrip(desc = "测试1")
 
+public class Bpacket2 extends BasePackage {
 
-
-@PacketDescrip(desc = "ɨ�����")
-
-public class Bpacket2 extends BasePacket {
-
-	public final short packetNo = 2;
+	private final short packetNo = 2;
 	@Override
-	public void run ( UserInfo user, ByteBuffer[] buffers ) {
+	public void run ( UserInfo user, ByteBuffer buf ) {
 		System.out.println( this.getClass().getName() );
 
 	}
