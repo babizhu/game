@@ -6,8 +6,8 @@ import user.UserInfo;
 
 import game.packages.*;
 
-@PacketDescrip(desc = "��ҵ�½��")
-public class LoginPacket extends BasePacket {
+@PacketDescrip(desc = "测试4")
+public class LoginPacket extends BasePackage {
 
 	public final short	packetNo	= 6;
 

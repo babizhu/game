@@ -9,9 +9,9 @@ import game.packages.*;
 
 
 
-@PacketDescrip(desc = "ɨ�����")
+@PacketDescrip(desc = "测试1")
 
-public class Bpacket2 extends BasePacket {
+public class Bpacket2 extends BasePackage {
 
 	public final short packetNo = 2;
 	@Override

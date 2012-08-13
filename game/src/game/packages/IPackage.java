@@ -7,7 +7,7 @@ import user.UserInfo;
 
 
 
-public interface IPacket {
+public interface IPackage {
 
 	public void run( UserInfo user, ByteBuffer[] buffers ); 
 	//public int getPacketNo();

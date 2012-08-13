@@ -6,8 +6,8 @@ import user.UserInfo;
 
 import game.packages.*;
 
-@PacketDescrip(desc = "��ʾ��ս�����")
-public class CityBattleShowMain extends BasePacket {
+@PacketDescrip(desc = "测试2")
+public class CityBattleShowMain extends BasePackage {
 
 	public final short	packetNo	= 3;
 

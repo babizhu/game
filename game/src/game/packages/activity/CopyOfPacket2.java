@@ -7,8 +7,8 @@ import user.UserInfo;
 import game.packages.*;
 
 
-@PacketDescrip(desc = "��ʾ��Ӣ���")
-public class CopyOfPacket2 extends BasePacket {
+@PacketDescrip(desc = "测试3")
+public class CopyOfPacket2 extends BasePackage {
 
 	
 	public short packetNo = 1;

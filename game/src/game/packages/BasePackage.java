@@ -6,7 +6,7 @@ import user.UserInfo;
 
 
 
-public abstract class BasePacket implements IPacket {
+public abstract class BasePackage implements IPackage {
 
 	static ByteBuffer header = ByteBuffer.allocate( 10 );
 	static ByteBuffer footer = ByteBuffer.allocate( 10 );
