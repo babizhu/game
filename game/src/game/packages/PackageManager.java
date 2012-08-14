@@ -77,7 +77,7 @@ public class PackageManager {
 	public ErrorCode run( short packageNo, UserInfo user, ByteBuffer buf ){
 		BasePackage pack = packages[packageNo];
 		if( pack == null ){
-			logger.info( "package No." + packageNo + " NOT FOUND" );
+			logger.info( "package No." + packageNo + " NOT FOUND！" );
 			return ErrorCode.PACAKAGE_NOT_FOUND;
 		}
 		//TODO 可进行一些数据审核工作，限制用户异常地快速发包
