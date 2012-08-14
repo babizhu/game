@@ -13,7 +13,7 @@ import util.ErrorCode;
 
 /**
  * 包管理器<br>
- * 单例 
+ * 单例
  * 整个系统使用一个实例
  * @author liukun
  *
