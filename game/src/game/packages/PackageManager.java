@@ -13,8 +13,7 @@ import util.ErrorCode;
 import util.SystemTimer;
 
 /**
- * 包管理器
- * 
+ * 包管理器* 
  * @author liukun
  * 
  */
