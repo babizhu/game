@@ -9,7 +9,7 @@ import game.packages.*;
 @PacketDescrip(desc = "测试2")
 public class CityBattleShowMain extends BasePackage {
 
-	private final short	packetNo	= 3;
+	private static final short	packetNo	= 3;
 
 	@Override
 	public void run ( UserInfo user, ByteBuffer buf ) {

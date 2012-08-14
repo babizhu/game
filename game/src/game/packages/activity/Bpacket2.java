@@ -12,7 +12,7 @@ import game.packages.*;
 
 public class Bpacket2 extends BasePackage {
 
-	private final short packetNo = 2;
+	private static final short packetNo = 2;
 	@Override
 	public void run ( UserInfo user, ByteBuffer buf ) {
 		System.out.println( this.getClass().getName() );
@@ -21,5 +21,9 @@ public class Bpacket2 extends BasePackage {
 	@Override
 	public short getPacketNo () {
 		return packetNo;
+	}
+
+	public static void main ( String[] args ) {
+		//Bpacket2 d = new Bpacket2();
 	}
 }

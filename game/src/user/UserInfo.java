@@ -109,6 +109,15 @@ public class UserInfo {
 	
 	public void sendPacket( ByteBuffer[] buffer ){
 		
+		ByteBuffer header = buffer[0];
+		
+		System.out.println( header );
+		System.out.println( "包头" + header.get() );
+		System.out.println( "包号:" + header.getShort() );
+		System.out.println( "包长:" + header.getShort() );
+		
+		ByteBuffer footer = buffer[2];
+		System.out.println( "包尾:" + footer.get() );
 	}
 	
 	/**

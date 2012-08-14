@@ -3,7 +3,6 @@ package game.packages;
 import game.util.PackageUtil;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -21,7 +20,7 @@ import util.ErrorCode;
  */
 public class PackageManager {
 
-	private final static Logger logger = LoggerFactory.getLogger( PackageManager.class ); 
+	private final static Logger 			logger = LoggerFactory.getLogger( PackageManager.class ); 
 	private final static PackageManager		instance = new PackageManager();
 	public  final static PackageManager 	getInstance(){ return instance; }
 	
@@ -33,16 +32,15 @@ public class PackageManager {
 	/**
 	 * 系统允许最大的包号，用于生成数组存放所有的包实例，包号的生成得稍微限制一下，最好不要超过10000，否则会开一个比较大的数组
 	 */
-	private	final static int				MAX_PACKAGE_NO = 1000;
+	private	final static int				MAX_PACKAGE_NO = 10000;
 	
 	/**
-	 * 程序内所有的包实例列表
+	 * 程序内所有的包实例数组
 	 */
 	private final BasePackage[]				packages;
 	
 	private PackageManager() {
-		List<Class<?>> list = new ArrayList<Class<?>>();
-		list = PackageUtil.getClasses( PACKAGE_PATH );
+		List<Class<?>> list = PackageUtil.getClasses( PACKAGE_PATH );
 		packages = new BasePackage[MAX_PACKAGE_NO];// 不存在0号包
 		
 		for( Class<?> c : list ) {
@@ -82,10 +80,9 @@ public class PackageManager {
 			logger.info( "package No." + packageNo + " NOT FOUND" );
 			return ErrorCode.PACAKAGE_NOT_FOUND;
 		}
-		
+		//TODO 可进行一些数据审核工作，限制用户异常地快速发包
 		pack.run( user, buf );
-		return ErrorCode.SUCCESS;
-		
+		return ErrorCode.SUCCESS;		
 	}
 	public static void main ( String[] args ) {
 		PackageUtil.printAllPakcets( PackageManager.getInstance().packages );

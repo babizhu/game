@@ -21,7 +21,7 @@ import com.alibaba.druid.sql.parser.SQLStatementParser;
 import com.alibaba.druid.sql.parser.Token;
 import com.alibaba.druid.stat.JdbcStatManager;
 
-public class test {
+public class Test {
 
 	static void test5() throws SQLException {
 		JdbcStatManager.getInstance().reset(); // 重置计数器

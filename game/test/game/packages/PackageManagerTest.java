@@ -4,12 +4,14 @@ import static org.junit.Assert.assertEquals;
 
 import java.nio.ByteBuffer;
 
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import user.UserInfo;
 import util.ErrorCode;
 
 public class PackageManagerTest {
@@ -37,12 +39,18 @@ public class PackageManagerTest {
 		assertEquals( code, ErrorCode.PACAKAGE_NOT_FOUND );
 		
 		ByteBuffer buf = ByteBuffer.allocate( 4 );
-		buf.putInt( 3 );
+		buf.putInt( 1 );
 		buf.flip();
 
-		code = instance.run( (short) 1, null, buf );
+		UserInfo user = new UserInfo(); 
+		code = instance.run( (short) 1, user, buf );
 		assertEquals( code, ErrorCode.SUCCESS );
 		
+		buf.flip();
+		buf.putInt( 3 );
+		buf.flip();
+		code = instance.run( (short) 1, user, buf );
+		assertEquals( code, ErrorCode.SUCCESS );
 		
 	}
 
