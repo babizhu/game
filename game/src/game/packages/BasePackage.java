@@ -19,7 +19,7 @@ public abstract class BasePackage implements IPackage {
 	//public final int ID = 0;
 	
 	@Override
-	public abstract void run ( UserInfo user, ByteBuffer[] buffers );
+	public abstract void run( UserInfo user, ByteBuffer buf );
 	
 	public void sendPacket( UserInfo user, ByteBuffer buff ){
 		ByteBuffer[] b = new ByteBuffer[]{header, buff, footer};

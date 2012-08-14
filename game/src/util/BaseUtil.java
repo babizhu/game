@@ -7,6 +7,7 @@ package util;
  */
 public class BaseUtil {
 
+	public static final float TO_SECOND = 1000000000f;
 	
 	
 	public static void main(String[] args) {

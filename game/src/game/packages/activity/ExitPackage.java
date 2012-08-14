@@ -6,13 +6,13 @@ import user.UserInfo;
 
 import game.packages.*;
 
-@PacketDescrip(desc = "测试4")
-public class LoginPacket extends BasePackage {
+@PacketDescrip(desc = "玩家退出包")
+public class ExitPackage extends BasePackage {
 
-	public final short	packetNo	= 6;
+	private final short	packetNo	= 6;
 
 	@Override
-	public void run ( UserInfo user, ByteBuffer[] buffers ) {
+	public void run ( UserInfo user, ByteBuffer buf ) {
 		System.out.println( this.getClass().getName() );
 		ByteBuffer buff = ByteBuffer.allocate( 1024 );
 		super.sendPacket( user, buff );

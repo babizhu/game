@@ -2,8 +2,15 @@ package game.packages;
 
 import game.util.PackageUtil;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import user.UserInfo;
+import util.ErrorCode;
 
 /**
  * 包管理器<br>
@@ -14,6 +21,7 @@ import java.util.List;
  */
 public class PackageManager {
 
+	private final static Logger logger = LoggerFactory.getLogger( PackageManager.class ); 
 	private final static PackageManager		instance = new PackageManager();
 	public  final static PackageManager 	getInstance(){ return instance; }
 	
@@ -23,7 +31,7 @@ public class PackageManager {
 	private	final static String				PACKAGE_PATH = "game.packages";
 	
 	/**
-	 * 系统允许最大的包号，用于生成数组存放所有的包实例
+	 * 系统允许最大的包号，用于生成数组存放所有的包实例，包号的生成得稍微限制一下，最好不要超过10000，否则会开一个比较大的数组
 	 */
 	private	final static int				MAX_PACKAGE_NO = 1000;
 	
@@ -49,7 +57,7 @@ public class PackageManager {
 						packages[packetNo] = p;
 
 					} else {
-						System.out.println(packetNo + " 重复了");
+						logger.error( packetNo + " 重复了，分别是" + packages[packetNo] + " " + p );
 					}
 				} catch (InstantiationException e) {
 					e.printStackTrace();
@@ -60,13 +68,27 @@ public class PackageManager {
 		}
 				
 	}
+	
+	/**
+	 * 客户端发送数据到服务器端，等待服务器端进行处理
+	 * @param packageNo
+	 * @param user
+	 * @param buf
+	 * @return
+	 */
+	public ErrorCode run( short packageNo, UserInfo user, ByteBuffer buf ){
+		BasePackage pack = packages[packageNo];
+		if( pack == null ){
+			logger.info( "package No." + packageNo + " NOT FOUND" );
+			return ErrorCode.PACAKAGE_NOT_FOUND;
+		}
+		
+		pack.run( user, buf );
+		return ErrorCode.SUCCESS;
+		
+	}
 	public static void main ( String[] args ) {
 		PackageUtil.printAllPakcets( PackageManager.getInstance().packages );
 	}
-	
-	
-	
-	
-	
 	
 }
