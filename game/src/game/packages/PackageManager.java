@@ -35,6 +35,10 @@ public class PackageManager {
 	 * 程序内所有的包实例数组
 	 */
 	private final static BasePackage[]				packages;
+	
+	/**
+	 * 接收相同包号两个包之间允许的最短时间间隔，如果小于这个值则认定客户端有刷包嫌疑，丢弃这个包
+	 */
 	private static final long MIN_INTERVAL_MILS = 0;
 	
 	/**
@@ -102,7 +106,7 @@ public class PackageManager {
 	}
 	
 	/**
-	 * 检查玩家是否存在段时间内恶意唰大量包的情况
+	 * 检查玩家是否存在段时间内恶意刷大量包的情况
 	 * @param packageNo
 	 * @return
 	 */
