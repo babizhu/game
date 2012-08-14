@@ -1,4 +1,4 @@
-package game.packages.activity;
+package game.packages.packs;
 
 import java.nio.ByteBuffer;
 

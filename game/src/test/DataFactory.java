@@ -1,4 +1,4 @@
-package game.db;
+package test;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;

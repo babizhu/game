@@ -1,4 +1,4 @@
-package game.packages.activity;
+package game.packages.packs;
 
 import java.nio.ByteBuffer;
 
@@ -6,14 +6,16 @@ import user.UserInfo;
 
 import game.packages.*;
 
-@PacketDescrip(desc = "测试2")
-public class CityBattleShowMain extends BasePackage {
+@PacketDescrip(desc = "玩家退出包")
+public class ExitPackage extends BasePackage {
 
-	private static final short	packetNo	= 3;
+	private static final short	packetNo	= 6;
 
 	@Override
 	public void run ( UserInfo user, ByteBuffer buf ) {
 		System.out.println( this.getClass().getName() );
+		ByteBuffer buff = ByteBuffer.allocate( 1024 );
+		super.sendPacket( user, buff );
 
 	}
 
