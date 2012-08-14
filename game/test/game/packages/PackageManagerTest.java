@@ -14,6 +14,11 @@ import org.junit.Test;
 import user.UserInfo;
 import util.ErrorCode;
 
+/**
+ * 包管理器测试
+ * @author liukun
+ *
+ */
 public class PackageManagerTest {
 
 	@BeforeClass
