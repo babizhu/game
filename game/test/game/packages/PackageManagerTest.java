@@ -34,8 +34,8 @@ public class PackageManagerTest {
 
 	@Test
 	public void testRun() {
-		PackageManager instance = PackageManager.getInstance(); 
-		ErrorCode code = instance.run( (short) 123, null, null );
+		PackageManager pm = new PackageManager(); 
+		ErrorCode code = pm.run( (short) 123, null, null );
 		assertEquals( code, ErrorCode.PACAKAGE_NOT_FOUND );
 		
 		ByteBuffer buf = ByteBuffer.allocate( 4 );
@@ -43,13 +43,13 @@ public class PackageManagerTest {
 		buf.flip();
 
 		UserInfo user = new UserInfo(); 
-		code = instance.run( (short) 1, user, buf );
+		code = pm.run( (short) 1, user, buf );
 		assertEquals( code, ErrorCode.SUCCESS );
 		
 		buf.flip();
 		buf.putInt( 3 );
 		buf.flip();
-		code = instance.run( (short) 1, user, buf );
+		code = pm.run( (short) 1, user, buf );
 		assertEquals( code, ErrorCode.SUCCESS );
 		
 	}

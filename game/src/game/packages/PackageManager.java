@@ -10,19 +10,17 @@ import org.slf4j.LoggerFactory;
 
 import user.UserInfo;
 import util.ErrorCode;
+import util.SystemTimer;
 
 /**
- * 包管理器<br>
- * 单例 
- * 整个系统使用一个实例
+ * 包管理器
+ * 
  * @author liukun
- *
+ * 
  */
 public class PackageManager {
 
 	private final static Logger 			logger = LoggerFactory.getLogger( PackageManager.class ); 
-	private final static PackageManager		instance = new PackageManager();
-	public  final static PackageManager 	getInstance(){ return instance; }
 	
 	/**
 	 * 包程序所在的目录
@@ -37,9 +35,13 @@ public class PackageManager {
 	/**
 	 * 程序内所有的包实例数组
 	 */
-	private final BasePackage[]				packages;
+	private final static BasePackage[]				packages;
+	private static final long MIN_INTERVAL_MILS = 0;
 	
-	private PackageManager() {
+	/**
+	 * 初始化系统所有的包
+	 */
+	static{
 		List<Class<?>> list = PackageUtil.getClasses( PACKAGE_PATH );
 		packages = new BasePackage[MAX_PACKAGE_NO];// 不存在0号包
 		
@@ -64,6 +66,18 @@ public class PackageManager {
 				}				
 			}
 		}
+	}
+	/**
+	 * 上一次包号
+	 */
+	private short	lastPackageNo = 0;
+	
+	/**
+	 * 上一次收报时间
+	 */
+	private	long	lastReceiveTime = 0;
+	
+	PackageManager() {
 				
 	}
 	
@@ -80,12 +94,30 @@ public class PackageManager {
 			logger.info( "package No." + packageNo + " NOT FOUND！" );
 			return ErrorCode.PACAKAGE_NOT_FOUND;
 		}
-		//TODO 可进行一些数据审核工作，限制用户异常地快速发包
+		
+		if( !securityCheck( packageNo ) ){
+			return ErrorCode.PACKAGE_SECURITY_CHECK_FAIL;
+		}
 		pack.run( user, buf );
 		return ErrorCode.SUCCESS;		
 	}
+	
+	/**
+	 * 检查玩家是否存在段时间内恶意唰大量包的情况
+	 * @param packageNo
+	 * @return
+	 */
+	private boolean securityCheck( short packageNo ){
+		long current = SystemTimer.currentTimeMillis();
+		if( packageNo == lastPackageNo && current - lastReceiveTime < MIN_INTERVAL_MILS ){
+			return false;
+		}
+		lastPackageNo = packageNo;
+		lastReceiveTime = current;
+		return true;
+	}
 	public static void main ( String[] args ) {
-		PackageUtil.printAllPakcets( PackageManager.getInstance().packages );
+		PackageUtil.printAllPakcets( PackageManager.packages );
 	}
 	
 }
