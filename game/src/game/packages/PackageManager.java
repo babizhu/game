@@ -13,7 +13,7 @@ import util.ErrorCode;
 import util.SystemTimer;
 
 /**
- * 包管理器* 
+ * 包管理器
  * @author liukun
  * 
  */
@@ -22,7 +22,7 @@ public class PackageManager {
 	private final static Logger 			logger = LoggerFactory.getLogger( PackageManager.class ); 
 	
 	/**
-	 * 包程序所在的目录
+	 * 包java文件所在的目录
 	 */
 	private	final static String				PACKAGE_PATH = "game.packages.packs";
 	
