@@ -22,7 +22,7 @@ public class PackageManager {
 	private final static Logger 			logger = LoggerFactory.getLogger( PackageManager.class ); 
 	
 	/**
-	 * 包程序所在的目录
+	 * 包程序文件所在的目录
 	 */
 	private	final static String				PACKAGE_PATH = "game.packages.packs";
 	
