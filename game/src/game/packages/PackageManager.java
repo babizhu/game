@@ -14,8 +14,9 @@ import util.SystemTimer;
 
 /**
  * 包管理器
- * @author liukun
  * 
+ * @author admin
+ * 2012-8-15 上午11:50:42
  */
 public class PackageManager {
 
@@ -32,26 +33,26 @@ public class PackageManager {
 	private	final static int				MAX_PACKAGE_NO = 10000;
 	
 	/**
+	 * 接收相同包号两个包之间允许的最短时间间隔，如果小于这个值则认定客户端有刷包嫌疑，丢弃这个包
+	 * 单位	毫秒
+	 */
+	private static final long 				MIN_INTERVAL_MILS = 0;
+	
+	/**
 	 * 程序内所有的包实例数组
 	 */
-	private final static BasePackage[]				packages;
+	private final static BasePackage[]		packages;
+	
 	
 	/**
-	 * 接收相同包号两个包之间允许的最短时间间隔，如果小于这个值则认定客户端有刷包嫌疑，丢弃这个包
-	 */
-	private static final long MIN_INTERVAL_MILS = 0;
-	
-	/**
-	 * 初始化系统所有的包
+	 * 初始化系统所有的包数组
 	 */
 	static{
 		List<Class<?>> list = PackageUtil.getClasses( PACKAGE_PATH );
 		packages = new BasePackage[MAX_PACKAGE_NO];// 不存在0号包
 		
 		for( Class<?> c : list ) {
-			if( !c.isInterface()/* && !c.getName().contains("Base") && !c.getName().contains("Manager")*/ ) {
-//			if( c.isInstance( BasePackage.class ) ){
-
+			if( !c.isInterface() ) {
 				BasePackage p;
 				try {
 					p = (BasePackage) c.newInstance();
@@ -70,18 +71,18 @@ public class PackageManager {
 			}
 		}
 	}
+	
 	/**
-	 * 上一次包号
+	 * 接收的上一个包的包号
 	 */
 	private short	lastPackageNo = 0;
 	
 	/**
-	 * 上一次收报时间
+	 * 上一次收包时间
 	 */
 	private	long	lastReceiveTime = 0;
 	
 	PackageManager() {
-				
 	}
 	
 	/**
@@ -94,7 +95,7 @@ public class PackageManager {
 	public ErrorCode run( short packageNo, UserInfo user, ByteBuffer buf ){
 		BasePackage pack = packages[packageNo];
 		if( pack == null ){
-			logger.info( "package No." + packageNo + " NOT FOUND！" );
+			logger.info( "package No." + packageNo + " NOT FOUND" );
 			return ErrorCode.PACAKAGE_NOT_FOUND;
 		}
 		
