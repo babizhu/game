@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package net;
 
 import game.packages.BasePackage;
