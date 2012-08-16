@@ -2,6 +2,8 @@ package core;
 
 import java.nio.ByteBuffer;
 
+import org.xsocket.connection.INonBlockingConnection;
+
 import user.UserInfo;
 import user.UserStatus;
 
@@ -29,12 +31,14 @@ public class GameMainLogic {
 	 * @param packageNo
 	 * @param data
 	 */
-	public void process( UserInfo user, short packageNo, byte[] data ){
+	public void process( INonBlockingConnection con, short packageNo, byte[] data ){
 		
+		UserInfo user = (UserInfo) con.getAttachment();
 		if( user.getStatus() == UserStatus.GUEST && (packageNo != 100001 || packageNo != 100001) )
 		{
 			//TODO 玩家非法，移除此连接
 		}
+		
 		ByteBuffer buf = ByteBuffer.wrap( data ); 
 		user.getPackageManager().run( user, packageNo, buf );
 		

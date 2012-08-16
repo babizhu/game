@@ -47,6 +47,8 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 		con = ConnectionUtils.synchronizedConnection( con );
 		System.out.println( con.getRemoteAddress() + " " + con.getRemotePort() );
 		con.write("hello");
+		UserInfo user = new UserInfo();
+		con.setAttachment( user );
 		return false;
 	}
 
@@ -79,8 +81,7 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 	      if( !checkInputData( head, foot ) ){
 	    	  //TODO 调用某个退出函数
 	      }
-	      UserInfo user = (UserInfo) con.getAttachment();
-	      gameLogic.process( user, packageNo, data );
+	      gameLogic.process( con, packageNo, data );
 	      return true;
 	}
 	

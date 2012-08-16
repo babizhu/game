@@ -58,6 +58,20 @@ public class UserInfo {
 	 */
 	byte		level;
 	
+	/**
+	 * 缺省的空白构造函数，用于测试函数等地方使用，以后如不需要，可删除
+	 * @param conn
+	 */
+	public UserInfo() {
+
+	}
+	
+	/**
+	 * 构造函数，保持一个尽量精简的构造函数
+	 */
+	public UserInfo( INonBlockingConnection conn ) {
+		this.conn = conn;
+	}
 	
 	public byte getLevel () {
 		return level;
