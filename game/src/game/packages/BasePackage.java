@@ -7,6 +7,9 @@ import user.UserInfo;
 
 
 public abstract class BasePackage implements IPackage {
+	
+	public static final byte HEAD		= 127;
+	public static final byte FOOT		= 126;
 
 	private ByteBuffer header = ByteBuffer.allocate( 5 );
 	
@@ -18,16 +21,13 @@ public abstract class BasePackage implements IPackage {
 	private static final int	HEADER_LIMIT	= 5;
 	
 	static{
-		footer.put( (byte) 126 );
+		footer.put( (byte) FOOT );
 	}
 	
 	public BasePackage() {
-		header.put( (byte) 127 );//包头
+		header.put( HEAD );//包头
 		header.putShort( getPacketNo() );//包号
 		//包长为一个short，具体值由相应函数写入
-	}
-	static{
-		
 	}
 	
 	/**

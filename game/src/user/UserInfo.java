@@ -1,12 +1,14 @@
 package user;
 
 import game.AwardType;
+import game.packages.PackageManager;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import org.slf4j.Logger; 
-
-import org.slf4j.LoggerFactory; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xsocket.connection.INonBlockingConnection;
 
 
 
@@ -17,6 +19,19 @@ import org.slf4j.LoggerFactory;
 public class UserInfo {
 	private final static Logger logger = LoggerFactory.getLogger( UserInfo.class ); 
 
+	/**
+	 * 包管理器
+	 */
+	PackageManager			packageManager = new PackageManager();
+	/**
+	 * 底层的网络连接
+	 */
+	INonBlockingConnection conn;
+	
+	/**
+	 * 当前玩家的状态
+	 */
+	private UserStatus status = UserStatus.GUEST;
 
 	/**
 	 * 金币
@@ -114,10 +129,16 @@ public class UserInfo {
 		System.out.println( header );
 		System.out.println( "包头" + header.get() );
 		System.out.println( "包号:" + header.getShort() );
-		System.out.println( "包长:" + header.getShort() );
+		System.out.println( "包长1:" + header.getShort() );
 		
 		ByteBuffer footer = buffer[2];
 		System.out.println( "包尾:" + footer.get() );
+		try {
+			conn.write( buffer );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -166,7 +187,26 @@ public class UserInfo {
 		this.name = name;
 	}
 	
+
+	public UserStatus getStatus () {
+		return status;
+	}
+	public void setStatus ( UserStatus status ) {
+		this.status = status;
+	}
 	
+	
+	public INonBlockingConnection getConn () {
+		return conn;
+	}
+	
+	
+	public PackageManager getPackageManager () {
+		return packageManager;
+	}
+	public void setPackageManager ( PackageManager packageManager ) {
+		this.packageManager = packageManager;
+	}
 	public static void main ( String[] args ) {
 		
 		for( int i = 0; i < 10000; i++ ){
