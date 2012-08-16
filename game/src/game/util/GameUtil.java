@@ -10,6 +10,7 @@ public class GameUtil {
 	 * 生成带有游戏区信息的ID
 	 * 方法为：把配置表中的区id * 1000亿
 	 * 
+	 * 
 	 * @param id
 	 * @return
 	 */

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 各种奖励类型
+ * 游戏内各种奖励类型
  * 
  * @author admin
  * 
