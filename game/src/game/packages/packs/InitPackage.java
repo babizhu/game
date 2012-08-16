@@ -13,7 +13,7 @@ import game.packages.BasePackage;
 public class InitPackage extends BasePackage {
 
 	@Override
-	public void run(UserInfo user, ByteBuffer buf) {
+	public void run( UserInfo user, ByteBuffer buf ) {
 		// TODO Auto-generated method stub
 
 	}

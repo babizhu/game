@@ -29,6 +29,7 @@ public class GameServer extends Server{
 		super(address, port, handler);
 		// TODO Auto-generated constructor stub
 	}
+
  
 	@SuppressWarnings("rawtypes")
 	public static void main(String[] args) throws IOException {
@@ -40,6 +41,7 @@ public class GameServer extends Server{
 		
 		
 		Map<String, Class> maps = server.getOptions();   
+
          if( maps != null ){   
                 
              for (Entry<String, Class> entry : maps.entrySet()) {   

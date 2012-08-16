@@ -25,9 +25,8 @@ import java.util.jar.JarFile;
  */
 
 public class PackageUtil {
-
 	/**
-	 * 从包package中获取所有的Class
+	 * 从包package中获取所有的Class信息
 	 * 
 	 * @param pack		包路径,类似于game.packages.BasePacket
 	 * @return
@@ -146,20 +145,19 @@ public class PackageUtil {
 	}
 
 	/**
-	 * 打印所有的包情况
+	 * 打印所有的包情况，方便查询
 	 */
-	public static void printAllPakcets(BasePackage[] packages) {
+	public static void printAllPakcets( BasePackage[] packages ) {
 		Formatter f = new Formatter(System.out);
 		f.format("%-15s %-127s %-150s \n", "包号", "类别", "功能说明");
 		f.format("%-15s %-127s %-150s \n", "－－", "－－", "－－－－");
-		for (BasePackage ap : packages) {
-
-			if (ap != null) {
+		for ( BasePackage ap : packages ) {
+			if( ap != null ){
 				Class<?> c = ap.getClass();
 				PacketDescrip desc = c.getAnnotation(PacketDescrip.class);
-				f.format("%-8s %-50s %-150s \n", ap.getPacketNo(), c.getName(),
-						desc.desc());
-
+				String s = null;
+				s = (desc == null) ? "" : desc.desc();
+				f.format("%-8s %-50s %-150s \n", ap.getPacketNo(), c.getName(),	s );
 			}
 		}
 	}

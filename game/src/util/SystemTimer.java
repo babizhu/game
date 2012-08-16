@@ -31,7 +31,7 @@ public class SystemTimer {
 	}
 
 	static {
-		s.scheduleAtFixedRate(new TimerTicker(), TICK_UNIT, TICK_UNIT,
+		s.scheduleAtFixedRate( new TimerTicker(), TICK_UNIT, TICK_UNIT,
 				TimeUnit.MILLISECONDS);
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
