@@ -61,15 +61,15 @@ public class DataFactory {
 	 * @author 严欢	2010-9-4 下午11:34:41
 	 * @return
 	 */
-	private  Connection getConnection(){
+	private synchronized  Connection getConnection(){
 		Connection con = null;
 		
 		while(con == null){
 			try{
-				synchronized (new Integer(pointer)) {
+//				synchronized (new Integer(0)) {
 					con = conPool.get(pointer);
 					pointer = (pointer + 1) % poolSize;
-				}
+//				}
 				
 				if(!checkConAvailable(con)){
 					con = null;
