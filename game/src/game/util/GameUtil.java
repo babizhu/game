@@ -1,10 +1,10 @@
 package game.util;
 
-import define.SystemConfig;
+import define.SystemCfg;
 
 public class GameUtil {
 
-	private static final long ID_PREFIX = SystemConfig.getGameDistrict() * 100000000000l;//
+	private static final long ID_PREFIX = SystemCfg.GAME_DISTRICT * 100000000000l;//
 
 	/**
 	 * 生成带有游戏区信息的ID

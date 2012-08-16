@@ -1,7 +1,7 @@
 /**
  * 
  */
-package core;
+package net;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -11,6 +11,8 @@ import java.util.Map.Entry;
 
 import org.xsocket.connection.IHandler;
 import org.xsocket.connection.Server;
+
+import define.SystemCfg;
 
 /**
  * @author liukun
@@ -33,10 +35,11 @@ public class GameServer extends Server{
  
 	@SuppressWarnings("rawtypes")
 	public static void main(String[] args) throws IOException {
+
 		InetAddress address = InetAddress.getByName( "localhost" );
 		
-		GameServer server = new GameServer( address, 8000, new GameHandler() );
-		//server.setIdleTimeoutMillis( 10 );
+		GameServer server = new GameServer( address, SystemCfg.PORT, new GameHandler() );
+		server.setIdleTimeoutMillis( 1000 );
 		server.start();
 		
 		
@@ -48,6 +51,8 @@ public class GameServer extends Server{
                  System.out.println("key= "+entry.getKey()+" value ="+entry.getValue().getName());   
              }   
          }   
-         System.out.println( "日志: " + server.getStartUpLogMessage() );   
+         System.out.println( "日志: " + server.getStartUpLogMessage() );
+         System.out.println( "版本: " + SystemCfg.VERSION );
+         
 	}
 }

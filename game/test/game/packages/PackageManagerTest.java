@@ -40,7 +40,7 @@ public class PackageManagerTest {
 	@Test
 	public void testRun() {
 		PackageManager pm = new PackageManager(); 
-		ErrorCode code = pm.run( (short) 123, null, null );
+		ErrorCode code = pm.run( null, (short) 123, null );
 		assertEquals( ErrorCode.PACAKAGE_NOT_FOUND, code );
 		
 		ByteBuffer buf = ByteBuffer.allocate( 4 );
@@ -48,13 +48,13 @@ public class PackageManagerTest {
 		buf.flip();
 
 		UserInfo user = new UserInfo(); 
-		code = pm.run( (short) 1, user, buf );
+		code = pm.run(  user, (short) 1, buf );
 		assertEquals( code, ErrorCode.SUCCESS );
 		
 		buf.flip();
 		buf.putInt( 3 );
 		buf.flip();
-		code = pm.run( (short) 1, user, buf );
+		code = pm.run( user, (short) 1, buf );
 		assertEquals( ErrorCode.SUCCESS, code );
 		
 	}

@@ -82,17 +82,17 @@ public class PackageManager {
 	 */
 	private	long	lastReceiveTime = 0;
 	
-	PackageManager() {
+	public PackageManager() {
 	}
 	
 	/**
 	 * 客户端发送数据到服务器端，等待服务器端进行处理
-	 * @param packageNo
 	 * @param user
+	 * @param packageNo
 	 * @param buf
 	 * @return
 	 */
-	public ErrorCode run( short packageNo, UserInfo user, ByteBuffer buf ){
+	public ErrorCode run( UserInfo user, short packageNo, ByteBuffer buf ){
 		BasePackage pack = packages[packageNo];
 		if( pack == null ){
 			logger.info( "package No." + packageNo + " NOT FOUND" );
