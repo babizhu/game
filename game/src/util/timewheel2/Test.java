@@ -4,9 +4,9 @@ import java.util.concurrent.TimeUnit;
 class task1 implements ITimerTask{
 
 	int i = 0;
-	ITimer timer;
+	//ITimer timer;
 	public task1( ITimer timer ) {
-		this.timer = timer; 
+	//	this.timer = timer; 
 	}
 @Override
 	public void run ( ITimeout timeout ) throws Exception {
@@ -20,7 +20,7 @@ class task1 implements ITimerTask{
 	}
 	
 }
-public class test {
+public class Test {
 
 	public static void main(String[] args) throws InterruptedException {
 		ITimer timer = new HashedWheelTimer();

@@ -6,12 +6,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 //import util.SystemTimer;
 
 
-class task1 implements ITimerTask{
+class Task1 implements ITimerTask{
 
 	static AtomicInteger a = new AtomicInteger();
 	int i = 0;
 	ITimer timer;
-	public task1( ITimer timer ) {
+	public Task1( ITimer timer ) {
 		this.timer = timer;
 		
 		i = a.incrementAndGet();
@@ -20,12 +20,12 @@ class task1 implements ITimerTask{
 	public void run ( ITimeout timeout ) throws Exception {
 		//System.out.println( i );
 		if( i == 100000 ){
-			System.out.println("end");
+			System.out.println(timer);
 		}
 	}
 	
 }
-public class test {
+public class Test {
 
 	public static void main ( String[] args ) {
 		
@@ -46,7 +46,7 @@ public class test {
 		
 		HashedWheelTimer timer = new HashedWheelTimer();
 		timer.start();
-		task1 t = new task1( timer );
+		Task1 t = new Task1( timer );
 		
 		for( int i = 0; i < 100000; i++ ){		
 			timer.newTimeout( t, 1000 );
