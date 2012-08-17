@@ -17,7 +17,7 @@ import java.util.List;
  * @author 严欢	2010-9-4 下午09:47:30
  *
  */
-public class DataFactory {
+public final class  DataFactory {
 	
     private int errorNum=0;
 	//Logger loger = null;
