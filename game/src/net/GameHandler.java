@@ -32,20 +32,20 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 	@Override
 	public boolean onIdleTimeout( INonBlockingConnection con ) throws IOException {
 		con = ConnectionUtils.synchronizedConnection( con );
+		//con.setIdleTimeoutMillis( 5000 );//连接上来之后，如果5秒不发包，主动切断
 		System.out.println( con.getRemoteAddress() + " " + con.getRemotePort() + " onIdleTimeout" );
 		return false;
 		//return true;//不切断连接
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see org.xsocket.connection.IConnectHandler#onConnect(org.xsocket.connection.INonBlockingConnection)
 	 */
 	@Override
 	public boolean onConnect( INonBlockingConnection con ) throws IOException, BufferUnderflowException, MaxReadSizeExceededException {
 		con = ConnectionUtils.synchronizedConnection( con );
-		System.out.println( con.getRemoteAddress() + " " + con.getRemotePort() );
-		con.write("hello");
-		UserInfo user = new UserInfo();
+		System.out.println( con + " onConnect" );
+		UserInfo user = new UserInfo( con );
 		con.setAttachment( user );
 		return false;
 	}
@@ -55,31 +55,46 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 	 */
 	@Override
 	public boolean onData( INonBlockingConnection con ) throws IOException,	BufferUnderflowException, ClosedChannelException, MaxReadSizeExceededException {
-		System.out.println( con.getRemoteAddress() + " " + con.getRemotePort() + " onData" );
 		con = ConnectionUtils.synchronizedConnection( con );
-		byte	head = 0;
-		byte	foot = 0;
-		short 	packageNo = 0;
-		short 	dataLength = 0;
-		con.markReadPosition();
-		byte data[] = null;
-		try {
-	         head = con.readByte();
-	         dataLength = con.readShort();
-	         
-	         data = con.readBytesByLength( dataLength );
-	         foot = con.readByte();
-	         con.removeReadMark();
+		int available = con.available();
+        if ( available > 0) {
+        	System.out.println( available );
+        	System.out.println( con.getRemoteAddress() + " " + con.getRemotePort() + " onData" );
+    		byte	head = 0;
+    		byte	foot = 0;
+    		short 	packageNo = 0;
+    		short 	dataLength = 0;
+    		con.markReadPosition();
+			byte data[] = null;
+			try {
+				head = con.readByte();
+				packageNo = con.readShort();
+				dataLength = con.readShort();
 
-	      } catch (BufferUnderflowException bue) {
-	         con.resetToReadMark();
-	         return true;
-	      }
+				data = con.readBytesByLength(dataLength);
+				foot = con.readByte();
+				con.removeReadMark();
 
-	      if( !checkInputData( head, foot ) ){
-	    	  //TODO 调用某个退出函数
-	      }
-	      gameLogic.process( con, packageNo, data );
+			} catch (BufferUnderflowException bue) {
+				con.resetToReadMark();
+				return true;
+			}
+
+			if (!checkInputData(head, foot)) {
+				// TODO 调用某个退出函数
+			}
+			gameLogic.process(con, packageNo, data);
+		}
+//		int i = 0;
+//		for( ; i < 1024*100; i++ ){
+//			int s = con.write( (byte)3 );
+//			System.out.println( s );
+//			System.out.println( i  );
+//		}
+//		System.out.println( "end");        	
+//		//
+//		
+		
 	      return true;
 	}
 	

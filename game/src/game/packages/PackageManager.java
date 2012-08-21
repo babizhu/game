@@ -93,25 +93,29 @@ public class PackageManager {
 	 * @return
 	 */
 	public ErrorCode run( UserInfo user, short packageNo, ByteBuffer buf ){
+		
+		if( packageNo < 0 || packageNo > MAX_PACKAGE_NO ){
+			return ErrorCode.PACKAGE_NOT_FOUND;
+		}			
+			
 		BasePackage pack = packages[packageNo];
 		if( pack == null ){
-			logger.info( "package No." + packageNo + " NOT FOUND" );
-			return ErrorCode.PACAKAGE_NOT_FOUND;
+			return ErrorCode.PACKAGE_NOT_FOUND;
 		}
-		
-		if( !securityCheck( packageNo ) ){
-			return ErrorCode.PACKAGE_SECURITY_CHECK_FAIL;
+
+		if( !safeCheck( packageNo ) ){
+			return ErrorCode.PACKAGE_SAFE_CHECK_FAIL;
 		}
 		pack.run( user, buf );
 		return ErrorCode.SUCCESS;		
 	}
 	
 	/**
-	 * 检查玩家是否存在段时间内恶意刷大量包的情况
+	 * 检查玩家是否存在断时间内恶意刷大量包的情况
 	 * @param packageNo
 	 * @return
 	 */
-	private boolean securityCheck( short packageNo ){
+	private boolean safeCheck( short packageNo ){
 		long current = SystemTimer.currentTimeMillis();
 		if( packageNo == lastPackageNo && current - lastReceiveTime < MIN_INTERVAL_MILS ){
 			return false;

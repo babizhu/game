@@ -5,10 +5,13 @@ import game.packages.PackageManager;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.ClosedChannelException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
+
+import util.ErrorCode;
 
 
 
@@ -148,11 +151,18 @@ public class UserInfo {
 		ByteBuffer footer = buffer[2];
 		System.out.println( "包尾:" + footer.get() );
 		try {
-			conn.write( buffer );
+			//if( conn.isOpen() ){
+				conn.write( buffer );
+//			}
+//			else{
+//				System.out.println( "conn is closed");
+//			}
+		} catch (ClosedChannelException e ) {
+			//e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
 	/**
@@ -221,6 +231,16 @@ public class UserInfo {
 	public void setPackageManager ( PackageManager packageManager ) {
 		this.packageManager = packageManager;
 	}
+	
+	/**
+	 * 成功登陆之后，从数据库获取此玩家的所有信息
+	 * @param user
+	 * @return
+	 */
+	ErrorCode initFromDb( UserInfo user ){
+		user.setStatus( UserStatus.NORMAL );
+		return ErrorCode.SUCCESS;
+	}
 	public static void main ( String[] args ) {
 		
 		for( int i = 0; i < 10000; i++ ){
@@ -236,5 +256,14 @@ public class UserInfo {
 		user.reduceStrength( 200, "扫荡" );
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "status=" + status + ", money=" + money
+				+ ", strength=" + strength + ", nickName=" + nickName
+				+ ", name=" + name + ", level=" + level;
+	}
+	
+	
 
 }

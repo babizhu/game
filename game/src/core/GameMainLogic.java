@@ -2,46 +2,54 @@ package core;
 
 import java.nio.ByteBuffer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
+
 import user.UserInfo;
 import user.UserStatus;
+import util.ErrorCode;
 
 /**
  * 游戏的主干框架
+ * 单例
  * @author liukun
  * 
- * 单例
- * 2012-8-16 下午04:13:27
+ *  2012-8-16 下午04:13:27
  */
 public class GameMainLogic {
 
+	private final static Logger 			logger = LoggerFactory.getLogger( GameMainLogic.class ); 
 	private static final GameMainLogic instance = new GameMainLogic();
-	public static final GameMainLogic getInstance(){ 
+
+	public static final GameMainLogic getInstance() {
 		return instance;
 	}
-	
-	private GameMainLogic(){		
+
+	private GameMainLogic() {
 	}
-	
-	
+
 	/**
-	 * 处理玩家传送过来的包信息
+	 * 处理玩家传送的包信息
+	 * 
 	 * @param user
 	 * @param packageNo
 	 * @param data
 	 */
-	public void process( INonBlockingConnection con, short packageNo, byte[] data ){
-		
+	public void process(INonBlockingConnection con, short packageNo, byte[] data) {
+
 		UserInfo user = (UserInfo) con.getAttachment();
-		if( user.getStatus() == UserStatus.GUEST && (packageNo != 100001 || packageNo != 100001) )
-		{
-			//TODO 玩家非法，移除此连接
+		if (user.getStatus() == UserStatus.GUEST
+				&& (packageNo != 100001 || packageNo != 100001)) {
+			// TODO 玩家非法，移除此连接
 		}
-		
-		ByteBuffer buf = ByteBuffer.wrap( data ); 
-		user.getPackageManager().run( user, packageNo, buf );
-		
+
+		ByteBuffer buf = ByteBuffer.wrap(data);
+		ErrorCode eCode = user.getPackageManager().run(user, packageNo, buf); 
+		if( eCode != ErrorCode.SUCCESS ){
+			logger.debug( user.getName() + ", 包号:" + packageNo + ", 错误码:" + eCode );
+		}
+
 	}
-	
 
 }

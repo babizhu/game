@@ -12,5 +12,14 @@ import java.lang.annotation.RetentionPolicy;
 //@Target (value = { ElementType.PACKAGE })
 @Retention(value = RetentionPolicy.RUNTIME)
 public @interface PacketDescrip {
+	/**
+	 * 包描述
+	 * @return
+	 */
 	public String desc() default "";
+	/**
+	 * 包结构
+	 * @return
+	 */
+	public String structure() default ""; 
 }

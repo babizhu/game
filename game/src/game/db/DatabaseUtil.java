@@ -20,22 +20,18 @@ public class DatabaseUtil {
 	private static final String	FILE	= "config/db.xml";
 
 	
-	private DatabaseUtil() {
-	}
 
-	private static DatabaseUtil	instance	= new DatabaseUtil();
-	private DruidDataSource dataSource		= new DruidDataSource();
+	private static DruidDataSource dataSource		= new DruidDataSource();
 	
-	public static DatabaseUtil getInstance () {
-		return instance;
+	static{
+		init();
 	}
-	
 	/**
 	 *	从连接池中获取一个有效连接 
 	 * @return
 	 * 		返回一个可用数据库连接
 	 */
-	public Connection getConnection(){
+	public static Connection getConnection(){
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
@@ -50,7 +46,7 @@ public class DatabaseUtil {
 	/**
 	 * 从配置表中读取相应的连接参数，初始化数据库连接池
 	 */
-	public void init () {
+	public static void init () {
 		String 	user = null;
 		String	password = null;
 		String	url = null;

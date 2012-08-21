@@ -1,13 +1,17 @@
 package game.packages.packs;
 
+import game.packages.BasePackage;
+import game.packages.PacketDescrip;
+
 import java.nio.ByteBuffer;
 
 import user.UserInfo;
+import user.UserManager;
+import util.ErrorCode;
 
-import game.packages.*;
 
+@PacketDescrip(desc = "玩家登陆包", structure = "short用户名长度,byte用户名")
 
-@PacketDescrip(desc = "玩家登陆包")
 public class LoginPackage extends BasePackage {
 
 	
@@ -26,12 +30,16 @@ public class LoginPackage extends BasePackage {
 			System.out.println( "another reson" );
 		}
 		//运行游戏相应逻辑，产生需要传给客户端的ByteBuffer buf
+		//String name = decod
+		//user.setName( name );
+		ErrorCode eCode = UserManager.getInstance().login(user);
+		if( eCode != ErrorCode.SUCCESS ){
+			//TODO 发送错误消息
+		}
 		sendPacket( user, buf );
 	}
 	@Override
 	public short getPacketNo () {
 		return packetNo;
 	}
-
-
 }

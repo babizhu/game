@@ -41,7 +41,7 @@ public class PackageManagerTest {
 	public void testRun() {
 		PackageManager pm = new PackageManager(); 
 		ErrorCode code = pm.run( null, (short) 123, null );
-		assertEquals( ErrorCode.PACAKAGE_NOT_FOUND, code );
+		assertEquals( ErrorCode.PACKAGE_NOT_FOUND, code );
 		
 		ByteBuffer buf = ByteBuffer.allocate( 4 );
 		buf.putInt( 1 );
