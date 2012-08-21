@@ -4,6 +4,11 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
+/**
+ * 通过url下载配置文件
+ * @author admin
+ * 2012-8-21 上午09:06:13
+ */
 public class SendPackage {
 	static void sendPackage(){
 		try {

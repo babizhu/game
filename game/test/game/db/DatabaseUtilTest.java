@@ -17,7 +17,6 @@ public class DatabaseUtilTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass () throws Exception {
-		DatabaseUtil.getInstance().init();
 	}
 
 	@AfterClass
