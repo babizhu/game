@@ -2,6 +2,9 @@ package util;
 
 import java.nio.ByteBuffer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 系统中最基础的一些工具，不仅仅针对游戏
  * 
@@ -9,8 +12,8 @@ import java.nio.ByteBuffer;
  * 
  */
 public class BaseUtil {
-
-	public static final float TO_SECOND = 1000000000f;
+	private final static Logger		logger = LoggerFactory.getLogger( BaseUtil.class ); 
+	public static final float 		TO_SECOND = 1000000000f;
 
 	/**
 	 * 编码字符串，先放入一个short的字符串长度，再放入字符串的内容<br>
@@ -39,6 +42,10 @@ public class BaseUtil {
 	public static String decodeString(ByteBuffer buf) {
 
 		short len = buf.getShort();
+		if( buf.limit() - buf.position() < len ){
+			logger.debug( "decodeString error: content not enouth" );
+			return "";
+		}
 		byte[] content = new byte[len];
 		buf.get(content);
 		return new String(content);

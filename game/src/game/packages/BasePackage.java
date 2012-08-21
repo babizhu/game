@@ -11,22 +11,10 @@ public abstract class BasePackage implements IPackage {
 	public static final byte HEAD		= 127;
 	public static final byte FOOT		= 126;
 
-	private ByteBuffer header = ByteBuffer.allocate( 5 );
-	
-	/**
-	 * 所有包的包尾都是一个固定值，因此用一个static处理即可
-	 */
-	private static final ByteBuffer footer = ByteBuffer.allocate( 1 );
 
-	private static final int	HEADER_LIMIT	= 5;
-	
-	static{
-		footer.put( (byte) FOOT );
-	}
-	
 	public BasePackage() {
-		header.put( HEAD );//包头
-		header.putShort( getPacketNo() );//包号
+//		header.put( HEAD );//包头
+//		header.putShort( getPacketNo() );//包号
 		//包长为一个short，具体值由相应函数写入
 	}
 	
@@ -40,16 +28,19 @@ public abstract class BasePackage implements IPackage {
 	 * 向客户端发送包
 	 * @param user
 	 * @param buff
+	 * 		包括包号(short)，包长(short)，包内容(byte[])
 	 */
 	public void sendPacket( UserInfo user, ByteBuffer buff ){
+		buff.flip();
+		ByteBuffer data = ByteBuffer.allocate( buff.limit() + 2 );
+		data.put(HEAD);
+		data.put( buff );
+		data.put( FOOT );
 		
-		header.putShort( 3, (short) buff.limit() );
-		header.position( HEADER_LIMIT );
-		header.flip();
-		footer.flip();
+		data.flip();
 		
-		ByteBuffer[] b = new ByteBuffer[]{header, buff, footer};
-		user.sendPacket( b );
+//		ByteBuffer[] b = new ByteBuffer[]{header, buff, footer};
+		user.sendPacket( data );
 	}
 	
 	@Override

@@ -22,7 +22,6 @@ public class DirectTaskTemplet extends BaseTaskTemplet {
 
 	@Override
 	public void parseParam(String param) {
-		// TODO Auto-generated method stub
 		
 	}
 

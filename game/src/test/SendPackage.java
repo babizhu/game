@@ -1,51 +1,78 @@
 package test;
 
+import game.packages.BasePackage;
+
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
+import util.BaseUtil;
+
 /**
- * 通过url下载配置文件
+ * 
  * @author admin
  * 2012-8-21 上午09:06:13
  */
 public class SendPackage {
-	static void sendPackage(){
+	
+	ByteBuffer login(){
+		String name = "bbzs";
+		ByteBuffer data = ByteBuffer.allocate( 10 );
+		BaseUtil.encodeString(data, name );
+		data.putInt(2);
+		data.flip();
+		return data;
+	}
+	
+	ByteBuffer createContent( short packageNo ){
+		ByteBuffer pack = null;
+		ByteBuffer data = null;
+		switch( packageNo ){
+		case 1:
+			data = login();
+			break;
+		default:
+			break;
+		}
+		pack = ByteBuffer.allocate( 6 + data.limit() );
+		
+		pack.put( BasePackage.HEAD );
+		pack.putShort( packageNo );
+		pack.putShort( (short) data.limit() );
+		pack.put( data );
+		pack.put( BasePackage.FOOT );
+		pack.flip();
+		
+		return pack;
+	}
+	void sendPackage( short packageNo ){
 		try {
+			
 			Socket socket = new Socket();
 			InetSocketAddress addr = new InetSocketAddress( "127.0.0.1", 8000 );
 			socket.connect( addr );
-			ByteBuffer buf = ByteBuffer.allocate( 6+8 );
-			buf.put( (byte) 127 );
-
-			short packageNo = 20000;
-			ByteBuffer data = ByteBuffer.allocate( 8 );
-			data.putInt(1);
-			data.putInt(2);
-			data.flip();
-			
-			
-			buf.putShort( packageNo );
-			buf.putShort( (short) data.limit() );
-			buf.put( data );
-			buf.put( (byte) 126 );
-			buf.flip();
-//			buf.get( dst )
-			
-			
-//			By
+				
+			ByteBuffer buf = createContent(packageNo);
 //			
 			socket.getOutputStream().write( buf.array() );
 
 //			socket.getOutputStream().flush();
-			Thread.sleep( 10000 );
+			Thread.sleep( 100 );
+			System.out.println( buf.limit() );
+//			socket.getOutputStream().write( buf.array() );
+//			byte[] b = new byte[100];
+//			System.out.println( socket.getInputStream().read(b) + "字节" );
+//			System.out.println( (char)b[7] +"" + (char)b[7]+"" + (char)b[7]);
+//			
 			socket.close();
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
 }
 
-public static void main ( String[] args ) {
-	sendPackage();
-}
+	public static void main ( String[] args ) {
+		for( int i = 0; i < 10; i++ ){
+			new SendPackage().sendPackage( (short) 1 );
+		}
+	}
 }

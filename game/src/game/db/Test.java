@@ -107,7 +107,6 @@ public class Test {
 					db.closePst(pst);
 
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					// e.printStackTrace();
 				}
 

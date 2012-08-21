@@ -106,8 +106,17 @@ public class PackageManager {
 		if( !safeCheck( packageNo ) ){
 			return ErrorCode.PACKAGE_SAFE_CHECK_FAIL;
 		}
-		pack.run( user, buf );
-		return ErrorCode.SUCCESS;		
+		try{
+			pack.run( user, buf );
+		}
+		catch( Exception e ){
+//			e.printStackTrace();
+			//System.out.println( e);
+			logger.debug( user.getName() + "," + packageNo + "," + buf, e );
+//			logger.debug( e.getCause().toString() );
+//			logger.debug( e.getLocalizedMessage() );
+		}
+		return ErrorCode.SUCCESS;	
 	}
 	
 	/**

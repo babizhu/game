@@ -4,6 +4,11 @@ public enum ErrorCode {
 
 	SUCCESS,
 	LEVEL_NOT_ENOUGH,
+	
+	/**
+	 * 玩家尚未注册
+	 */
+	USER_NOT_FOUND,
 	/**
 	 * 任务没找到
 	 */
@@ -18,5 +23,5 @@ public enum ErrorCode {
 	 */
 	PACKAGE_SAFE_CHECK_FAIL,
 	
-	UNKNOW_ERROR, ;
+	UNKNOW_ERROR,  ;
 }

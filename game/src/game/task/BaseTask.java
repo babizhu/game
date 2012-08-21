@@ -96,13 +96,11 @@ public abstract class BaseTask implements ITask{
 
 	@Override
 	public boolean doTask ( UserInfo user, Object obj ) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void parseParamFromDb ( String str ) {
-		// TODO Auto-generated method stub
 		
 	}
 

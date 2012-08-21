@@ -2,7 +2,7 @@
 
 
 <game>
-	<url>jdbc:mysql://192.168.1.246:3306/game</url>
+	<url>jdbc:mysql://localhost:3306/game</url>
 	<user>root</user>
-	<password>shangjie</password>	
+	<password>game</password>	
 </game>

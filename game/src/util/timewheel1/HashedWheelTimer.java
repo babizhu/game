@@ -58,7 +58,6 @@ public class HashedWheelTimer {
 		try {
 			Thread.sleep(tickDuration);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		tick++;

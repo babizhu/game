@@ -4,6 +4,7 @@ import game.AwardType;
 import game.packages.PackageManager;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 
@@ -112,7 +113,7 @@ public class UserInfo {
 	public int addMoney( int moneyAdd, String funcName ){
 		money += moneyAdd;
 		
-		//TODO 处理防沉迷系统
+		//TODO 处理防沉迷系统，其他的vip加成等信息
 		
 //		Thread thr = Thread.currentThread();
 //      StackTraceElement[] ele = thr.getStackTrace();
@@ -139,29 +140,33 @@ public class UserInfo {
 	}
 	
 	
-	public void sendPacket( ByteBuffer[] buffer ){
+	public void sendPacket( ByteBuffer data ){
 		
-		ByteBuffer header = buffer[0];
+//		ByteBuffer header = buffer[0];
 		
-		System.out.println( header );
-		System.out.println( "包头" + header.get() );
-		System.out.println( "包号:" + header.getShort() );
-		System.out.println( "包长1:" + header.getShort() );
+//		System.out.println( header );
+//		System.out.println( "包头" + header.get() );
+//		System.out.println( "包号:" + header.getShort() );
+//		System.out.println( "包长1:" + header.getShort() );
 		
-		ByteBuffer footer = buffer[2];
-		System.out.println( "包尾:" + footer.get() );
+//		ByteBuffer footer = buffer[2];
+//		System.out.println( "包尾:" + footer.get() );
 		try {
-			//if( conn.isOpen() ){
-				conn.write( buffer );
-//			}
-//			else{
-//				System.out.println( "conn is closed");
-//			}
+			if( conn.isOpen() ){
+				conn.write( data );
+			}
+			else{
+				System.err.println( this.getName() + " conn is closed");
+			}
 		} catch (ClosedChannelException e ) {
-			//e.printStackTrace();
+			e.printStackTrace();
+		} catch (SocketTimeoutException e){
+			logger.debug( e.toString() );
+		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		
 	}
 	
@@ -238,7 +243,7 @@ public class UserInfo {
 	 * @return
 	 */
 	ErrorCode initFromDb( UserInfo user ){
-		user.setStatus( UserStatus.NORMAL );
+		user.setStatus( UserStatus.LOGIN );
 		return ErrorCode.SUCCESS;
 	}
 	public static void main ( String[] args ) {

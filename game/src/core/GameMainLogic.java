@@ -17,7 +17,7 @@ import util.ErrorCode;
  * 
  *  2012-8-16 下午04:13:27
  */
-public class GameMainLogic {
+public class GameMainLogic implements IGameLogic{
 
 	private final static Logger 			logger = LoggerFactory.getLogger( GameMainLogic.class ); 
 	private static final GameMainLogic instance = new GameMainLogic();
@@ -36,7 +36,8 @@ public class GameMainLogic {
 	 * @param packageNo
 	 * @param data
 	 */
-	public void process(INonBlockingConnection con, short packageNo, byte[] data) {
+	@Override
+	public void packageProcess(INonBlockingConnection con, short packageNo, byte[] data) {
 
 		UserInfo user = (UserInfo) con.getAttachment();
 		if (user.getStatus() == UserStatus.GUEST
@@ -49,7 +50,5 @@ public class GameMainLogic {
 		if( eCode != ErrorCode.SUCCESS ){
 			logger.debug( user.getName() + ", 包号:" + packageNo + ", 错误码:" + eCode );
 		}
-
 	}
-
 }

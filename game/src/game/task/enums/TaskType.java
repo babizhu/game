@@ -30,7 +30,6 @@ public enum TaskType {
 	COUNT {
 		@Override
 		public BaseTaskTemplet createNewTemplet() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 	},

@@ -7,6 +7,7 @@ import java.nio.ByteBuffer;
 
 import user.UserInfo;
 import user.UserManager;
+import util.BaseUtil;
 import util.ErrorCode;
 
 
@@ -18,6 +19,7 @@ public class LoginPackage extends BasePackage {
 	private static short packetNo = 1;
 	@Override
 	public void run ( UserInfo user, ByteBuffer buf ) {
+		/**
 		int i = buf.getInt();
 		switch( i ){
 		case 1:
@@ -29,14 +31,21 @@ public class LoginPackage extends BasePackage {
 		default:
 			System.out.println( "another reson" );
 		}
-		//运行游戏相应逻辑，产生需要传给客户端的ByteBuffer buf
-		//String name = decod
-		//user.setName( name );
+		*/
+		
+		String name = util.BaseUtil.decodeString( buf );
+		user.setName( name );
+		
+		//TODO 进行安全监测。包括验证运营商发送过来的key值等信息
+		
 		ErrorCode eCode = UserManager.getInstance().login(user);
 		if( eCode != ErrorCode.SUCCESS ){
 			//TODO 发送错误消息
 		}
-		sendPacket( user, buf );
+		ByteBuffer bf = ByteBuffer.allocate(50);
+		bf.putShort( packetNo );
+		BaseUtil.encodeString(bf, user.getName() );
+		sendPacket( user, bf );
 	}
 	@Override
 	public short getPacketNo () {

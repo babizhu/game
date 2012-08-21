@@ -19,22 +19,58 @@ public class UserManager {
 	}
 	private UserManager() {	}
 	
+	private final UserInfoDataProvider db = UserInfoDataProvider.getInstance();
+	
 	private Map<String,UserInfo> onlineUser = new ConcurrentHashMap<String, UserInfo>();
 	
 
+	/**
+	 * 玩家尝试登陆
+	 * @param user
+	 * @return
+	 */
 	public ErrorCode login( UserInfo user ){
-		//TODO 从数据库获取数据
-//		if( )
-		onlineUser.put( user.getName(), user );
-		return null;
+		db.login( user );
+		if( user.getStatus() == UserStatus.NEW ){
+		}
+		else if( user.getStatus() == UserStatus.LOGIN ){
+			doLogin( user );
+		}
+		return ErrorCode.USER_NOT_FOUND;
 		
 	}
 	
+	/**
+	 * 玩家退出游戏
+	 * @param user
+	 * @return
+	 */
 	public ErrorCode logout( UserInfo user ){
 		//TODO 从数据库获取数据
 //		if( )
 		onlineUser.remove( user.getName() );
 		return null;
+	}
+	
+	/**
+	 * 把玩家添加到程序逻辑中
+	 * @param user
+	 */
+	private ErrorCode doLogin( UserInfo user ){
+		onlineUser.put( user.getName(), user );
+		return null;
+		
+	}
+	/**
+	 * 创建一个新用户，用户名以及其他基本属性由user指定
+	 * @param user
+	 * @return
+	 */
+	public ErrorCode create( UserInfo user ){
+		doLogin( user );
+		return null;
+		
+		
 	}
 	
 	@Override

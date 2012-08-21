@@ -13,6 +13,9 @@ import java.net.URL;
 /**
  * @author liukun
  * 2012-8-20
+ * 
+ * 通过url下载配置文件
+ * 
  */
 public class HttpDownLoad {
 	

@@ -20,7 +20,6 @@ public class CustomTask extends BaseTask implements ITask {
 
 	@Override
 	public BaseTaskTemplet getTemplet() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -14,13 +14,11 @@ public class InitPackage extends BasePackage {
 
 	@Override
 	public void run( UserInfo user, ByteBuffer buf ) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public short getPacketNo() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

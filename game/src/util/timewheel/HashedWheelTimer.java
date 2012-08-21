@@ -372,7 +372,6 @@ public class HashedWheelTimer implements ITimer {
 
 	@Override
 	public Set<ITimeout> stop () {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
