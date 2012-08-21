@@ -58,40 +58,42 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 	 */
 	@Override
 	public boolean onData( INonBlockingConnection con ) throws IOException,	BufferUnderflowException, ClosedChannelException, MaxReadSizeExceededException {
-		int available = con.available();
-		ByteBuffer buffer = ByteBuffer.allocate(available);
-		con.read(buffer);
-		System.out.println( available );
-//		con = ConnectionUtils.synchronizedConnection( con );
+		con = ConnectionUtils.synchronizedConnection( con );
 //		int available = con.available();
-//        if ( available > 0) {
-//
-//        	System.out.println( con.getRemoteAddress() + " " + con.getRemotePort() + " onData" + ",available:" + available + "byte" );
-//    		byte	head = 0;
-//    		byte	foot = 0;
-//    		short 	packageNo = 0;
-//    		short 	dataLength = 0;
-//    		con.markReadPosition();
-//			byte data[] = null;
-//			try {
-//				head = con.readByte();
-//				packageNo = con.readShort();
-//				dataLength = con.readShort();
-//
-//				data = con.readBytesByLength(dataLength);
-//				foot = con.readByte();
-//				con.removeReadMark();
-//
-//			} catch (BufferUnderflowException bue) {
-//				con.resetToReadMark();
-//				return true;
-//			}
-//
-//			if (!checkInputData(head, foot)) {
-//				// TODO 调用某个退出函数
-//			}
-//			gameLogic.packageProcess(con, packageNo, data);
-//		}
+//		
+//		ByteBuffer buffer = ByteBuffer.allocate(available);
+//		con.read(buffer);
+//		System.out.println( available );
+//		
+		int available = con.available();
+        if ( available > 0) {
+
+        	System.out.println( con.getRemoteAddress() + " " + con.getRemotePort() + " onData" + ",available:" + available + "byte" );
+    		byte	head = 0;
+    		byte	foot = 0;
+    		short 	packageNo = 0;
+    		short 	dataLength = 0;
+    		con.markReadPosition();
+			byte data[] = null;
+			try {
+				head = con.readByte();
+				packageNo = con.readShort();
+				dataLength = con.readShort();
+
+				data = con.readBytesByLength(dataLength);
+				foot = con.readByte();
+				con.removeReadMark();
+
+			} catch (BufferUnderflowException bue) {
+				con.resetToReadMark();
+				return true;
+			}
+
+			if (!checkInputData(head, foot)) {
+				// TODO 调用某个退出函数
+			}
+			//gameLogic.packageProcess(con, packageNo, data);
+		}
 //		int i = 0;
 //		for( ; i < 1024*100; i++ ){
 //			int s = con.write( (byte)3 );
