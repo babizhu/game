@@ -37,7 +37,7 @@ public class DatabaseUtilTest {
 	 */
 	@Test
 	public void testGetConnection () {
-		Connection conn = DatabaseUtil.getInstance().getConnection();
+		Connection conn = DatabaseUtil.getConnection();
 		assertNotNull( conn );
 	}
 	
@@ -51,7 +51,7 @@ public class DatabaseUtilTest {
 		
 		long begin = System.nanoTime();
 		for( int i = 0; i < count; i++ ){
-			Connection conn = DatabaseUtil.getInstance().getConnection();
+			Connection conn = DatabaseUtil.getConnection();
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery( "SELECT rank,uname from city_elite order by rank" );
 			

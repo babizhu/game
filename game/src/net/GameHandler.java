@@ -44,7 +44,9 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 	@Override
 	public boolean onConnect( INonBlockingConnection con ) throws IOException, BufferUnderflowException, MaxReadSizeExceededException {
 		con = ConnectionUtils.synchronizedConnection( con );
+
 		System.out.println( con + " onConnect" );
+
 		UserInfo user = new UserInfo( con );
 		con.setAttachment( user );
 		return false;
@@ -59,6 +61,7 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 		int available = con.available();
         if ( available > 0) {
         	System.out.println( available );
+
         	System.out.println( con.getRemoteAddress() + " " + con.getRemotePort() + " onData" );
     		byte	head = 0;
     		byte	foot = 0;
@@ -95,6 +98,7 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 //		//
 //		
 		
+
 	      return true;
 	}
 	

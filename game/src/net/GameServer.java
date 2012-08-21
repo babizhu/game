@@ -42,7 +42,7 @@ public class GameServer extends Server{
 		
         //System.out.println( "日志: " + server.getStartUpLogMessage() );
 //		Map<String, Class> maps = server.getOptions();   
-//
+
 //         if( maps != null ){   
 //                
 //             for (Entry<String, Class> entry : maps.entrySet()) {   

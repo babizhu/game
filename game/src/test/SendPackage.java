@@ -12,6 +12,7 @@ public class SendPackage {
 			socket.connect( addr );
 			ByteBuffer buf = ByteBuffer.allocate( 6+8 );
 			buf.put( (byte) 127 );
+
 			short packageNo = 20000;
 			ByteBuffer data = ByteBuffer.allocate( 8 );
 			data.putInt(1);
@@ -30,6 +31,7 @@ public class SendPackage {
 //			By
 //			
 			socket.getOutputStream().write( buf.array() );
+
 //			socket.getOutputStream().flush();
 			Thread.sleep( 10000 );
 			socket.close();
