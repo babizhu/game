@@ -42,10 +42,11 @@ public class LoginPackage extends BasePackage {
 		if( eCode != ErrorCode.SUCCESS ){
 			//TODO 发送错误消息
 		}
-		ByteBuffer bf = ByteBuffer.allocate(50);
-		bf.putShort( packetNo );
-		BaseUtil.encodeString(bf, user.getName() );
-		sendPacket( user, bf );
+//		ByteBuffer bf = ByteBuffer.allocate( 1024 );
+		//bf.putShort( packetNo );
+		ByteBuffer data = buildEmptyPackage( 1024 );
+		BaseUtil.encodeString( data, user.getName() );
+		sendPacket( user, data );
 	}
 	@Override
 	public short getPacketNo () {

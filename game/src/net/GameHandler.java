@@ -5,7 +5,6 @@ import game.packages.BasePackage;
 
 import java.io.IOException;
 import java.nio.BufferUnderflowException;
-import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 
 import org.xsocket.MaxReadSizeExceededException;
@@ -16,9 +15,8 @@ import org.xsocket.connection.IDisconnectHandler;
 import org.xsocket.connection.IIdleTimeoutHandler;
 import org.xsocket.connection.INonBlockingConnection;
 
-import core.GameMainLogic;
-
 import user.UserInfo;
+import core.GameMainLogic;
 
 /**
  * @author liukun
@@ -92,7 +90,7 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 			if (!checkInputData(head, foot)) {
 				// TODO 调用某个退出函数
 			}
-			//gameLogic.packageProcess(con, packageNo, data);
+			gameLogic.packageProcess( con, packageNo, data );
 		}
 //		int i = 0;
 //		for( ; i < 1024*100; i++ ){

@@ -30,19 +30,38 @@ public abstract class BasePackage implements IPackage {
 	 * @param buff
 	 * 		包括包号(short)，包长(short)，包内容(byte[])
 	 */
-	public void sendPacket( UserInfo user, ByteBuffer buff ){
-		buff.flip();
-		ByteBuffer data = ByteBuffer.allocate( buff.limit() + 2 );
-		data.put(HEAD);
-		data.put( buff );
-		data.put( FOOT );
-		
-		data.flip();
+	public void sendPacket( UserInfo user, ByteBuffer buffer ){
+		buffer.putShort( 3, (short) (buffer.position() - 5) );//设置内容长度
+		buffer.put( FOOT );
+				
+		buffer.flip();
 		
 //		ByteBuffer[] b = new ByteBuffer[]{header, buff, footer};
-		user.sendPacket( data );
+		user.sendPacket( buffer );
+		
+		System.out.println( toString(buffer) );
 	}
 	
+	protected ByteBuffer buildEmptyPackage( int capacity ){
+		ByteBuffer buff = ByteBuffer.allocate(capacity);
+		buff.put( HEAD );
+		buff.putShort( getPacketNo() );
+		buff.putShort( (short) 0 );//长度占位符
+		return buff;
+	}
+
+	public String toString( ByteBuffer buffer ) {
+		System.out.println( buffer );
+		buffer.flip();
+		String str = "HEAD:" + buffer.get() + "\n";;
+		str += "包号:" + buffer.getShort() + "\n";
+		int len =  buffer.getShort();
+		str += "包长:" + len + "\n";
+		byte[] data = new byte[len];
+		buffer.get( data );
+		str += "FOOT:" + buffer.get();
+		return str;
+	}
 	@Override
 	public abstract short getPacketNo ();
 	

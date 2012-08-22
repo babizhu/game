@@ -111,7 +111,6 @@ public class PackageManager {
 		}
 		catch( Exception e ){
 //			e.printStackTrace();
-			//System.out.println( e);
 			logger.debug( user.getName() + "," + packageNo + "," + buf, e );
 //			logger.debug( e.getCause().toString() );
 //			logger.debug( e.getLocalizedMessage() );

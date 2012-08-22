@@ -140,7 +140,7 @@ public class UserInfo {
 	}
 	
 	
-	public void sendPacket( ByteBuffer data ){
+	public void sendPacket( ByteBuffer buffer ){
 		
 //		ByteBuffer header = buffer[0];
 		
@@ -153,7 +153,7 @@ public class UserInfo {
 //		System.out.println( "包尾:" + footer.get() );
 		try {
 			if( conn.isOpen() ){
-				conn.write( data );
+				conn.write( buffer );
 			}
 			else{
 				System.err.println( this.getName() + " conn is closed");
