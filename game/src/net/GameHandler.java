@@ -92,7 +92,7 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 			if (!checkInputData(head, foot)) {
 				// TODO 调用某个退出函数
 			}
-			//gameLogic.packageProcess(con, packageNo, data);
+			gameLogic.packageProcess( con, packageNo, data );
 		}
 //		int i = 0;
 //		for( ; i < 1024*100; i++ ){

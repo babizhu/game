@@ -45,7 +45,7 @@ public class LoginPackage extends BasePackage {
 		ByteBuffer bf = ByteBuffer.allocate(50);
 		bf.putShort( packetNo );
 		BaseUtil.encodeString(bf, user.getName() );
-		sendPacket( user, bf );
+		//sendPacket( user, bf );
 	}
 	@Override
 	public short getPacketNo () {
