@@ -8,44 +8,31 @@ import java.nio.ByteBuffer;
 import user.UserInfo;
 import user.UserManager;
 import util.BaseUtil;
-import util.ErrorCode;
 
 
-@PacketDescrip(desc = "玩家登陆包", structure = "short用户名长度,byte用户名")
+@PacketDescrip(desc = "玩家登陆包", structure = "short用户名长度,byte[]用户名")
 
 public class LoginPackage extends BasePackage {
 
 	
 	private static short packetNo = 1;
 	@Override
-	public void run ( UserInfo user, ByteBuffer buf ) {
-		/**
-		int i = buf.getInt();
-		switch( i ){
-		case 1:
-			System.out.println( "login" );
-			break;
-		case 2:
-			System.out.println( "exit" );
-			break;
-		default:
-			System.out.println( "another reson" );
-		}
-		*/
-		
+	public void run( UserInfo user, ByteBuffer buf ) {
+				
 		String name = util.BaseUtil.decodeString( buf );
 		user.setName( name );
 		
 		//TODO 进行安全监测。包括验证运营商发送过来的key值等信息
 		
-		ErrorCode eCode = UserManager.getInstance().login(user);
-		if( eCode != ErrorCode.SUCCESS ){
-			//TODO 发送错误消息
-		}
-		ByteBuffer bf = ByteBuffer.allocate(50);
-		bf.putShort( packetNo );
-		BaseUtil.encodeString(bf, user.getName() );
-		//sendPacket( user, bf );
+		UserManager.getInstance().login( user );
+		ByteBuffer buffer = buildEmptyPackage( 1024 );
+		BaseUtil.encodeString( buffer, user.getName() );
+		buffer.put( user.getStatus().toNum() );			//玩家的状态
+		
+
+		
+		sendPacket( user, buffer );
+
 	}
 	@Override
 	public short getPacketNo () {

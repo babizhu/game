@@ -12,7 +12,7 @@
 
 # Host: localhost    Database: game
 # ------------------------------------------------------
-# Server version 5.0.22-community-nt
+# Server version 5.5.22
 
 #
 # Source for table user_base
@@ -20,11 +20,11 @@
 
 DROP TABLE IF EXISTS `user_base`;
 CREATE TABLE `user_base` (
-  `name` char(35) NOT NULL default '',
-  `nick_name` varchar(35) NOT NULL default '' COMMENT '昵称',
-  `money` int(11) NOT NULL default '0' COMMENT '金币',
-  `status` tinyint(3) NOT NULL default '1' COMMENT '1:正常登陆 2:被ban用户',
-  PRIMARY KEY  (`name`)
+  `name` varchar(35) NOT NULL DEFAULT '',
+  `nick_name` varchar(35) NOT NULL DEFAULT '',
+  `money` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '1:正常登陆 2:被ban用户',
+  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #

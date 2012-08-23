@@ -34,7 +34,7 @@ public class SendPackage {
 		default:
 			break;
 		}
-		pack = ByteBuffer.allocate( 6 + data.limit() );
+		pack = ByteBuffer.allocate( 6 + data.limit() );//6 for 1(HEAD) + 2(PACKAGE NO) + 2(PACKAGE LEN) + 1(FOOT) = 6
 		
 		pack.put( BasePackage.HEAD );
 		pack.putShort( packageNo );
@@ -57,7 +57,7 @@ public class SendPackage {
 			socket.getOutputStream().write( buf.array() );
 
 //			socket.getOutputStream().flush();
-			Thread.sleep( 100 );
+			Thread.sleep( 10 );
 			System.out.println( buf.limit() );
 //			socket.getOutputStream().write( buf.array() );
 //			byte[] b = new byte[100];
@@ -71,7 +71,7 @@ public class SendPackage {
 }
 
 	public static void main ( String[] args ) {
-		for( int i = 0; i < 10000; i++ ){
+		for( int i = 0; i < 1000; i++ ){
 			new SendPackage().sendPackage( (short) 1 );
 		}
 	}

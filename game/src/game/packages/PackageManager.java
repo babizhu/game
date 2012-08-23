@@ -87,9 +87,9 @@ public class PackageManager {
 	
 	/**
 	 * 客户端发送数据到服务器端，等待服务器端进行处理
-	 * @param user
-	 * @param packageNo
-	 * @param buf
+	 * @param user			玩家
+	 * @param packageNo		包号
+	 * @param buf			消息正文
 	 * @return
 	 */
 	public ErrorCode run( UserInfo user, short packageNo, ByteBuffer buf ){
@@ -110,11 +110,7 @@ public class PackageManager {
 			pack.run( user, buf );
 		}
 		catch( Exception e ){
-//			e.printStackTrace();
-			//System.out.println( e);
 			logger.debug( user.getName() + "," + packageNo + "," + buf, e );
-//			logger.debug( e.getCause().toString() );
-//			logger.debug( e.getLocalizedMessage() );
 		}
 		return ErrorCode.SUCCESS;	
 	}
