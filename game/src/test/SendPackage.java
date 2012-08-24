@@ -57,7 +57,7 @@ public class SendPackage {
 			socket.getOutputStream().write( buf.array() );
 
 //			socket.getOutputStream().flush();
-			Thread.sleep( 10 );
+			Thread.sleep( 100000 );
 			System.out.println( buf.limit() );
 //			socket.getOutputStream().write( buf.array() );
 //			byte[] b = new byte[100];
@@ -71,7 +71,7 @@ public class SendPackage {
 }
 
 	public static void main ( String[] args ) {
-		for( int i = 0; i < 1000; i++ ){
+		for( int i = 0; i < 1; i++ ){
 			new SendPackage().sendPackage( (short) 1 );
 		}
 	}

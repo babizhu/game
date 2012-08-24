@@ -52,7 +52,7 @@ public class PackageManager {
 		packages = new BasePackage[MAX_PACKAGE_NO];// 不存在0号包
 		
 		for( Class<?> c : list ) {
-			if( !c.isInterface() ) {
+			if( !c.isInterface() && !c.getName().contains( "Test" ) ) {
 				BasePackage p;
 				try {
 					p = (BasePackage) c.newInstance();

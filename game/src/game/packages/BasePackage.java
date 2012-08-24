@@ -1,9 +1,7 @@
 package game.packages;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
-import java.nio.channels.ClosedChannelException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,29 +40,12 @@ public abstract class BasePackage implements IPackage {
 		
 		INonBlockingConnection conn = user.getConn();
 		try {
-			if( conn.isOpen() ){
-//				for( int i = 0; i < 10000; i++ ) {
-////					System.out.println( "i = " + i );
-//					conn.write( 'a' );
-//				}
-				conn.write( buffer );
-			}
-			else{
-				System.err.println( user.getName() + " conn is closed");
-			}
-		} catch (ClosedChannelException e ) {
-			logger.debug( e.toString() );
-		} catch (SocketTimeoutException e){
-			logger.debug( e.toString() );
-		
+			conn.write( buffer );
+			//由于设置了setFlushmode( FlushMode.ASYNC );，所以，后续程序不得在对buffer进行任何包括读取在内的操作！！！！！！
 		} catch (IOException e) {
-			logger.debug( e.toString() );
+			logger.debug( user + " " + e.toString() );
 		}
-		
-		//System.out.println( toString(buffer) );
-	}
-	
-	
+	}	
 	
 	protected ByteBuffer buildEmptyPackage( int capacity ){
 		ByteBuffer buff = ByteBuffer.allocate(capacity);

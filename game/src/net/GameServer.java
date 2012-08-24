@@ -5,9 +5,14 @@ package net;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 
+import javax.management.JMException;
+
+import org.xsocket.connection.ConnectionUtils;
 import org.xsocket.connection.IHandler;
 import org.xsocket.connection.Server;
+import org.xsocket.connection.IConnection.FlushMode;
 
 import define.SystemCfg;
 
@@ -26,18 +31,24 @@ public class GameServer extends Server{
 	 */
 	public GameServer( InetAddress address, int port, IHandler handler ) throws UnknownHostException, IOException {
 		super(address, port, handler);
+		setFlushmode( FlushMode.ASYNC );
+		//setIdleTimeoutMillis( 10000 );
 	}
 
  
-	public static void main(String[] args) throws IOException {
-
-		InetAddress address = InetAddress.getByName( "localhost" );
+	@SuppressWarnings("deprecation")
+	public static void main(String[] args) throws IOException, JMException {
+		
+		System.out.println( new Date().toLocaleString() + " server start now..." );
+        System.out.println( new Date().toLocaleString() + " game version: " + SystemCfg.VERSION );        
+		
+        InetAddress address = InetAddress.getByName( "localhost" );
 		
 		GameServer server = new GameServer( address, SystemCfg.PORT, new GameHandler() );
-		//server.setIdleTimeoutMillis( 1000 );
 		
-		System.err.println( "server start now........" );
-        System.out.println( "game version: " + SystemCfg.VERSION );        
+		ConnectionUtils.registerMBean( server );   
+
+		
 		server.start();
 		
         //System.out.println( "日志: " + server.getStartUpLogMessage() );
