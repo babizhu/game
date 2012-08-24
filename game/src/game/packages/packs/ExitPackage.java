@@ -9,7 +9,7 @@ import game.packages.*;
 @PacketDescrip(desc = "玩家退出包")
 public class ExitPackage extends BasePackage {
 
-	private static final short	packetNo	= 6;
+	private static  final PackageNoDefine packageNo = PackageNoDefine.USER_EXIT;
 
 	@Override
 	public void run ( UserInfo user, ByteBuffer buf ) {
@@ -21,7 +21,7 @@ public class ExitPackage extends BasePackage {
 
 	@Override
 	public short getPacketNo () {
-		return packetNo;
+		return packageNo.toNum();
 	}
 
 }

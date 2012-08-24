@@ -10,7 +10,6 @@ import java.nio.channels.ClosedChannelException;
 import org.xsocket.MaxReadSizeExceededException;
 import org.xsocket.connection.ConnectionUtils;
 import org.xsocket.connection.IConnectHandler;
-import org.xsocket.connection.IConnection.FlushMode;
 import org.xsocket.connection.IDataHandler;
 import org.xsocket.connection.IDisconnectHandler;
 import org.xsocket.connection.IIdleTimeoutHandler;
@@ -32,8 +31,7 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 	@Override
 	public boolean onIdleTimeout( INonBlockingConnection con ) throws IOException {
 		con = ConnectionUtils.synchronizedConnection( con );
-		//con.setIdleTimeoutMillis( 5000 );//连接上来之后，如果5秒不发包，主动切断
-//		System.out.println( con.getRemoteAddress() + " " + con.getRemotePort() + " onIdleTimeout" );
+		
 		return false;
 		//return true;//不切断连接
 	}
@@ -44,8 +42,6 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 	@Override
 	public boolean onConnect( INonBlockingConnection con ) throws IOException, BufferUnderflowException, MaxReadSizeExceededException {
 		con = ConnectionUtils.synchronizedConnection( con );
-
-		con.setFlushmode( FlushMode.ASYNC );
 
 		System.out.println( con.getId() + " onConnect" );
 
@@ -69,7 +65,21 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 		int available = con.available();
         if ( available > 0) {
 
-        	System.out.println( con.getId() + " onData" + ",available:" + available + "byte" );
+        	System.out.println( con.getId() + " onData" + ",available:" + available + " byte" );
+//        	
+//        	try{
+//	        for( int i = 0; i < 100000000; i++ ){
+//				System.out.println( i );
+//					//con.write( 34 );
+//					//System.out.println(  );
+//				con.write( 's' );
+//			}
+//        	}
+//        	catch( Throwable t ){
+//        		t.printStackTrace();
+//        		System.out.println( t );
+//        	}        	
+//        	System.out.println( "dddddddddddddddddd");
     		byte	head = 0;
     		byte	foot = 0;
     		short 	packageNo = 0;
@@ -93,26 +103,9 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 			if (!checkInputData(head, foot)) {
 				// TODO 调用某个退出函数
 			}
-			//gameLogic.packageProcess( con, packageNo, data );
-			for( int i = 0; i < 10000; i++ ){
-				//System.out.println( i );
-				//con.write( 34 );
-				//System.out.println(  );
-				con.write( 34 );
-			}
+			gameLogic.packageProcess( con, packageNo, data );
 		}
-//		int i = 0;
-//		for( ; i < 1024*100; i++ ){
-//			int s = con.write( (byte)3 );
-//			System.out.println( s );
-//			System.out.println( i  );
-//		}
-//		System.out.println( "end");        	
-//		//
-//		
-		
-
-	      return true;
+        return true;
 	}
 	
 	/**
@@ -136,7 +129,7 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 	@Override
 	public boolean onDisconnect( INonBlockingConnection con ) throws IOException {
 		con = ConnectionUtils.synchronizedConnection( con );
-		System.out.println( con.getRemoteAddress() + " " + con.getRemotePort() + " onDisconnect" );
+		System.out.println( con.getId() + " onDisconnect" );
 		return false;
 	}
 
