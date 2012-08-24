@@ -3,11 +3,6 @@ package user;
 import game.AwardType;
 import game.packages.PackageManager;
 
-import java.io.IOException;
-import java.net.SocketTimeoutException;
-import java.nio.ByteBuffer;
-import java.nio.channels.ClosedChannelException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
@@ -27,10 +22,11 @@ public class UserInfo {
 	 * 包管理器
 	 */
 	PackageManager			packageManager = new PackageManager();
+	
 	/**
-	 * 底层的网络连接
+	 * 底层的网络连接，
 	 */
-	INonBlockingConnection conn;
+	private INonBlockingConnection conn;
 	
 	/**
 	 * 当前玩家的状态
@@ -103,6 +99,13 @@ public class UserInfo {
 		return strength;
 	}
 	
+	public void setMoney( int money ){
+		this.money = money;
+	}
+	
+	public int getMoney(  ){
+		return money;
+	}
 	/**
 	 * 增加金币
 	 * @param add		增加的金币
@@ -140,36 +143,44 @@ public class UserInfo {
 	}
 	
 	
-	public void sendPacket( ByteBuffer buffer ){
-		
-//		ByteBuffer header = buffer[0];
-		
-//		System.out.println( header );
-//		System.out.println( "包头" + header.get() );
-//		System.out.println( "包号:" + header.getShort() );
-//		System.out.println( "包长1:" + header.getShort() );
-		
-//		ByteBuffer footer = buffer[2];
-//		System.out.println( "包尾:" + footer.get() );
-		try {
-			if( conn.isOpen() ){
-				conn.write( buffer );
-			}
-			else{
-				System.err.println( this.getName() + " conn is closed");
-			}
-		} catch (ClosedChannelException e ) {
-			e.printStackTrace();
-		} catch (SocketTimeoutException e){
-			logger.debug( e.toString() );
-		
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		
-	}
-	
+	/**
+	 * 此函数有可能被废弃，测试中
+	 * @param buffer
+	 */
+//	public void sendPacket( ByteBuffer buffer ){
+//		
+////		ByteBuffer header = buffer[0];
+//		
+////		System.out.println( header );
+////		System.out.println( "包头" + header.get() );
+////		System.out.println( "包号:" + header.getShort() );
+////		System.out.println( "包长1:" + header.getShort() );
+//		
+////		ByteBuffer footer = buffer[2];
+////		System.out.println( "包尾:" + footer.get() );
+//		try {
+//			if( conn.isOpen() ){
+//				conn.write( buffer );
+//				for( int i = 0; i < 10000; i++ ) {
+//					System.out.println( "i = " + i );
+//					conn.write( 45 );
+//				}
+//			}
+//			else{
+//				System.err.println( this.getName() + " conn is closed");
+//			}
+//		} catch (ClosedChannelException e ) {
+//			logger.debug( e.toString() );
+//		} catch (SocketTimeoutException e){
+//			logger.debug( e.toString() );
+//		
+//		} catch (IOException e) {
+//			logger.debug( e.toString() );
+//		}
+//		
+//		
+//	}
+//	
 	/**
 	 * 构造关键数据的日志文件
 	 * @param at

@@ -38,12 +38,13 @@ public class UserInfoDataProvider {
 			ResultSet rs = pst.executeQuery();
 
 			if( rs.next() ) {
-//				int rank = rs.getInt("rank");
-				System.out.println( rs.getString("name") );
+				user.setLevel( rs.getByte("level") );
+				user.setNickName( rs.getString("nick_name") );
+				user.setStatus( UserStatus.fromNum( rs.getByte( "status" ) ) );
+				user.setMoney( rs.getInt( "money" ) );
 			}
 			else{//数据库无此玩家
 				user.setStatus( UserStatus.NEW );
-				System.out.println( user.getName() + "不存在" );
 			}
 			
 			rs.close();

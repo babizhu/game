@@ -29,14 +29,19 @@ public class UserManager {
 	 * @param user
 	 * @return
 	 */
-	public ErrorCode login( UserInfo user ){
+	public void login( UserInfo user ){
 		db.login( user );
 		if( user.getStatus() == UserStatus.NEW ){
+//			return ErrorCode.USER_NOT_FOUND;
 		}
 		else if( user.getStatus() == UserStatus.LOGIN ){
 			doLogin( user );
+			
 		}
-		return ErrorCode.USER_NOT_FOUND;
+		else{
+			
+		}
+		
 		
 	}
 	
@@ -62,11 +67,12 @@ public class UserManager {
 		
 	}
 	/**
-	 * 创建一个新用户，用户名以及其他基本属性由user指定
+	 * 创建一个新玩家，玩家名以及其他基本属性由user指定
 	 * @param user
 	 * @return
 	 */
 	public ErrorCode create( UserInfo user ){
+		
 		doLogin( user );
 		return null;
 		

@@ -1,6 +1,13 @@
 package game.packages;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
+import java.nio.channels.ClosedChannelException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xsocket.connection.INonBlockingConnection;
 
 import user.UserInfo;
 
@@ -8,14 +15,12 @@ import user.UserInfo;
 
 public abstract class BasePackage implements IPackage {
 	
+	private final static Logger logger = LoggerFactory.getLogger( BasePackage.class ); 
 	public static final byte HEAD		= 127;
 	public static final byte FOOT		= 126;
 
 
 	public BasePackage() {
-//		header.put( HEAD );//包头
-//		header.putShort( getPacketNo() );//包号
-		//包长为一个short，具体值由相应函数写入
 	}
 	
 	/**
@@ -32,15 +37,34 @@ public abstract class BasePackage implements IPackage {
 	 */
 	public void sendPacket( UserInfo user, ByteBuffer buffer ){
 		buffer.putShort( 3, (short) (buffer.position() - 5) );//设置内容长度
-		buffer.put( FOOT );
-				
+		buffer.put( FOOT );				
 		buffer.flip();
 		
-//		ByteBuffer[] b = new ByteBuffer[]{header, buff, footer};
-		user.sendPacket( buffer );
+		INonBlockingConnection conn = user.getConn();
+		try {
+			if( conn.isOpen() ){
+//				for( int i = 0; i < 10000; i++ ) {
+////					System.out.println( "i = " + i );
+//					conn.write( 'a' );
+//				}
+				conn.write( buffer );
+			}
+			else{
+				System.err.println( user.getName() + " conn is closed");
+			}
+		} catch (ClosedChannelException e ) {
+			logger.debug( e.toString() );
+		} catch (SocketTimeoutException e){
+			logger.debug( e.toString() );
 		
-		System.out.println( toString(buffer) );
+		} catch (IOException e) {
+			logger.debug( e.toString() );
+		}
+		
+		//System.out.println( toString(buffer) );
 	}
+	
+	
 	
 	protected ByteBuffer buildEmptyPackage( int capacity ){
 		ByteBuffer buff = ByteBuffer.allocate(capacity);
@@ -52,7 +76,9 @@ public abstract class BasePackage implements IPackage {
 
 	public String toString( ByteBuffer buffer ) {
 		System.out.println( buffer );
-		buffer.flip();
+		if( buffer.position() != 0 ){
+			buffer.flip();
+		}
 		String str = "HEAD:" + buffer.get() + "\n";;
 		str += "包号:" + buffer.getShort() + "\n";
 		int len =  buffer.getShort();
