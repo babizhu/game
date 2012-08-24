@@ -40,6 +40,8 @@ public class GameMainLogic implements IGameLogic{
 	public void packageProcess(INonBlockingConnection con, short packageNo, byte[] data) {
 
 		UserInfo user = (UserInfo) con.getAttachment();
+		
+		//TODO 基于玩家自身的同步似乎应该开始了
 		if (user.getStatus() == UserStatus.GUEST
 				&& (packageNo != 100001 || packageNo != 100001)) {
 			// TODO 玩家非法，移除此连接

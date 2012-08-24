@@ -1,6 +1,7 @@
 package game.packages.packs;
 
 import game.packages.BasePackage;
+import game.packages.PackageNoDefine;
 import game.packages.PacketDescrip;
 
 import java.nio.ByteBuffer;
@@ -14,7 +15,7 @@ import util.BaseUtil;
 public class LoginPackage extends BasePackage {
 
 	
-	private static short packetNo = 1;
+	private static  final PackageNoDefine packageNo = PackageNoDefine.USER_LOGIN;
 	@Override
 	public void run( UserInfo user, ByteBuffer buf ) {
 				
@@ -35,6 +36,6 @@ public class LoginPackage extends BasePackage {
 	}
 	@Override
 	public short getPacketNo () {
-		return packetNo;
+		return packageNo.toNum();
 	}
 }
