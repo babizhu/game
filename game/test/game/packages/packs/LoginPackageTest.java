@@ -66,6 +66,7 @@ public class LoginPackageTest extends BasePackageTest {
 	@Override
 	public short getPacketNo() {
 		return PackageNoDefine.USER_LOGIN.toNum();
+		
 	}
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
