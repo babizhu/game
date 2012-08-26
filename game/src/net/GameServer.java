@@ -36,7 +36,7 @@ public class GameServer extends Server{
 		GameServer server = new GameServer( address, SystemCfg.PORT, new GameHandler() );
 		//server.setIdleTimeoutMillis( 1000 );
 		
-		System.err.println( "server start now........" );
+		System.out.println( "server start now........" );
         System.out.println( "game version: " + SystemCfg.VERSION );        
 		server.start();
 		

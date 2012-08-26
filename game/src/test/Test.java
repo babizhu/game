@@ -1,4 +1,4 @@
-package game.db;
+package test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.management.JMException;
 
-import test.DataFactory;
 import user.UserInfo;
 
 import com.alibaba.druid.pool.DruidDataSource;

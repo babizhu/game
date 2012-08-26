@@ -25,8 +25,6 @@
 		<desc>去北寒极地消灭变种巨狼</desc><dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
         <button>我这就去</button>		
 		<task_type>DIRECT</task_type>
-		<successor>10003</successor>
-		<task_prop>MAIN</task_prop>
 		<param></param>
 		<npc>100900</npc>
 		<location_id>1000301</location_id>

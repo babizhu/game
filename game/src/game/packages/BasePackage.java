@@ -1,5 +1,7 @@
 package game.packages;
 
+import game.packages.packs.UserLoginPackage;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
@@ -10,7 +12,11 @@ import org.xsocket.connection.INonBlockingConnection;
 import user.UserInfo;
 
 
-
+/**
+ * 所有通信包的基类
+ * @author liukun
+ * 2012-8-26
+ */
 public abstract class BasePackage implements IPackage {
 	
 	private final static Logger logger = LoggerFactory.getLogger( BasePackage.class ); 
@@ -19,7 +25,6 @@ public abstract class BasePackage implements IPackage {
 
 	private short packageNo;
 
-	
 	/**
 	 * 从客户端收取包并进行逻辑处理
 	 */
@@ -30,7 +35,9 @@ public abstract class BasePackage implements IPackage {
 	 * 向客户端发送包
 	 * @param user
 	 * @param buff
-	 * 		包括包号(short)，包长(short)，包内容(byte[])
+	 * 		包括包头(byte)，包号(short)，包长(short)，包内容(byte[])
+	 * 
+	 * @注意	由于设置了setFlushmode( FlushMode.ASYNC );，所以，后续程序不得在对此buffer进行任何包括读取在内的操作！！！！！！
 	 */
 	public void sendPacket( UserInfo user, ByteBuffer buffer ){
 		buffer.putShort( 3, (short) (buffer.position() - 5) );//设置内容长度
@@ -46,6 +53,11 @@ public abstract class BasePackage implements IPackage {
 		}
 	}	
 	
+	/**
+	 * 创建一个长度为capacity的缓冲包，此包包括包头，包号，包长（占位符）
+	 * @param capacity
+	 * @return
+	 */
 	protected ByteBuffer buildEmptyPackage( int capacity ){
 		ByteBuffer buff = ByteBuffer.allocate(capacity);
 		buff.put( HEAD );
@@ -54,17 +66,23 @@ public abstract class BasePackage implements IPackage {
 		return buff;
 	}
 
+	/**
+	 * 复制此buffer，然后进行打印，避免影响原有的ButeBuffer
+	 * @param buffer
+	 * @return
+	 */
 	public String toString( ByteBuffer buffer ) {
-		if( buffer.position() != 0 ){
-			buffer.flip();
+		ByteBuffer clone = buffer.asReadOnlyBuffer();
+		if( clone.position() != 0 ){
+			clone.flip();
 		}
-		String str = "HEAD:" + buffer.get() + "\n";;
-		str += "包号:" + buffer.getShort() + "\n";
-		int len =  buffer.getShort();
+		String str = "HEAD:" + clone.get() + "\n";;
+		str += "包号:" + clone.getShort() + "\n";
+		int len =  clone.getShort();
 		str += "包长:" + len + "\n";
 		byte[] data = new byte[len];
-		buffer.get( data );
-		str += "FOOT:" + buffer.get();
+		clone.get( data );
+		str += "FOOT:" + clone.get();
 		return str;
 	}
 	@Override
@@ -73,5 +91,24 @@ public abstract class BasePackage implements IPackage {
 	}
 	public void setPackageNo( short packageNo ){
 		this.packageNo = packageNo;
+	}
+	
+	/**
+	 * 测试toString函数
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		ByteBuffer buf = ByteBuffer.allocate( 1024 );
+		buf.put( BasePackage.HEAD );
+		buf.putShort( Packages.USER_CREATE.toNum() );
+		buf.putShort( (short) 4 );
+		buf.putInt( 88 );
+		buf.put( BasePackage.FOOT );
+		
+		UserLoginPackage p = new UserLoginPackage();
+		System.out.println( buf );
+		System.out.println( p.toString( buf ) );
+		
+		System.out.println( buf );
 	}
 }
