@@ -32,11 +32,11 @@ public final class  DataFactory {
 	 * 方法说明：构造方�?
 	 * @author 严欢	2010-9-4 下午11:33:50
 	 * @param driverName	连接驱动
-	 * @param url			数据库地�?
-	 * @param user			数据库用�?
-	 * @param password		数据库密�?
-	 * @param poolSize		连接池大�?
-	 * @param timeIntervalReConnect		数据库断线重连时间间隔（毫秒�?
+	 * @param url			数据库地url
+	 * @param user			数据库用户名
+	 * @param password		数据库密码
+	 * @param poolSize		连接池大小
+	 * @param timeIntervalReConnect		数据库断线重连时间间隔（毫秒）
 	 */
 	public DataFactory(String driverName, String url, String user, String password, int poolSize, long timeIntervalReConnect){
 		this.driverName = driverName;

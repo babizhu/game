@@ -1,9 +1,8 @@
 package game.packages;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.nio.ByteBuffer;
-
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -38,24 +37,29 @@ public class PackageManagerTest {
 	}
 
 	@Test
+	/**
+	 * 直接执行此测试，会成功，但是会抛异常，因为user不存在相应的连接conn
+	 * 应该不影响测试
+	 */
 	public void testRun() {
 		PackageManager pm = new PackageManager(); 
-		ErrorCode code = pm.run( null, (short) 123, null );
-		assertEquals( ErrorCode.PACKAGE_NOT_FOUND, code );
-		
+//		ErrorCode code = pm.run( null, (short) 123, null );
+//		assertEquals( ErrorCode.PACKAGE_NOT_FOUND, code );
+//		
 		ByteBuffer buf = ByteBuffer.allocate( 4 );
 		buf.putInt( 1 );
 		buf.flip();
 
 		UserInfo user = new UserInfo(); 
-		code = pm.run(  user, (short) 1, buf );
-		assertEquals( code, ErrorCode.SUCCESS );
+		ErrorCode ecode = pm.run(  user, Packages.USER_LOGIN, buf );
+		assertEquals( ecode, ErrorCode.SUCCESS );
 		
-		buf.flip();
+		buf.position( 0 );
+		buf.limit( buf.capacity() );
 		buf.putInt( 3 );
 		buf.flip();
-		code = pm.run( user, (short) 1, buf );
-		assertEquals( ErrorCode.SUCCESS, code );
+		ecode = pm.run( user, Packages.USER_EXIT, buf );
+		assertEquals( ErrorCode.SUCCESS, ecode );
 		
 	}
 

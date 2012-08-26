@@ -36,13 +36,9 @@ public class UserManager {
 		}
 		else if( user.getStatus() == UserStatus.LOGIN ){
 			doLogin( user );
-			
 		}
 		else{
-			
 		}
-		
-		
 	}
 	
 	/**
@@ -58,7 +54,7 @@ public class UserManager {
 	}
 	
 	/**
-	 * 把玩家添加到程序逻辑中
+	 * 把玩家添加到程序中
 	 * @param user
 	 */
 	private ErrorCode doLogin( UserInfo user ){
@@ -72,11 +68,8 @@ public class UserManager {
 	 * @return
 	 */
 	public ErrorCode create( UserInfo user ){
-		
 		doLogin( user );
 		return null;
-		
-		
 	}
 	
 	@Override

@@ -1,10 +1,10 @@
 package game.packages.packs;
 
 import game.packages.BasePackage;
-import game.packages.PackageNoDefine;
 import game.packages.PacketDescrip;
 
 import java.nio.ByteBuffer;
+
 import user.UserInfo;
 import user.UserManager;
 import util.BaseUtil;
@@ -12,10 +12,8 @@ import util.BaseUtil;
 
 @PacketDescrip(desc = "玩家登陆包", structure = "short用户名长度,byte[]用户名")
 
-public class LoginPackage extends BasePackage {
-
+public class UserLoginPackage extends BasePackage {
 	
-	private static  final PackageNoDefine packageNo = PackageNoDefine.USER_LOGIN;
 	@Override
 	public void run( UserInfo user, ByteBuffer buf ) {
 				
@@ -29,13 +27,7 @@ public class LoginPackage extends BasePackage {
 		BaseUtil.encodeString( buffer, user.getName() );
 		buffer.put( user.getStatus().toNum() );			//玩家的状态
 		
-
-		
 		sendPacket( user, buffer );
 
-	}
-	@Override
-	public short getPacketNo () {
-		return packageNo.toNum();
 	}
 }

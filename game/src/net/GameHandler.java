@@ -32,15 +32,12 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 	@Override
 	public boolean onIdleTimeout( INonBlockingConnection con ) throws IOException {
 		con = ConnectionUtils.synchronizedConnection( con );
+		con.available();//避免findbugs的警告
 		//con.setIdleTimeoutMillis( 5000 );//连接上来之后，如果5秒不发包，主动切断
-//		System.out.println( con.getRemoteAddress() + " " + con.getRemotePort() + " onIdleTimeout" );
 		return false;
 		//return true;//不切断连接
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.xsocket.connection.IConnectHandler#onConnect(org.xsocket.connection.INonBlockingConnection)
-	 */
 	@Override
 	public boolean onConnect( INonBlockingConnection con ) throws IOException, BufferUnderflowException, MaxReadSizeExceededException {
 		con = ConnectionUtils.synchronizedConnection( con );
@@ -60,12 +57,6 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 	@Override
 	public boolean onData( INonBlockingConnection con ) throws IOException,	BufferUnderflowException, ClosedChannelException, MaxReadSizeExceededException {
 		con = ConnectionUtils.synchronizedConnection( con );
-//		int available = con.available();
-//		
-//		ByteBuffer buffer = ByteBuffer.allocate(available);
-//		con.read(buffer);
-//		System.out.println( available );
-//		
 		int available = con.available();
         if ( available > 0) {
 
@@ -93,13 +84,13 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 			if (!checkInputData(head, foot)) {
 				// TODO 调用某个退出函数
 			}
-			//gameLogic.packageProcess( con, packageNo, data );
-			for( int i = 0; i < 10000; i++ ){
-				//System.out.println( i );
-				//con.write( 34 );
-				//System.out.println(  );
-				con.write( 34 );
-			}
+			gameLogic.packageProcess( con, packageNo, data );
+//			for( int i = 0; i < 10000; i++ ){
+//				//System.out.println( i );
+//				//con.write( 34 );
+//				//System.out.println(  );
+//				con.write( 34 );
+//			}
 		}
 //		int i = 0;
 //		for( ; i < 1024*100; i++ ){

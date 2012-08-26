@@ -157,7 +157,7 @@ public class PackageUtil {
 				PacketDescrip desc = c.getAnnotation(PacketDescrip.class);
 				String s = null;
 				s = (desc == null) ? "" : desc.desc();
-				f.format("%-8s %-50s %-150s \n", ap.getPacketNo(), c.getName(),	s );
+				f.format("%-8s %-50s %-150s \n", ap.getPackageNo(), c.getName(),	s );
 			}
 		}
 	}
@@ -177,7 +177,7 @@ public class PackageUtil {
 				p1 = (BasePackage) c.newInstance();
 				// System.out.println( c.getName() + " ：" + p1.getPacketNo() );
 
-				int packetNo = p1.getPacketNo();
+				int packetNo = p1.getPackageNo();
 				BasePackage ip = packets[packetNo];
 				if( ip == null ) {
 					packets[packetNo] = p1;
@@ -198,7 +198,7 @@ public class PackageUtil {
 			} else {
 				ap.run(null, null);//传null，有些包可能会出错
 
-				if (ap.getPacketNo() == 4) {
+				if (ap.getPackageNo() == 4) {
 					// ((ShowBattle)ap).run( null, true, 234 );
 				}
 			}

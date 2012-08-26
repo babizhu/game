@@ -17,9 +17,8 @@ public abstract class BasePackage implements IPackage {
 	public static final byte HEAD		= 127;
 	public static final byte FOOT		= 126;
 
+	private short packageNo;
 
-	public BasePackage() {
-	}
 	
 	/**
 	 * 从客户端收取包并进行逻辑处理
@@ -50,13 +49,12 @@ public abstract class BasePackage implements IPackage {
 	protected ByteBuffer buildEmptyPackage( int capacity ){
 		ByteBuffer buff = ByteBuffer.allocate(capacity);
 		buff.put( HEAD );
-		buff.putShort( getPacketNo() );
+		buff.putShort( getPackageNo() );
 		buff.putShort( (short) 0 );//长度占位符
 		return buff;
 	}
 
 	public String toString( ByteBuffer buffer ) {
-		System.out.println( buffer );
 		if( buffer.position() != 0 ){
 			buffer.flip();
 		}
@@ -70,9 +68,10 @@ public abstract class BasePackage implements IPackage {
 		return str;
 	}
 	@Override
-	public abstract short getPacketNo ();
-	
-	
-	
-
+	public short getPackageNo (){
+		return packageNo;
+	}
+	public void setPackageNo( short packageNo ){
+		this.packageNo = packageNo;
+	}
 }

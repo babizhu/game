@@ -1,6 +1,7 @@
 package test;
 
 import game.packages.BasePackage;
+import game.packages.Packages;
 
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -28,11 +29,12 @@ public class SendPackage {
 		ByteBuffer pack = null;
 		ByteBuffer data = null;
 		switch( packageNo ){
-		case 1:
+		case 201:
 			data = login();
 			break;
-		default:
-			break;
+		}
+		if( data == null ){
+			return null;
 		}
 		pack = ByteBuffer.allocate( 6 + data.limit() );//6 for 1(HEAD) + 2(PACKAGE NO) + 2(PACKAGE LEN) + 1(FOOT) = 6
 		
@@ -72,7 +74,7 @@ public class SendPackage {
 
 	public static void main ( String[] args ) {
 		for( int i = 0; i < 1; i++ ){
-			new SendPackage().sendPackage( (short) 1 );
+			new SendPackage().sendPackage( (short) Packages.USER_LOGIN.toNum() );
 		}
 	}
 }

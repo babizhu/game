@@ -12,5 +12,5 @@ public interface IPackage {
 	public void run( UserInfo user, ByteBuffer buf ); 
 	//public int getPacketNo();
 
-	short getPacketNo ();
+	short getPackageNo ();
 }

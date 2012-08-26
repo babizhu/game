@@ -1,9 +1,6 @@
 package game.packages;
 
-import game.util.PackageUtil;
-
 import java.nio.ByteBuffer;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,61 +18,18 @@ import util.SystemTimer;
 public class PackageManager {
 
 	private final static Logger 			logger = LoggerFactory.getLogger( PackageManager.class ); 
-	
-	/**
-	 * 包程序文件所在的目录
-	 */
-	private	final static String				PACKAGE_PATH = "game.packages.packs";
-	
-	/**
-	 * 系统允许最大的包号，用于生成数组存放所有的包实例，包号的生成得稍微限制一下，最好不要超过10000，否则会开一个比较大的数组
-	 */
-	private	final static int				MAX_PACKAGE_NO = 10000;
-	
+
 	/**
 	 * 接收相同包号两个包之间允许的最短时间间隔，如果小于这个值则认定客户端有刷包嫌疑，丢弃这个包
 	 * 单位	毫秒
 	 */
 	private static final long 				MIN_INTERVAL_MILS = 0;
 	
-	/**
-	 * 程序内所有的包实例数组
-	 */
-	private final static BasePackage[]		packages;
-	
-	
-	/**
-	 * 初始化系统所有的包数组
-	 */
-	static{
-		List<Class<?>> list = PackageUtil.getClasses( PACKAGE_PATH );
-		packages = new BasePackage[MAX_PACKAGE_NO];// 不存在0号包
-		
-		for( Class<?> c : list ) {
-			if( !c.isInterface() && !c.getName().contains( "Test" ) ) {
-				BasePackage p;
-				try {
-					p = (BasePackage) c.newInstance();
-					int packetNo = p.getPacketNo();
-					if( packages[packetNo] == null ) {
-						packages[packetNo] = p;
 
-					} else {
-						logger.error( packetNo + " 重复了，分别是" + packages[packetNo] + " " + p );
-					}
-				} catch (InstantiationException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				}				
-			}
-		}
-	}
-	
 	/**
-	 * 接收的上一个包的包号
+	 * 接收的上一个包
 	 */
-	private short	lastPackageNo = 0;
+	private Packages	lastPack;
 	
 	/**
 	 * 上一次收包时间
@@ -92,25 +46,16 @@ public class PackageManager {
 	 * @param buf			消息正文
 	 * @return
 	 */
-	public ErrorCode run( UserInfo user, short packageNo, ByteBuffer buf ){
+	public ErrorCode run( UserInfo user, Packages pack, ByteBuffer buf ){
 		
-		if( packageNo < 0 || packageNo > MAX_PACKAGE_NO ){
-			return ErrorCode.PACKAGE_NOT_FOUND;
-		}			
-			
-		BasePackage pack = packages[packageNo];
-		if( pack == null ){
-			return ErrorCode.PACKAGE_NOT_FOUND;
-		}
-
-		if( !safeCheck( packageNo ) ){
+		if( !safeCheck( pack ) ){
 			return ErrorCode.PACKAGE_SAFE_CHECK_FAIL;
 		}
 		try{
 			pack.run( user, buf );
 		}
 		catch( Exception e ){
-			logger.debug( user.getName() + "," + packageNo + "," + buf, e );
+			logger.debug( user.getName() + "," + pack + "," + buf, e );
 		}
 		return ErrorCode.SUCCESS;	
 	}
@@ -120,16 +65,16 @@ public class PackageManager {
 	 * @param packageNo
 	 * @return
 	 */
-	private boolean safeCheck( short packageNo ){
+	private boolean safeCheck( Packages pack ){
 		long current = SystemTimer.currentTimeMillis();
-		if( packageNo == lastPackageNo && current - lastReceiveTime < MIN_INTERVAL_MILS ){
+		if( pack == lastPack && current - lastReceiveTime < MIN_INTERVAL_MILS ){
 			return false;
 		}
-		lastPackageNo = packageNo;
+		lastPack = pack;
 		lastReceiveTime = current;
 		return true;
 	}
 	public static void main ( String[] args ) {
-		PackageUtil.printAllPakcets( PackageManager.packages );
+		//PackageUtil.printAllPakcets( PackageManager.packages );
 	}	
 }
