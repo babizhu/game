@@ -1,5 +1,6 @@
 package game.packages.packs;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import user.UserInfo;
@@ -11,10 +12,10 @@ public class UserExitPackage extends BasePackage {
 
 
 	@Override
-	public void run ( UserInfo user, ByteBuffer buf ) {
+	public void run ( UserInfo user, ByteBuffer buf ) throws IOException {
 		System.out.println( this.getClass().getName() );
 		ByteBuffer buff = ByteBuffer.allocate( 1024 );
-		super.sendPacket( user, buff );
+		super.sendPackage( user, buff );
 
 	}
 

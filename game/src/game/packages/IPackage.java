@@ -1,5 +1,6 @@
 package game.packages;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import user.UserInfo;
@@ -9,7 +10,7 @@ import user.UserInfo;
 
 public interface IPackage {
 
-	public void run( UserInfo user, ByteBuffer buf ); 
+	public void run( UserInfo user, ByteBuffer buf ) throws IOException; 
 	//public int getPacketNo();
 
 	short getPackageNo ();

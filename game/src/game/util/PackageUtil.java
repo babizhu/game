@@ -162,7 +162,7 @@ public class PackageUtil {
 		}
 	}
 
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException, SecurityException, NoSuchFieldException {
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, SecurityException, NoSuchFieldException, IOException {
 		BasePackage p1 = null;
 		// String p = "PacketTest";
 		String s = "game.packages";// 包文件夹

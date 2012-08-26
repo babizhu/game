@@ -50,19 +50,18 @@ public class BasePackageTest {
 	}
 
 	/**
-	 * Test method for {@link game.packages.BasePackage#sendPacket(user.UserInfo, java.nio.ByteBuffer)}.
-	 */
-	@Test
-	public void testSendPacket() {
-		fail("Not yet implemented");
-	}
-
-	/**
 	 * Test method for {@link game.packages.BasePackage#buildEmptyPackage(int)}.
 	 */
 	@Test
 	public void testBuildEmptyPackage() {
-		fail("Not yet implemented");
+		ByteBuffer buf = p.buildEmptyPackage( 1024 );
+		assertEquals( 5, buf.position() );//5 for HEAD(byte) + packageNo(short) + len(short)
+		buf.flip();
+		
+		assertEquals( BasePackage.HEAD, buf.get() );
+		assertEquals( p.getPackageNo(), buf.getShort() );
+		assertEquals( 0, buf.getShort() );
+
 	}
 
 	/**

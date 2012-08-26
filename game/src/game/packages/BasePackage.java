@@ -5,8 +5,6 @@ import game.packages.packs.UserLoginPackage;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
 
 import user.UserInfo;
@@ -19,7 +17,7 @@ import user.UserInfo;
  */
 public abstract class BasePackage implements IPackage {
 	
-	private final static Logger logger = LoggerFactory.getLogger( BasePackage.class ); 
+	//private final static Logger logger = LoggerFactory.getLogger( BasePackage.class ); 
 	public static final byte HEAD		= 127;
 	public static final byte FOOT		= 126;
 
@@ -27,30 +25,30 @@ public abstract class BasePackage implements IPackage {
 
 	/**
 	 * 从客户端收取包并进行逻辑处理
+	 * 通常也会返回一个应答包到客户端
+	 * @throws IOException 
 	 */
 	@Override
-	public abstract void run( UserInfo user, ByteBuffer buf );
+	public abstract void run( UserInfo user, ByteBuffer buf ) throws IOException;
 	
 	/**
 	 * 向客户端发送包
 	 * @param user
 	 * @param buff
 	 * 		包括包头(byte)，包号(short)，包长(short)，包内容(byte[])
+
+	 * @throws IOException 
 	 * 
 	 * @注意	由于设置了setFlushmode( FlushMode.ASYNC );，所以，后续程序不得在对此buffer进行任何包括读取在内的操作！！！！！！
 	 */
-	public void sendPacket( UserInfo user, ByteBuffer buffer ){
+	public void sendPackage( UserInfo user, ByteBuffer buffer ) throws IOException{
 		buffer.putShort( 3, (short) (buffer.position() - 5) );//设置内容长度
 		buffer.put( FOOT );				
 		buffer.flip();
 		
 		INonBlockingConnection conn = user.getConn();
-		try {
-			conn.write( buffer );
+		conn.write( buffer );
 			//由于设置了setFlushmode( FlushMode.ASYNC );，所以，后续程序不得在对buffer进行任何包括读取在内的操作！！！！！！
-		} catch (IOException e) {
-			logger.debug( user + " " + e.toString() );
-		}
 	}	
 	
 	/**
@@ -67,7 +65,8 @@ public abstract class BasePackage implements IPackage {
 	}
 
 	/**
-	 * 复制此buffer，然后进行打印，避免影响原有的ButeBuffer
+
+	 * 复制此buffer，然后进行打印，避免影响原有的ByteBuffer
 	 * @param buffer
 	 * @return
 	 */

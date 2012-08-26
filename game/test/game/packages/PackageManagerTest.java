@@ -51,6 +51,7 @@ public class PackageManagerTest {
 		buf.flip();
 
 		UserInfo user = new UserInfo(); 
+		user.setName( "babizhu" );
 		ErrorCode ecode = pm.run(  user, Packages.USER_LOGIN, buf );
 		assertEquals( ecode, ErrorCode.SUCCESS );
 		
