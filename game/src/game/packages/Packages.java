@@ -4,6 +4,7 @@ import game.packages.packs.UserCreatePackage;
 import game.packages.packs.UserExitPackage;
 import game.packages.packs.UserLoginPackage;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Formatter;
 import java.util.HashMap;
@@ -28,12 +29,12 @@ public enum Packages {
 	//private final static Logger 			logger = LoggerFactory.getLogger( PackageDefine.class ); 
 	
 	private final short 			number;
-	private final BasePackage 		pack;
+	private final BasePackage 		packageInstance;
 	
-	Packages( int value, BasePackage pack ) {
+	Packages( int value, BasePackage packageInstance ) {
 		this.number =  (short) value;
-		this.pack = pack;
-		this.pack.setPackageNo( number );
+		this.packageInstance = packageInstance;
+		this.packageInstance.setPackageNo( number );
 	}
 	private static final Map<Short, Packages> numToEnum = new HashMap<Short, Packages>();
 	static{
@@ -51,9 +52,10 @@ public enum Packages {
 	 * 运行此枚举所对应的包的run方法
 	 * @param user
 	 * @param buf
+	 * @throws IOException 
 	 */
-	public void run(UserInfo user, ByteBuffer buf) {
-		pack.run(user, buf);
+	public void run(UserInfo user, ByteBuffer buf) throws IOException {
+		packageInstance.run(user, buf);
 	}
 	
 	/**
@@ -66,11 +68,11 @@ public enum Packages {
 		f.format("%-15s %-127s %-150s \n", "－－", "－－", "－－－－");
 		for( Packages p : Packages.values() ){
 			
-			Class<?> c = p.pack.getClass();
+			Class<?> c = p.packageInstance.getClass();
 			PacketDescrip desc = c.getAnnotation(PacketDescrip.class);
 			String s = null;
 			s = (desc == null) ? "" : desc.desc();
-			f.format("%-8s %-50s %-150s \n", p.pack.getPackageNo(), c.getName(),s );
+			f.format("%-8s %-50s %-150s \n", p.packageInstance.getPackageNo(), c.getName(),s );
 			
 		}
 	}

@@ -99,10 +99,6 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 //			System.out.println( i  );
 //		}
 //		System.out.println( "end");        	
-//		//
-//		
-		
-
 	      return true;
 	}
 	
@@ -127,7 +123,7 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 	@Override
 	public boolean onDisconnect( INonBlockingConnection con ) throws IOException {
 		con = ConnectionUtils.synchronizedConnection( con );
-		System.out.println( con.getRemoteAddress() + " " + con.getRemotePort() + " onDisconnect" );
+		System.out.println( con.getId() + " onDisconnect" );
 		return false;
 	}
 

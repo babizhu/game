@@ -275,9 +275,10 @@ public class UserInfo {
 
 	@Override
 	public String toString() {
-		return "status=" + status + ", money=" + money
+		return "[status=" + status + ", money=" + money
 				+ ", strength=" + strength + ", nickName=" + nickName
-				+ ", name=" + name + ", level=" + level;
+				+ ", name=" + name + ", level=" + level
+				+ "]";
 	}
 	
 	

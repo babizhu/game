@@ -55,7 +55,7 @@ public class PackageManager {
 			pack.run( user, buf );
 		}
 		catch( Exception e ){
-			logger.debug( user.getName() + "," + pack + "," + buf, e );
+			logger.debug( user + "," + pack + "," + buf, e );
 		}
 		return ErrorCode.SUCCESS;	
 	}
