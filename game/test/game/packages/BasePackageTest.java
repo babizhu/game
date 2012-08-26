@@ -61,6 +61,7 @@ public class BasePackageTest {
 		assertEquals( BasePackage.HEAD, buf.get() );
 		assertEquals( p.getPackageNo(), buf.getShort() );
 		assertEquals( 0, buf.getShort() );
+
 	}
 
 	/**

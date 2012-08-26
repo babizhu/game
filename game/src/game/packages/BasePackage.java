@@ -36,6 +36,7 @@ public abstract class BasePackage implements IPackage {
 	 * @param user
 	 * @param buff
 	 * 		包括包头(byte)，包号(short)，包长(short)，包内容(byte[])
+
 	 * @throws IOException 
 	 * 
 	 * @注意	由于设置了setFlushmode( FlushMode.ASYNC );，所以，后续程序不得在对此buffer进行任何包括读取在内的操作！！！！！！
@@ -64,6 +65,7 @@ public abstract class BasePackage implements IPackage {
 	}
 
 	/**
+
 	 * 复制此buffer，然后进行打印，避免影响原有的ByteBuffer
 	 * @param buffer
 	 * @return
