@@ -1,5 +1,5 @@
 /**
- * 
+ * 测试BasePackage类
  */
 package game.packages;
 

@@ -1,10 +1,8 @@
 package game.packages;
 
 import game.packages.packs.UserLoginPackage;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
-
 import org.xsocket.connection.INonBlockingConnection;
 
 import user.UserInfo;
