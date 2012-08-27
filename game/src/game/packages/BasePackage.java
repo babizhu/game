@@ -69,17 +69,17 @@ public abstract class BasePackage implements IPackage {
 	 * @return
 	 */
 	public String toString( ByteBuffer buffer ) {
-		ByteBuffer clone = buffer.asReadOnlyBuffer();
-		if( clone.position() != 0 ){
-			clone.flip();
+		ByteBuffer copy = buffer.asReadOnlyBuffer();
+		if( copy.position() != 0 ){
+			copy.flip();
 		}
-		String str = "HEAD:" + clone.get() + "\n";;
-		str += "包号:" + clone.getShort() + "\n";
-		int len =  clone.getShort();
+		String str = "HEAD:" + copy.get() + "\n";;
+		str += "包号:" + copy.getShort() + "\n";
+		int len =  copy.getShort();
 		str += "包长:" + len + "\n";
 		byte[] data = new byte[len];
-		clone.get( data );
-		str += "FOOT:" + clone.get();
+		copy.get( data );
+		str += "FOOT:" + copy.get();
 		return str;
 	}
 	@Override

@@ -22,8 +22,8 @@ public class UserPropertyTask extends BaseTask {
 	@Override
 	public boolean doTask( UserInfo user, Object obj ) {
 		Object[] parm = (Object[]) obj;
-		int property = (Integer) parm[0];
-		if( property == templet.getProperty() ){
+		//int property = 
+		if( (Integer) parm[0] == templet.getProperty() ){
 			
 			//通过obj的第二个参数获取被改变的战士
 			//判断此此战士是否完成任务

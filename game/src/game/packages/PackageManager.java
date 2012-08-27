@@ -55,7 +55,7 @@ public class PackageManager {
 			pack.run( user, buf );
 		}
 		catch( Exception e ){
-			logger.debug( user + "," + pack + "," + buf, e );
+			logger.debug( user + "," + pack + "," + bufToString( buf ), e );
 		}
 		return ErrorCode.SUCCESS;	
 	}
@@ -73,6 +73,24 @@ public class PackageManager {
 		lastPack = pack;
 		lastReceiveTime = current;
 		return true;
+	}
+	
+	/**
+	 * 返回按字节为单位收到的客户端传来的数据信息，调试用
+	 * @param buf
+	 * @return
+	 */
+	private String bufToString( ByteBuffer buf ){
+		ByteBuffer copy = buf.asReadOnlyBuffer();
+		if( copy.position() != 0 ){
+			copy.flip();
+		}
+		StringBuilder sb = new StringBuilder( "[");
+		while( copy.hasRemaining() ){
+			sb.append( copy.get() + " " );
+		}
+		sb.append( "]" );
+		return sb.toString();
 	}
 	public static void main ( String[] args ) {
 		//PackageUtil.printAllPakcets( PackageManager.packages );

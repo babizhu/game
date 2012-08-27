@@ -4,7 +4,6 @@
 package test;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -21,7 +20,7 @@ public class HttpDownLoad {
 	
 	private static int		BUFFER_SIZE = 8096;//缓冲区大小  
 	private static String 	ZIP_URL = "http://www.sina.com";//配置文件所在的地址 
-	private static String 	ZIP_FILE = "d:\\ZIP.ZIP";//配置文件所在的地址 
+	private static String 	ZIP_FILE = "d:\\ZIP.htm";//配置文件所在的地址 
 	
 	public static void downloadCfgFile() throws IOException{
 		FileOutputStream fos = null;  
@@ -39,13 +38,13 @@ public class HttpDownLoad {
         //获取网络输入流  
         bis = new BufferedInputStream(httpUrl.getInputStream());  
         //建立文件  
-        File file = new File(ZIP_FILE);//配置文件所在的地址 );  
-        if(!file.exists()) {  
-            if(!file.getParentFile().exists()) {  
-                file.getParentFile().mkdirs();  
-            }  
-            file.createNewFile();  
-        }  
+       // File file = new File(ZIP_FILE);//配置文件所在的地址 );  
+//        if(!file.exists()) {  
+//            if(!file.getParentFile().exists()) {  
+//                file.getParentFile().mkdirs();  
+//            }  
+//            file.createNewFile();  
+//        }  
         fos = new FileOutputStream(ZIP_FILE);  
   
 //        if (this.DEBUG)  
