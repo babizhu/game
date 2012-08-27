@@ -16,7 +16,12 @@ import org.xsocket.connection.IBlockingConnection;
 import util.BaseUtil;
 import define.SystemCfg;
 
-public class LoginPackageTest extends BasePackageTest {
+public class UserLoginPackageTest extends BasePackageTest {
+
+	public UserLoginPackageTest(int count) {
+		super(count);
+		// TODO Auto-generated constructor stub
+	}
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -54,12 +59,14 @@ public class LoginPackageTest extends BasePackageTest {
 	}
 	public void run() throws IOException, InterruptedException{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
-
-		String name = "liukun";
-		ByteBuffer buf = createContent( name );
-		sendPacket( nbc, buf );
-		ByteBuffer data = getData( nbc );
-		parse( data );
+		for( int i = 0; i < count; i++ ){
+			System.out.print( i + ":");
+			String name = "liukun";
+			ByteBuffer buf = createContent( name );
+			sendPacket( nbc, buf );
+			ByteBuffer data = getData( nbc );
+			parse( data );
+		}
 		nbc.close();
 	}
 
@@ -69,11 +76,12 @@ public class LoginPackageTest extends BasePackageTest {
 	}
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
-		for( int i = 0; i < 1000; i++ ){
-			System.out.print( i + ":");
-			LoginPackageTest lt = new LoginPackageTest();
-			lt.run();
-		}
+//		for( int i = 0; i < 1000; i++ ){
+//			System.out.print( i + ":");
+//			UserLoginPackageTest lt = new UserLoginPackageTest();
+//			lt.run();
+//		}
+		new UserLoginPackageTest( 100 ).run();
 		System.exit(0);
 	}
 	

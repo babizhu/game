@@ -10,7 +10,6 @@ import java.nio.channels.ClosedChannelException;
 import org.xsocket.MaxReadSizeExceededException;
 import org.xsocket.connection.ConnectionUtils;
 import org.xsocket.connection.IConnectHandler;
-import org.xsocket.connection.IConnection.FlushMode;
 import org.xsocket.connection.IDataHandler;
 import org.xsocket.connection.IDisconnectHandler;
 import org.xsocket.connection.IIdleTimeoutHandler;
@@ -41,9 +40,6 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 	@Override
 	public boolean onConnect( INonBlockingConnection con ) throws IOException, BufferUnderflowException, MaxReadSizeExceededException {
 		con = ConnectionUtils.synchronizedConnection( con );
-
-		con.setFlushmode( FlushMode.ASYNC );
-
 		System.out.println( con.getId() + " onConnect" );
 
 		UserInfo user = new UserInfo( con );
@@ -51,9 +47,6 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.xsocket.connection.IDataHandler#onData(org.xsocket.connection.INonBlockingConnection)
-	 */
 	@Override
 	public boolean onData( INonBlockingConnection con ) throws IOException,	BufferUnderflowException, ClosedChannelException, MaxReadSizeExceededException {
 		con = ConnectionUtils.synchronizedConnection( con );
@@ -85,20 +78,7 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 				// TODO 调用某个退出函数
 			}
 			gameLogic.packageProcess( con, packageNo, data );
-//			for( int i = 0; i < 10000; i++ ){
-//				//System.out.println( i );
-//				//con.write( 34 );
-//				//System.out.println(  );
-//				con.write( 34 );
-//			}
 		}
-//		int i = 0;
-//		for( ; i < 1024*100; i++ ){
-//			int s = con.write( (byte)3 );
-//			System.out.println( s );
-//			System.out.println( i  );
-//		}
-//		System.out.println( "end");        	
 	      return true;
 	}
 	
@@ -126,5 +106,4 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 		System.out.println( con.getId() + " onDisconnect" );
 		return false;
 	}
-
 }

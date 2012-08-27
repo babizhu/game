@@ -9,9 +9,16 @@ import org.xsocket.connection.IBlockingConnection;
 
 public abstract class BasePackageTest {
 
-	//private final static Logger logger = LoggerFactory.getLogger( BasePackageTest.class ); 
 	/**
-	 * 创建一个空包
+	 * 发送包的次数
+	 */
+	public final int			count;
+	
+	public BasePackageTest( int count ) {
+		this.count = count;
+	}
+	/**
+	 * 创建一个发送到服务器的空包
 	 * @param capacity
 	 * @return
 	 */
@@ -91,4 +98,6 @@ public abstract class BasePackageTest {
 	 * @param buf
 	 */
 	public abstract void parse( ByteBuffer buf );
+	
+	public abstract void run() throws IOException, InterruptedException;
 }
