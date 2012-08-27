@@ -1,4 +1,4 @@
-package game.packages.packs;
+package client.packages.packs;
 
 import game.packages.BasePackage;
 

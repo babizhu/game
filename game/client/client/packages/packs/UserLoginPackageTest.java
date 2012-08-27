@@ -1,4 +1,5 @@
-package game.packages.packs;
+package client.packages.packs;
+
 
 
 import game.packages.Packages;
@@ -81,7 +82,7 @@ public class UserLoginPackageTest extends BasePackageTest {
 //			UserLoginPackageTest lt = new UserLoginPackageTest();
 //			lt.run();
 //		}
-		new UserLoginPackageTest( 100 ).run();
+		new UserLoginPackageTest( 1 ).run();
 		System.exit(0);
 	}
 	

@@ -1,4 +1,9 @@
-package game.packages.packs;
+package client.packages;
+
+
+import client.packages.packs.BasePackageTest;
+import client.packages.packs.UserLoginPackageTest;
+
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
