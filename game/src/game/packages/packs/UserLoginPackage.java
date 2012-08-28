@@ -8,6 +8,7 @@ import java.nio.ByteBuffer;
 
 import user.UserInfo;
 import user.UserManager;
+import user.UserStatus;
 import util.BaseUtil;
 
 
@@ -26,9 +27,15 @@ public class UserLoginPackage extends BasePackage {
 		UserManager.getInstance().login( user );
 		
 		ByteBuffer buffer = buildEmptyPackage( 1024 );
-		BaseUtil.encodeString( buffer, user.getName() );
-		buffer.put( user.getStatus().toNum() );			//玩家的状态
+		buffer.put( user.getStatus().toNum() );				//状态
+		BaseUtil.encodeString( buffer, user.getName() );	//用户名
 		
+		if( user.getStatus() == UserStatus.LOGIN ){
+			BaseUtil.encodeString( buffer, user.getNickName() );	//昵称
+			buffer.put( user.getSex() );							//性别
+			buffer.put( user.getLevel() );							//级别
+			buffer.put( (byte) (user.isAdult()? 1 : 0)  );			//是否成年			
+		}
 		sendPackage( user, buffer );
 
 	}

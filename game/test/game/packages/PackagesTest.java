@@ -45,6 +45,10 @@ public class PackagesTest {
 	@After
 	public void tearDown() throws Exception {
 	}
+	
+	/**
+	 * 测试不存在的包号
+	 */
 	@Test
 	public void testPackages(){
 		short errNumber = 1;

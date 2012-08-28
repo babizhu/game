@@ -7,13 +7,10 @@ import game.packages.Packages;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.xsocket.connection.BlockingConnection;
 import org.xsocket.connection.IBlockingConnection;
 
+import user.UserStatus;
 import util.BaseUtil;
 import define.SystemCfg;
 
@@ -22,22 +19,6 @@ public class UserLoginPackageTest extends BasePackageTest {
 	public UserLoginPackageTest(int count) {
 		super(count);
 		// TODO Auto-generated constructor stub
-	}
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
 	}
 	
 	/**
@@ -55,8 +36,9 @@ public class UserLoginPackageTest extends BasePackageTest {
 	@Override
 	public
 	void parse( ByteBuffer buf ){
+		UserStatus status = UserStatus.fromNum( buf.get() );
 		String name = BaseUtil.decodeString(buf);
-		System.out.println( name );
+		System.out.println( status + " " + name );
 	}
 	public void run() throws IOException, InterruptedException{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );

@@ -39,7 +39,7 @@ public enum UserStatus {
 	public byte toNum() {
 		return number;
 	}
-	static UserStatus fromNum( byte n ){
+	public static UserStatus fromNum( byte n ){
 		return numToEnum.get( n );
 	}
 	

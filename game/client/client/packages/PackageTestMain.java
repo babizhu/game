@@ -12,7 +12,11 @@ import java.util.concurrent.TimeUnit;
 
 import util.BaseUtil;
 
-
+/**
+ * 发包线程
+ * @author admin
+ * 2012-8-28 上午10:09:10
+ */
 class Client implements Runnable{
 
 	BasePackageTest pack;
@@ -33,8 +37,8 @@ class Client implements Runnable{
 }
 public class PackageTestMain {
 	public static void main(String[] args) throws InterruptedException {
-		int count = 30000;
-		int threadCount = 5000;
+		int count = 30000;//发包数量
+		int threadCount = 500;//线程数量
 		ExecutorService exec = Executors.newCachedThreadPool();
 		long begin = System.nanoTime();
 		for( int i = 0; i < threadCount; i++ ){

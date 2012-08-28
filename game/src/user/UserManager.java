@@ -25,19 +25,16 @@ public class UserManager {
 	
 
 	/**
-	 * 玩家尝试登陆
+	 * 玩家尝试登陆<br>
+	 * 目前只有三种情况 1、新玩家，2、正常登陆，3、被BAN玩家<br>
+	 * 除了正常登陆需要一定处理以外，其他两种情况均可发送给客户端进行处理
 	 * @param user
 	 * @return
 	 */
 	public void login( UserInfo user ){
 		db.login( user );
-		if( user.getStatus() == UserStatus.NEW ){
-//			return ErrorCode.USER_NOT_FOUND;
-		}
-		else if( user.getStatus() == UserStatus.LOGIN ){
+		if( user.getStatus() == UserStatus.LOGIN ){
 			doLogin( user );
-		}
-		else{
 		}
 	}
 	
@@ -68,6 +65,7 @@ public class UserManager {
 	 * @return
 	 */
 	public ErrorCode create( UserInfo user ){
+		db.create( user );
 		doLogin( user );
 		return null;
 	}

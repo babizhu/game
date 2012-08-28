@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import util.ErrorCode;
+
 
 
 /**
@@ -29,13 +31,14 @@ public class UserInfoDataProvider {
 	 * @param user
 	 */
 	void login(UserInfo user) {
-		Connection conn = DatabaseUtil.getConnection();
-		PreparedStatement pst;
+		Connection con = DatabaseUtil.getConnection();
+		PreparedStatement pst = null;
+		ResultSet rs = null;
 		try {
 			String sql = "SELECT * from user_base where name=?";
-			pst = conn.prepareStatement( sql );
+			pst = con.prepareStatement( sql );
 			pst.setString( 1, user.getName() );
-			ResultSet rs = pst.executeQuery();
+			rs = pst.executeQuery();
 
 			if( rs.next() ) {
 				user.setLevel( rs.getByte("level") );
@@ -45,14 +48,53 @@ public class UserInfoDataProvider {
 			}
 			else{//数据库无此玩家
 				user.setStatus( UserStatus.NEW );
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally{			
+			DatabaseUtil.close( rs, pst, con );
+		}
+	}
+	
+	/**
+	 * 检测昵称在游戏中是否已经存在
+	 * @param uName
+	 * @return
+	 * 		true:	昵称存在
+	 */
+	boolean nickNameIsDuplicate( String uName ){
+		Connection con = DatabaseUtil.getConnection();
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT sex from user_base where name=?";
+			pst = con.prepareStatement( sql );
+			pst.setString( 1, uName );
+			rs = pst.executeQuery();
+
+			if( rs.next() ) {
+				return true;  
 			}
-			
-			rs.close();
-			pst.close();
-			conn.close();
+			else{//数据库无此玩家
+				return false;
+			}	
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		finally{			
+			DatabaseUtil.close( rs, pst, con );
+		}
+		return true;
+	}
+	
+	/**
+	 * 创建玩家
+	 * @param user
+	 */
+	public ErrorCode create(UserInfo user) {
+		// TODO Auto-generated method stub
+		
 	}
 }

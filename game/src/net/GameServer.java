@@ -32,7 +32,7 @@ public class GameServer extends Server{
 	public GameServer( InetAddress address, int port, IHandler handler ) throws UnknownHostException, IOException {
 		super(address, port, handler);
 		setFlushmode( FlushMode.ASYNC );
-		setIdleTimeoutMillis( 1000000 );
+		setIdleTimeoutMillis( 1000000000 );
 	}
 
  

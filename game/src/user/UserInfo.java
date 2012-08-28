@@ -36,27 +36,46 @@ public class UserInfo {
 	/**
 	 * 金币
 	 */
-	int			money;
+	private int			money;
 	
 	/**
 	 * 体力
 	 */
-	int			strength;
+	private short		strength;
 	
 	/**
 	 * 昵称
 	 */
-	String		nickName;
+	private String		nickName;
 	
 	/**
 	 * 用户名
 	 */
-	String		name;
+	private String		name;
 	
 	/**
 	 * 等级
 	 */
-	byte		level;
+	private byte		level;
+	
+	/**
+	 * 创建时间			
+	 */
+	private long		createTime;
+	
+	/**
+	 * 上次下线时间
+	 */
+	private long		lastLogoutTime;
+	
+	/**
+	 * 玩家总的登陆次数
+	 */
+	private int			loginCount;
+	
+	private byte		sex;
+	
+	private boolean		isAdult;
 	
 	/**
 	 * 缺省的空白构造函数，用于测试函数等地方使用，以后如不需要，可删除
@@ -189,13 +208,6 @@ public class UserInfo {
 	 * @param funcName
 	 */
 	private void buildLog( AwardType at, int change, int current, String funcName ){
-//		String log = at.toString();
-//		log += ",";
-//		log += change;
-//		log += ",";
-//		log += current;
-//		log += ",";
-//		log += funcName;
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append( name );		//用户名
@@ -248,6 +260,47 @@ public class UserInfo {
 		this.packageManager = packageManager;
 	}
 	
+	
+	public long getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(long createTime) {
+		this.createTime = createTime;
+	}
+
+	public long getLastLogoutTime() {
+		return lastLogoutTime;
+	}
+
+	public void setLastLogoutTime(long lastLogoutTime) {
+		this.lastLogoutTime = lastLogoutTime;
+	}
+
+	public int getLoginCount() {
+		return loginCount;
+	}
+
+	public void setLoginCount(int loginCount) {
+		this.loginCount = loginCount;
+	}
+
+	public byte getSex() {
+		return sex;
+	}
+
+	public void setSex(byte sex) {
+		this.sex = sex;
+	}
+
+	public boolean isAdult() {
+		return isAdult;
+	}
+
+	public void setAdult(boolean isAdult) {
+		this.isAdult = isAdult;
+	}
+
 	/**
 	 * 成功登陆之后，从数据库获取此玩家的所有信息
 	 * @param user
@@ -275,11 +328,14 @@ public class UserInfo {
 
 	@Override
 	public String toString() {
-		return "[status=" + status + ", money=" + money
-				+ ", strength=" + strength + ", nickName=" + nickName
-				+ ", name=" + name + ", level=" + level
-				+ "]";
+		return "UserInfo [packageManager=" + packageManager + ", conn=" + conn
+				+ ", status=" + status + ", money=" + money + ", strength="
+				+ strength + ", nickName=" + nickName + ", name=" + name
+				+ ", level=" + level + ", createTime=" + createTime
+				+ ", lastLogoutTime=" + lastLogoutTime + ", loginCount="
+				+ loginCount + ", sex=" + sex + ", isAdult=" + isAdult + "]";
 	}
+
 	
 	
 

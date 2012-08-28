@@ -2,7 +2,9 @@ package game.db;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Iterator;
 import java.util.List;
 
@@ -78,6 +80,24 @@ public class DatabaseUtil {
 		dataSource.setUsername( user );
 		dataSource.setPassword( password );
 
+	}
+	
+	/**
+	 * 关闭本次查询所有的打开的资源，除了rs，其余两个资源应该不可能为null，有待考证
+	 * @param rs
+	 * @param st
+	 * @param con
+	 */
+	public static void close( ResultSet rs, Statement st, Connection con ){
+		try {
+			if( rs != null ){
+				rs.close();
+			}
+			st.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main ( String[] args ) {
