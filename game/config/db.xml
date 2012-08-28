@@ -2,7 +2,7 @@
 
 
 <game>
-	<url>jdbc:mysql://localhost:3306/game</url>
+	<url>jdbc:mysql://localhost:3306/game?useUnicode=true&characterEncoding=UTF-8</url>
 	<user>root</user>
 	<password>game</password>	
 </game>
