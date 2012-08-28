@@ -6,6 +6,11 @@ public enum ErrorCode {
 	LEVEL_NOT_ENOUGH,
 	
 	/**
+	 * 玩家用户名重复
+	 */
+	USER_DUPLICATE_NAME,
+	
+	/**
 	 * 玩家尚未注册
 	 */
 	USER_NOT_FOUND,

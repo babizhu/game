@@ -67,8 +67,8 @@ public class UserInfoDataProvider {
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;
 		ResultSet rs = null;
+		String sql = "SELECT sex from user_base where name=?";
 		try {
-			String sql = "SELECT sex from user_base where name=?";
 			pst = con.prepareStatement( sql );
 			pst.setString( 1, uName );
 			rs = pst.executeQuery();
@@ -94,7 +94,22 @@ public class UserInfoDataProvider {
 	 * @param user
 	 */
 	public ErrorCode create(UserInfo user) {
-		// TODO Auto-generated method stub
-		
+		if( nickNameIsDuplicate( user.getName() ) ){
+			return ErrorCode.USER_DUPLICATE_NAME;
+		}
+		Connection con = DatabaseUtil.getConnection();
+		PreparedStatement pst = null;								  
+		String sql = "insert into user_base(name,nick_name, sex, money, strength, status,login_count,create_time,lastlogout_time,is_adult) values" +
+										  "(   ?,	     ?,   ?,	 ?,        ?,      ?,          ?,          ?,              ?,       ?)";
+		try {
+			pst = con.prepareStatement( sql );
+			pst.setString( 1, user.getName() );
+			pst.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DatabaseUtil.close( null, pst, con );
+		}
+		return ErrorCode.SUCCESS;
 	}
 }
