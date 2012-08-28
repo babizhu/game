@@ -23,6 +23,7 @@ CREATE TABLE `user_base` (
   `name` char(35) NOT NULL DEFAULT '',
   `nick_name` varchar(35) NOT NULL DEFAULT '' COMMENT '昵称',
   `sex` tinyint(1) NOT NULL DEFAULT '0' COMMENT '性别，0:女 1:男  2:人妖',
+  `level` smallint(3) DEFAULT '1' COMMENT '级别',
   `money` int(11) NOT NULL DEFAULT '0' COMMENT '金币',
   `strength` smallint(6) NOT NULL DEFAULT '100' COMMENT '体力',
   `status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '1:正常登陆 2:被ban用户',
@@ -40,6 +41,7 @@ CREATE TABLE `user_base` (
 
 LOCK TABLES `user_base` WRITE;
 /*!40000 ALTER TABLE `user_base` DISABLE KEYS */;
+INSERT INTO `user_base` VALUES ('liukun','???',1,1,0,0,1,0,0,1346174233,b'0');
 /*!40000 ALTER TABLE `user_base` ENABLE KEYS */;
 UNLOCK TABLES;
 

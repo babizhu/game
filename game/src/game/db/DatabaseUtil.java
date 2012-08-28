@@ -37,7 +37,7 @@ public class DatabaseUtil {
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
-			conn.createStatement().execute("set names utf8");
+			//conn.createStatement().execute("set names utf8");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
