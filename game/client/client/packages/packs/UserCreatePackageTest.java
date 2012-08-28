@@ -10,13 +10,13 @@ import java.nio.ByteBuffer;
 import org.xsocket.connection.BlockingConnection;
 import org.xsocket.connection.IBlockingConnection;
 
-import user.UserStatus;
 import util.BaseUtil;
+import util.ErrorCode;
 import define.SystemCfg;
 
-public class UserLoginPackageTest extends BasePackageTest {
+public class UserCreatePackageTest extends BasePackageTest {
 
-	public UserLoginPackageTest(int count) {
+	public UserCreatePackageTest(int count) {
 		super(count);
 		// TODO Auto-generated constructor stub
 	}
@@ -24,27 +24,30 @@ public class UserLoginPackageTest extends BasePackageTest {
 	/**
 	 * 
 	 * @param name	玩家名字
+	 * @param name	玩家昵称
 	 * @return
 	 */
-	public ByteBuffer createContent( String name ){
+	public ByteBuffer createContent( String name, String nickName ){
 		ByteBuffer buf = createEmptyPackage(1024);
-		BaseUtil.encodeString( buf, name );
+		BaseUtil.encodeString( buf, name );					//用户名
+		BaseUtil.encodeString( buf, nickName );				//昵称
+		buf.put( (byte) 1 );								//性别
 		return buf;
 	}
 	
 	@Override
 	public
 	void parse( ByteBuffer buf ){
-		UserStatus status = UserStatus.fromNum( buf.get() );
-		String name = BaseUtil.decodeString(buf);
-		System.out.println( status + " " + name );
+		ErrorCode eCode = ErrorCode.values()[buf.getShort()];
+		System.out.println( eCode );
 	}
 	public void run() throws IOException, InterruptedException{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		for( int i = 0; i < count; i++ ){
 			System.out.print( i + ":");
 			String name = "liukun";
-			ByteBuffer buf = createContent( name );
+			String nickName = "巴比猪";
+			ByteBuffer buf = createContent( name, nickName );
 			sendPacket( nbc, buf );
 			ByteBuffer data = getData( nbc );
 			parse( data );
@@ -54,7 +57,7 @@ public class UserLoginPackageTest extends BasePackageTest {
 
 	@Override
 	public short getPacketNo() {
-		return Packages.USER_LOGIN.toNum();
+		return Packages.USER_CREATE.toNum();
 	}
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
@@ -63,7 +66,8 @@ public class UserLoginPackageTest extends BasePackageTest {
 //			UserLoginPackageTest lt = new UserLoginPackageTest();
 //			lt.run();
 //		}
-		new UserLoginPackageTest( 1 ).run();
+		int runCount = 2;
+		new UserCreatePackageTest( runCount ).run();
 		System.exit(0);
 	}
 	

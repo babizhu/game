@@ -7,7 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import util.ErrorCode;
+import util.SystemTimer;
 
 
 
@@ -18,7 +22,7 @@ import util.ErrorCode;
  * @author liukun 2012-8-20 下午05:53:59
  */
 public class UserInfoDataProvider {
-	
+	private final static Logger logger = LoggerFactory.getLogger(UserInfoDataProvider.class);
 	private static UserInfoDataProvider instance = new UserInfoDataProvider();
 	public static  UserInfoDataProvider getInstance(){
 		return instance;
@@ -41,8 +45,9 @@ public class UserInfoDataProvider {
 			rs = pst.executeQuery();
 
 			if( rs.next() ) {
-				user.setLevel( rs.getByte("level") );
+				user.setLevel( rs.getShort("level") );
 				user.setNickName( rs.getString("nick_name") );
+				System.out.println( user.getNickName() );
 				user.setStatus( UserStatus.fromNum( rs.getByte( "status" ) ) );
 				user.setMoney( rs.getInt( "money" ) );
 			}
@@ -99,14 +104,22 @@ public class UserInfoDataProvider {
 		}
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;								  
-		String sql = "insert into user_base(name,nick_name, sex, money, strength, status,login_count,create_time,lastlogout_time,is_adult) values" +
-										  "(   ?,	     ?,   ?,	 ?,        ?,      ?,          ?,          ?,              ?,       ?)";
+		String sql = "insert into user_base(name,nick_name, sex, money, strength,create_time,is_adult) values" +
+										  "(   ?,	     ?,   ?,	 ?,        ?,          ?,       ?)";
+		int	i = 1;
 		try {
 			pst = con.prepareStatement( sql );
-			pst.setString( 1, user.getName() );
+			pst.setString( i++, user.getName() );
+			pst.setString( i++, user.getNickName() );
+			pst.setByte( i++, user.getSex() );
+			pst.setInt( i++, user.getMoney() );
+			pst.setInt( i++, user.getStrength() );
+			pst.setInt( i++, SystemTimer.currentTimeSecond() );
+			pst.setByte( i++, (byte) (user.isAdult() ? 1 : 0) );
 			pst.execute();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.debug( e.getLocalizedMessage() );
+			return ErrorCode.DB_ERROR;
 		} finally {
 			DatabaseUtil.close( null, pst, con );
 		}

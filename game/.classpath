@@ -10,11 +10,11 @@
 	<classpathentry kind="lib" path="lib/logback-classic-1.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/logback-core-1.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.6.6.jar"/>
-	<classpathentry kind="lib" path="lib/druid-0.2.4.jar" sourcepath="C:/Documents and Settings/Admin/.m2/repository/com/alibaba/druid/0.2.4/druid-0.2.4-sources.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.9-bin.jar"/>
 	<classpathentry kind="lib" path="lib/dom4j.jar"/>
 	<classpathentry kind="lib" path="lib/jdom-2.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/xSocket-2.8.14.jar" sourcepath="C:/Documents and Settings/Admin/.m2/repository/org/xsocket/xSocket/2.8.14/xSocket-2.8.14-sources.jar"/>
+	<classpathentry kind="lib" path="lib/druid-0.2.5.jar" sourcepath="E:/work/java/workspace/game_git/game/lib/druid-0.2.5-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

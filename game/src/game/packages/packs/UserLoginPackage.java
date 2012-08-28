@@ -32,8 +32,7 @@ public class UserLoginPackage extends BasePackage {
 		
 		if( user.getStatus() == UserStatus.LOGIN ){
 			BaseUtil.encodeString( buffer, user.getNickName() );	//昵称
-			buffer.put( user.getSex() );							//性别
-			buffer.put( user.getLevel() );							//级别
+			buffer.putShort( user.getSex() );						//性别
 			buffer.put( (byte) (user.isAdult()? 1 : 0)  );			//是否成年			
 		}
 		sendPackage( user, buffer );

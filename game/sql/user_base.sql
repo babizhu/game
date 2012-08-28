@@ -12,7 +12,7 @@
 
 # Host: localhost    Database: game
 # ------------------------------------------------------
-# Server version 5.0.22-community-nt
+# Server version 5.5.22
 
 #
 # Source for table user_base
@@ -20,17 +20,17 @@
 
 DROP TABLE IF EXISTS `user_base`;
 CREATE TABLE `user_base` (
-  `name` char(35) NOT NULL default '',
-  `nick_name` varchar(35) NOT NULL default '' COMMENT '昵称',
-  `sex` tinyint(1) NOT NULL default '0' COMMENT '性别，0:女 1:男  2:人妖',
-  `money` int(11) NOT NULL default '0' COMMENT '金币',
-  `strength` smallint(6) NOT NULL default '100' COMMENT '体力',
-  `status` tinyint(3) NOT NULL default '1' COMMENT '1:正常登陆 2:被ban用户',
-  `login_count` int(11) NOT NULL default '0' COMMENT '玩家总的登陆次数',
-  `lastlogout_time` int(11) NOT NULL default '0' COMMENT '上次下线时间',
-  `create_time` int(11) NOT NULL default '0' COMMENT '用户创建的时间',
-  `is_adult` bit(1) NOT NULL default '' COMMENT '是否成年',
-  PRIMARY KEY  (`name`),
+  `name` char(35) NOT NULL DEFAULT '',
+  `nick_name` varchar(35) NOT NULL DEFAULT '' COMMENT '昵称',
+  `sex` tinyint(1) NOT NULL DEFAULT '0' COMMENT '性别，0:女 1:男  2:人妖',
+  `money` int(11) NOT NULL DEFAULT '0' COMMENT '金币',
+  `strength` smallint(6) NOT NULL DEFAULT '100' COMMENT '体力',
+  `status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '1:正常登陆 2:被ban用户',
+  `login_count` int(11) NOT NULL DEFAULT '0' COMMENT '玩家总的登陆次数',
+  `lastlogout_time` int(11) NOT NULL DEFAULT '0' COMMENT '上次下线时间',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '用户创建的时间',
+  `is_adult` bit(1) NOT NULL DEFAULT b'1' COMMENT '是否成年',
+  PRIMARY KEY (`name`),
   UNIQUE KEY `nick_name` (`nick_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
