@@ -56,7 +56,7 @@ public class UserInfo {
 	/**
 	 * 等级
 	 */
-	private byte		level;
+	private short		level;
 	
 	/**
 	 * 创建时间			
@@ -92,10 +92,10 @@ public class UserInfo {
 		this.conn = conn;
 	}
 	
-	public byte getLevel () {
+	public short getLevel () {
 		return level;
 	}
-	public void setLevel ( byte level ) {
+	public void setLevel ( short level ) {
 		this.level = level;
 	}
 	/**
@@ -299,6 +299,15 @@ public class UserInfo {
 
 	public void setAdult(boolean isAdult) {
 		this.isAdult = isAdult;
+	}
+
+	
+	public short getStrength() {
+		return strength;
+	}
+
+	public void setStrength(short strength) {
+		this.strength = strength;
 	}
 
 	/**

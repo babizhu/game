@@ -48,6 +48,11 @@ public class SystemTimer {
 		return time;
 		// return System.currentTimeMillis();
 	}
+	public static int currentTimeSecond() {
+		// System.out.println( "time:" + time );
+		return (int) (time / 1000);
+		// return System.currentTimeMillis();
+	}
 
 	public static void main(String[] args) throws InterruptedException {
 		for (int i = 0; i < 10; i++) {

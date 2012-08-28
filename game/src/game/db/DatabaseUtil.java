@@ -76,9 +76,9 @@ public class DatabaseUtil {
 		}
 		
 		
-		dataSource.setUrl( url );
 		dataSource.setUsername( user );
 		dataSource.setPassword( password );
+		dataSource.setUrl( url );
 
 	}
 	

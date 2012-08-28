@@ -40,5 +40,9 @@ public enum ErrorCode {
 	 */
 	PACKAGE_SAFE_CHECK_FAIL,
 	
-	UNKNOW_ERROR;
+	/**
+	 * 数据库错误
+	 */
+	DB_ERROR,
+	UNKNOW_ERROR, ;
 }

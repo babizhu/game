@@ -87,11 +87,11 @@ public abstract class BasePackageTest {
 	public abstract short getPacketNo ();
 	
 	/**
-	 * 重载以实现不同包发送不同数据
+	 * 重载以实现不同包发送不同数据，参数似乎不好统一，因此暂时注释掉，看看有没有更好的方法
 	 * @param name
 	 * @return
 	 */
-	public abstract ByteBuffer createContent( String name );
+	//public abstract ByteBuffer createContent( String name );
 	
 	/**
 	 * 解析服务器端的返回包

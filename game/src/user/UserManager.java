@@ -12,6 +12,7 @@ import util.ErrorCode;
  * 2012-8-20 下午04:09:39
  */
 public class UserManager {
+	//private final static Logger logger = LoggerFactory.getLogger(UserManager.class);
 	
 	private static final UserManager instance = new UserManager();
 	public static final UserManager getInstance(){
@@ -65,9 +66,12 @@ public class UserManager {
 	 * @return
 	 */
 	public ErrorCode create( UserInfo user ){
-		db.create( user );
-		doLogin( user );
-		return null;
+		return db.create( user ) ;
+//		if( eCode != ErrorCode.SUCCESS );{
+//			return eCode;
+//		}
+//		doLogin( user );
+//		return null;
 	}
 	
 	@Override
