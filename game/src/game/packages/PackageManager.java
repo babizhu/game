@@ -45,6 +45,7 @@ public class PackageManager {
 	 * @param packageNo		包号
 	 * @param buf			消息正文
 	 * @return
+	 * 		PACKAGE_SAFE_CHECK_FAIL
 	 */
 	public ErrorCode run( UserInfo user, Packages pack, ByteBuffer buf ){
 		
@@ -68,6 +69,7 @@ public class PackageManager {
 	private boolean safeCheck( Packages pack ){
 		long current = SystemTimer.currentTimeMillis();
 		if( pack == lastPack && current - lastReceiveTime < MIN_INTERVAL_MILS ){
+			System.out.println( current + "-" + lastReceiveTime  + "=" + (current - lastReceiveTime) );
 			return false;
 		}
 		lastPack = pack;
@@ -77,6 +79,7 @@ public class PackageManager {
 	
 	/**
 	 * 返回按字节为单位收到的客户端传来的数据信息，调试用
+	 * 
 	 * @param buf
 	 * @return
 	 */

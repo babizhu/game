@@ -72,7 +72,7 @@ public class UserManager {
 	 */
 	public ErrorCode create( UserInfo user ){
 		ErrorCode eCode = db.create( user ) ;
-		if( eCode == ErrorCode.SUCCESS );{
+		if( eCode == ErrorCode.SUCCESS ){
 			user.setStatus( UserStatus.LOGIN );
 		}
 //		doLogin( user );

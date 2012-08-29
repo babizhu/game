@@ -37,21 +37,20 @@ public class GameMainLogic implements IGameLogic {
 	 * 
 	 * @param con
 	 * @param packageNo
-	 * @param data
+	 * @param data			去除包头，包尾，包号，包长的附加信息的数据
 	 */
 	@Override
-	public void packageProcess(INonBlockingConnection con, short packageNo,	byte[] data) {
+	public void packageProcess( INonBlockingConnection con, short packageNo, byte[] data) {
 		Packages pack = Packages.fromNum(packageNo);
 		ErrorCode eCode;
 		UserInfo user = (UserInfo) con.getAttachment();
 		synchronized (user) {
 			if (pack == null) {
-				eCode = ErrorCode.PACKAGE_NOT_FOUND;//此处未同步是否有问题？
+				eCode = ErrorCode.PACKAGE_NOT_FOUND;
 			} else {
 				ByteBuffer buf = ByteBuffer.wrap(data);
 				if (user.getStatus() == UserStatus.GUEST
 						&& (pack != Packages.USER_LOGIN && pack != Packages.USER_CREATE )) {
-					// TODO 玩家非法，移除此连接
 					eCode = ErrorCode.USER_NOT_LOGIN;
 				}
 				else{
@@ -59,8 +58,7 @@ public class GameMainLogic implements IGameLogic {
 				}
 			}
 			if (eCode != ErrorCode.SUCCESS) {
-				logger.debug(user.getName() + "[" + con.getId() + "], 包号:" + packageNo + ", 错误码:"
-						+ eCode);
+				logger.debug(user.getName() + "[" + con.getId() + "], 包号:" + packageNo + ", 错误码:" + eCode );
 				
 				//TODO 断开连接？
 			}

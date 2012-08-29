@@ -94,7 +94,9 @@ public class DatabaseUtil {
 			if( rs != null ){
 				rs.close();
 			}
-			st.close();
+			if( st != null ){
+				st.close();
+			}
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
