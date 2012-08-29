@@ -14,7 +14,7 @@
 	<classpathentry kind="lib" path="lib/jdom-2.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/xSocket-2.8.14.jar" sourcepath="C:/Documents and Settings/Admin/.m2/repository/org/xsocket/xSocket/2.8.14/xSocket-2.8.14-sources.jar"/>
 	<classpathentry kind="lib" path="lib/druid-0.2.5.jar" sourcepath="E:/work/java/workspace/game_git/game/lib/druid-0.2.5-sources.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.10-bin.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.15-bin.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

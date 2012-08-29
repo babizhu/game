@@ -40,7 +40,7 @@ public class DatabaseUtilTest {
 		assertNotNull( conn );
 	}
 	
-	@SuppressWarnings("unused")
+
 	@Test
 	/**
 	 * 测试数据库的连接池
@@ -52,16 +52,14 @@ public class DatabaseUtilTest {
 		for( int i = 0; i < count; i++ ){
 			Connection conn = DatabaseUtil.getConnection();
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery( "SELECT rank,uname from city_elite order by rank" );
+			ResultSet rs = stmt.executeQuery( "SELECT * from user_base" );
 			
-			while(rs != null && rs.next()){
+			while( rs.next()){
 				
-				int rank = rs.getInt( "rank" );
-				String uname = rs.getString( "uname" );				
+				//int rank = rs.getInt( "money" );
+				//String uname = rs.getString( "nick_name" );				
 			}
-			rs.close();
-			stmt.close();
-			conn.close();
+			DatabaseUtil.close(rs, stmt, conn);
 		}
 		
 		System.out.println( "耗时：" + (System.nanoTime() - begin) / 1000000000f + "秒" );
