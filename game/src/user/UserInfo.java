@@ -1,5 +1,8 @@
 package user;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import game.AwardType;
 import game.packages.PackageManager;
 
@@ -59,23 +62,23 @@ public class UserInfo {
 	private short		level;
 	
 	/**
-	 * 创建时间			
+	 * 创建时间，单位：秒	
 	 */
-	private long		createTime;
+	private int		createTime;
 	
 	/**
-	 * 上次下线时间
+	 * 上次下线时间，单位：秒
 	 */
-	private long		lastLogoutTime;
+	private int		lastLogoutTime;
 	
 	/**
 	 * 玩家总的登陆次数
 	 */
-	private int			loginCount;
+	private short		loginCount;
 	
 	private byte		sex;
 	
-	private boolean		isAdult;
+	private boolean		isAdult					= true;
 	
 	/**
 	 * 缺省的空白构造函数，用于测试函数等地方使用，以后如不需要，可删除
@@ -261,11 +264,11 @@ public class UserInfo {
 	}
 	
 	
-	public long getCreateTime() {
+	public int getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(long createTime) {
+	public void setCreateTime(int createTime) {
 		this.createTime = createTime;
 	}
 
@@ -273,15 +276,15 @@ public class UserInfo {
 		return lastLogoutTime;
 	}
 
-	public void setLastLogoutTime(long lastLogoutTime) {
+	public void setLastLogoutTime(int lastLogoutTime) {
 		this.lastLogoutTime = lastLogoutTime;
 	}
 
-	public int getLoginCount() {
+	public short getLoginCount() {
 		return loginCount;
 	}
 
-	public void setLoginCount(int loginCount) {
+	public void setLoginCount(short loginCount) {
 		this.loginCount = loginCount;
 	}
 
@@ -337,11 +340,13 @@ public class UserInfo {
 
 	@Override
 	public String toString() {
-		return "UserInfo [packageManager=" + packageManager + ", conn=" + conn
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+		//dateFormat.format( new Date(createTime * 1000l) )格式
+		return "UserInfo [conn=" + conn
 				+ ", status=" + status + ", money=" + money + ", strength="
 				+ strength + ", nickName=" + nickName + ", name=" + name
-				+ ", level=" + level + ", createTime=" + createTime
-				+ ", lastLogoutTime=" + lastLogoutTime + ", loginCount="
+				+ ", level=" + level + ", createTime=" + dateFormat.format( new Date(createTime * 1000l) )
+				+ ", lastLogoutTime=" + dateFormat.format( new Date(lastLogoutTime * 1000l) ) + ", loginCount="
 				+ loginCount + ", sex=" + sex + ", isAdult=" + isAdult + "]";
 	}
 

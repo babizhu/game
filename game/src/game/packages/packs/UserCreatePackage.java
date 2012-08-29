@@ -31,7 +31,7 @@ public class UserCreatePackage extends BasePackage {
 		
 		ErrorCode eCode =UserManager.getInstance().create(user);
 		
-		ByteBuffer buffer = buildEmptyPackage( 1024 );
+		ByteBuffer buffer = buildEmptyPackage( 8 );
 		buffer.putShort( (short) eCode.ordinal() );			//错误代码
 		
 		sendPackage( user, buffer );

@@ -57,11 +57,12 @@ public class GameMainLogic implements IGameLogic {
 				else{
 					eCode = user.getPackageManager().run(user, pack, buf);
 				}
-
 			}
 			if (eCode != ErrorCode.SUCCESS) {
-				logger.debug(user.getName() + ", 包号:" + packageNo + ", 错误码:"
+				logger.debug(user.getName() + "[" + con.getId() + "], 包号:" + packageNo + ", 错误码:"
 						+ eCode);
+				
+				//TODO 断开连接？
 			}
 		}
 	}

@@ -44,14 +44,10 @@ public class SystemTimer {
 	}
 
 	public static long currentTimeMillis() {
-		// System.out.println( "time:" + time );
 		return time;
-		// return System.currentTimeMillis();
 	}
 	public static int currentTimeSecond() {
-		// System.out.println( "time:" + time );
 		return (int) (time / 1000);
-		// return System.currentTimeMillis();
 	}
 
 	public static void main(String[] args) throws InterruptedException {

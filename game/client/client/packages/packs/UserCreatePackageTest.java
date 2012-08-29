@@ -45,8 +45,8 @@ public class UserCreatePackageTest extends BasePackageTest {
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		for( int i = 0; i < count; i++ ){
 			System.out.print( i + ":");
-			String name = "liukun";
-			String nickName = "巴比猪";
+			String name = "刘昆" + i;
+			String nickName = "巴比猪" + i;
 			ByteBuffer buf = createContent( name, nickName );
 			sendPacket( nbc, buf );
 			ByteBuffer data = getData( nbc );
@@ -66,8 +66,12 @@ public class UserCreatePackageTest extends BasePackageTest {
 //			UserLoginPackageTest lt = new UserLoginPackageTest();
 //			lt.run();
 //		}
-		int runCount = 2;
+		int runCount = 10000;
+		long begin = System.nanoTime();
 		new UserCreatePackageTest( runCount ).run();
+		System.out.println("用时" + ((System.nanoTime() - begin) / 1000000000f)
+				+ "秒");
+		
 		System.exit(0);
 	}
 	

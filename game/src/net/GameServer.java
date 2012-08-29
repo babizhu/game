@@ -5,6 +5,7 @@ package net;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.charset.Charset;
 import java.util.Date;
 
 import javax.management.JMException;
@@ -39,6 +40,9 @@ public class GameServer extends Server{
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException, JMException {
 		
+		System.out.println("编码集= "+System.getProperty("file.encoding"));
+		System.out.println("编码集1= "+Charset.defaultCharset() );
+
 		System.out.println( new Date().toLocaleString() + " server start now..." );
         System.out.println( new Date().toLocaleString() + " game version: " + SystemCfg.VERSION );        
 		

@@ -28,14 +28,20 @@ public class UserLoginPackage extends BasePackage {
 		
 		ByteBuffer buffer = buildEmptyPackage( 1024 );
 		buffer.put( user.getStatus().toNum() );				//状态
-		BaseUtil.encodeString( buffer, user.getName() );	//用户名
+		//BaseUtil.encodeString( buffer, user.getName() );	//用户名，似乎没必要发送
 		
 		if( user.getStatus() == UserStatus.LOGIN ){
 			BaseUtil.encodeString( buffer, user.getNickName() );	//昵称
-			buffer.putShort( user.getSex() );						//性别
-			buffer.put( (byte) (user.isAdult()? 1 : 0)  );			//是否成年			
+			buffer.put( user.getSex() );							//性别
+			buffer.put( (byte) (user.isAdult()? 1 : 0)  );			//是否成年
+			buffer.putShort( user.getStrength()  );					//体力
+			buffer.putInt( user.getMoney()  );						//金币
+			buffer.putShort( user.getLoginCount() );				//登陆次数	
+			buffer.putInt( user.getCreateTime() );					//创建时间
+//			
 		}
 		sendPackage( user, buffer );
 
 	}
+	
 }

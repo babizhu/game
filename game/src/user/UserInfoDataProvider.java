@@ -24,7 +24,7 @@ import util.SystemTimer;
 public class UserInfoDataProvider {
 	private final static Logger logger = LoggerFactory.getLogger(UserInfoDataProvider.class);
 	private static UserInfoDataProvider instance = new UserInfoDataProvider();
-	public static  UserInfoDataProvider getInstance(){
+	static  UserInfoDataProvider getInstance(){
 		return instance;
 	}
 	private UserInfoDataProvider(){
@@ -33,8 +33,10 @@ public class UserInfoDataProvider {
 	/**
 	 * 玩家尝试登陆命令
 	 * @param user
+	 * @return
+	 * 		DB_ERROR
 	 */
-	void login(UserInfo user) {
+	ErrorCode login( UserInfo user ) {
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -47,35 +49,44 @@ public class UserInfoDataProvider {
 			if( rs.next() ) {
 				user.setLevel( rs.getShort("level") );
 				user.setNickName( rs.getString("nick_name") );
-				System.out.println( user.getNickName() );
 				user.setStatus( UserStatus.fromNum( rs.getByte( "status" ) ) );
 				user.setMoney( rs.getInt( "money" ) );
+				user.setStrength( rs.getShort( "strength" ) );
+				user.setAdult( rs.getBoolean( "is_adult" ) ) ;
+				user.setCreateTime( rs.getInt( "create_time" ) );
+				user.setLastLogoutTime( rs.getInt( "lastlogout_time" ) );
+				user.setLoginCount( rs.getShort( "login_count" ) );
+				user.setSex( rs.getByte( "sex" ) );
+				
 			}
 			else{//数据库无此玩家
 				user.setStatus( UserStatus.NEW );
 			}			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.debug( e.getLocalizedMessage(), e );
+			return ErrorCode.DB_ERROR; 
 		}
 		finally{			
 			DatabaseUtil.close( rs, pst, con );
 		}
+		return ErrorCode.SUCCESS;
 	}
 	
 	/**
-	 * 检测昵称在游戏中是否已经存在
+	 * 检测昵称或用户名在游戏中是否已经存在
 	 * @param uName
 	 * @return
-	 * 		true:	昵称存在
+	 * 		true:	昵称或者用户名已存在
 	 */
-	boolean nickNameIsDuplicate( String uName ){
+	boolean nameIsDuplicate( UserInfo user ){
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		String sql = "SELECT sex from user_base where name=?";
+		String sql = "SELECT sex from user_base where name=? or nick_name=?";
 		try {
 			pst = con.prepareStatement( sql );
-			pst.setString( 1, uName );
+			pst.setString( 1, user.getName() );
+			pst.setString( 2, user.getNickName() );
 			rs = pst.executeQuery();
 
 			if( rs.next() ) {
@@ -86,7 +97,7 @@ public class UserInfoDataProvider {
 			}	
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.debug( e.getLocalizedMessage(), e );
 		}
 		finally{			
 			DatabaseUtil.close( rs, pst, con );
@@ -97,9 +108,11 @@ public class UserInfoDataProvider {
 	/**
 	 * 创建玩家
 	 * @param user
+	 * @return
+	 * 		USER_DUPLICATE_NAME,DB_ERROR
 	 */
-	public ErrorCode create(UserInfo user) {
-		if( nickNameIsDuplicate( user.getName() ) ){
+	ErrorCode create(UserInfo user) {
+		if( nameIsDuplicate( user ) ){
 			return ErrorCode.USER_DUPLICATE_NAME;
 		}
 		Connection con = DatabaseUtil.getConnection();
@@ -115,10 +128,10 @@ public class UserInfoDataProvider {
 			pst.setInt( i++, user.getMoney() );
 			pst.setInt( i++, user.getStrength() );
 			pst.setInt( i++, SystemTimer.currentTimeSecond() );
-			pst.setByte( i++, (byte) (user.isAdult() ? 1 : 0) );
+			pst.setBoolean( i++, user.isAdult() );
 			pst.execute();
 		} catch (SQLException e) {
-			logger.debug( e.getLocalizedMessage() );
+			logger.debug( e.getLocalizedMessage(), e );
 			return ErrorCode.DB_ERROR;
 		} finally {
 			DatabaseUtil.close( null, pst, con );

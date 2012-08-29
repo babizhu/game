@@ -32,11 +32,16 @@ public class UserManager {
 	 * @param user
 	 * @return
 	 */
-	public void login( UserInfo user ){
-		db.login( user );
-		if( user.getStatus() == UserStatus.LOGIN ){
-			doLogin( user );
+	public ErrorCode login( UserInfo user ){
+		ErrorCode eCode = db.login( user );
+		if( eCode == ErrorCode.SUCCESS )
+		{
+			if( user.getStatus() == UserStatus.LOGIN ){
+				doLogin( user );
+			}
 		}
+		return eCode;
+		
 	}
 	
 	/**
@@ -45,7 +50,7 @@ public class UserManager {
 	 * @return
 	 */
 	public ErrorCode logout( UserInfo user ){
-		//TODO 从数据库获取数据
+		//TODO 回写数据库
 //		if( )
 		onlineUser.remove( user.getName() );
 		return null;
@@ -66,12 +71,12 @@ public class UserManager {
 	 * @return
 	 */
 	public ErrorCode create( UserInfo user ){
-		return db.create( user ) ;
-//		if( eCode != ErrorCode.SUCCESS );{
-//			return eCode;
-//		}
+		ErrorCode eCode = db.create( user ) ;
+		if( eCode == ErrorCode.SUCCESS );{
+			user.setStatus( UserStatus.LOGIN );
+		}
 //		doLogin( user );
-//		return null;
+		return eCode;
 	}
 	
 	@Override
