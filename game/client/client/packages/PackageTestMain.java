@@ -1,16 +1,14 @@
 package client.packages;
 
 
-import client.packages.packs.BasePackageTest;
-import client.packages.packs.UserLoginPackageTest;
-
-
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import util.BaseUtil;
+import client.packages.packs.BasePackageTest;
+import client.packages.packs.UserExitPackageTest;
 
 /**
  * 发包线程
@@ -37,12 +35,12 @@ class Client implements Runnable{
 }
 public class PackageTestMain {
 	public static void main(String[] args) throws InterruptedException {
-		int count = 30000;//发包数量
-		int threadCount = 500;//线程数量
+		int count = 1;//发包数量
+		int threadCount = 2;//线程数量
 		ExecutorService exec = Executors.newCachedThreadPool();
 		long begin = System.nanoTime();
 		for( int i = 0; i < threadCount; i++ ){
-			BasePackageTest p = new UserLoginPackageTest( count );
+			BasePackageTest p = new UserExitPackageTest( count );
 			exec.execute( new Client( p ) );
 		}
 		exec.shutdown();

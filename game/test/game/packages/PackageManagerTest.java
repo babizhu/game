@@ -52,15 +52,15 @@ public class PackageManagerTest {
 
 		UserInfo user = new UserInfo(); 
 		user.setName( "babizhu" );
-		ErrorCode ecode = pm.run(  user, Packages.USER_LOGIN, buf );
-		assertEquals( ecode, ErrorCode.SUCCESS );
+		ErrorCode code = pm.run(  user, Packages.USER_LOGIN, buf );
+		assertEquals( code, ErrorCode.SUCCESS );
 		
 		buf.position( 0 );
 		buf.limit( buf.capacity() );
 		buf.putInt( 3 );
 		buf.flip();
-		ecode = pm.run( user, Packages.USER_EXIT, buf );
-		assertEquals( ErrorCode.SUCCESS, ecode );
+		code = pm.run( user, Packages.USER_EXIT, buf );
+		assertEquals( ErrorCode.SUCCESS, code );
 		
 	}
 

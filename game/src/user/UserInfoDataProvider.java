@@ -13,8 +13,6 @@ import org.slf4j.LoggerFactory;
 import util.ErrorCode;
 import util.SystemTimer;
 
-
-
 /**
  * 和数据库打交道
  * 单体
@@ -34,9 +32,9 @@ public class UserInfoDataProvider {
 	 * 玩家尝试登陆命令
 	 * @param user
 	 * @return
-	 * 		DB_ERROR
+	 * 		DB_ERROR,USER_NOT_FOUND
 	 */
-	ErrorCode login( UserInfo user ) {
+	ErrorCode get( UserInfo user ) {
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -61,6 +59,7 @@ public class UserInfoDataProvider {
 			}
 			else{//数据库无此玩家
 				user.setStatus( UserStatus.NEW );
+				return ErrorCode.USER_NOT_FOUND;
 			}			
 		} catch (SQLException e) {
 			logger.debug( e.getLocalizedMessage(), e );
@@ -129,7 +128,45 @@ public class UserInfoDataProvider {
 			pst.setInt( i++, user.getStrength() );
 			pst.setInt( i++, SystemTimer.currentTimeSecond() );
 			pst.setBoolean( i++, user.isAdult() );
-			pst.execute();
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			logger.debug( e.getLocalizedMessage(), e );
+			return ErrorCode.DB_ERROR;
+		} finally {
+			DatabaseUtil.close( null, pst, con );
+		}
+		return ErrorCode.SUCCESS;
+	}
+	
+	/**
+	 * 修改玩家信息，针对某些改动比较频繁且重要的字段，可考虑专门做一个语法糖，优化的事情放到以后再说
+	 * @param user
+	 * @return
+	 * 		DB_ERROR
+	 */
+	ErrorCode update(UserInfo user) {
+		
+		Connection con = DatabaseUtil.getConnection();
+		PreparedStatement pst = null;								  
+		String sql = "update user_base set " +
+				"money = ?," +
+				"strength=?," +
+				"level=?," +
+				"status=?," +
+				"lastlogout_time=?," +
+				"is_adult=? " +
+				"where name=?";
+		int	i = 1;
+		try {
+			pst = con.prepareStatement( sql );
+			pst.setInt( i++, user.getMoney() );
+			pst.setShort( i++, user.getStrength() );
+			pst.setShort( i++, user.getLevel() );
+			pst.setByte( i++, user.getStatus().toNum() );
+			pst.setInt( i++, user.getLastLogoutTime() );
+			pst.setBoolean( i++, user.isAdult() );
+			pst.setString( i++, user.getName() );
+			pst.executeUpdate();
 		} catch (SQLException e) {
 			logger.debug( e.getLocalizedMessage(), e );
 			return ErrorCode.DB_ERROR;

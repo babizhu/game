@@ -6,6 +6,7 @@ import game.packages.Packages;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Random;
 
 import org.xsocket.connection.BlockingConnection;
 import org.xsocket.connection.IBlockingConnection;
@@ -15,9 +16,17 @@ import util.BaseUtil;
 import util.ErrorCode;
 import define.SystemCfg;
 
-public class UserLoginPackageTest extends BasePackageTest {
+/**
+ * 测试游戏的退出机制，这里并没有真正的包
+ * 1、利用多线程创建多个连接
+ * 2、每个线程发送一个登陆包，然后等待一段时间（随机），然后主动切断连接
+ * 
+ * @author liukun
+ * 2012-8-30 下午04:31:15
+ */
+public class UserExitPackageTest extends BasePackageTest {
 
-	public UserLoginPackageTest(int count) {
+	public UserExitPackageTest(int count) {
 		super(count);
 	}
 	
@@ -48,7 +57,14 @@ public class UserLoginPackageTest extends BasePackageTest {
 			user.setLoginCount( buf.getShort() );					//登陆次数
 			user.setCreateTime( buf.getInt() );						//创建时间——秒数
 		}
-		System.out.println( code + "\t" + user );
+		int sleepMills = new Random().nextInt( 500 ) * 1000;
+		try {
+			Thread.sleep( sleepMills );
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println( code + "\t" + Thread.currentThread().getName() + "睡眠时间" + sleepMills/1000 + "秒" );
 	}
 	public void run() throws IOException, InterruptedException{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
@@ -74,8 +90,8 @@ public class UserLoginPackageTest extends BasePackageTest {
 	public static void main(String[] args) throws IOException, InterruptedException {
 
 		long begin = System.nanoTime();
-		int count = 10000;
-		new UserLoginPackageTest( count ).run();
+		int count = 1;
+		new UserExitPackageTest( count ).run();
 		System.out.println( "用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
 		System.exit(0);
 		

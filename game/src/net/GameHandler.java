@@ -25,6 +25,7 @@ import core.GameMainLogic;
 public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeoutHandler, IDisconnectHandler{
 
 	private GameMainLogic gameLogic = GameMainLogic.getInstance();
+	
 	/* (non-Javadoc)
 	 * @see org.xsocket.connection.IIdleTimeoutHandler#onIdleTimeout(org.xsocket.connection.INonBlockingConnection)
 	 */
@@ -79,7 +80,8 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 			}
 			gameLogic.packageProcess( con, packageNo, data );
 		}
-	      return true;
+        
+        return true;
 	}
 	
 	/**
@@ -97,13 +99,13 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.xsocket.connection.IDisconnectHandler#onDisconnect(org.xsocket.connection.INonBlockingConnection)
+	/**
+	 * 主动响应玩家关闭连接的事件
 	 */
 	@Override
 	public boolean onDisconnect( INonBlockingConnection con ) throws IOException {
 		con = ConnectionUtils.synchronizedConnection( con );
-		System.out.println( con.getId() + " onDisconnect" );
+		gameLogic.exit(con);
 		return false;
 	}
 }

@@ -38,8 +38,8 @@ public class UserCreatePackageTest extends BasePackageTest {
 	@Override
 	public
 	void parse( ByteBuffer buf ){
-		ErrorCode eCode = ErrorCode.values()[buf.getShort()];
-		System.out.println( eCode );
+		ErrorCode code = ErrorCode.values()[buf.getShort()];
+		System.out.println( code );
 	}
 	public void run() throws IOException, InterruptedException{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );

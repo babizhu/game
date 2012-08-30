@@ -29,10 +29,10 @@ public class UserCreatePackage extends BasePackage {
 		user.setSex(sex);
 		
 		
-		ErrorCode eCode =UserManager.getInstance().create(user);
+		ErrorCode code =UserManager.getInstance().create(user);
 		
 		ByteBuffer buffer = buildEmptyPackage( 8 );
-		buffer.putShort( (short) eCode.ordinal() );			//错误代码
+		buffer.putShort( (short) code.ordinal() );			//错误代码
 		
 		sendPackage( user, buffer );
 	}

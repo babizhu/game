@@ -1,4 +1,4 @@
-package client.packages.packs;
+package game.packages.packs;
 
 import game.packages.BasePackage;
 
@@ -7,16 +7,9 @@ import java.nio.ByteBuffer;
 
 import org.xsocket.connection.IBlockingConnection;
 
-public abstract class BasePackageTest {
 
-	/**
-	 * 发送包的次数
-	 */
-	public final int			count;
+public abstract class PackageTest {
 	
-	public BasePackageTest( int count ) {
-		this.count = count;
-	}
 	/**
 	 * 创建一个发送到服务器的空包
 	 * @param capacity
@@ -30,11 +23,11 @@ public abstract class BasePackageTest {
 		buff.putShort( (short) 0 );//长度占位符
 		return buff;
 	}
+	
 	/**
-	 * 向服务器端发送包
-	 * @param user
-	 * @param buff
-	 * 		包括包号(short)，包长(short)，包内容(byte[])
+	 * 发送包到服务器
+	 * @param conn
+	 * @param buffer
 	 */
 	public void sendPacket( IBlockingConnection conn, ByteBuffer buffer ){
 		buffer.putShort( 3, (short) (buffer.position() - 5) );//设置内容长度
@@ -48,6 +41,7 @@ public abstract class BasePackageTest {
 			//logger.debug( user + " " + e.toString() );
 		}
 	}
+	
 	/**
 	 * 确保此包是完整的
 	 * 去除包头，长度等信息，返回包内容
@@ -68,35 +62,6 @@ public abstract class BasePackageTest {
 		return ByteBuffer.wrap( data );
 	}
 	
-	/**
-	 * 检测服务器端所发送的首尾标识位是否正确
-	 * @param head
-	 * @param foot
-	 * @return
-	 * 		true		首尾包号正确
-	 * 		false		错误
-	 */
-	boolean checkInputData( byte head, byte foot ){
-		if( head != BasePackage.HEAD || foot != BasePackage.FOOT ){
-			return false;
-		}
-		return true;
-	}
-	
 	public abstract short getPacketNo ();
-	
-	/**
-	 * 重载以实现不同包发送不同数据，参数似乎不好统一，因此暂时注释掉，看看有没有更好的方法
-	 * @param name
-	 * @return
-	 */
-	//public abstract ByteBuffer createContent( String name );
-	
-	/**
-	 * 解析服务器端的返回包
-	 * @param buf
-	 */
-	public abstract void parse( ByteBuffer buf );
-	
-	public abstract void run() throws IOException, InterruptedException;
+
 }

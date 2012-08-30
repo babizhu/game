@@ -272,7 +272,7 @@ public class UserInfo {
 		this.createTime = createTime;
 	}
 
-	public long getLastLogoutTime() {
+	public int getLastLogoutTime() {
 		return lastLogoutTime;
 	}
 
@@ -337,14 +337,21 @@ public class UserInfo {
 		user.reduceStrength( 200, "扫荡" );
 		}
 	}
+	
+	
+
+	public void setConn(INonBlockingConnection conn) {
+		this.conn = conn;
+	}
 
 	@Override
 	public String toString() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+		String connStr = conn == null ? "null" : conn.getId();
 		//dateFormat.format( new Date(createTime * 1000l) )格式
-		return "UserInfo [conn=" + conn
+		return "UserInfo [conn=" + connStr + ", name=" + name
 				+ ", status=" + status + ", money=" + money + ", strength="
-				+ strength + ", nickName=" + nickName + ", name=" + name
+				+ strength + ", nickName=" + nickName
 				+ ", level=" + level + ", createTime=" + dateFormat.format( new Date(createTime * 1000l) )
 				+ ", lastLogoutTime=" + dateFormat.format( new Date(lastLogoutTime * 1000l) ) + ", loginCount="
 				+ loginCount + ", sex=" + sex + ", isAdult=" + isAdult + "]";

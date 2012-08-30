@@ -6,6 +6,11 @@ public enum ErrorCode {
 	LEVEL_NOT_ENOUGH,
 	
 	/**
+	 * 用户已经登陆了
+	 */
+	USER_HAS_LOGIN,
+	
+	/**
 	 * 玩家用户名重复
 	 */
 	USER_DUPLICATE_NAME,
@@ -44,5 +49,5 @@ public enum ErrorCode {
 	 * 数据库错误
 	 */
 	DB_ERROR,
-	UNKNOW_ERROR, ;
+	UNKNOW_ERROR ;
 }

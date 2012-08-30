@@ -2,6 +2,7 @@ package core;
 
 import game.packages.Packages;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
 
 import user.UserInfo;
+import user.UserManager;
 import user.UserStatus;
 import util.ErrorCode;
 
@@ -42,26 +44,43 @@ public class GameMainLogic implements IGameLogic {
 	@Override
 	public void packageProcess( INonBlockingConnection con, short packageNo, byte[] data) {
 		Packages pack = Packages.fromNum(packageNo);
-		ErrorCode eCode;
+		ErrorCode code;
 		UserInfo user = (UserInfo) con.getAttachment();
 		synchronized (user) {
 			if (pack == null) {
-				eCode = ErrorCode.PACKAGE_NOT_FOUND;
+				code = ErrorCode.PACKAGE_NOT_FOUND;
 			} else {
 				ByteBuffer buf = ByteBuffer.wrap(data);
 				if (user.getStatus() == UserStatus.GUEST
 						&& (pack != Packages.USER_LOGIN && pack != Packages.USER_CREATE )) {
-					eCode = ErrorCode.USER_NOT_LOGIN;
+					code = ErrorCode.USER_NOT_LOGIN;
 				}
 				else{
-					eCode = user.getPackageManager().run(user, pack, buf);
+					code = user.getPackageManager().run(user, pack, buf);
 				}
 			}
-			if (eCode != ErrorCode.SUCCESS) {
-				logger.debug(user.getName() + "[" + con.getId() + "], 包号:" + packageNo + ", 错误码:" + eCode );
+			if (code != ErrorCode.SUCCESS) {
+				logger.debug(user.getName() + "[" + con.getId() + "], 包号:" + packageNo + ", 错误码:" + code );
 				
 				//TODO 断开连接？
 			}
+		}
+	}
+
+	/**
+	 * 玩家关闭连接，退出游戏
+	 */
+	@Override
+	public void exit(INonBlockingConnection con) throws IOException {
+		UserInfo user = (UserInfo) con.getAttachment();
+		ErrorCode code;
+		synchronized (user) {
+			code = UserManager.getInstance().exit( user );
+		}	
+		if (code != ErrorCode.SUCCESS) {
+			logger.debug( user.getName() + "[" + con.getId() + "], 错误码:" + code );
+			
+			//TODO 断开连接？
 		}
 	}
 }
