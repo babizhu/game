@@ -50,17 +50,28 @@ public class GameMainLogic implements IGameLogic {
 			if (pack == null) {
 				code = ErrorCode.PACKAGE_NOT_FOUND;
 			} else {
+				
 				ByteBuffer buf = ByteBuffer.wrap(data);
-				if (user.getStatus() == UserStatus.GUEST
-						&& (pack != Packages.USER_LOGIN && pack != Packages.USER_CREATE )) {
-					code = ErrorCode.USER_NOT_LOGIN;
+//				if( user.getStatus() == UserStatus.NEW && pack != Packages.USER_CREATE ){
+//					code = ErrorCode.USER_NOT_FOUND;
+//				}
+//				else if( user.getStatus() == UserStatus.GUEST && pack != Packages.USER_LOGIN ){
+//					code = ErrorCode.USER_NOT_LOGIN;
+//				} 
+//				else if( user.getStatus() == UserStatus.LOGIN ){
+//					code = user.getPackageManager().run(user, pack, buf);
+//				}
+//				else{
+//					
+//					
+//				}
+				if( pack == Packages.USER_CREATE && user.getStatus() != UserStatus.NEW ){
+					code = null;
 				}
-				else{
-					code = user.getPackageManager().run(user, pack, buf);
-				}
+				
 			}
 			if (code != ErrorCode.SUCCESS) {
-				logger.debug(user.getName() + "[" + con.getId() + "], 包号:" + packageNo + ", 错误码:" + code );
+				logger.debug( "错误码:" + code + " 包号: " + packageNo + user + "[" + con.getId() + "]" );
 				
 				//TODO 断开连接？
 			}

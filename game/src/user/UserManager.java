@@ -39,6 +39,10 @@ public class UserManager {
 		if( user.getStatus() == UserStatus.LOGIN ){//防止反复登录
 			return ErrorCode.USER_HAS_LOGIN;
 		}
+		if( user.getStatus() == UserStatus.NEW ){
+			return ErrorCode.USER_NOT_FOUND;
+		}
+		if( user.)
 		ErrorCode code = null;
 		UserInfo oldUser = onlineUser.get( user.getName() ); 
 		if( oldUser != null ){//此玩家在线
