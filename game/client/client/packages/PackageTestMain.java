@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import util.BaseUtil;
 import client.packages.packs.BasePackageTest;
-import client.packages.packs.UserExitPackageTest;
+import client.packages.packs.UserLoginPackageTest;
 
 /**
  * 发包线程
@@ -40,7 +40,7 @@ public class PackageTestMain {
 		ExecutorService exec = Executors.newCachedThreadPool();
 		long begin = System.nanoTime();
 		for( int i = 0; i < threadCount; i++ ){
-			BasePackageTest p = new UserExitPackageTest( count );
+			BasePackageTest p = new UserLoginPackageTest( count );
 			exec.execute( new Client( p ) );
 		}
 		exec.shutdown();

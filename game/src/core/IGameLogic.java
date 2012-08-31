@@ -10,7 +10,7 @@ public interface IGameLogic {
 	 * 包处理器
 	 * @param con
 	 * @param packageNo		包号
-	 * @param data			客户端传送的数据体，不包括包号，包长等信息
+	 * @param data			除包头，包尾，包号，包长的附加信息的数据
 	 */
 	void packageProcess( INonBlockingConnection con, short packageNo, byte[] data );
 	

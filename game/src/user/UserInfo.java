@@ -318,10 +318,10 @@ public class UserInfo {
 	 * @param user
 	 * @return
 	 */
-	ErrorCode initFromDb( UserInfo user ){
-		user.setStatus( UserStatus.LOGIN );
-		return ErrorCode.SUCCESS;
-	}
+//	ErrorCode initFromDb( UserInfo user ){
+//		user.setStatus( UserStatus.LOGIN );
+//		return ErrorCode.SUCCESS;
+//	}
 	public static void main ( String[] args ) {
 		
 		for( int i = 0; i < 10000; i++ ){
@@ -349,7 +349,7 @@ public class UserInfo {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
 		String connStr = conn == null ? "null" : conn.getId();
 		//dateFormat.format( new Date(createTime * 1000l) )格式
-		return "UserInfo [conn=" + connStr + ", name=" + name
+		return "UserInfo[name=" + name + ", conn=" + connStr 
 				+ ", status=" + status + ", money=" + money + ", strength="
 				+ strength + ", nickName=" + nickName
 				+ ", level=" + level + ", createTime=" + dateFormat.format( new Date(createTime * 1000l) )

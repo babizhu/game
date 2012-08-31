@@ -13,7 +13,7 @@ public enum UserStatus {
 	/**
 	 * 新玩家状态
 	 */
-	NEW(2),
+//	NEW(2),
 	
 	/**
 	 * 正常登陆状态

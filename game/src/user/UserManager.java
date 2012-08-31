@@ -36,26 +36,21 @@ public class UserManager {
 	 * @throws IOException 
 	 */
 	public ErrorCode login( UserInfo user ) throws IOException{
-		if( user.getStatus() == UserStatus.LOGIN ){//防止反复登录
-			return ErrorCode.USER_HAS_LOGIN;
-		}
-		if( user.getStatus() == UserStatus.NEW ){
-			return ErrorCode.USER_NOT_FOUND;
-		}
-		if( user.)
-		ErrorCode code = null;
+		
+		ErrorCode code;
 		UserInfo oldUser = onlineUser.get( user.getName() ); 
 		if( oldUser != null ){//此玩家在线
 			//TODO 给老玩家发送退出包
 			oldUser.getConn().close();
 			oldUser.setConn( user.getConn() );
-			user = oldUser;			
+			user = oldUser;
+			code = ErrorCode.SUCCESS;
 		}
 		else{
 			code = db.get( user );
 			if( code == ErrorCode.SUCCESS )
 			{
-				doLogin( user );
+				code = doLogin( user );
 			}		
 			System.out.println( "在线人数" + onlineUser.size() );
 		}
@@ -87,9 +82,9 @@ public class UserManager {
 	 * @param user
 	 */
 	private ErrorCode doLogin( UserInfo user ){
-		
+		user.setStatus( UserStatus.LOGIN );
 		onlineUser.put( user.getName(), user );
-		return null;
+		return ErrorCode.SUCCESS;
 		
 	}
 	/**

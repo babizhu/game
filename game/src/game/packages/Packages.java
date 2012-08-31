@@ -16,12 +16,15 @@ import user.UserInfo;
  * 100以内为系统保留
  * 200以内为系统功能需求
  * 500以上为游戏需要
+ * 
+ * @注意：为了传输方便，枚举对应的数字不得超过Short.MAX_VALUE
  * @author liukun
  * 2012-8-25
  */
 public enum Packages {
 	
 
+	SYSTEM_SEND_ERROR_CODE( 100, new SystemSendErrorCodePackage() ),
 	USER_LOGIN( 201, new UserLoginPackage() ),
 	USER_CREATE( 202, new UserCreatePackage() ),
 	USER_EXIT( 203, new UserExitPackage() ); 
@@ -32,6 +35,7 @@ public enum Packages {
 	private final BasePackage 		packageInstance;
 	
 	Packages( int value, BasePackage packageInstance ) {
+		
 		this.number =  (short) value;
 		this.packageInstance = packageInstance;
 		this.packageInstance.setPackageNo( number );
@@ -41,6 +45,10 @@ public enum Packages {
 		for( Packages a : values() ){
 			numToEnum.put( a.number, a );
 		}
+	}
+	
+	public BasePackage getPackageInstance() {
+		return packageInstance;
 	}
 	public short toNum() {
 		return number;

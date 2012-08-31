@@ -24,6 +24,9 @@ public class BaseUtil {
 	 */
 	public static void encodeString(ByteBuffer buf, String content) {
 
+		if( content == null ){
+			throw new IllegalArgumentException( "null 字符串" );
+		}
 		byte[] temp = content.getBytes();
 		if (temp.length > Short.MAX_VALUE) {
 			throw new IllegalArgumentException("字符串长度超限");

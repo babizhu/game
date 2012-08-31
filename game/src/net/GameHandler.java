@@ -22,7 +22,7 @@ import core.GameMainLogic;
  * @author liukun
  * 2012-8-16
  */
-public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeoutHandler, IDisconnectHandler{
+public class GameHandler implements IDataHandler ,IConnectHandler ,IIdleTimeoutHandler, IDisconnectHandler{
 
 	private GameMainLogic gameLogic = GameMainLogic.getInstance();
 	
@@ -50,8 +50,7 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
 
 	@Override
 	public boolean onData( INonBlockingConnection con ) throws IOException,	BufferUnderflowException, ClosedChannelException, MaxReadSizeExceededException {
-		con = ConnectionUtils.synchronizedConnection( con );
-		int available = con.available();
+		int available = con.available();//确保没有别的线程调用available()函数
         if ( available > 0) {
 
         	System.out.println( con.getId() + " onData" + ",available:" + available + "byte" );
@@ -59,26 +58,28 @@ public class GameHandler  implements IDataHandler ,IConnectHandler ,IIdleTimeout
     		byte	foot = 0;
     		short 	packageNo = 0;
     		short 	dataLength = 0;
-    		con.markReadPosition();
-			byte data[] = null;
-			try {
-				head = con.readByte();
-				packageNo = con.readShort();
-				dataLength = con.readShort();
+    		byte data[] = null;
+    		synchronized (con) {
+        		con.markReadPosition();    			
+    			try {
+    				head = con.readByte();
+    				packageNo = con.readShort();
+    				dataLength = con.readShort();
 
-				data = con.readBytesByLength(dataLength);
-				foot = con.readByte();
-				con.removeReadMark();
+    				data = con.readBytesByLength(dataLength);
+    				foot = con.readByte();
+    				con.removeReadMark();
 
-			} catch (BufferUnderflowException bue) {
-				con.resetToReadMark();
-				return true;
+    			} catch (BufferUnderflowException bue) {
+    				con.resetToReadMark();
+    				return true;
+    			}	
 			}
-
-			if (!checkInputData(head, foot)) {
+    		if (!checkInputData(head, foot)) {
 				// TODO 调用某个退出函数
 			}
-			gameLogic.packageProcess( con, packageNo, data );
+    		
+    		gameLogic.packageProcess( con, packageNo, data );
 		}
         
         return true;

@@ -20,7 +20,7 @@ public class PerfomanceTest {
 
 	private static Map<Short,BaseTask> taskMap = new HashMap<Short,BaseTask>();
 	private static List<BaseTask> 	taskList = new ArrayList<BaseTask>();
-	static int count = 15;
+	static int count = 10;
 	static void init()
 	{
 		for( int i = 0; i < count; i++ ){
@@ -34,6 +34,9 @@ public class PerfomanceTest {
 		}
 		
 	}
+	/**
+	 * 循环haspMap所需要的时间
+	 */
 	static void test1(){
 		long begin = System.nanoTime();
 		for( int j = 0; j < 100000; j++ ){
@@ -48,6 +51,9 @@ public class PerfomanceTest {
 		System.out.println( "map 的循环时间为:" + (System.nanoTime() - begin) / 1000000000f );
 	}
 	
+	/**
+	 * 循环ArrayList所需要的时间
+	 */
 	static void test2(){
 		long begin = System.nanoTime();
 		for( int j = 0; j < 100000; j++ ){

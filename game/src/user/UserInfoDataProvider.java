@@ -58,7 +58,6 @@ public class UserInfoDataProvider {
 				
 			}
 			else{//数据库无此玩家
-				user.setStatus( UserStatus.NEW );
 				return ErrorCode.USER_NOT_FOUND;
 			}			
 		} catch (SQLException e) {
