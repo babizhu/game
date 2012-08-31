@@ -94,9 +94,9 @@ public class UserManager {
 	 */
 	public ErrorCode create( UserInfo user ){
 		ErrorCode code = db.create( user ) ;
-		if( code == ErrorCode.SUCCESS ){
-			user.setStatus( UserStatus.LOGIN );
-		}
+//		if( code == ErrorCode.SUCCESS ){
+//			//user.setStatus( UserStatus.LOGIN );
+//		}
 //		doLogin( user );
 		return code;
 	}
