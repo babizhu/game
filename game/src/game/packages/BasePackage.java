@@ -1,10 +1,10 @@
 package game.packages;
 
 import game.packages.packs.UserLoginPackage;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import org.xsocket.connection.ConnectionUtils;
 import org.xsocket.connection.INonBlockingConnection;
 
 import user.UserInfo;
@@ -46,7 +46,7 @@ public abstract class BasePackage implements IPackage {
 		buffer.put( FOOT );				
 		buffer.flip();
 		
-		INonBlockingConnection con = ConnectionUtils.synchronizedConnection( user.getConn() );
+		INonBlockingConnection con = user.getConn();
 		con.write( buffer );
 			//由于设置了setFlushmode( FlushMode.ASYNC );，所以，后续程序不得在对buffer进行任何包括读取在内的操作！！！！！！
 	}	

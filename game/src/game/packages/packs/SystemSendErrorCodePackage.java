@@ -1,4 +1,6 @@
-package game.packages;
+package game.packages.packs;
+
+import game.packages.BasePackage;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

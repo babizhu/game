@@ -1,4 +1,3 @@
-
 package net;
 
 import game.packages.BasePackage;
@@ -19,82 +18,89 @@ import user.UserInfo;
 import core.GameMainLogic;
 
 /**
- * @author liukun
- * 2012-8-16
+ * @author liukun 2012-8-16
  */
-public class GameHandler implements IDataHandler ,IConnectHandler ,IIdleTimeoutHandler, IDisconnectHandler{
+public class GameHandler implements IDataHandler, IConnectHandler,
+		IIdleTimeoutHandler, IDisconnectHandler {
 
 	private GameMainLogic gameLogic = GameMainLogic.getInstance();
-	
-	/* (non-Javadoc)
-	 * @see org.xsocket.connection.IIdleTimeoutHandler#onIdleTimeout(org.xsocket.connection.INonBlockingConnection)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.xsocket.connection.IIdleTimeoutHandler#onIdleTimeout(org.xsocket.
+	 * connection.INonBlockingConnection)
 	 */
 	@Override
-	public boolean onIdleTimeout( INonBlockingConnection con ) throws IOException {
-		con = ConnectionUtils.synchronizedConnection( con );
-		con.available();//避免findbugs的警告
-		//con.setIdleTimeoutMillis( 5000 );//连接上来之后，如果5秒不发包，主动切断
+	public boolean onIdleTimeout(INonBlockingConnection con) throws IOException {
+		con = ConnectionUtils.synchronizedConnection(con);
+		con.available();// 避免findbugs的警告
+		// con.setIdleTimeoutMillis( 5000 );//连接上来之后，如果5秒不发包，主动切断
 		return false;
-		//return true;//不切断连接
-	}
-	
-	@Override
-	public boolean onConnect( INonBlockingConnection con ) throws IOException, BufferUnderflowException, MaxReadSizeExceededException {
-		con = ConnectionUtils.synchronizedConnection( con );
-		System.out.println( con.getId() + " onConnect" );
-
-		UserInfo user = new UserInfo( con );
-		con.setAttachment( user );
-		return false;
+		// return true;//不切断连接
 	}
 
 	@Override
-	public boolean onData( INonBlockingConnection con ) throws IOException,	BufferUnderflowException, ClosedChannelException, MaxReadSizeExceededException {
-		int available = con.available();//确保没有别的线程调用available()函数
-        if ( available > 0) {
+	public boolean onConnect(INonBlockingConnection con) throws IOException,
+			BufferUnderflowException, MaxReadSizeExceededException {
+		con = ConnectionUtils.synchronizedConnection(con);
+		System.out.println(con.getId() + " onConnect");
 
-        	System.out.println( con.getId() + " onData" + ",available:" + available + "byte" );
-    		byte	head = 0;
-    		byte	foot = 0;
-    		short 	packageNo = 0;
-    		short 	dataLength = 0;
-    		byte data[] = null;
-    		synchronized (con) {
-        		con.markReadPosition();    			
-    			try {
-    				head = con.readByte();
-    				packageNo = con.readShort();
-    				dataLength = con.readShort();
+		UserInfo user = new UserInfo(con);
+		con.setAttachment(user);
+		return false;
+	}
 
-    				data = con.readBytesByLength(dataLength);
-    				foot = con.readByte();
-    				con.removeReadMark();
+	@Override
+	public boolean onData(INonBlockingConnection con) throws IOException, BufferUnderflowException, ClosedChannelException,	MaxReadSizeExceededException {
 
-    			} catch (BufferUnderflowException bue) {
-    				con.resetToReadMark();
-    				return true;
-    			}	
+		byte head = 0;
+		byte foot = 0;
+		short packageNo = 0;
+		short dataLength = 0;
+		byte data[] = null;
+		synchronized (con) {
+			int available = con.available();
+			
+			if (available > 0) {
+				System.out.println(con.getId() + " onData" + ",available:" + available + "byte");
+				con.markReadPosition();
+				try {
+					head = con.readByte();
+					packageNo = con.readShort();
+					dataLength = con.readShort();
+
+					data = con.readBytesByLength(dataLength);
+					foot = con.readByte();
+					con.removeReadMark();
+
+				} catch (BufferUnderflowException bue) {
+					con.resetToReadMark();
+					return true;
+				}
 			}
-    		if (!checkInputData(head, foot)) {
-				// TODO 调用某个退出函数
-			}
-    		
-    		gameLogic.packageProcess( con, packageNo, data );
+			
 		}
-        
-        return true;
+		if (!checkInputData(head, foot)) {
+			// TODO 调用某个退出函数
+		}
+
+		con = ConnectionUtils.synchronizedConnection(con);
+		gameLogic.packageProcess(con, packageNo, data);
+
+		return true;
 	}
-	
+
 	/**
 	 * 检测客户端所发送的首尾标识位是否正确
+	 * 
 	 * @param head
 	 * @param foot
-	 * @return
-	 * 		true		首尾包号正确
-	 * 		false		错误
+	 * @return true 首尾包号正确 false 错误
 	 */
-	private boolean checkInputData( byte head, byte foot ){
-		if( head != BasePackage.HEAD || foot != BasePackage.FOOT ){
+	private boolean checkInputData(byte head, byte foot) {
+		if (head != BasePackage.HEAD || foot != BasePackage.FOOT) {
 			return false;
 		}
 		return true;
@@ -104,8 +110,8 @@ public class GameHandler implements IDataHandler ,IConnectHandler ,IIdleTimeoutH
 	 * 主动响应玩家关闭连接的事件
 	 */
 	@Override
-	public boolean onDisconnect( INonBlockingConnection con ) throws IOException {
-		con = ConnectionUtils.synchronizedConnection( con );
+	public boolean onDisconnect(INonBlockingConnection con) throws IOException {
+		con = ConnectionUtils.synchronizedConnection(con);
 		gameLogic.exit(con);
 		return false;
 	}

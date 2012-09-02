@@ -41,9 +41,9 @@ public class UserManager {
 		UserInfo oldUser = onlineUser.get( user.getName() ); 
 		if( oldUser != null ){//此玩家在线
 			//TODO 给老玩家发送退出包
-			oldUser.getConn().close();
-			oldUser.setConn( user.getConn() );
-			user = oldUser;
+//			oldUser.getConn().close();
+//			oldUser.setConn( user.getConn() );
+//			user = oldUser;
 			code = ErrorCode.SUCCESS;
 		}
 		else{
@@ -114,5 +114,12 @@ public class UserManager {
 		}
 		sb.append( "]" );
 		return sb.toString();
+	}
+	/**
+	 * @param string
+	 * @return
+	 */
+	public UserInfo getUserByName(String name) {
+		return onlineUser.get( name );
 	}
 }

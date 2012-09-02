@@ -14,7 +14,7 @@ public class ArgumentChange {
 	void test( UserInfo user ){
 		UserInfo u1 = new UserInfo();
 		u1.setName( "babizhu" );
-		user = u1;
+		//user = u1;	避免findbug报警告，如果要查看本代码效果，则不能注释此行
 	}
 
 	public static void main(String[] args) {

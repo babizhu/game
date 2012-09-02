@@ -1,7 +1,7 @@
 package core;
 
 import game.packages.Packages;
-import game.packages.SystemSendErrorCodePackage;
+import game.packages.packs.SystemSendErrorCodePackage;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
 
 import user.UserInfo;
-import user.UserManager;
 import user.UserStatus;
 import util.ErrorCode;
 
@@ -40,55 +39,65 @@ public class GameMainLogic implements IGameLogic {
 	 * 
 	 * @param con
 	 * @param packageNo
-	 * @param data			去除包头，包尾，包号，包长的附加信息的数据
+	 * @param data
+	 *            去除包头，包尾，包号，包长的附加信息的数据
 	 * 
-	 * <br>本函数原则上不主动发送包，函数尾部有个try块发送的错误信息包目前只用于用例测试，正式发布的时候应考虑删除<br>
-	 * 具体情况请查看{@link game.packages.packs.UserLoginPackageTest#Login} 
+	 * <br>
+	 *            本函数原则上不主动发送包，函数尾部有个发送的错误信息包目前只用于用例测试，正式发布的时候应考虑删除<br>
+	 *            具体情况请查看{@link game.packages.packs.UserLoginPackageTest#Login}
+	 *            
+	 *  @注意：原本设计在这里对user进行加锁，保证同步，后来发现这样在交互类操作（精英挑战赛）会导致死锁，具体查看
+	 *  {@link game.packages.packs.DeadLockTestPackageTest#testDeadLock}
+	 * @throws IOException
 	 */
 	@Override
-	public void packageProcess( INonBlockingConnection con, short packageNo, byte[] data) {
+	public void packageProcess(INonBlockingConnection con, short packageNo,
+			byte[] data) throws IOException {
+		
 		Packages pack = Packages.fromNum(packageNo);
 		ErrorCode code;
 		UserInfo user = (UserInfo) con.getAttachment();
-		synchronized (user) {
-			if (pack == null) {
-				code = ErrorCode.PACKAGE_NOT_FOUND;
+		if (pack == null) {
+			code = ErrorCode.PACKAGE_NOT_FOUND;
+		} else {
+/*
+			
+
+			if (user.getStatus() == UserStatus.LOGIN) {
+				if (pack == Packages.USER_LOGIN || pack == Packages.USER_CREATE) {
+					code = ErrorCode.USER_HAS_LOGIN;
+				} else {
+					code = user.getPackageManager().run(user, pack, buf);
+				}
+			} else if (user.getStatus() == UserStatus.GUEST) {
+				if (pack != Packages.USER_LOGIN && pack != Packages.USER_CREATE) {
+					code = ErrorCode.USER_NOT_LOGIN;
+				} else {
+					code = user.getPackageManager().run(user, pack, buf);
+				}
 			} else {
-				
-				ByteBuffer buf = ByteBuffer.wrap(data);
-//				
-				if( user.getStatus() == UserStatus.LOGIN ){
-					 if( pack == Packages.USER_LOGIN || pack == Packages.USER_CREATE ){
-						code = ErrorCode.USER_HAS_LOGIN; 
-					 }
-					 else{
-						 code = user.getPackageManager().run(user, pack, buf); 
-					 }
-				}
-				else if( user.getStatus() == UserStatus.GUEST ){
-					if( pack != Packages.USER_LOGIN && pack != Packages.USER_CREATE ){
-						code = ErrorCode.USER_NOT_LOGIN;
-					}
-					else{
-						code = user.getPackageManager().run(user, pack, buf);
-					}
-				}
-				else{
-					code = ErrorCode.UNKNOW_ERROR;
-				}
+				code = ErrorCode.UNKNOW_ERROR;
+			}
+*/
+			if( (pack == Packages.USER_LOGIN || pack == Packages.USER_CREATE) && user.getStatus() == UserStatus.LOGIN ) {
+				code = ErrorCode.USER_HAS_LOGIN;
+			}
+			else if( (pack != Packages.USER_LOGIN && pack != Packages.USER_CREATE) && user.getStatus() == UserStatus.GUEST ) {
+				code = ErrorCode.USER_NOT_LOGIN;
+			}
+			else{
+				ByteBuffer buf = ByteBuffer.wrap( data );
+				code = user.getPackageManager().run( user, pack, buf );
 			}
 		}
+		
 		if (code != ErrorCode.SUCCESS) {
-			try {
-				SystemSendErrorCodePackage p = (SystemSendErrorCodePackage) Packages.SYSTEM_SEND_ERROR_CODE.getPackageInstance();
-				//UserLoginPackage p1 = (UserLoginPackage) Packages.USER_LOGIN.getPackageInstance();
-				p.run(user, code);
-			} catch (IOException e) {
-				// TODO DEBUG:整个try块似乎只用于用例测试，正式发布的时候可以考虑删除
-				e.printStackTrace();
-			}
-			logger.debug( "错误码:" + code + " 包号:" + packageNo + " " + user );
-			//TODO 断开连接？
+			SystemSendErrorCodePackage p = (SystemSendErrorCodePackage) Packages.SYSTEM_SEND_ERROR_CODE
+					.getPackageInstance();
+			p.run(user, code);
+			// TODO DEBUG:整个try块似乎只用于用例测试，正式发布的时候可以考虑删除
+			logger.debug("错误码:" + code + " 包号:" + packageNo + " " + user);
+			// TODO 断开连接？
 		}
 	}
 
@@ -97,15 +106,16 @@ public class GameMainLogic implements IGameLogic {
 	 */
 	@Override
 	public void exit(INonBlockingConnection con) throws IOException {
-		UserInfo user = (UserInfo) con.getAttachment();
-		ErrorCode code;
-		synchronized (user) {
-			code = UserManager.getInstance().exit( user );
-		}	
-		if (code != ErrorCode.SUCCESS) {
-			logger.debug( user.getName() + "[" + con.getId() + "], 错误码:" + code );
-			
-			//TODO 断开连接？
-		}
+		// UserInfo user = (UserInfo) con.getAttachment();
+		// ErrorCode code;
+		// synchronized (user) {
+		// code = UserManager.getInstance().exit( user );
+		// }
+		// if (code != ErrorCode.SUCCESS) {
+		// logger.debug( user.getName() + "[" + con.getId() + "], 错误码:" + code
+		// );
+		//
+		// //TODO 断开连接？
+		// }
 	}
 }

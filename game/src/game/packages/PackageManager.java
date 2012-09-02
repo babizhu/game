@@ -69,7 +69,7 @@ public class PackageManager {
 	private boolean safeCheck( Packages pack ){
 		long current = SystemTimer.currentTimeMillis();
 		if( pack == lastPack && current - lastReceiveTime < MIN_INTERVAL_MILS ){
-			System.out.println( current + "-" + lastReceiveTime  + "=" + (current - lastReceiveTime) );
+			logger.debug( "packag:" + pack + current + "-" + lastReceiveTime  + "=" + (current - lastReceiveTime) );
 			return false;
 		}
 		lastPack = pack;

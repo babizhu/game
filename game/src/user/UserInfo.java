@@ -1,16 +1,14 @@
 package user;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import game.AwardType;
 import game.packages.PackageManager;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
-
-import util.ErrorCode;
 
 
 
@@ -243,10 +241,10 @@ public class UserInfo {
 	}
 	
 
-	public UserStatus getStatus () {
+	public synchronized UserStatus getStatus () {
 		return status;
 	}
-	public void setStatus ( UserStatus status ) {
+	public synchronized void setStatus ( UserStatus status ) {
 		this.status = status;
 	}
 	

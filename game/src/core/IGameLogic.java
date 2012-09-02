@@ -11,8 +11,9 @@ public interface IGameLogic {
 	 * @param con
 	 * @param packageNo		包号
 	 * @param data			除包头，包尾，包号，包长的附加信息的数据
+	 * @throws IOException 
 	 */
-	void packageProcess( INonBlockingConnection con, short packageNo, byte[] data );
+	void packageProcess( INonBlockingConnection con, short packageNo, byte[] data ) throws IOException;
 	
 	/**
 	 * 玩家关闭连接，退出游戏

@@ -27,7 +27,7 @@ public abstract class PackageTest {
 	/**
 	 * 发送包到服务器
 	 * @param conn
-	 * @param buffer
+	 * @param buffer		待发送的包缓冲
 	 */
 	public void sendPacket( IBlockingConnection conn, ByteBuffer buffer ){
 		buffer.putShort( 3, (short) (buffer.position() - 5) );//设置内容长度

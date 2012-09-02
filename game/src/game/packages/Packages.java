@@ -1,8 +1,6 @@
 package game.packages;
 
-import game.packages.packs.UserCreatePackage;
-import game.packages.packs.UserExitPackage;
-import game.packages.packs.UserLoginPackage;
+import game.packages.packs.*;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -17,6 +15,8 @@ import user.UserInfo;
  * 200以内为系统功能需求
  * 500以上为游戏需要
  * 
+ * 30000以上为测试用(暂时)
+ * 
  * @注意：为了传输方便，枚举对应的数字不得超过Short.MAX_VALUE
  * @author liukun
  * 2012-8-25
@@ -27,7 +27,8 @@ public enum Packages {
 	SYSTEM_SEND_ERROR_CODE( 100, new SystemSendErrorCodePackage() ),
 	USER_LOGIN( 201, new UserLoginPackage() ),
 	USER_CREATE( 202, new UserCreatePackage() ),
-	USER_EXIT( 203, new UserExitPackage() ); 
+	USER_EXIT( 203, new UserExitPackage() ), 
+	DEAD_LOCK_TEST( 30000, new DeadLockTestPackage() ); 
 				
 	//private final static Logger 			logger = LoggerFactory.getLogger( PackageDefine.class ); 
 	
@@ -56,6 +57,7 @@ public enum Packages {
 	public static Packages fromNum( short n ){
 		return numToEnum.get( n );
 	}
+	
 	/**
 	 * 运行此枚举所对应的包的run方法
 	 * @param user

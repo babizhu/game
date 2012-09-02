@@ -46,7 +46,7 @@ public class UserLoginPackageTest extends PackageTest {
 	 * @return
 	 * @throws IOException 
 	 */
-	private ByteBuffer sendLoginPackage( IBlockingConnection nbc, String name ) throws IOException{
+	public ByteBuffer sendLoginPackage( IBlockingConnection nbc, String name ) throws IOException{
 		this.nbc = nbc;
 		ByteBuffer buf = createContent( name );
 		sendPacket( nbc, buf );
