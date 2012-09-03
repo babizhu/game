@@ -20,7 +20,7 @@ import define.SystemCfg;
 import util.BaseUtil;
 import util.ErrorCode;
 
-public class UserLoginPackageTest extends PackageTest {
+public class UserLoginPackageTest extends BasePackageTest {
 
 	IBlockingConnection nbc;
 	@BeforeClass
@@ -59,12 +59,12 @@ public class UserLoginPackageTest extends PackageTest {
 	 * 进入正式版本之后，第二~五次发包可能不会收到任何消息，针对这个种错误，服务器可能不会返回任何信息，现在为了测试用例需要，暂时有返回信息<br>
 	 * 具体情况请查看{@link core.GameMainLogic#packageProcess} 
 	 */
-	//@Test
+	@Test
 	public void Login() throws IOException{
 		
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		/****************************测试玩家不存在的情况**************************************/		
-		String name = "刘昆";
+		String name = "不存在的人";
 		ByteBuffer buf = sendLoginPackage( nbc, name );
 		ErrorCode code = ErrorCode.values()[buf.getShort()];
 		
@@ -103,7 +103,7 @@ public class UserLoginPackageTest extends PackageTest {
 	 * 同一个用户用两个con两次登陆
 	 * @throws IOException 
 	 */
-	@Test
+	//@Test
 	public void DuplicateLoginByTwoConn() throws IOException{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		

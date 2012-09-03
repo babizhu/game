@@ -57,6 +57,7 @@ public class PackageManager {
 		}
 		catch( Exception e ){
 			logger.debug( user + "," + pack + "," + bufToString( buf ), e );
+			return ErrorCode.UNKNOW_ERROR;
 		}
 		return ErrorCode.SUCCESS;	
 	}

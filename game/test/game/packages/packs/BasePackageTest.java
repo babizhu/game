@@ -8,7 +8,7 @@ import java.nio.ByteBuffer;
 import org.xsocket.connection.IBlockingConnection;
 
 
-public abstract class PackageTest {
+public abstract class BasePackageTest {
 	
 	/**
 	 * 创建一个发送到服务器的空包

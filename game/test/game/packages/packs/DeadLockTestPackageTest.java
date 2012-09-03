@@ -56,7 +56,7 @@ class DeadLockClient implements Runnable{
  * @author liukun
  * 2012-9-2
  */
-public class DeadLockTestPackageTest extends PackageTest {
+public class DeadLockTestPackageTest extends BasePackageTest {
 
 	/**
 	 * @throws java.lang.Exception

@@ -311,15 +311,28 @@ public class UserInfo {
 		this.strength = strength;
 	}
 
+
 	/**
-	 * 成功登陆之后，从数据库获取此玩家的所有信息
+	 * 拷贝构造函数，除开以下变量，其余都要复制：<br>
+	 * this.conn;
+	 * this.name
 	 * @param user
-	 * @return
 	 */
-//	ErrorCode initFromDb( UserInfo user ){
-//		user.setStatus( UserStatus.LOGIN );
-//		return ErrorCode.SUCCESS;
-//	}
+	public void copy( UserInfo user ){
+		
+		this.createTime = user.createTime;
+		this.isAdult = user.isAdult;
+		this.lastLogoutTime = user.lastLogoutTime;
+		this.level = user.level;
+		this.loginCount = user.loginCount;
+		this.money = user.money;
+		this.nickName = user.nickName;
+		this.sex = user.sex;
+		this.status = user.status;
+		this.strength = user.strength;
+		
+		
+	}
 	public static void main ( String[] args ) {
 		
 		for( int i = 0; i < 10000; i++ ){

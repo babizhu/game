@@ -35,7 +35,7 @@ public class UserLoginPackage extends BasePackage {
 			BaseUtil.encodeString( buffer, user.getNickName() );	//昵称
 			buffer.put( user.getSex() );							//性别
 			buffer.put( (byte) (user.isAdult()? 1 : 0)  );			//是否成年
-			buffer.putShort( user.getStrength()  );					//体力
+			buffer.putShort( user.getStrength() );					//体力
 			buffer.putInt( user.getMoney()  );						//金币
 			buffer.putShort( user.getLoginCount() );				//登陆次数	
 			buffer.putInt( user.getCreateTime() );					//创建时间

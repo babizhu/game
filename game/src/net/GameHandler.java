@@ -23,6 +23,11 @@ import core.GameMainLogic;
 public class GameHandler implements IDataHandler, IConnectHandler,
 		IIdleTimeoutHandler, IDisconnectHandler {
 
+	/**
+	 * 除去包头包尾允许接收的最大的包长度
+	 */
+	private static final int PACKAGE_LEN = 8192;
+	
 	private GameMainLogic gameLogic = GameMainLogic.getInstance();
 
 	/*
@@ -42,8 +47,8 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 	}
 
 	@Override
-	public boolean onConnect(INonBlockingConnection con) throws IOException,
-			BufferUnderflowException, MaxReadSizeExceededException {
+	public boolean onConnect(INonBlockingConnection con) throws IOException, BufferUnderflowException, MaxReadSizeExceededException {
+		
 		con = ConnectionUtils.synchronizedConnection(con);
 		System.out.println(con.getId() + " onConnect");
 
@@ -70,7 +75,9 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 					head = con.readByte();
 					packageNo = con.readShort();
 					dataLength = con.readShort();
-
+					if( dataLength < 0 || dataLength > PACKAGE_LEN ){
+						//TODO 切断连接
+					}
 					data = con.readBytesByLength(dataLength);
 					foot = con.readByte();
 					con.removeReadMark();
@@ -112,6 +119,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 	@Override
 	public boolean onDisconnect(INonBlockingConnection con) throws IOException {
 		con = ConnectionUtils.synchronizedConnection(con);
+		System.out.println(con.getId() + " onDisconnect");
 		gameLogic.exit(con);
 		return false;
 	}

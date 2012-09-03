@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
 
 import user.UserInfo;
+import user.UserManager;
 import user.UserStatus;
 import util.ErrorCode;
 
@@ -23,8 +24,7 @@ import util.ErrorCode;
  */
 public class GameMainLogic implements IGameLogic {
 
-	private final static Logger logger = LoggerFactory
-			.getLogger(GameMainLogic.class);
+	private final static Logger logger = LoggerFactory.getLogger(GameMainLogic.class);
 	private static final GameMainLogic instance = new GameMainLogic();
 
 	public static final GameMainLogic getInstance() {
@@ -51,8 +51,7 @@ public class GameMainLogic implements IGameLogic {
 	 * @throws IOException
 	 */
 	@Override
-	public void packageProcess(INonBlockingConnection con, short packageNo,
-			byte[] data) throws IOException {
+	public void packageProcess(INonBlockingConnection con, short packageNo,	byte[] data) throws IOException {
 		
 		Packages pack = Packages.fromNum(packageNo);
 		ErrorCode code;
@@ -60,25 +59,7 @@ public class GameMainLogic implements IGameLogic {
 		if (pack == null) {
 			code = ErrorCode.PACKAGE_NOT_FOUND;
 		} else {
-/*
 			
-
-			if (user.getStatus() == UserStatus.LOGIN) {
-				if (pack == Packages.USER_LOGIN || pack == Packages.USER_CREATE) {
-					code = ErrorCode.USER_HAS_LOGIN;
-				} else {
-					code = user.getPackageManager().run(user, pack, buf);
-				}
-			} else if (user.getStatus() == UserStatus.GUEST) {
-				if (pack != Packages.USER_LOGIN && pack != Packages.USER_CREATE) {
-					code = ErrorCode.USER_NOT_LOGIN;
-				} else {
-					code = user.getPackageManager().run(user, pack, buf);
-				}
-			} else {
-				code = ErrorCode.UNKNOW_ERROR;
-			}
-*/
 			if( (pack == Packages.USER_LOGIN || pack == Packages.USER_CREATE) && user.getStatus() == UserStatus.LOGIN ) {
 				code = ErrorCode.USER_HAS_LOGIN;
 			}
@@ -92,30 +73,24 @@ public class GameMainLogic implements IGameLogic {
 		}
 		
 		if (code != ErrorCode.SUCCESS) {
-			SystemSendErrorCodePackage p = (SystemSendErrorCodePackage) Packages.SYSTEM_SEND_ERROR_CODE
-					.getPackageInstance();
+			SystemSendErrorCodePackage p = (SystemSendErrorCodePackage) Packages.SYSTEM_SEND_ERROR_CODE.getPackageInstance();
 			p.run(user, code);
 			// TODO DEBUG:整个try块似乎只用于用例测试，正式发布的时候可以考虑删除
-			logger.debug("错误码:" + code + " 包号:" + packageNo + " " + user);
+			logger.debug("错误码:[" + code + "] 包号:[" + pack + "] " + user);
 			// TODO 断开连接？
 		}
 	}
 
 	/**
-	 * 玩家关闭连接，退出游戏
+	 * 玩家关闭连接，退出游戏,这里无需考虑网络层的代码，只需考虑user层
+	 * 
 	 */
 	@Override
 	public void exit(INonBlockingConnection con) throws IOException {
-		// UserInfo user = (UserInfo) con.getAttachment();
-		// ErrorCode code;
-		// synchronized (user) {
-		// code = UserManager.getInstance().exit( user );
-		// }
-		// if (code != ErrorCode.SUCCESS) {
-		// logger.debug( user.getName() + "[" + con.getId() + "], 错误码:" + code
-		// );
-		//
-		// //TODO 断开连接？
-		// }
+		UserInfo user = (UserInfo) con.getAttachment();
+		ErrorCode code = UserManager.getInstance().exit( user );
+		if (code != ErrorCode.SUCCESS) {
+			logger.debug("用户退出发生错误：" + user.getName() + "[" + con.getId() + "], 错误码:" + code );
+		}
 	}
 }

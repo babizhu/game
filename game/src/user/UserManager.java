@@ -22,9 +22,8 @@ public class UserManager {
 	}
 	private UserManager() {	}
 	
-	private final UserInfoDataProvider db = UserInfoDataProvider.getInstance();
-	
-	private Map<String,UserInfo> onlineUser = new ConcurrentHashMap<String, UserInfo>();
+	private final UserInfoDataProvider db = UserInfoDataProvider.getInstance();	
+	private Map<String,UserInfo> onlineUsers = new ConcurrentHashMap<String, UserInfo>();
 	
 
 	/**
@@ -38,12 +37,14 @@ public class UserManager {
 	public ErrorCode login( UserInfo user ) throws IOException{
 		
 		ErrorCode code;
-		UserInfo oldUser = onlineUser.get( user.getName() ); 
+		UserInfo oldUser = onlineUsers.get( user.getName() ); 
+		
 		if( oldUser != null ){//此玩家在线
 			//TODO 给老玩家发送退出包
-//			oldUser.getConn().close();
-//			oldUser.setConn( user.getConn() );
-//			user = oldUser;
+			//user.copy( oldUser );
+			
+			oldUser.setStatus( UserStatus.GUEST );
+			oldUser.getConn().close();
 			code = ErrorCode.SUCCESS;
 		}
 		else{
@@ -52,9 +53,9 @@ public class UserManager {
 			{
 				code = doLogin( user );
 			}		
-			System.out.println( "在线人数" + onlineUser.size() );
+			System.out.println( "在线人数" + onlineUsers.size() );
 		}
-		return code;		
+		return code;
 	}
 	
 	/**
@@ -65,15 +66,16 @@ public class UserManager {
 	 */
 	public ErrorCode exit( UserInfo user ) throws IOException{
 		ErrorCode code = ErrorCode.SUCCESS;
-		if( user.getStatus() == UserStatus.LOGIN ){
-			onlineUser.remove( user.getName() );
-			user.setLastLogoutTime( SystemTimer.currentTimeSecond() );
-			code = db.update(user);
+		synchronized ( user ) {
+			if( user.getStatus() == UserStatus.LOGIN ){
+				onlineUsers.remove( user.getName() );
+				user.setLastLogoutTime( SystemTimer.currentTimeSecond() );
+				
+				code = db.update(user);
+				user.setStatus( UserStatus.GUEST );//必须放在db.update(user);之后，否则数据库中的玩家状态就变成GUEST了
+			}
 		}
-		if( user.getConn().isOpen() ){
-			user.getConn().close();
-		}
-		System.out.println( "在线人数" + onlineUser.size() );
+		System.out.println( "在线人数" + onlineUsers.size() );
 		return code;
 	}
 	
@@ -83,7 +85,7 @@ public class UserManager {
 	 */
 	private ErrorCode doLogin( UserInfo user ){
 		user.setStatus( UserStatus.LOGIN );
-		onlineUser.put( user.getName(), user );
+		onlineUsers.put( user.getName(), user );
 		return ErrorCode.SUCCESS;
 		
 	}
@@ -107,7 +109,7 @@ public class UserManager {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder( "online user[\n");
-		for( Entry<String, UserInfo> e : onlineUser.entrySet() ){
+		for( Entry<String, UserInfo> e : onlineUsers.entrySet() ){
 			sb.append( "[" );
 			sb.append( e.getValue() );
 			sb.append( "]\n" );
@@ -118,8 +120,10 @@ public class UserManager {
 	/**
 	 * @param string
 	 * @return
+	 * 
+	 * 如果玩家不在线呢？
 	 */
 	public UserInfo getUserByName(String name) {
-		return onlineUser.get( name );
+		return onlineUsers.get( name );
 	}
 }
