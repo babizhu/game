@@ -35,6 +35,6 @@ public class UserCreatePackage extends BasePackage {
 		buffer.putShort( (short) code.ordinal() );			//错误代码
 		
 		sendPackage( user, buffer );
-	}
+		}
 
 }

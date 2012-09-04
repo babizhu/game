@@ -44,7 +44,9 @@ public class TaskTempletCfg {
 			List<?> taskList= root.getChildren( "task" ); 
 			
 			for( int i = 0; i < taskList.size(); i++ ){
+				
 				Element element = (Element) taskList.get( i );
+				System.out.println( element.getChildText( "name" ) );
 				TaskType type = TaskType.valueOf( element.getChildText( "task_type" ) );
 				BaseTaskTemplet templet = type.createNewTemplet();
 				templet.setTempletId( Short.parseShort( element.getChildText( "id" ) ) );

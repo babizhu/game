@@ -5,7 +5,7 @@ import game.task.UserPropertyTask;
 import game.task.enums.TaskType;
 
 /**
- * 关卡任务
+ * 玩家属性任务
  * @author liukun
  *
  */

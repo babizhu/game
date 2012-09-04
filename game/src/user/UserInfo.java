@@ -10,81 +10,69 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
 
-
-
-//import org.slf4j.; 
-
-
-
 public class UserInfo {
 	private final static Logger logger = LoggerFactory.getLogger( UserInfo.class ); 
 
 	/**
 	 * 包管理器
 	 */
-	PackageManager			packageManager = new PackageManager();
+	private final PackageManager						packageManager = new PackageManager();
 	
 	/**
 	 * 底层的网络连接，
 	 */
-	private INonBlockingConnection conn;
+	private final INonBlockingConnection 				conn;
 	
 	/**
 	 * 当前玩家的状态
 	 */
-	private UserStatus status = UserStatus.GUEST;
+	private UserStatus 									status = UserStatus.GUEST;
 
 	/**
 	 * 金币
 	 */
-	private int			money;
+	private int											money;
 	
 	/**
 	 * 体力
 	 */
-	private short		strength;
+	private short										strength;
 	
 	/**
 	 * 昵称
 	 */
-	private String		nickName;
+	private String										nickName;
 	
 	/**
 	 * 用户名
 	 */
-	private String		name;
+	private String										name;
 	
 	/**
 	 * 等级
 	 */
-	private short		level;
+	private short										level;
 	
 	/**
 	 * 创建时间，单位：秒	
 	 */
-	private int		createTime;
+	private int											createTime;
 	
 	/**
 	 * 上次下线时间，单位：秒
 	 */
-	private int		lastLogoutTime;
+	private int											lastLogoutTime;
 	
 	/**
 	 * 玩家总的登陆次数
 	 */
-	private short		loginCount;
+	private short										loginCount;
 	
-	private byte		sex;
+	private byte										sex;
 	
-	private boolean		isAdult					= true;
+	private boolean										isAdult					= true;
 	
-	/**
-	 * 缺省的空白构造函数，用于测试函数等地方使用，以后如不需要，可删除
-	 * @param conn
-	 */
-	public UserInfo() {
 
-	}
 	
 	/**
 	 * 构造函数，保持一个尽量精简的构造函数
@@ -257,9 +245,7 @@ public class UserInfo {
 	public PackageManager getPackageManager () {
 		return packageManager;
 	}
-	public void setPackageManager ( PackageManager packageManager ) {
-		this.packageManager = packageManager;
-	}
+	
 	
 	
 	public int getCreateTime() {
@@ -330,31 +316,9 @@ public class UserInfo {
 		this.sex = user.sex;
 		this.status = user.status;
 		this.strength = user.strength;
-		
-		
-	}
-	public static void main ( String[] args ) {
-		
-		for( int i = 0; i < 10000; i++ ){
-		UserInfo user = new UserInfo();
-		user.addMoney( 50, "main" );
-		
-		user.reduceMoney( 20, "main" );
-		
-		user.addMoney( 20, "main" );
-		user.reduceMoney( 20, "main" );
-		
-		user.addStrength( 500, "练功" );
-		user.reduceStrength( 200, "扫荡" );
-		}
+	
 	}
 	
-	
-
-	public void setConn(INonBlockingConnection conn) {
-		this.conn = conn;
-	}
-
 	@Override
 	public String toString() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
@@ -368,6 +332,22 @@ public class UserInfo {
 				+ loginCount + ", sex=" + sex + ", isAdult=" + isAdult + "]";
 	}
 
+	
+public static void main ( String[] args ) {
+		
+		for( int i = 0; i < 10000; i++ ){
+		UserInfo user = new UserInfo( null );
+		user.addMoney( 50, "main" );
+		
+		user.reduceMoney( 20, "main" );
+		
+		user.addMoney( 20, "main" );
+		user.reduceMoney( 20, "main" );
+		
+		user.addStrength( 500, "练功" );
+		user.reduceStrength( 200, "扫荡" );
+		}
+	}
 	
 	
 
