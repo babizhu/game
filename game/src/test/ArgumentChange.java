@@ -12,14 +12,14 @@ import user.UserInfo;
 public class ArgumentChange {
 	
 	void test( UserInfo user ){
-		UserInfo u1 = new UserInfo();
+		UserInfo u1 = new UserInfo( null );
 		u1.setName( "babizhu" );
 		//user = u1;	避免findbug报警告，如果要查看本代码效果，则不能注释此行
 	}
 
 	public static void main(String[] args) {
 		ArgumentChange ac = new ArgumentChange();
-		UserInfo user = new UserInfo();
+		UserInfo user = new UserInfo( null );
 		user.setName( "liukun" );
 		
 		System.out.println( "调用test函数之前：" + user.getName() );

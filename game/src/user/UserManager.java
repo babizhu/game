@@ -1,7 +1,6 @@
 package user;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,7 +22,7 @@ public class UserManager {
 	private UserManager() {	}
 	
 	private final UserInfoDataProvider db = UserInfoDataProvider.getInstance();	
-	private Map<String,UserInfo> onlineUsers = new ConcurrentHashMap<String, UserInfo>();
+	private ConcurrentHashMap<String,UserInfo> onlineUsers = new ConcurrentHashMap<String, UserInfo>();
 	
 
 	/**
@@ -51,7 +50,7 @@ public class UserManager {
 			code = db.get( user );
 			if( code == ErrorCode.SUCCESS )
 			{
-				code = doLogin( user );
+				doLogin( user );
 			}		
 			System.out.println( "在线人数" + onlineUsers.size() );
 		}
@@ -83,10 +82,10 @@ public class UserManager {
 	 * 把玩家添加到程序中
 	 * @param user
 	 */
-	private ErrorCode doLogin( UserInfo user ){
+	private UserInfo doLogin( UserInfo user ){
 		user.setStatus( UserStatus.LOGIN );
-		onlineUsers.put( user.getName(), user );
-		return ErrorCode.SUCCESS;
+		return onlineUsers.putIfAbsent( user.getName(), user );
+//		return ErrorCode.SUCCESS;
 		
 	}
 	/**

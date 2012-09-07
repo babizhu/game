@@ -50,7 +50,7 @@ public class PackageManagerTest {
 		buf.putInt( 1 );
 		buf.flip();
 
-		UserInfo user = new UserInfo(); 
+		UserInfo user = new UserInfo( null ); 
 		user.setName( "babizhu" );
 		ErrorCode code = pm.run(  user, Packages.USER_LOGIN, buf );
 		assertEquals( code, ErrorCode.SUCCESS );
