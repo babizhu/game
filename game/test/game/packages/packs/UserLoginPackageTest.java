@@ -22,7 +22,7 @@ import util.ErrorCode;
 
 public class UserLoginPackageTest extends BasePackageTest {
 
-	IBlockingConnection nbc;
+	//IBlockingConnection nbc;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 //		nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
@@ -47,7 +47,7 @@ public class UserLoginPackageTest extends BasePackageTest {
 	 * @throws IOException 
 	 */
 	public ByteBuffer sendLoginPackage( IBlockingConnection nbc, String name ) throws IOException{
-		this.nbc = nbc;
+		//this.nbc = nbc;
 		ByteBuffer buf = createContent( name );
 		sendPacket( nbc, buf );
 		return getData( nbc );
@@ -60,7 +60,7 @@ public class UserLoginPackageTest extends BasePackageTest {
 	 * 具体情况请查看{@link core.GameMainLogic#packageProcess} 
 	 */
 	@Test
-	public void Login() throws IOException{
+	public void login() throws IOException{
 		
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		/****************************测试玩家不存在的情况**************************************/		
@@ -104,7 +104,7 @@ public class UserLoginPackageTest extends BasePackageTest {
 	 * @throws IOException 
 	 */
 	//@Test
-	public void DuplicateLoginByTwoConn() throws IOException{
+	public void duplicateLoginByTwoConn() throws IOException{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		
 		String name = "刘昆0";

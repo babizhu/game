@@ -3,12 +3,11 @@ package user;
 import game.AwardType;
 import game.packages.PackageManager;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
+
+import util.BaseUtil;
 
 public class UserInfo {
 	private final static Logger logger = LoggerFactory.getLogger( UserInfo.class ); 
@@ -68,7 +67,7 @@ public class UserInfo {
 	 */
 	private short										loginCount;
 	
-	private byte										sex;
+	private byte										sex						= 1;
 	
 	private boolean										isAdult					= true;
 	
@@ -298,37 +297,37 @@ public class UserInfo {
 	}
 
 
-	/**
-	 * 拷贝构造函数，除开以下变量，其余都要复制：<br>
-	 * this.conn;
-	 * this.name
-	 * @param user
-	 */
-	public void copy( UserInfo user ){
-		
-		this.createTime = user.createTime;
-		this.isAdult = user.isAdult;
-		this.lastLogoutTime = user.lastLogoutTime;
-		this.level = user.level;
-		this.loginCount = user.loginCount;
-		this.money = user.money;
-		this.nickName = user.nickName;
-		this.sex = user.sex;
-		this.status = user.status;
-		this.strength = user.strength;
-	
-	}
+//	/**
+//	 * 拷贝构造函数，除开以下变量，其余都要复制：<br>
+//	 * this.conn;
+//	 * this.name
+//	 * @param user
+//	 */
+//	public void copy( UserInfo user ){
+//		
+//		this.createTime = user.createTime;
+//		this.isAdult = user.isAdult;
+//		this.lastLogoutTime = user.lastLogoutTime;
+//		this.level = user.level;
+//		this.loginCount = user.loginCount;
+//		this.money = user.money;
+//		this.nickName = user.nickName;
+//		this.sex = user.sex;
+//		this.status = user.status;
+//		this.strength = user.strength;
+//	
+//	}
 	
 	@Override
 	public String toString() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+		
 		String connStr = conn == null ? "null" : conn.getId();
 		//dateFormat.format( new Date(createTime * 1000l) )格式
 		return "UserInfo[name=" + name + ", conn=" + connStr 
 				+ ", status=" + status + ", money=" + money + ", strength="
 				+ strength + ", nickName=" + nickName
-				+ ", level=" + level + ", createTime=" + dateFormat.format( new Date(createTime * 1000l) )
-				+ ", lastLogoutTime=" + dateFormat.format( new Date(lastLogoutTime * 1000l) ) + ", loginCount="
+				+ ", level=" + level + ", createTime=" + BaseUtil.secondsToStr( createTime )
+				+ ", lastLogoutTime=" + BaseUtil.secondsToStr( lastLogoutTime ) + ", loginCount="
 				+ loginCount + ", sex=" + sex + ", isAdult=" + isAdult + "]";
 	}
 

@@ -22,9 +22,9 @@ import util.ErrorCode;
  * 
  *         2012-8-16 下午04:13:27
  */
-public class GameMainLogic implements IGameLogic {
+public final class GameMainLogic implements IGameLogic {
 
-	private final static Logger logger = LoggerFactory.getLogger(GameMainLogic.class);
+	private static final  Logger logger = LoggerFactory.getLogger(GameMainLogic.class);
 	private static final GameMainLogic instance = new GameMainLogic();
 
 	public static final GameMainLogic getInstance() {
@@ -51,7 +51,7 @@ public class GameMainLogic implements IGameLogic {
 	 * @throws IOException
 	 */
 	@Override
-	public void packageProcess(INonBlockingConnection con, short packageNo,	byte[] data) throws IOException {
+	public void packageRun(INonBlockingConnection con, short packageNo,	byte[] data) throws IOException {
 		
 		Packages pack = Packages.fromNum(packageNo);
 		ErrorCode code;

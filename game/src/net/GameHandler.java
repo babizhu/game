@@ -94,7 +94,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 		}
 
 		con = ConnectionUtils.synchronizedConnection(con);
-		gameLogic.packageProcess(con, packageNo, data);
+		gameLogic.packageRun(con, packageNo, data);
 
 		return true;
 	}

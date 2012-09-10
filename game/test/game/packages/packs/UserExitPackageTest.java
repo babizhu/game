@@ -15,7 +15,7 @@ import define.SystemCfg;
 public class UserExitPackageTest extends BasePackageTest {
 
 	@Test
-	public void Login() throws IOException, InterruptedException{
+	public void login() throws IOException, InterruptedException{
 		int count = 1;
 		for( int i = 0; i < count; i++ ){
 //			test1();

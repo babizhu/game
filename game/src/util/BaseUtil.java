@@ -1,6 +1,8 @@
 package util;
 
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +65,16 @@ public class BaseUtil {
 		return isWindowsOS;
 	}
 
+	/**
+	 * 把一个用秒数保存的时间值转换为易读的字符串
+	 * @param seconds
+	 * @return
+	 */
+	public static String secondsToStr( long seconds ){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
+		return dateFormat.format( new Date( seconds * 1000l ) );
+		
+	}
 	public static void main(String[] args) {
 		ByteBuffer buf = ByteBuffer.allocate(100);
 		encodeString(buf, "content中文");

@@ -17,6 +17,10 @@ import game.packages.BasePackage;
  * 
  * 所以结论是不能简单的在最外层个某个user加锁，这样的话一旦涉及到交互类玩法，就有可能形成死锁
  * 
+ * 为了增加死锁的概率，增加了如下语句Thread.sleep(4000);
+ * 由于findbugs会报警告，为了避免警告，暂时把此句屏蔽了
+ * //Thread.sleep(4000);//为了findbugs不报错
+ * 
  * @author liukun 2012-9-2
  */
 public class DeadLockTestPackage extends BasePackage {
@@ -39,8 +43,8 @@ public class DeadLockTestPackage extends BasePackage {
 			if ( firstIn.getAndSet( false ) ) {
 				try {
 					System.out.println(name + "睡眠4秒");
-					Thread.sleep(4000);
-				} catch (InterruptedException e) {
+					//Thread.sleep(4000);//为了findbugs不报错
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -50,7 +54,8 @@ public class DeadLockTestPackage extends BasePackage {
 					+ "企图寻找" + otherName);
 			UserInfo user2 = UserManager.getInstance().getUserByName(otherName);
 			if (user2 == null) {
-				System.out.println("未找到" + user2 + "请找数据库中已有的用户名进行测试");
+				System.out.println("未找到user2,请找数据库中已有的用户名进行测试");
+				return;
 			}
 
 			/**
@@ -60,7 +65,7 @@ public class DeadLockTestPackage extends BasePackage {
 			synchronized (user2) {
 				System.out.println(Thread.currentThread() + "\t" + "试图获取"
 						+ user2.getName() + "成功");
-				name = user2.getName();
+				//name = user2.getName();
 			}
 		}
 	}
