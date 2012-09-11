@@ -48,7 +48,7 @@ public class UserInfoDataProvider {
 				user.setLevel( rs.getShort("level") );
 				user.setNickName( rs.getString("nick_name") );
 				user.setStatus( UserStatus.fromNum( rs.getByte( "status" ) ) );
-				user.setMoney( rs.getInt( "money" ) );
+				user.changeMoney( rs.getInt( "money" ), "get" );
 				user.setStrength( rs.getShort( "strength" ) );
 				user.setAdult( rs.getBoolean( "is_adult" ) ) ;
 				user.setCreateTime( rs.getInt( "create_time" ) );

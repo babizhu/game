@@ -33,7 +33,7 @@ public class UserInfo {
 	/**
 	 * 用户名
 	 */
-	private final String								name;
+	private String										name;
 	
 	/**
 	 * 当前玩家的状态
@@ -84,9 +84,8 @@ public class UserInfo {
 	/**
 	 * 构造函数，保持一个尽量精简的构造函数
 	 */
-	public UserInfo( INonBlockingConnection conn, String name ) {
+	public UserInfo( INonBlockingConnection conn ) {
 		this.conn = conn;
-		this.name = name;
 		this.packageManager = new PackageManager();
 	}
 	
@@ -169,6 +168,10 @@ public class UserInfo {
 	}
 	public String getName () {
 		return name;
+	}
+	
+	public void setName( String name ) {
+		this.name = name;
 	}
 
 	public synchronized UserStatus getStatus () {
@@ -282,6 +285,8 @@ public static void main ( String[] args ) {
 //	System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
 //		
 	}
+
+
 	
 	
 

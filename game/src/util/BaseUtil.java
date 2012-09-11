@@ -70,7 +70,7 @@ public class BaseUtil {
 	 * @param seconds
 	 * @return
 	 */
-	public static String secondsToStr( long seconds ){
+	public static String secondsToDateStr( long seconds ){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
 		return dateFormat.format( new Date( seconds * 1000l ) );
 		

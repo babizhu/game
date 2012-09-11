@@ -179,7 +179,7 @@ public class Test {
 		UserInfo user = new UserInfo( null );
 		long begin = System.nanoTime();
 		for (int i = 0; i < count; i++) {
-			user.addMoney(500, "test7");
+			user.changeMoney( 500, "test7" );
 		}
 		System.out.println("执行" + count + "次，耗时：" + (System.nanoTime() - begin)
 				/ 1000000000f + "秒");
