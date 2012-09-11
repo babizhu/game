@@ -9,18 +9,31 @@ import org.xsocket.connection.INonBlockingConnection;
 
 import util.BaseUtil;
 
+/**
+ * 用户基础信息类
+ * 
+ * 线程安全
+ * 
+ * @author liukun
+ * 2012-9-11 下午02:24:20
+ */
 public class UserInfo {
 	private final static Logger logger = LoggerFactory.getLogger( UserInfo.class ); 
 
 	/**
 	 * 包管理器
 	 */
-	private final PackageManager						packageManager = new PackageManager();
+	private final PackageManager						packageManager;
 	
 	/**
 	 * 底层的网络连接，
 	 */
 	private final INonBlockingConnection 				conn;
+	
+	/**
+	 * 用户名
+	 */
+	private final String								name;
 	
 	/**
 	 * 当前玩家的状态
@@ -35,17 +48,12 @@ public class UserInfo {
 	/**
 	 * 体力
 	 */
-	private short										strength;
+	private short										strength = 0;
 	
 	/**
 	 * 昵称
 	 */
 	private String										nickName;
-	
-	/**
-	 * 用户名
-	 */
-	private String										name;
 	
 	/**
 	 * 等级
@@ -76,52 +84,43 @@ public class UserInfo {
 	/**
 	 * 构造函数，保持一个尽量精简的构造函数
 	 */
-	public UserInfo( INonBlockingConnection conn ) {
+	public UserInfo( INonBlockingConnection conn, String name ) {
 		this.conn = conn;
+		this.name = name;
+		this.packageManager = new PackageManager();
 	}
 	
-	public short getLevel () {
+	public synchronized short getLevel () {
 		return level;
 	}
-	public void setLevel ( short level ) {
+	public synchronized void setLevel ( short level ) {
 		this.level = level;
 	}
 	/**
-	 * 增加体力
-	 * @param strengthAdd
+	 * 修改体力
+	 * @param change		增加为正数，减少为负数
 	 * @param funcName
-	 * @return
+	 * @return				当前体力值
 	 */	
-	public int addStrength( int strengthAdd, String funcName ){
-		strength += strengthAdd;
-		buildLog( AwardType.STRENGTH, strengthAdd, strength, funcName );
+	synchronized int changeStrength( int change, String funcName ){
+		strength += change;
+		buildLog( AwardType.STRENGTH, change, strength, funcName );
 		return strength;
 	}
-	public int reduceStrength( int strengthReduce, String funcName ){
-		if( strength < strengthReduce ){
-			throw new IllegalArgumentException();
-		}
-		strength -= strengthReduce;
-		buildLog( AwardType.STRENGTH, -strengthReduce, strength, funcName );
-		return strength;
-	}
+
 	
-	public void setMoney( int money ){
-		this.money = money;
-	}
-	
-	public int getMoney(  ){
+	public synchronized int getMoney(  ){
 		return money;
 	}
 	/**
-	 * 增加金币
-	 * @param add		增加的金币
-	 * @param funcName	调用的函数
+	 * 修改玩家的金币数量
+	 * @param change			增加为正数，减少为负数
+	 * @param funcName			调用的函数
 	 * 
-	 * @return 当前所有的金币
+	 * @return 					当前拥有的金币
 	 */
-	public int addMoney( int moneyAdd, String funcName ){
-		money += moneyAdd;
+	public synchronized int changeMoney( int change, String funcName ){
+		money += change;
 		
 		//TODO 处理防沉迷系统，其他的vip加成等信息
 		
@@ -130,64 +129,11 @@ public class UserInfo {
 //      String func = ele[2].getMethodName();
 //      System.out.println(func);
 
-		buildLog( AwardType.MONEY, moneyAdd, money, funcName );
-		return money;
-	}
-	
-	/**
-	 * 扣除金币
-	 * @param moneyReduce	扣除的金币
-	 * 
-	 * @return 当前金币
-	 */
-	public int reduceMoney( int moneyReduce, String funcName ){
-		if( money < moneyReduce ){
-			throw new IllegalArgumentException();
-		}
-		money -= moneyReduce;
-		buildLog( AwardType.MONEY, -moneyReduce, money, funcName );
+		buildLog( AwardType.MONEY, change, money, funcName );
 		return money;
 	}
 	
 	
-	/**
-	 * 此函数有可能被废弃，测试中
-	 * @param buffer
-	 */
-//	public void sendPacket( ByteBuffer buffer ){
-//		
-////		ByteBuffer header = buffer[0];
-//		
-////		System.out.println( header );
-////		System.out.println( "包头" + header.get() );
-////		System.out.println( "包号:" + header.getShort() );
-////		System.out.println( "包长1:" + header.getShort() );
-//		
-////		ByteBuffer footer = buffer[2];
-////		System.out.println( "包尾:" + footer.get() );
-//		try {
-//			if( conn.isOpen() ){
-//				conn.write( buffer );
-//				for( int i = 0; i < 10000; i++ ) {
-//					System.out.println( "i = " + i );
-//					conn.write( 45 );
-//				}
-//			}
-//			else{
-//				System.err.println( this.getName() + " conn is closed");
-//			}
-//		} catch (ClosedChannelException e ) {
-//			logger.debug( e.toString() );
-//		} catch (SocketTimeoutException e){
-//			logger.debug( e.toString() );
-//		
-//		} catch (IOException e) {
-//			logger.debug( e.toString() );
-//		}
-//		
-//		
-//	}
-//	
 	/**
 	 * 构造关键数据的日志文件
 	 * @param at
@@ -214,19 +160,16 @@ public class UserInfo {
 		logger.info( sb.toString() );
 	}
 	
-	public String getNickName () {
+	public synchronized String getNickName () {
 		return nickName;
 	}
-	public void setNickName ( String nickName ) {
+	
+	public synchronized void setNickName ( String nickName ) {
 		this.nickName = nickName;
 	}
 	public String getName () {
 		return name;
 	}
-	public void setName ( String name ) {
-		this.name = name;
-	}
-	
 
 	public synchronized UserStatus getStatus () {
 		return status;
@@ -235,64 +178,61 @@ public class UserInfo {
 		this.status = status;
 	}
 	
-	
 	public INonBlockingConnection getConn () {
 		return conn;
 	}
-	
 	
 	public PackageManager getPackageManager () {
 		return packageManager;
 	}
 	
 	
-	
-	public int getCreateTime() {
+	public synchronized int getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(int createTime) {
+	public synchronized void setCreateTime(int createTime) {
 		this.createTime = createTime;
 	}
 
-	public int getLastLogoutTime() {
+	public synchronized int getLastLogoutTime() {
 		return lastLogoutTime;
 	}
 
-	public void setLastLogoutTime(int lastLogoutTime) {
+	synchronized void setLastLogoutTime(int lastLogoutTime) {
 		this.lastLogoutTime = lastLogoutTime;
 	}
 
-	public short getLoginCount() {
+	public synchronized short getLoginCount() {
 		return loginCount;
 	}
 
-	public void setLoginCount(short loginCount) {
+	public synchronized void setLoginCount(short loginCount) {
 		this.loginCount = loginCount;
 	}
 
-	public byte getSex() {
+	public synchronized byte getSex() {
 		return sex;
 	}
 
-	public void setSex(byte sex) {
+	public synchronized void setSex(byte sex) {
 		this.sex = sex;
 	}
 
-	public boolean isAdult() {
+	public synchronized boolean isAdult() {
 		return isAdult;
 	}
 
-	public void setAdult(boolean isAdult) {
+	public synchronized void setAdult(boolean isAdult) {
 		this.isAdult = isAdult;
 	}
 
 	
-	public short getStrength() {
+	public synchronized short getStrength() {
 		return strength;
 	}
 
-	public void setStrength(short strength) {
+	public synchronized void setStrength(short strength) {
 		this.strength = strength;
 	}
 
@@ -319,33 +259,28 @@ public class UserInfo {
 //	}
 	
 	@Override
-	public String toString() {
+	public synchronized String toString() {
 		
 		String connStr = conn == null ? "null" : conn.getId();
-		//dateFormat.format( new Date(createTime * 1000l) )格式
 		return "UserInfo[name=" + name + ", conn=" + connStr 
 				+ ", status=" + status + ", money=" + money + ", strength="
 				+ strength + ", nickName=" + nickName
-				+ ", level=" + level + ", createTime=" + BaseUtil.secondsToStr( createTime )
-				+ ", lastLogoutTime=" + BaseUtil.secondsToStr( lastLogoutTime ) + ", loginCount="
+				+ ", level=" + level + ", createTime=" + BaseUtil.secondsToDateStr( createTime )
+				+ ", lastLogoutTime=" + BaseUtil.secondsToDateStr( lastLogoutTime ) + ", loginCount="
 				+ loginCount + ", sex=" + sex + ", isAdult=" + isAdult + "]";
 	}
 
-	
+
+
 public static void main ( String[] args ) {
-		
-		for( int i = 0; i < 10000; i++ ){
-		UserInfo user = new UserInfo( null );
-		user.addMoney( 50, "main" );
-		
-		user.reduceMoney( 20, "main" );
-		
-		user.addMoney( 20, "main" );
-		user.reduceMoney( 20, "main" );
-		
-		user.addStrength( 500, "练功" );
-		user.reduceStrength( 200, "扫荡" );
-		}
+//	long begin = System.nanoTime();
+//	for( int i = 0; i < 100000000; i++ ){
+//		UserInfo user = new UserInfo(null, "bbz");
+//		user.changeMoney(i, "");
+//	}
+//	
+//	System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
+//		
 	}
 	
 	
