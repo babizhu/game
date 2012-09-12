@@ -134,6 +134,7 @@ public class UserLoginPackageTest extends BasePackageTest {
 
 	@Override
 	public short getPacketNo() {
+//		return -1;
 		return Packages.USER_LOGIN.toNum();
 	}
 }

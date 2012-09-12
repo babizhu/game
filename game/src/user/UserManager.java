@@ -1,5 +1,7 @@
 package user;
 
+import game.packages.Packages;
+
 import java.io.IOException;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,7 +38,7 @@ public class UserManager {
 	public ErrorCode login( UserInfo user ) throws IOException{
 		
 		ErrorCode code;
-		UserInfo oldUser = onlineUsers.get( user.getName() ); 
+		UserInfo oldUser = onlineUsers.remove( user.getName() ); 
 		
 		if( oldUser != null ){//此玩家在线
 			//TODO 给老玩家发送退出包
@@ -58,22 +60,33 @@ public class UserManager {
 	}
 	
 	/**
-	 * 玩家退出游戏
-	 * @param user
+	 * 玩家退出游戏，回写一些玩家的信息到数据库
+	 * 
+	 * 注意：
+	 * 			如果是内部调用exit，必须确保玩家所发送的所有包信息都执行完成之后，才可调用exit，否则可能出现如下问题：
+	 * 			玩家发送一个会损耗大量点券的包，并且已经从onlineUsers中取出该user对象，然后，内部调用exit，并
+	 * 
+	 * @param name			外层确保不会为null
 	 * @return
 	 * @throws IOException 
 	 */
-	public ErrorCode exit( UserInfo user ) throws IOException{
+	public ErrorCode exit( String name ) throws IOException{
 		ErrorCode code = ErrorCode.SUCCESS;
-		synchronized ( user ) {
-			if( user.getStatus() == UserStatus.LOGIN ){
-				onlineUsers.remove( user.getName() );
-				user.setLastLogoutTime( SystemTimer.currentTimeSecond() );
-				
-				code = db.update(user);
-				user.setStatus( UserStatus.GUEST );//必须放在db.update(user);之后，否则数据库中的玩家状态就变成GUEST了
-			}
+
+		UserInfo user = onlineUsers.remove( name );
+		if( user == null ){
+			//按道理说name！=null，这里就不会等于null，考虑什么情况下会出现con的attachment有name值，而这里却没有user的情况？？？？？？？？？？？？
+			return ErrorCode.USER_NOT_LOGIN; 
 		}
+		
+		synchronized ( user ) {
+			user.setLastLogoutTime( SystemTimer.currentTimeSecond() );
+			code = db.update(user);
+//				user.setStatus( UserStatus.GUEST );//必须放在db.update(user);之后，否则数据库中的玩家状态就变成GUEST了
+//			if( user.getStatus() == UserStatus.LOGIN ){
+//			}
+		}
+	
 		System.out.println( "在线人数" + onlineUsers.size() );
 		return code;
 	}
@@ -124,5 +137,30 @@ public class UserManager {
 	 */
 	public UserInfo getUserByName(String name) {
 		return onlineUsers.get( name );
+	}
+	
+	/**
+	 * 之所以要从这里运行run方法，主要是为了保证外层不再拥有user信息，<br>
+	 * 所有的user信息都是从onlineUsers中获取，这样可以缩小user被发布的范围，增加线程安全性
+	 * @param name
+	 * @param pack
+	 * @param data
+	 * @return
+	 */
+	public ErrorCode run( String name, Packages pack, byte[] data ) {
+		
+		if( name == null ){
+			if( pack != Packages.USER_CREATE || pack != Packages.USER_LOGIN ){
+				return ErrorCode.USER_NOT_LOGIN;
+			}
+		}
+		UserInfo user = onlineUsers.get( name );
+		if( user != null ){
+			user.run(pack, data);
+		}
+		else{
+			return ErrorCode.USER_NOT_FOUND;
+		}
+		return ErrorCode.SUCCESS;
 	}
 }

@@ -3,13 +3,14 @@
  */
 package game.packages.packs;
 
+import game.packages.BasePackage;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import user.UserInfo;
 import user.UserManager;
-import game.packages.BasePackage;
 
 /**
  * 用来测试死锁问题，比如精英挑战赛等交互类的玩法
