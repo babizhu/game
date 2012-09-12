@@ -1,6 +1,10 @@
 package game.packages;
 
-import game.packages.packs.*;
+import game.packages.packs.DeadLockTestPackage;
+import game.packages.packs.SystemSendErrorCodePackage;
+import game.packages.packs.UserCreatePackage;
+import game.packages.packs.UserExitPackage;
+import game.packages.packs.UserLoginPackage;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -65,7 +69,7 @@ public enum Packages {
 	 * @throws IOException 
 	 */
 	public void run(UserInfo user, ByteBuffer buf) throws IOException {
-		packageInstance.run(user, buf);
+		packageInstance.run( user, buf );
 	}
 	
 	/**

@@ -41,7 +41,7 @@ public class UserLoginPackage extends BasePackage {
 			buffer.putInt( user.getCreateTime() );					//创建时间
 //			
 		}
-		sendPackage( user, buffer );
+		sendPackage( user.getConn(), buffer );
 
 	}
 	

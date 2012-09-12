@@ -75,6 +75,26 @@ public class BaseUtil {
 		return dateFormat.format( new Date( seconds * 1000l ) );
 		
 	}
+	
+	/**
+	 * 返回按字节为单位收到的客户端传来的数据信息，调试用
+	 * 
+	 * @param buf
+	 * @return
+	 */
+	public static String bufToString( ByteBuffer buf ){
+		ByteBuffer copy = buf.asReadOnlyBuffer();
+		if( copy.position() != 0 ){
+			copy.flip();
+		}
+		StringBuilder sb = new StringBuilder( "[");
+		while( copy.hasRemaining() ){
+			sb.append( copy.get() + " " );
+		}
+		sb.append( "]" );
+		return sb.toString();
+	}
+	
 	public static void main(String[] args) {
 		ByteBuffer buf = ByteBuffer.allocate(100);
 		encodeString(buf, "content中文");

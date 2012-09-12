@@ -1,21 +1,22 @@
 package user;
 
+import game.packages.Packages;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import util.SystemTimer;
-import game.packages.PackageManager;
-import game.packages.Packages;
 
 /**
- * 检测玩家是否存在频繁发包的情况
+ * 玩家的包管理器，主要处理客户端刷包等情况
  * 
- * @author liukun
- * 2012-9-11 下午05:06:47
+ * @author admin
+ * 2012-8-15 上午11:50:42
  */
-public class PackageCheck {
+class UserPackageManager {
 
-	private final static Logger 			logger = LoggerFactory.getLogger( PackageManager.class ); 
+	private final static Logger 			logger = LoggerFactory.getLogger( UserPackageManager.class ); 
+
 	/**
 	 * 接收相同包号两个包之间允许的最短时间间隔，如果小于这个值则认定客户端有刷包嫌疑，丢弃这个包
 	 * 单位	毫秒
@@ -26,20 +27,18 @@ public class PackageCheck {
 	/**
 	 * 接收的上一个包
 	 */
-	private Packages	lastPack;
+	private Packages						lastPack;
 	
 	/**
 	 * 上一次收包时间
 	 */
-	private	long	lastReceiveTime = 0;
-	
+	private	long							lastReceiveTime = 0;
+
 	/**
-	 * 检查玩家是否存在断时间内恶意刷大量包的情况
-	 * 只有连续2个相同的包才开启检测，例如两个登陆包的时间间隔小于MIN_INTERVAL_MILS，则被视为恶意刷包
+	 * 检查玩家是否存在断时间内恶意刷大量包的情况<br>
+	 * 只有在连续两个包的包号相同并且间隔时间少于规定值的时候，才返回false<br>
+	 * 具体规则可能还需要根据实际情况进一步调整
 	 * @param packageNo
-	 * 
-	 * @线程安全
-	 * 
 	 * @return
 	 */
 	public synchronized boolean safeCheck( Packages pack ){
@@ -52,5 +51,9 @@ public class PackageCheck {
 		lastReceiveTime = current;
 		return true;
 	}
-
+	
+	
+	public static void main ( String[] args ) {
+		//PackageUtil.printAllPakcets( PackageManager.packages );
+	}	
 }

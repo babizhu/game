@@ -1,13 +1,16 @@
 package user;
 
 import game.AwardType;
-import game.packages.PackageManager;
+import game.packages.Packages;
+
+import java.nio.ByteBuffer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
 
 import util.BaseUtil;
+import util.ErrorCode;
 
 /**
  * 用户基础信息类
@@ -23,7 +26,7 @@ public class UserInfo {
 	/**
 	 * 包管理器
 	 */
-	private final PackageManager						packageManager;
+	private final UserPackageManager						packageManager;
 	
 	/**
 	 * 底层的网络连接，
@@ -86,7 +89,7 @@ public class UserInfo {
 	 */
 	public UserInfo( INonBlockingConnection conn ) {
 		this.conn = conn;
-		this.packageManager = new PackageManager();
+		this.packageManager = new UserPackageManager();
 	}
 	
 	public synchronized short getLevel () {
@@ -185,7 +188,7 @@ public class UserInfo {
 		return conn;
 	}
 	
-	public PackageManager getPackageManager () {
+	public UserPackageManager getPackageManager () {
 		return packageManager;
 	}
 	
@@ -261,6 +264,33 @@ public class UserInfo {
 //	
 //	}
 	
+	/**
+	 * 运行包处理程序，多线程下，唯一的风险是getStatus()会不会在这里为UserStatus.LOGIN之后，被另外的线程修改为其他状态，导致竞态条件的产生<br>
+	 * 再想想
+	 */
+	public ErrorCode run( Packages pack, byte[] data ){
+		
+		if( !packageManager.safeCheck( pack ) ){
+			return ErrorCode.PACKAGE_SAFE_CHECK_FAIL;
+		}
+		if( (pack == Packages.USER_LOGIN || pack == Packages.USER_CREATE) && getStatus() == UserStatus.LOGIN ) {
+			return ErrorCode.USER_HAS_LOGIN;
+		}
+		else if( (pack != Packages.USER_LOGIN && pack != Packages.USER_CREATE) && getStatus() == UserStatus.GUEST ) {
+			return ErrorCode.USER_NOT_LOGIN;
+		}
+		
+		ByteBuffer buf = ByteBuffer.wrap( data );
+		try{
+			pack.run( this, buf );
+		}
+		catch( Exception e ){
+			logger.debug( this + "," + pack + "," + BaseUtil.bufToString( buf ), e );
+			return ErrorCode.UNKNOW_ERROR;
+		}
+		return ErrorCode.SUCCESS;
+				
+	}
 	@Override
 	public synchronized String toString() {
 		

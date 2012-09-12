@@ -1,5 +1,7 @@
 package user;
 
+import game.packages.Packages;
+
 import java.io.IOException;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,7 +38,7 @@ public class UserManager {
 	public ErrorCode login( UserInfo user ) throws IOException{
 		
 		ErrorCode code;
-		UserInfo oldUser = onlineUsers.get( user.getName() ); 
+		UserInfo oldUser = onlineUsers.remove( user.getName() ); 
 		
 		if( oldUser != null ){//此玩家在线
 			//TODO 给老玩家发送退出包
@@ -63,15 +65,21 @@ public class UserManager {
 	 * @return
 	 * @throws IOException 
 	 */
-	public ErrorCode exit( UserInfo user ) throws IOException{
+	public ErrorCode exit( String name ) throws IOException{
 		ErrorCode code = ErrorCode.SUCCESS;
-		synchronized ( user ) {
-			if( user.getStatus() == UserStatus.LOGIN ){
-				onlineUsers.remove( user.getName() );
-				user.setLastLogoutTime( SystemTimer.currentTimeSecond() );
-				
-				code = db.update(user);
-				user.setStatus( UserStatus.GUEST );//必须放在db.update(user);之后，否则数据库中的玩家状态就变成GUEST了
+		if( name == null ){
+			return ErrorCode.USER_NOT_LOGIN; 
+		}
+		UserInfo user = onlineUsers.remove( name );
+		if( user != null ){
+		
+			synchronized ( user ) {
+				if( user.getStatus() == UserStatus.LOGIN ){
+					user.setLastLogoutTime( SystemTimer.currentTimeSecond() );
+					
+					code = db.update(user);
+//					user.setStatus( UserStatus.GUEST );//必须放在db.update(user);之后，否则数据库中的玩家状态就变成GUEST了
+				}
 			}
 		}
 		System.out.println( "在线人数" + onlineUsers.size() );
@@ -124,5 +132,30 @@ public class UserManager {
 	 */
 	public UserInfo getUserByName(String name) {
 		return onlineUsers.get( name );
+	}
+	
+	/**
+	 * 之所以要从这里运行run方法，主要是为了保证外层不再拥有user信息，<br>
+	 * 所有的user信息都是从onlineUsers中获取，这样可以缩小user被发布的范围，增加线程安全性
+	 * @param name
+	 * @param pack
+	 * @param data
+	 * @return
+	 */
+	public ErrorCode run( String name, Packages pack, byte[] data ) {
+		
+		if( name == null ){
+			if( pack != Packages.USER_CREATE || pack != Packages.USER_LOGIN ){
+				return ErrorCode.USER_NOT_LOGIN;
+			}
+		}
+		UserInfo user = onlineUsers.get( name );
+		if( user != null ){
+			user.run(pack, data);
+		}
+		else{
+			return ErrorCode.USER_NOT_FOUND;
+		}
+		return ErrorCode.SUCCESS;
 	}
 }

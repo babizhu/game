@@ -8,6 +8,7 @@ import java.nio.ByteBuffer;
 import org.xsocket.connection.INonBlockingConnection;
 
 import user.UserInfo;
+import util.ErrorCode;
 
 
 /**
@@ -41,15 +42,28 @@ public abstract class BasePackage implements IPackage {
 	 * 
 	 * @注意	由于设置了setFlushmode( FlushMode.ASYNC );，所以，后续程序不得在对此buffer进行任何包括读取在内的操作！！！！！！
 	 */
-	public void sendPackage( UserInfo user, ByteBuffer buffer ) throws IOException{
+	public void sendPackage( INonBlockingConnection con, ByteBuffer buffer ) throws IOException{
 		buffer.putShort( 3, (short) (buffer.position() - 5) );//设置内容长度
 		buffer.put( FOOT );				
 		buffer.flip();
 		
-		INonBlockingConnection con = user.getConn();
 		con.write( buffer );
 			//由于设置了setFlushmode( FlushMode.ASYNC );，所以，后续程序不得在对buffer进行任何包括读取在内的操作！！！！！！
 	}	
+	
+	
+	/**
+	 * 处理仅仅回送一个ErrorCode的情况
+	 * @param conn
+	 * @param code
+	 * @throws IOException
+	 */
+	protected void sendErrorCode( INonBlockingConnection con, ErrorCode code ) throws IOException{
+		ByteBuffer buffer = buildEmptyPackage( 8 );
+		buffer.putShort( (short) code.ordinal() );			//错误代码
+		
+		sendPackage( con, buffer );
+	}
 	
 	/**
 	 * 创建一个长度为capacity的缓冲包，此包包括包头，包号，包长（占位符）

@@ -4,15 +4,12 @@ import game.packages.Packages;
 import game.packages.packs.SystemSendErrorCodePackage;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
 
-import user.UserInfo;
 import user.UserManager;
-import user.UserStatus;
 import util.ErrorCode;
 
 /**
@@ -31,11 +28,8 @@ public final class GameMainLogic implements IGameLogic {
 		return instance;
 	}
 
-	private GameMainLogic() {
-	}
-
 	/**
-	 * 处理玩家传送的包信息
+	 * 处理客户端发送的包信息
 	 * 
 	 * @param con
 	 * @param packageNo
@@ -51,32 +45,23 @@ public final class GameMainLogic implements IGameLogic {
 	 * @throws IOException
 	 */
 	@Override
-	public void packageRun(INonBlockingConnection con, short packageNo,	byte[] data) throws IOException {
+	public void packageRun( INonBlockingConnection con, short packageNo, byte[] data ) throws IOException {
 		
-		Packages pack = Packages.fromNum(packageNo);
+		Packages pack = Packages.fromNum( packageNo );
 		ErrorCode code;
-		UserInfo user = (UserInfo) con.getAttachment();
+		String name = (String) con.getAttachment();
 		if (pack == null) {
 			code = ErrorCode.PACKAGE_NOT_FOUND;
-		} else {
-			
-			if( (pack == Packages.USER_LOGIN || pack == Packages.USER_CREATE) && user.getStatus() == UserStatus.LOGIN ) {
-				code = ErrorCode.USER_HAS_LOGIN;
-			}
-			else if( (pack != Packages.USER_LOGIN && pack != Packages.USER_CREATE) && user.getStatus() == UserStatus.GUEST ) {
-				code = ErrorCode.USER_NOT_LOGIN;
-			}
-			else{
-				ByteBuffer buf = ByteBuffer.wrap( data );
-				code = user.getPackageManager().run( user, pack, buf );
-			}
+		} else {			
+			code = UserManager.getInstance().run( name, pack, data );
 		}
 		
 		if (code != ErrorCode.SUCCESS) {
 			SystemSendErrorCodePackage p = (SystemSendErrorCodePackage) Packages.SYSTEM_SEND_ERROR_CODE.getPackageInstance();
-			p.run(user, code);
-			// TODO DEBUG:整个try块似乎只用于用例测试，正式发布的时候可以考虑删除
-			logger.debug("错误码:[" + code + "] 包号:[" + pack + "] " + user);
+			p.run( con, code );
+			logger.debug( "[" + con.getRemoteAddress() + "]错误码:[" + code + "] 包号:[" + pack + "] " + name );
+
+			// TODO DEBUG:整个if块似乎只用于用例测试，正式发布的时候可以考虑删除
 			// TODO 断开连接？
 		}
 	}
@@ -87,10 +72,10 @@ public final class GameMainLogic implements IGameLogic {
 	 */
 	@Override
 	public void exit(INonBlockingConnection con) throws IOException {
-		UserInfo user = (UserInfo) con.getAttachment();
-		ErrorCode code = UserManager.getInstance().exit( user );
+		String name = (String) con.getAttachment();
+		ErrorCode code = UserManager.getInstance().exit( name );
 		if (code != ErrorCode.SUCCESS) {
-			logger.debug("用户退出发生错误：" + user.getName() + "[" + con.getId() + "], 错误码:" + code );
+			logger.debug( "用户退出发生错误：" + name + "[" + con.getId() + "], 错误码:" + code );
 		}
 	}
 }
