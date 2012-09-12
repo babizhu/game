@@ -73,12 +73,13 @@ public class UserManager {
 	public ErrorCode exit( String name ) throws IOException{
 		ErrorCode code = ErrorCode.SUCCESS;
 
+
 		UserInfo user = onlineUsers.remove( name );
 		if( user == null ){
 			//按道理说name！=null，这里就不会等于null，考虑什么情况下会出现con的attachment有name值，而这里却没有user的情况？？？？？？？？？？？？
 			return ErrorCode.USER_NOT_LOGIN; 
+
 		}
-		
 		synchronized ( user ) {
 			user.setLastLogoutTime( SystemTimer.currentTimeSecond() );
 			code = db.update(user);

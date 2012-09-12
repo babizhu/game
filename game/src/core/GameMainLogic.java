@@ -73,11 +73,13 @@ public final class GameMainLogic implements IGameLogic {
 	@Override
 	public void exit(INonBlockingConnection con) throws IOException {
 		String name = (String) con.getAttachment();
+
 		if( name != null ){
 			ErrorCode code = UserManager.getInstance().exit( name );
 			if (code != ErrorCode.SUCCESS) {
 				logger.debug( "用户退出发生错误：" + name + "[" + con.getId() + "], 错误码:" + code );
 			}
+
 		}
 	}
 }
