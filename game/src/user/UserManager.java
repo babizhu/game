@@ -3,11 +3,8 @@ package user;
 import game.packages.Packages;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.xsocket.connection.INonBlockingConnection;
 
 import util.ErrorCode;
 import util.SystemTimer;
@@ -41,12 +38,14 @@ public class UserManager {
 	public ErrorCode login( UserInfo user ) throws IOException{
 		
 		ErrorCode code;
-		UserInfo oldUser = onlineUsers.get( user.getName() ); 
-		
+		UserInfo oldUser = onlineUsers.remove( user.getName() ); 
 		
 		if( oldUser != null ){//此玩家在线
+			//TODO 给老玩家发送退出包
+			//user.copy( oldUser );
 			
-			user.setcon
+			oldUser.setStatus( UserStatus.GUEST );
+			oldUser.getConn().close();
 			code = ErrorCode.SUCCESS;
 		}
 		else{
@@ -144,33 +143,24 @@ public class UserManager {
 	/**
 	 * 之所以要从这里运行run方法，主要是为了保证外层不再拥有user信息，<br>
 	 * 所有的user信息都是从onlineUsers中获取，这样可以缩小user被发布的范围，增加线程安全性
-	 * 
-	 * @param con
+	 * @param name
 	 * @param pack
 	 * @param data
 	 * @return
-	 * @throws IOException 
 	 */
-	public ErrorCode run( INonBlockingConnection con, Packages pack, byte[] data ) throws IOException {
+	public ErrorCode run( String name, Packages pack, byte[] data ) {
 		
-		ByteBuffer buf = ByteBuffer.wrap( data );
-		String name = (String) con.getAttachment();
 		if( name == null ){
-			
-			if( pack == Packages.USER_CREATE || pack == Packages.USER_LOGIN ){
-				UserInfo user = new UserInfo( con );
-				pack.run( user, buf );
-			}
-			else{
+			if( pack != Packages.USER_CREATE || pack != Packages.USER_LOGIN ){
 				return ErrorCode.USER_NOT_LOGIN;
 			}
 		}
+		UserInfo user = onlineUsers.get( name );
+		if( user != null ){
+			user.run(pack, data);
+		}
 		else{
-			if( pack == Packages.USER_CREATE || pack == Packages.USER_LOGIN ){
-				return ErrorCode.USER_HAS_LOGIN; 
-			}
-			UserInfo user = onlineUsers.get( name );
-			pack.run(user, buf);
+			return ErrorCode.USER_NOT_FOUND;
 		}
 		return ErrorCode.SUCCESS;
 	}

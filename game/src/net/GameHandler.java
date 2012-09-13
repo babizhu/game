@@ -14,8 +14,6 @@ import org.xsocket.connection.IDisconnectHandler;
 import org.xsocket.connection.IIdleTimeoutHandler;
 import org.xsocket.connection.INonBlockingConnection;
 
-import user.UserInfo;
-
 import core.GameMainLogic;
 
 /**
@@ -43,7 +41,6 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 		con = ConnectionUtils.synchronizedConnection(con);
 		con.available();// 避免findbugs的警告
 		// con.setIdleTimeoutMillis( 5000 );//连接上来之后，如果5秒不发包，主动切断
-		
 		return false;
 		// return true;//不切断连接
 	}
@@ -54,7 +51,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 		con = ConnectionUtils.synchronizedConnection(con);
 		System.out.println(con.getId() + " onConnect");
 
-//		UserInfo user = new UserInfo( con );
+//		UserInfo user = new UserInfo(con);
 //		con.setAttachment(user);
 		return false;
 	}
