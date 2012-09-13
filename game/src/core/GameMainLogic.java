@@ -49,17 +49,16 @@ public final class GameMainLogic implements IGameLogic {
 		
 		Packages pack = Packages.fromNum( packageNo );
 		ErrorCode code;
-		String name = (String) con.getAttachment();
 		if (pack == null) {
 			code = ErrorCode.PACKAGE_NOT_FOUND;
 		} else {			
-			code = UserManager.getInstance().run( name, pack, data );
+			code = UserManager.getInstance().run( con, pack, data );
 		}
 		
 		if (code != ErrorCode.SUCCESS) {
 			SystemSendErrorCodePackage p = (SystemSendErrorCodePackage) Packages.SYSTEM_SEND_ERROR_CODE.getPackageInstance();
 			p.run( con, code );
-			logger.debug( "[" + con.getRemoteAddress() + "]错误码:[" + code + "] 包号:[" + pack + "] " + name );
+			logger.debug( "[" + con.getRemoteAddress() + "]错误码:[" + code + "] 包号:[" + pack + "] " );
 
 			// TODO DEBUG:整个if块似乎只用于用例测试，正式发布的时候可以考虑删除
 			// TODO 断开连接？
@@ -73,9 +72,13 @@ public final class GameMainLogic implements IGameLogic {
 	@Override
 	public void exit(INonBlockingConnection con) throws IOException {
 		String name = (String) con.getAttachment();
-		ErrorCode code = UserManager.getInstance().exit( name );
-		if (code != ErrorCode.SUCCESS) {
-			logger.debug( "用户退出发生错误：" + name + "[" + con.getId() + "], 错误码:" + code );
+
+		if( name != null ){
+			ErrorCode code = UserManager.getInstance().exit( name );
+			if (code != ErrorCode.SUCCESS) {
+				logger.debug( "用户退出发生错误：" + name + "[" + con.getId() + "], 错误码:" + code );
+			}
+
 		}
 	}
 }
