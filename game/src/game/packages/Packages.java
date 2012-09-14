@@ -1,10 +1,7 @@
 package game.packages;
 
-import game.packages.packs.DeadLockTestPackage;
-import game.packages.packs.SystemSendErrorCodePackage;
-import game.packages.packs.UserCreatePackage;
-import game.packages.packs.UserExitPackage;
-import game.packages.packs.UserLoginPackage;
+
+import game.packages.packs.*;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -32,6 +29,7 @@ public enum Packages {
 	USER_LOGIN( 201, new UserLoginPackage() ),
 	USER_CREATE( 202, new UserCreatePackage() ),
 	USER_EXIT( 203, new UserExitPackage() ), 
+	EQUIPMENT_LEVEL_UP( 501, new EquipmentLevelUpPackage() ),
 	DEAD_LOCK_TEST( 30000, new DeadLockTestPackage() ); 
 				
 	//private final static Logger 			logger = LoggerFactory.getLogger( PackageDefine.class ); 

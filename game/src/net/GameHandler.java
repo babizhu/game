@@ -14,6 +14,8 @@ import org.xsocket.connection.IDisconnectHandler;
 import org.xsocket.connection.IIdleTimeoutHandler;
 import org.xsocket.connection.INonBlockingConnection;
 
+import user.UserInfo;
+
 import core.GameMainLogic;
 
 /**
@@ -51,8 +53,8 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 		con = ConnectionUtils.synchronizedConnection(con);
 		System.out.println(con.getId() + " onConnect");
 
-//		UserInfo user = new UserInfo(con);
-//		con.setAttachment(user);
+		UserInfo user = new UserInfo( con );
+		con.setAttachment(user);
 		return false;
 	}
 

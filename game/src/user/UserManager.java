@@ -5,6 +5,7 @@ import game.packages.Packages;
 import java.io.IOException;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import util.ErrorCode;
 import util.SystemTimer;
@@ -38,24 +39,43 @@ public class UserManager {
 	public ErrorCode login( UserInfo user ) throws IOException{
 		
 		ErrorCode code;
-		UserInfo oldUser = onlineUsers.remove( user.getName() ); 
+//		UserInfo oldUser = onlineUsers.get( user.getName() ); 
+//		
+//		if( oldUser != null ){//此玩家在线
+//			oldUser.getConn().close();
+//			code = ErrorCode.USER_HAS_LOGIN;
+//		}
+//		else{
+//			code = db.get( user );
+//			if( code == ErrorCode.SUCCESS )
+//			{
+//				if( user.getStatus() == UserStatus.LOGIN ){
+//					if( doLogin( user ) != null ){//有人捷足先登了
+//						code = ErrorCode.USER_HAS_LOGIN; 
+//					}
+//				}
+//				else{
+//					if( user.getStatus() == UserStatus.BAN ){
+//						code = ErrorCode.USER_HAS_BAN;
+//					}
+//				}
+//			}		
+//			System.out.println( "在线人数" + onlineUsers.size() );
+//		}
+		code = db.get(user);
+		if( code == ErrorCode.SUCCESS ){
+			if( user.getStatus() == UserStatus.BAN ){
+				code = ErrorCode.USER_HAS_BAN;
+			}
+			else if( user.getStatus() == UserStatus.LOGIN ){
+				UserInfo oldUser = doLogin( user );
+				if( oldUser != null && oldUser != user ){//二次登陆
+					code = ErrorCode.USER_HAS_LOGIN;
+					oldUser.getConn().close();
+				}
+			}
+		}
 		
-		if( oldUser != null ){//此玩家在线
-			//TODO 给老玩家发送退出包
-			//user.copy( oldUser );
-			
-			oldUser.setStatus( UserStatus.GUEST );
-			oldUser.getConn().close();
-			code = ErrorCode.SUCCESS;
-		}
-		else{
-			code = db.get( user );
-			if( code == ErrorCode.SUCCESS )
-			{
-				doLogin( user );
-			}		
-			System.out.println( "在线人数" + onlineUsers.size() );
-		}
 		return code;
 	}
 	
@@ -70,25 +90,16 @@ public class UserManager {
 	 * @return
 	 * @throws IOException 
 	 */
-	public ErrorCode exit( String name ) throws IOException{
+	public ErrorCode exit( UserInfo user ) throws IOException{
 		ErrorCode code = ErrorCode.SUCCESS;
 
-
-		UserInfo user = onlineUsers.remove( name );
-		if( user == null ){
-			//按道理说name！=null，这里就不会等于null，考虑什么情况下会出现con的attachment有name值，而这里却没有user的情况？？？？？？？？？？？？
-			return ErrorCode.USER_NOT_LOGIN; 
-
+		if( onlineUsers.containsValue( user ) ){
+			onlineUsers.remove( user.getName() );
+			synchronized ( user ) {
+				user.setLastLogoutTime( SystemTimer.currentTimeSecond() );
+				code = db.update(user);
+			}
 		}
-		synchronized ( user ) {
-			user.setLastLogoutTime( SystemTimer.currentTimeSecond() );
-			code = db.update(user);
-//				user.setStatus( UserStatus.GUEST );//必须放在db.update(user);之后，否则数据库中的玩家状态就变成GUEST了
-//			if( user.getStatus() == UserStatus.LOGIN ){
-//			}
-		}
-	
-		System.out.println( "在线人数" + onlineUsers.size() );
 		return code;
 	}
 	
@@ -97,7 +108,6 @@ public class UserManager {
 	 * @param user
 	 */
 	private UserInfo doLogin( UserInfo user ){
-		user.setStatus( UserStatus.LOGIN );
 		return onlineUsers.putIfAbsent( user.getName(), user );
 //		return ErrorCode.SUCCESS;
 		
@@ -148,20 +158,19 @@ public class UserManager {
 	 * @param data
 	 * @return
 	 */
-	public ErrorCode run( String name, Packages pack, byte[] data ) {
+	public ErrorCode run( UserInfo user, Packages pack, byte[] data ) {
 		
-		if( name == null ){
-			if( pack != Packages.USER_CREATE || pack != Packages.USER_LOGIN ){
-				return ErrorCode.USER_NOT_LOGIN;
-			}
-		}
-		UserInfo user = onlineUsers.get( name );
-		if( user != null ){
-			user.run(pack, data);
-		}
-		else{
-			return ErrorCode.USER_NOT_FOUND;
-		}
+		user.run(pack, data);
+		
 		return ErrorCode.SUCCESS;
+	}
+	public static void main(String[] args) {
+		ConcurrentMap<String, Integer > map = new ConcurrentHashMap<String, Integer>();
+		System.out.println( map.putIfAbsent( "a", 2));
+		System.out.println( map.putIfAbsent( "a", 3));
+		System.out.println( map.putIfAbsent( "a", 5));
+		for( Entry<String, Integer> e : map.entrySet() ){
+			System.out.println( e.getKey() + "=" + e.getValue() );
+		}
 	}
 }

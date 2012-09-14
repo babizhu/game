@@ -6,15 +6,15 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
-import java.util.Date;
 
 import javax.management.JMException;
 
 import org.xsocket.connection.ConnectionUtils;
+import org.xsocket.connection.IConnection.FlushMode;
 import org.xsocket.connection.IHandler;
 import org.xsocket.connection.Server;
-import org.xsocket.connection.IConnection.FlushMode;
 
+import util.BaseUtil;
 import define.SystemCfg;
 
 /**
@@ -36,15 +36,13 @@ public class GameServer extends Server{
 		setIdleTimeoutMillis( 1000000000 );
 	}
 
- 
-	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException, JMException {
 		
 		System.out.println("编码集= "+System.getProperty("file.encoding"));
 		System.out.println("编码集1= "+Charset.defaultCharset() );
 
-		System.out.println( new Date().toLocaleString() + " server start now..." );
-        System.out.println( new Date().toLocaleString() + " game version: " + SystemCfg.VERSION );        
+		System.out.println( BaseUtil.secondsToDateStr( System.currentTimeMillis() / 1000 ) + " server start now..." );
+        System.out.println( BaseUtil.secondsToDateStr( System.currentTimeMillis() / 1000 ) + " game version: " + SystemCfg.VERSION );        
 		
         InetAddress address = InetAddress.getByName( "localhost" );
 		

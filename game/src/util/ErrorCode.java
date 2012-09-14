@@ -31,6 +31,11 @@ public enum ErrorCode {
 	USER_NOT_LOGIN,
 	
 	/**
+	 * 玩家被ban，无法登陆
+	 */
+	USER_HAS_BAN,
+	
+	/**
 	 * 任务没找到
 	 */
 	TASK_NOT_FOUND,
