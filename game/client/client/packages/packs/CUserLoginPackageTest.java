@@ -15,9 +15,9 @@ import util.BaseUtil;
 import util.ErrorCode;
 import define.SystemCfg;
 
-public class UserLoginPackageTest extends BasePackageTest {
+public class CUserLoginPackageTest extends BasePackageTest {
 
-	public UserLoginPackageTest(int count) {
+	public CUserLoginPackageTest(int count) {
 		super(count);
 	}
 	
@@ -35,7 +35,7 @@ public class UserLoginPackageTest extends BasePackageTest {
 	@Override
 	public
 	void parse( ByteBuffer buf ){
-		UserInfo user = new UserInfo( null );
+		UserInfo user = new UserInfo( null, "liukun" );
 //		user.setStatus( UserStatus.fromNum( buf.get() ) );
 		ErrorCode code = ErrorCode.values()[buf.getShort()]; 
 	
@@ -53,7 +53,7 @@ public class UserLoginPackageTest extends BasePackageTest {
 	public void run() throws IOException, InterruptedException{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		/***************************************************发包参数***********************************************/
-		String name = "刘昆";
+		String name = "liukun";
 		/***************************************************发包参数***********************************************/
 		for( int i = 0; i < count; i++ ){
 			System.out.print( i + ":");
@@ -71,14 +71,34 @@ public class UserLoginPackageTest extends BasePackageTest {
 		return Packages.USER_LOGIN.toNum();
 	}
 	
+	/**
+	 * 发送一个登陆包，并保持住连接用于测试同一个用户名反复登录
+	 * @throws IOException 
+	 */
+	void test() throws IOException{
+		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
+		/***************************************************发包参数***********************************************/
+		String name = "liukun";
+		/***************************************************发包参数***********************************************/
+		ByteBuffer buf = createContent( name );
+		sendPacket( nbc, buf );
+		ByteBuffer data = getData( nbc );
+		parse( data );
+		
+//		nbc.close();
+	}
+	
 	public static void main(String[] args) throws IOException, InterruptedException {
 
-		long begin = System.nanoTime();
-		int count = 10000;
-		new UserLoginPackageTest( count ).run();
-		System.out.println( "用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
-		System.exit(0);
+//		long begin = System.nanoTime();
+//		int count = 10000;
+//		new UserLoginPackageTest( count ).run();
+//		System.out.println( "用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
+//		System.exit(0);
 		
+		new CUserLoginPackageTest(1).test();
+
+		Thread.sleep(50000);
 		
 	}
 	

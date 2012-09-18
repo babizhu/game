@@ -22,7 +22,7 @@ public class SystemSendErrorCodePackage extends BasePackage {
 		
 		ByteBuffer buffer = buildEmptyPackage( 1024 );
 		buffer.put(buf);
-		sendPackage( user.getConn(), buffer );
+		sendPackage( user.getCon(), buffer );
 
 
 	}

@@ -26,12 +26,12 @@ public class UserInfo {
 	/**
 	 * 包管理器
 	 */
-	private final UserPackageManager						packageManager;
+	private final UserPackageManager					packageManager;
 	
 	/**
 	 * 底层的网络连接，
 	 */
-	private final INonBlockingConnection 				conn;
+	private 	INonBlockingConnection	 				con;
 	
 	/**
 	 * 用户名
@@ -87,9 +87,10 @@ public class UserInfo {
 	/**
 	 * 构造函数，保持一个尽量精简的构造函数
 	 */
-	public UserInfo( INonBlockingConnection conn ) {
-		this.conn = conn;
+	public UserInfo( INonBlockingConnection con, String name ) {
+		this.con = con;
 		this.packageManager = new UserPackageManager();
+		this.name = name;
 	}
 	
 	public synchronized short getLevel () {
@@ -184,8 +185,11 @@ public class UserInfo {
 		this.status = status;
 	}
 	
-	public INonBlockingConnection getConn () {
-		return conn;
+	public INonBlockingConnection getCon () {
+		return con;
+	}
+	public void setCon ( INonBlockingConnection con ) {
+		this.con = con;
 	}
 	
 	public UserPackageManager getPackageManager () {
@@ -294,7 +298,7 @@ public class UserInfo {
 	@Override
 	public synchronized String toString() {
 		
-		String connStr = conn == null ? "null" : conn.getId();
+		String connStr = con == null ? "null" : con.getId();
 		return "UserInfo[name=" + name + ", conn=" + connStr 
 				+ ", status=" + status + ", money=" + money + ", strength="
 				+ strength + ", nickName=" + nickName
@@ -303,6 +307,13 @@ public class UserInfo {
 				+ loginCount + ", sex=" + sex + ", isAdult=" + isAdult + "]";
 	}
 
+	/**
+	 * 玩家是否在线
+	 * @return
+	 */
+	public synchronized boolean isOnline(){
+		return con.isOpen();
+	}
 
 
 public static void main ( String[] args ) {

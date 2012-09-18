@@ -15,7 +15,7 @@ public class UserExitPackage extends BasePackage {
 	public void run ( UserInfo user, ByteBuffer buf ) throws IOException {
 		System.out.println( this.getClass().getName() );
 		ByteBuffer buff = ByteBuffer.allocate( 1024 );
-		super.sendPackage( user.getConn(), buff );
+		super.sendPackage( user.getCon(), buff );
 
 	}
 

@@ -3,9 +3,12 @@ package user;
 import game.packages.Packages;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import org.xsocket.connection.INonBlockingConnection;
 
 import util.ErrorCode;
 import util.SystemTimer;
@@ -28,56 +31,7 @@ public class UserManager {
 	private ConcurrentHashMap<String,UserInfo> onlineUsers = new ConcurrentHashMap<String, UserInfo>();
 	
 
-	/**
-	 * 玩家尝试登陆<br>
-	 * 目前只有三种情况 1、新玩家，2、正常登陆，3、被BAN玩家<br>
-	 * 除了正常登陆需要一定处理以外，其他两种情况均可发送给客户端进行处理
-	 * @param user
-	 * @return
-	 * @throws IOException 
-	 */
-	public ErrorCode login( UserInfo user ) throws IOException{
-		
-		ErrorCode code;
-//		UserInfo oldUser = onlineUsers.get( user.getName() ); 
-//		
-//		if( oldUser != null ){//此玩家在线
-//			oldUser.getConn().close();
-//			code = ErrorCode.USER_HAS_LOGIN;
-//		}
-//		else{
-//			code = db.get( user );
-//			if( code == ErrorCode.SUCCESS )
-//			{
-//				if( user.getStatus() == UserStatus.LOGIN ){
-//					if( doLogin( user ) != null ){//有人捷足先登了
-//						code = ErrorCode.USER_HAS_LOGIN; 
-//					}
-//				}
-//				else{
-//					if( user.getStatus() == UserStatus.BAN ){
-//						code = ErrorCode.USER_HAS_BAN;
-//					}
-//				}
-//			}		
-//			System.out.println( "在线人数" + onlineUsers.size() );
-//		}
-		code = db.get(user);
-		if( code == ErrorCode.SUCCESS ){
-			if( user.getStatus() == UserStatus.BAN ){
-				code = ErrorCode.USER_HAS_BAN;
-			}
-			else if( user.getStatus() == UserStatus.LOGIN ){
-				UserInfo oldUser = doLogin( user );
-				if( oldUser != null && oldUser != user ){//二次登陆
-					code = ErrorCode.USER_HAS_LOGIN;
-					oldUser.getConn().close();
-				}
-			}
-		}
-		
-		return code;
-	}
+	
 	
 	/**
 	 * 玩家退出游戏，回写一些玩家的信息到数据库
@@ -90,28 +44,21 @@ public class UserManager {
 	 * @return
 	 * @throws IOException 
 	 */
-	public ErrorCode exit( UserInfo user ) throws IOException{
+	public ErrorCode exit( String name ) throws IOException{
 		ErrorCode code = ErrorCode.SUCCESS;
 
-		if( onlineUsers.containsValue( user ) ){
-			onlineUsers.remove( user.getName() );
-			synchronized ( user ) {
-				user.setLastLogoutTime( SystemTimer.currentTimeSecond() );
-				code = db.update(user);
-			}
+//		onlineUsers.remove( user.getName() );
+		UserInfo user = onlineUsers.get( name );//正常情况下这里不可能为null，无需测试
+		synchronized ( user ) {
+			user.setLastLogoutTime( SystemTimer.currentTimeSecond() );
+			code = db.update(user);
+			user.setCon( null );
 		}
+		
 		return code;
 	}
 	
-	/**
-	 * 把玩家添加到程序中
-	 * @param user
-	 */
-	private UserInfo doLogin( UserInfo user ){
-		return onlineUsers.putIfAbsent( user.getName(), user );
-//		return ErrorCode.SUCCESS;
-		
-	}
+	
 	/**
 	 * 创建一个新玩家，玩家名以及其他基本属性由user指定
 	 * @param user
@@ -141,12 +88,21 @@ public class UserManager {
 		return sb.toString();
 	}
 	/**
+	 * 从数据库获取玩家信息,不管是否在线，只要该玩家确实在数据库中存在，就尽力保存到内存当中来，是否在线无所谓
 	 * @param string
 	 * @return
 	 * 
-	 * 如果玩家不在线呢？
 	 */
 	public UserInfo getUserByName(String name) {
+		if( onlineUsers.get( name ) == null ){
+			UserInfo user = new UserInfo( null, name );
+			ErrorCode code = db.get( user );
+			if( code != ErrorCode.SUCCESS ){
+				return null;
+			}
+			onlineUsers.putIfAbsent( name, user );
+			
+		}
 		return onlineUsers.get( name );
 	}
 	
@@ -157,13 +113,59 @@ public class UserManager {
 	 * @param pack
 	 * @param data
 	 * @return
+	 * @throws IOException 
 	 */
-	public ErrorCode run( UserInfo user, Packages pack, byte[] data ) {
+	public ErrorCode run( String name, Packages pack, byte[] data ) throws IOException {
 		
-		user.run(pack, data);
+//		//user.run(pack, data);
 		
+		UserInfo user = getUserByName(name);
+		if( user != null ){
+			ByteBuffer buf = ByteBuffer.wrap( data );
+			pack.run( user, buf );
+		}
 		return ErrorCode.SUCCESS;
 	}
+	
+	/**
+	 * 成功的登陆需要注意以下条件：
+	 * 1、此连接(con)尚未登陆
+	 * 2、此用户名存在于数据库中
+	 * 3、此玩家的状态是可登陆的状态
+	 * 4、此玩家尚未登陆（不同连接）
+	 * 
+	 * 
+	 * @param con
+	 * @param data
+	 * @return
+	 * @throws IOException
+	 */
+	public ErrorCode login( INonBlockingConnection con, ByteBuffer buf ) throws IOException {
+		if( con.getAttachment() != null ){
+			return ErrorCode.USER_HAS_LOGIN;
+		}
+		
+		String name = util.BaseUtil.decodeString( buf );
+
+		UserInfo user = getUserByName( name );
+		if( user == null ){
+			return ErrorCode.USER_NOT_FOUND;
+		}
+		synchronized (user) {
+			if( user.getStatus() == UserStatus.BAN ){
+				return ErrorCode.USER_HAS_BAN;
+			}
+			if( user.getCon() != null ){//二次登陆
+				user.getCon().close();
+				return ErrorCode.USER_HAS_LOGIN;//请客户的等待500ms后重试
+			}
+			user.setCon(con);
+			con.setAttachment( name );			
+			
+		}
+		return ErrorCode.SUCCESS;
+	}
+	
 	public static void main(String[] args) {
 		ConcurrentMap<String, Integer > map = new ConcurrentHashMap<String, Integer>();
 		System.out.println( map.putIfAbsent( "a", 2));
@@ -173,4 +175,5 @@ public class UserManager {
 			System.out.println( e.getKey() + "=" + e.getValue() );
 		}
 	}
+
 }

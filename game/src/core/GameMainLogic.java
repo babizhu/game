@@ -2,8 +2,10 @@ package core;
 
 import game.packages.Packages;
 import game.packages.packs.SystemSendErrorCodePackage;
+import game.packages.packs.UserLoginPackage;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,21 +52,30 @@ public final class GameMainLogic implements IGameLogic {
 		
 		Packages pack = Packages.fromNum( packageNo );
 		ErrorCode code;
-		UserInfo user = (UserInfo) con.getAttachment();
+		String name = (String) con.getAttachment();
 		if (pack == null) {
 			code = ErrorCode.PACKAGE_NOT_FOUND;
-		} else {			
-			code = UserManager.getInstance().run( user, pack, data );
+		} else {
+			ByteBuffer buf = ByteBuffer.wrap( data );
+			if( pack == Packages.USER_LOGIN ){
+				//code = UserManager.getInstance().login( con, buf );
+				UserLoginPackage p = (UserLoginPackage) Packages.USER_LOGIN.getPackageInstance();
+				p.run( con, buf );
+				
+			}
+			else{
+				code = UserManager.getInstance().run( name, pack, data );
+			}
 		}
-		
-		if (code != ErrorCode.SUCCESS) {
-			SystemSendErrorCodePackage p = (SystemSendErrorCodePackage) Packages.SYSTEM_SEND_ERROR_CODE.getPackageInstance();
-			p.run( con, code );
-			logger.debug( "[" + con.getRemoteAddress() + "]错误码:[" + code + "] 包号:[" + pack + "] " + user );
-
-			// TODO DEBUG:整个if块似乎只用于用例测试，正式发布的时候可以考虑删除
-			// TODO 断开连接？
-		}
+//		
+//		if (code != ErrorCode.SUCCESS) {
+//			SystemSendErrorCodePackage p = (SystemSendErrorCodePackage) Packages.SYSTEM_SEND_ERROR_CODE.getPackageInstance();
+//			p.run( con, code );
+//			logger.debug( "[" + con.getRemoteAddress() + "]错误码:[" + code + "] 包号:[" + pack + "] " + name );
+//
+//			// TODO DEBUG:整个if块似乎只用于用例测试，正式发布的时候可以考虑删除
+//			// TODO 断开连接？
+//		}
 	}
 
 	/**
@@ -73,12 +84,15 @@ public final class GameMainLogic implements IGameLogic {
 	 */
 	@Override
 	public void exit(INonBlockingConnection con) throws IOException {
-		UserInfo user = (UserInfo) con.getAttachment();
+		String name = (String) con.getAttachment();
 
-		System.out.println( user.getName() + "执行退出程序");
-		ErrorCode code = UserManager.getInstance().exit( user );
-		if (code != ErrorCode.SUCCESS) {
-			logger.debug( "用户退出发生错误：" + user + "[" + con.getId() + "], 错误码:" + code );
+		System.out.println( name + "执行退出程序");
+		if( name != null ){
+			
+			ErrorCode code = UserManager.getInstance().exit( name );
+			if (code != ErrorCode.SUCCESS) {
+				logger.debug( "用户退出发生错误：" + name + "[" + con.getId() + "], 错误码:" + code );
+			}
 		}
 
 		

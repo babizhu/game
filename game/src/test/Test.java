@@ -176,7 +176,7 @@ public class Test {
 
 	static void test7() {
 		int count = 1000000;
-		UserInfo user = new UserInfo( null );
+		UserInfo user = new UserInfo( null, "bbz" );
 		long begin = System.nanoTime();
 		for (int i = 0; i < count; i++) {
 			user.changeMoney( 500, "test7" );

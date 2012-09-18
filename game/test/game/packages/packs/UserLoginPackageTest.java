@@ -60,7 +60,7 @@ public class UserLoginPackageTest extends BasePackageTest {
 	 * @throws IOException 
 	 */
 	@Test
-	public void ConcurrentLogin() throws IOException{
+	public void concurrentLogin() throws IOException{
 		
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		String name = "刘昆0";
