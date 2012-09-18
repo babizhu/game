@@ -1,6 +1,7 @@
 package core;
 
 import game.packages.Packages;
+
 import game.packages.packs.UserLoginPackage;
 
 import java.io.IOException;
@@ -49,7 +50,9 @@ public final class GameMainLogic implements IGameLogic {
 	public void packageRun( INonBlockingConnection con, short packageNo, byte[] data ) throws IOException {
 		
 		Packages pack = Packages.fromNum( packageNo );
+
 		ErrorCode code = ErrorCode.SUCCESS;
+
 		String name = (String) con.getAttachment();
 		if (pack == null) {
 			code = ErrorCode.PACKAGE_NOT_FOUND;
@@ -65,6 +68,7 @@ public final class GameMainLogic implements IGameLogic {
 				code = UserManager.getInstance().run( name, pack, data );
 			}
 		}
+
 		if (code != ErrorCode.SUCCESS) {
 		
 			logger.debug( "[" + con.getRemoteAddress() + "]错误码:[" + code + "] 包:" + pack + "[" + packageNo + "] " + name );
@@ -72,6 +76,7 @@ public final class GameMainLogic implements IGameLogic {
 //		
 //			SystemSendErrorCodePackage p = (SystemSendErrorCodePackage) Packages.SYSTEM_SEND_ERROR_CODE.getPackageInstance();
 //			p.run( con, code );
+
 //
 //			// TODO DEBUG:整个if块似乎只用于用例测试，正式发布的时候可以考虑删除
 //			// TODO 断开连接？
