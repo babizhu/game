@@ -6,6 +6,8 @@ import game.packages.PacketDescrip;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import org.xsocket.connection.INonBlockingConnection;
+
 import user.UserInfo;
 import user.UserManager;
 import util.BaseUtil;
@@ -18,20 +20,19 @@ public class UserLoginPackage extends BasePackage {
 	
 	@Override
 	public void run( UserInfo user, ByteBuffer buf ) throws IOException {
-				
-		String name = util.BaseUtil.decodeString( buf );
-		user.setName( name );
 		
-		//TODO 进行安全监测。包括验证运营商发送过来的key值等信息
-		
-		ErrorCode code = UserManager.getInstance().login( user );
+
+	}
+	
+	public void run( INonBlockingConnection con, ByteBuffer buf ) throws IOException {
+		ErrorCode code = UserManager.getInstance().login( con, buf );
 		
 		ByteBuffer buffer = buildEmptyPackage( 1024 );
 		buffer.putShort( (short) code.ordinal() );				//
-		//BaseUtil.encodeString( buffer, user.getName() );		//用户名，似乎没必要发送
 		
 		if( code == ErrorCode.SUCCESS ){
-			
+			String name = (String) con.getAttachment();
+			UserInfo user = UserManager.getInstance().getUserByName( name );
 			BaseUtil.encodeString( buffer, user.getNickName() );	//昵称
 			buffer.put( user.getSex() );							//性别
 			buffer.put( (byte) (user.isAdult()? 1 : 0)  );			//是否成年
@@ -41,7 +42,10 @@ public class UserLoginPackage extends BasePackage {
 			buffer.putInt( user.getCreateTime() );					//创建时间
 //			
 		}
-		sendPackage( user.getConn(), buffer );
+		sendPackage( con, buffer );
+//		if( code == ErrorCode.USER_NOT_FOUND ){
+//			con.close();
+//		}
 
 	}
 	

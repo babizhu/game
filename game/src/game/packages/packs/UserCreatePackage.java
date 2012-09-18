@@ -34,7 +34,7 @@ public class UserCreatePackage extends BasePackage {
 		ByteBuffer buffer = buildEmptyPackage( 8 );
 		buffer.putShort( (short) code.ordinal() );			//错误代码
 		
-		sendPackage( user.getConn(), buffer );
+		sendPackage( user.getCon(), buffer );
 		
 	}
 

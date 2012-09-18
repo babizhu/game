@@ -17,7 +17,7 @@ import util.ErrorCode;
 
 public class TaskManagerTest {
 
-	UserInfo user = new UserInfo( null );
+	UserInfo user = new UserInfo( null, "bbz" );
 	
 	TaskManager manager = new TaskManager( user );
 	@BeforeClass

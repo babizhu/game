@@ -44,7 +44,7 @@ public class UserExitPackageTest extends BasePackageTest {
 	@Override
 	public
 	void parse( ByteBuffer buf ){
-		UserInfo user = new UserInfo( null );
+		UserInfo user = new UserInfo( null, "bbz" );
 //		user.setStatus( UserStatus.fromNum( buf.get() ) );
 		ErrorCode code = ErrorCode.values()[buf.getShort()]; 
 	

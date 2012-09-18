@@ -56,11 +56,11 @@ public class UserLoginPackageTest extends BasePackageTest {
 	 *  客户端登陆之后发送三个包到服务器，在没有处理完第一个 包的时候（通过sleep），这里测试的是Packages.EQUIPMENT_LEVEL_UP<br>
 	 *  客户端在用另外一个连接发送相同的登陆包导致第一个登陆掉线，此时来测试三个包的执行情况
 	 *  情况1：
-	 *  	正在执行第一个包的时候，最后一个登陆包进来了（把最后一个登陆包调整到前面来），另外两个EQUIPMENT_LEVEL_UP包不知道能否提交到服务器端
+	 *  	正在执行第一个包的时候，最后一个登陆包进来了（把最后一个登陆包调整到前面来），另外两个EQUIPMENT_LEVEL_UP包不知道能否提交到服务器端，结论：不能
 	 * @throws IOException 
 	 */
-	@Test
-	public void ConcurrentLogin() throws IOException{
+//	@Test
+	public void concurrentLogin() throws IOException{
 		
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		String name = "刘昆0";
@@ -89,9 +89,10 @@ public class UserLoginPackageTest extends BasePackageTest {
 	 * 测试同一个连接反复发送各种登陆包的情况<br>
 	 * 进入正式版本之后，第二~五次发包可能不会收到任何消息，针对这个种错误，服务器可能不会返回任何信息，现在为了测试用例需要，暂时有返回信息<br>
 	 * 具体情况请查看{@link core.GameMainLogic#packageProcess} 
+	 * @throws InterruptedException 
 	 */
-	//@Test
-	public void login() throws IOException{
+	@Test
+	public void login() throws IOException, InterruptedException{
 		
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		/****************************测试玩家不存在的情况**************************************/		
@@ -112,6 +113,8 @@ public class UserLoginPackageTest extends BasePackageTest {
 		code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.USER_HAS_LOGIN, code );
 		
+		
+		
 		/****************************测试玩家第三次发送登陆包**************************************/
 		buf = sendLoginPackage( nbc, name );
 		code = ErrorCode.values()[buf.getShort()];
@@ -128,6 +131,8 @@ public class UserLoginPackageTest extends BasePackageTest {
 		buf = sendLoginPackage( nbc, name );
 		code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.USER_HAS_LOGIN, code );
+		
+		Thread.sleep( 100000 );
 	}
 	
 	/**
