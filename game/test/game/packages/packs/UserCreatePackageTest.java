@@ -20,7 +20,7 @@ public class UserCreatePackageTest extends BasePackageTest{
 
 	
 	/**
-	 * 发送一个完整的登陆包
+	 * 发送一个完整的注册包
 	 * @param name
 	 * @return
 	 * @throws IOException 
