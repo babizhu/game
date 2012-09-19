@@ -2,25 +2,19 @@ package game.packages.packs;
 
 
 import static org.junit.Assert.assertEquals;
+import game.packages.Packages;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Random;
 
-import game.packages.Packages;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.xsocket.connection.BlockingConnection;
 import org.xsocket.connection.IBlockingConnection;
 
-import define.SystemCfg;
-
 import util.BaseUtil;
 import util.ErrorCode;
+import define.SystemCfg;
 
 public class UserCreatePackageTest extends BasePackageTest{
 
