@@ -13,6 +13,7 @@ public class ArgumentChange {
 	
 	void test( UserInfo user ){
 		UserInfo u1 = new UserInfo( null, "bbz" );
+		System.out.println( u1.getName() );
 		//user = u1;	避免findbug报警告，如果要查看本代码效果，则不能注释此行
 	}
 

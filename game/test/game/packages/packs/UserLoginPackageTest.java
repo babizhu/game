@@ -45,7 +45,7 @@ public class UserLoginPackageTest extends BasePackageTest {
 	 * @return
 	 * @throws IOException 
 	 */
-	public ByteBuffer sendLoginPackage( IBlockingConnection nbc, String name ) throws IOException{
+	public ByteBuffer sendPackage( IBlockingConnection nbc, String name ) throws IOException{
 		//this.nbc = nbc;
 		ByteBuffer buf = createContent( name );
 		sendPacket( nbc, buf );
@@ -66,7 +66,7 @@ public class UserLoginPackageTest extends BasePackageTest {
 		
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		String name = "刘昆0";
-		ByteBuffer buf = sendLoginPackage( nbc, name );
+		ByteBuffer buf = sendPackage( nbc, name );
 		ErrorCode code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.SUCCESS, code );
 		
@@ -80,7 +80,7 @@ public class UserLoginPackageTest extends BasePackageTest {
 		IBlockingConnection nbc1 = new BlockingConnection( "localhost", SystemCfg.PORT );
 
 		
-		ByteBuffer buf1 = sendLoginPackage( nbc1, name );
+		ByteBuffer buf1 = sendPackage( nbc1, name );
 		code = ErrorCode.values()[buf1.getShort()];
 		assertEquals( ErrorCode.USER_HAS_LOGIN, code );
 		
@@ -105,38 +105,38 @@ public class UserLoginPackageTest extends BasePackageTest {
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		/****************************测试玩家不存在的情况**************************************/		
 		String name = "不存在的人";
-		ByteBuffer buf = sendLoginPackage( nbc, name );
+		ByteBuffer buf = sendPackage( nbc, name );
 		ErrorCode code = ErrorCode.values()[buf.getShort()];
 		
 		assertEquals( ErrorCode.USER_NOT_FOUND, code );
 		
 		/****************************测试玩家正常登陆**************************************/
 		name = "刘昆0";
-		buf = sendLoginPackage( nbc, name );
+		buf = sendPackage( nbc, name );
 		code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.SUCCESS, code );
 		
 		/****************************测试玩家第二次发送登陆包**************************************/
-		buf = sendLoginPackage( nbc, name );
+		buf = sendPackage( nbc, name );
 		code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.USER_HAS_LOGIN, code );
 		
 		
 		
 		/****************************测试玩家第三次发送登陆包**************************************/
-		buf = sendLoginPackage( nbc, name );
+		buf = sendPackage( nbc, name );
 		code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.USER_HAS_LOGIN, code );
 		
 		/****************************测试玩家第四次发送登陆包，用另外的不存在的用户名****************/
 		name = "另外一个不存在名字";
-		buf = sendLoginPackage( nbc, name );
+		buf = sendPackage( nbc, name );
 		code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.USER_HAS_LOGIN, code );
 		
 		/****************************测试玩家第五次发送登陆包，用另外的已经存在的用户名***************/
 		name = "刘昆1";
-		buf = sendLoginPackage( nbc, name );
+		buf = sendPackage( nbc, name );
 		code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.USER_HAS_LOGIN, code );
 
@@ -153,21 +153,21 @@ public class UserLoginPackageTest extends BasePackageTest {
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		
 		String name = "刘昆0";
-		ByteBuffer buf = sendLoginPackage( nbc, name );
+		ByteBuffer buf = sendPackage( nbc, name );
 		ErrorCode code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.SUCCESS, code );
 		
 		IBlockingConnection nbc1 = new BlockingConnection( "localhost", SystemCfg.PORT );
 		
 		name = "刘昆0";
-		ByteBuffer buf1 = sendLoginPackage( nbc1, name );
+		ByteBuffer buf1 = sendPackage( nbc1, name );
 		ErrorCode code1 = ErrorCode.values()[buf1.getShort()];
 		assertEquals( ErrorCode.USER_HAS_LOGIN, code1 );
 		
 		Thread.sleep( 500 );//休息500ms
 		assertEquals( false, nbc.isOpen() );//原有连接已经关闭
 		
-		buf = sendLoginPackage( nbc1, name );
+		buf = sendPackage( nbc1, name );
 		code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.SUCCESS, code );//再次登录成功
 		
