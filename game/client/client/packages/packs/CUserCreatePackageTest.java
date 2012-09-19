@@ -14,9 +14,9 @@ import util.BaseUtil;
 import util.ErrorCode;
 import define.SystemCfg;
 
-public class UserCreatePackageTest extends BasePackageTest {
+public class CUserCreatePackageTest extends BasePackageTest {
 
-	public UserCreatePackageTest(int count) {
+	public CUserCreatePackageTest(int count) {
 		super(count);
 		// TODO Auto-generated constructor stub
 	}
@@ -68,7 +68,7 @@ public class UserCreatePackageTest extends BasePackageTest {
 //		}
 		int runCount = 10000;
 		long begin = System.nanoTime();
-		new UserCreatePackageTest( runCount ).run();
+		new CUserCreatePackageTest( runCount ).run();
 		System.out.println("用时" + ((System.nanoTime() - begin) / 1000000000f)
 				+ "秒");
 		

@@ -76,7 +76,7 @@ public class UserExitPackageTest extends BasePackageTest {
 	
 	private void doLogin( String name, boolean isAutoClose ) throws IOException, InterruptedException{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
-		ByteBuffer buf = new UserLoginPackageTest().sendLoginPackage(nbc, name);
+		ByteBuffer buf = new UserLoginPackageTest().sendPackage(nbc, name);
 		ErrorCode code = ErrorCode.values()[buf.getShort()];
 		if( name.equals( "错误的用户名" ) ){
 			assertEquals( ErrorCode.USER_NOT_FOUND, code );

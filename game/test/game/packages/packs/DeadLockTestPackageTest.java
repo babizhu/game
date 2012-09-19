@@ -40,7 +40,7 @@ class DeadLockClient implements Runnable{
 		IBlockingConnection nbc;
 		try {
 			nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
-			ByteBuffer buf = t.sendLoginPackage( nbc, name );//先登录
+			ByteBuffer buf = t.sendPackage( nbc, name );//先登录
 			ErrorCode code = ErrorCode.values()[buf.getShort()];
 			if( code == ErrorCode.SUCCESS ){
 				deadPackage.sendDeadLoclTestPackage( nbc );//发送导致死锁的包
