@@ -53,6 +53,15 @@ public class UserCreatePackageTest extends BasePackageTest{
 		ByteBuffer buf = sendPackage( nbc, name, "nickname_" + name, (byte) 1 );
 		ErrorCode code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.SUCCESS, code );
+		
+		buf = sendPackage( nbc, name, "nickname_" + name, (byte) 1 );
+		code = ErrorCode.values()[buf.getShort()];
+		assertEquals( ErrorCode.USER_DUPLICATE_NAME, code );
+		
+		name = "刘0" + new Random().nextInt( 1000000) + 1000000;//生成一个基本不容易重复的名字，方便测试
+		buf = sendPackage( nbc, name, "巴比猪0", (byte) 1 );//测试昵称冲突
+		code = ErrorCode.values()[buf.getShort()];
+		assertEquals( ErrorCode.USER_DUPLICATE_NAME, code );
 	}
 
 }
