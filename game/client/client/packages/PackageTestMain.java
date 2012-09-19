@@ -6,7 +6,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import util.BaseUtil;
 import client.packages.packs.BasePackageTest;
 import client.packages.packs.CUserLoginPackageTest;
 
@@ -35,8 +34,8 @@ class Client implements Runnable{
 }
 public class PackageTestMain {
 	public static void main(String[] args) throws InterruptedException {
-		int count = 1;//发包数量
-		int threadCount = 2;//线程数量
+		int count = 10000;//发包数量
+		int threadCount = 20;//线程数量
 		ExecutorService exec = Executors.newCachedThreadPool();
 		long begin = System.nanoTime();
 		for( int i = 0; i < threadCount; i++ ){
@@ -45,7 +44,8 @@ public class PackageTestMain {
 		}
 		exec.shutdown();
 		exec.awaitTermination( 100, TimeUnit.DAYS );
-		System.out.println( "用时" + (System.nanoTime() - begin) / BaseUtil.TO_SECOND );
+		
+		System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
 		System.exit(0);
 	}
 }

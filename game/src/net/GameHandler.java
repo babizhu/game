@@ -48,7 +48,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 	public boolean onConnect(INonBlockingConnection con) throws IOException, BufferUnderflowException, MaxReadSizeExceededException {
 		
 		con = ConnectionUtils.synchronizedConnection(con);
-		System.out.println(con.getId() + " onConnect");
+		//System.out.println(con.getId() + " onConnect");
 
 //		UserInfo user = new UserInfo( con );
 //		con.setAttachment(user);
@@ -68,8 +68,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 		int available = con.available();
 
 		if (available > 0) {
-			System.out.println(con.getId() + " onData" + ",available:"
-					+ available + "byte");
+//			System.out.println(con.getId() + " onData" + ",available:" + available + "byte");
 			con.markReadPosition();
 			try {
 				head = con.readByte();
@@ -118,7 +117,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 	@Override
 	public boolean onDisconnect(INonBlockingConnection con) throws IOException {
 		con = ConnectionUtils.synchronizedConnection(con);
-		System.out.println(con.getId() + " onDisconnect");
+		//System.out.println(con.getId() + " onDisconnect " + System.nanoTime() );
 		gameLogic.exit(con);
 		return false;
 	}

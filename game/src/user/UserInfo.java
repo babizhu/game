@@ -3,6 +3,7 @@ package user;
 import game.AwardType;
 import game.packages.Packages;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import org.slf4j.Logger;
@@ -36,7 +37,7 @@ public class UserInfo {
 	/**
 	 * 用户名
 	 */
-	private String										name;
+	private final String								name;
 	
 	/**
 	 * 当前玩家的状态
@@ -174,9 +175,9 @@ public class UserInfo {
 		return name;
 	}
 	
-	public void setName( String name ) {
-		this.name = name;
-	}
+//	public void setName( String name ) {
+//		this.name = name;
+//	}
 
 	public synchronized UserStatus getStatus () {
 		return status;
@@ -185,13 +186,35 @@ public class UserInfo {
 		this.status = status;
 	}
 	
-	public INonBlockingConnection getCon () {
+	public synchronized INonBlockingConnection getCon () {
 		return con;
 	}
-	public void setCon ( INonBlockingConnection con ) {
-		this.con = con;
+	public synchronized ErrorCode setConLogin ( INonBlockingConnection con, String name ) throws IOException {
+		ErrorCode code = ErrorCode.SUCCESS;
+		if( this.con != null ){
+			/**双重登陆的处理方案:关闭原有连接，返回一个已经录的错误，让原有登陆在完成所有的包之后，按正常流程关闭*/
+			this.con.close();
+			//this.con = null;
+			code = ErrorCode.USER_HAS_LOGIN;
+		}
+		else{
+			this.con = con;
+			con.setAttachment( name );//这个是非加锁的，应该不会造成死锁
+			
+		}
+		return code;
 	}
-	
+	public synchronized void setConClose() throws IOException{
+		if( con != null ){
+			//con.close();
+			/**
+			 * 这里无需再次调用close函数，因为关闭连接无非
+			 * 1、客户端主动发起，这个时候，连接已经关闭
+			 * 2、服务器主动发起，在发起处，已经调用过close了
+			 */
+			con = null;
+		}
+	}
 	public UserPackageManager getPackageManager () {
 		return packageManager;
 	}
@@ -312,7 +335,7 @@ public class UserInfo {
 	 * @return
 	 */
 	public synchronized boolean isOnline(){
-		return con.isOpen();
+		return (con != null && con.isOpen());
 	}
 
 

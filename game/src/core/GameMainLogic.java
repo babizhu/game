@@ -2,6 +2,7 @@ package core;
 
 import game.packages.Packages;
 
+import game.packages.packs.UserCreatePackage;
 import game.packages.packs.UserLoginPackage;
 
 import java.io.IOException;
@@ -54,15 +55,19 @@ public final class GameMainLogic implements IGameLogic {
 		ErrorCode code = ErrorCode.SUCCESS;
 
 		String name = (String) con.getAttachment();
+		logger.debug( name + "[" + con.getId().substring( 16 ) + "] " + pack );
 		if (pack == null) {
 			code = ErrorCode.PACKAGE_NOT_FOUND;
 		} else {
 			ByteBuffer buf = ByteBuffer.wrap( data );
 			if( pack == Packages.USER_LOGIN ){
-				//code = UserManager.getInstance().login( con, buf );
 				UserLoginPackage p = (UserLoginPackage) Packages.USER_LOGIN.getPackageInstance();
 				p.run( con, buf );
 				
+			}
+			else if( pack == Packages.USER_CREATE ){
+				UserCreatePackage p = (UserCreatePackage) Packages.USER_CREATE.getPackageInstance();
+				p.run( con, buf );
 			}
 			else{
 				code = UserManager.getInstance().run( name, pack, data );
@@ -91,8 +96,8 @@ public final class GameMainLogic implements IGameLogic {
 	public void exit(INonBlockingConnection con) throws IOException {
 		String name = (String) con.getAttachment();
 
-		System.out.println( name + "执行退出程序");
 		if( name != null ){
+			System.out.println( name + "执行退出程序");
 			
 			ErrorCode code = UserManager.getInstance().exit( name );
 			if (code != ErrorCode.SUCCESS) {

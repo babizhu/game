@@ -50,10 +50,11 @@ public class CUserLoginPackageTest extends BasePackageTest {
 		}
 		System.out.println( code + "\t" + user );
 	}
+	
 	public void run() throws IOException, InterruptedException{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		/***************************************************发包参数***********************************************/
-		String name = "liukun";
+		String name = "刘昆";
 		/***************************************************发包参数***********************************************/
 		for( int i = 0; i < count; i++ ){
 			System.out.print( i + ":");
@@ -78,7 +79,7 @@ public class CUserLoginPackageTest extends BasePackageTest {
 	void test() throws IOException{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		/***************************************************发包参数***********************************************/
-		String name = "liukun";
+		String name = "刘昆0";
 		/***************************************************发包参数***********************************************/
 		ByteBuffer buf = createContent( name );
 		sendPacket( nbc, buf );

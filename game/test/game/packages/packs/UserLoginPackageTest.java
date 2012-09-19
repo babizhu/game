@@ -58,10 +58,11 @@ public class UserLoginPackageTest extends BasePackageTest {
 	 *  情况1：
 	 *  	正在执行第一个包的时候，最后一个登陆包进来了（把最后一个登陆包调整到前面来），另外两个EQUIPMENT_LEVEL_UP包不知道能否提交到服务器端，结论：不能
 	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-//	@Test
+	@Test
 
-	public void concurrentLogin() throws IOException{
+	public void concurrentLogin() throws IOException, InterruptedException{
 		
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		String name = "刘昆0";
@@ -70,19 +71,25 @@ public class UserLoginPackageTest extends BasePackageTest {
 		assertEquals( ErrorCode.SUCCESS, code );
 		
 		new EquipmentLevelUpPackageTest().sendPackage(nbc, 0, (byte) 0);//暂时不用取得回应
-		
-		
+		new EquipmentLevelUpPackageTest().sendPackage(nbc, 0, (byte) 0);//暂时不用取得回应
+		new EquipmentLevelUpPackageTest().sendPackage(nbc, 0, (byte) 0);//暂时不用取得回应
+
 		/**
 		 * 用另外一个con登陆
 		 */
 		IBlockingConnection nbc1 = new BlockingConnection( "localhost", SystemCfg.PORT );
+
+		
 		ByteBuffer buf1 = sendLoginPackage( nbc1, name );
 		code = ErrorCode.values()[buf1.getShort()];
 		assertEquals( ErrorCode.USER_HAS_LOGIN, code );
 		
-		new EquipmentLevelUpPackageTest().sendPackage(nbc, 0, (byte) 0);//暂时不用取得回应
-		new EquipmentLevelUpPackageTest().sendPackage(nbc, 0, (byte) 0);//暂时不用取得回应
+		
 		System.out.println( "发包完成！" );
+		
+		nbc.close();
+		nbc1.close();
+		Thread.sleep( 2000 );
 		
 	}
 	/**
@@ -132,16 +139,17 @@ public class UserLoginPackageTest extends BasePackageTest {
 		buf = sendLoginPackage( nbc, name );
 		code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.USER_HAS_LOGIN, code );
-		
-		Thread.sleep( 100000 );
+
+		nbc.close();
 	}
 	
 	/**
 	 * 同一个用户用两个con两次登陆
 	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	//@Test
-	public void duplicateLoginByTwoConn() throws IOException{
+	@Test
+	public void duplicateLoginByTwoConn() throws IOException, InterruptedException{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		
 		String name = "刘昆0";
@@ -154,7 +162,16 @@ public class UserLoginPackageTest extends BasePackageTest {
 		name = "刘昆0";
 		ByteBuffer buf1 = sendLoginPackage( nbc1, name );
 		ErrorCode code1 = ErrorCode.values()[buf1.getShort()];
-		assertEquals( ErrorCode.SUCCESS, code1 );
+		assertEquals( ErrorCode.USER_HAS_LOGIN, code1 );
+		
+		Thread.sleep( 500 );//休息500ms
+		assertEquals( false, nbc.isOpen() );//原有连接已经关闭
+		
+		buf = sendLoginPackage( nbc1, name );
+		code = ErrorCode.values()[buf.getShort()];
+		assertEquals( ErrorCode.SUCCESS, code );//再次登录成功
+		
+		nbc1.close();
 	}
 	
 

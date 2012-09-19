@@ -44,7 +44,6 @@ public class TaskManagerTest {
 	
 	
 	private void init(){
-		user.setName( "bbz" );
 		BaseTaskTemplet templet = TaskTempletCfg.getTempletById( (short) 10000 );
 		manager.addFirstTask( templet );//初始化，添加第一个任务
 		
