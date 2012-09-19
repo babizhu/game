@@ -11,8 +11,7 @@ import java.util.concurrent.TimeUnit;
  * 
  */
 public class SystemTimer {
-	private static final ScheduledExecutorService s = Executors
-			.newSingleThreadScheduledExecutor();
+	private static final ScheduledExecutorService s = Executors.newSingleThreadScheduledExecutor();
 
 	private SystemTimer() {
 	};

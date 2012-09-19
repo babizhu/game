@@ -5,6 +5,7 @@ import game.packages.Packages;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -37,25 +38,23 @@ public class UserManager {
 	 * 玩家退出游戏，回写一些玩家的信息到数据库
 	 * 
 	 * 注意：
-	 * 			如果是内部调用exit，必须确保玩家所发送的所有包信息都执行完成之后，才可调用exit，否则可能出现如下问题：
-	 * 			玩家发送一个会损耗大量点券的包，并且已经从onlineUsers中取出该user对象，然后，内部调用exit，并
+	 * 			
 	 * 
 	 * @param name			外层确保不会为null
 	 * @return
 	 * @throws IOException 
 	 */
 	public ErrorCode exit( String name ) throws IOException{
-		ErrorCode code = ErrorCode.SUCCESS;
-
-//		onlineUsers.remove( user.getName() );
-		UserInfo user = onlineUsers.get( name );//正常情况下这里不可能为null，无需测试
-		synchronized ( user ) {
-			user.setLastLogoutTime( SystemTimer.currentTimeSecond() );
-			code = db.update(user);
-			user.setCon( null );
-		}
 		
-		return code;
+//		onlineUsers.remove( user.getName() );
+		UserInfo user = onlineUsers.get( name );
+		if( user != null ){
+		//synchronized ( user ) {
+			user.setLastLogoutTime( SystemTimer.currentTimeSecond() );
+			user.setConClose();
+			return db.update(user);
+		}
+		return ErrorCode.UNKNOW_ERROR;
 	}
 	
 	
@@ -117,14 +116,19 @@ public class UserManager {
 	 */
 	public ErrorCode run( String name, Packages pack, byte[] data ) throws IOException {
 		
-//		//user.run(pack, data);
-		
+
 		UserInfo user = getUserByName(name);
 		if( user != null ){
+			if( user.getPackageManager().safeCheck(pack) == false ){
+				return ErrorCode.PACKAGE_SAFE_CHECK_FAIL;
+			}
 			ByteBuffer buf = ByteBuffer.wrap( data );
 			pack.run( user, buf );
+			return ErrorCode.SUCCESS;
 		}
-		return ErrorCode.SUCCESS;
+		else{
+			return ErrorCode.USER_NOT_LOGIN;
+		}
 	}
 	
 	/**
@@ -151,19 +155,10 @@ public class UserManager {
 		if( user == null ){
 			return ErrorCode.USER_NOT_FOUND;
 		}
-		synchronized (user) {
-			if( user.getStatus() == UserStatus.BAN ){
-				return ErrorCode.USER_HAS_BAN;
-			}
-			if( user.getCon() != null ){//二次登陆
-				user.getCon().close();
-				return ErrorCode.USER_HAS_LOGIN;//请客户的等待500ms后重试
-			}
-			user.setCon(con);
-			con.setAttachment( name );			
-			
+		if( user.getStatus() == UserStatus.BAN ){
+			return ErrorCode.USER_HAS_BAN;
 		}
-		return ErrorCode.SUCCESS;
+		return user.setConLogin( con, name );
 	}
 	
 	public static void main(String[] args) {
@@ -174,6 +169,46 @@ public class UserManager {
 		for( Entry<String, Integer> e : map.entrySet() ){
 			System.out.println( e.getKey() + "=" + e.getValue() );
 		}
+		
+		int count = 30000;
+		ConcurrentHashMap<String, UserInfo> users = new ConcurrentHashMap<String, UserInfo>();
+		long begin = System.nanoTime();
+		for( int i = 0; i < count; i++ ){
+			String name = "bbz"+i;
+			UserInfo u = new UserInfo(null, name );
+			users.put( name, u );
+		}
+		System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f
+				+ "秒");
+		
+		java.util.Random r = new Random();
+		begin = System.nanoTime();
+		for( int i = 0; i < 10000; i++ ){
+			String name = "bbz" + r.nextInt( 10000 );
+			UserInfo u = users.get( name );
+			if( u != null ){
+				//System.out.print( u.getName() + ",");
+			}
+		}
+		System.out.println();
+		System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f
+				+ "秒");
+		
+		begin = System.nanoTime();
+		
+		for( int i = 0; i < count; i++ ){
+			String name = "bbz"+i;
+			UserInfo u = users.get(name);
+			if( u != null ){
+				//System.out.print( u.getName() + "," );
+				if( u.isOnline() ){
+					System.out.println( "3");
+				}
+			}
+		}
+		System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f
+				+ "秒");
+		
 	}
 
 }

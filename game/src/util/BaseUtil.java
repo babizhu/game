@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  */
 public class BaseUtil {
 	private final static Logger		logger = LoggerFactory.getLogger( BaseUtil.class ); 
-	public static final float 		TO_SECOND = 1000000000f;
 
 	/**
 	 * 编码字符串，先放入一个short的字符串长度，再放入字符串的内容<br>

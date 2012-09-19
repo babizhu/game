@@ -1,7 +1,8 @@
 package core;
 
 import game.packages.Packages;
-import game.packages.packs.SystemSendErrorCodePackage;
+
+import game.packages.packs.UserCreatePackage;
 import game.packages.packs.UserLoginPackage;
 
 import java.io.IOException;
@@ -11,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
 
-import user.UserInfo;
 import user.UserManager;
 import util.ErrorCode;
 
@@ -51,27 +51,37 @@ public final class GameMainLogic implements IGameLogic {
 	public void packageRun( INonBlockingConnection con, short packageNo, byte[] data ) throws IOException {
 		
 		Packages pack = Packages.fromNum( packageNo );
-		ErrorCode code;
+
+		ErrorCode code = ErrorCode.SUCCESS;
+
 		String name = (String) con.getAttachment();
+		logger.debug( name + "[" + con.getId().substring( 16 ) + "] " + pack );
 		if (pack == null) {
 			code = ErrorCode.PACKAGE_NOT_FOUND;
 		} else {
 			ByteBuffer buf = ByteBuffer.wrap( data );
 			if( pack == Packages.USER_LOGIN ){
-				//code = UserManager.getInstance().login( con, buf );
 				UserLoginPackage p = (UserLoginPackage) Packages.USER_LOGIN.getPackageInstance();
 				p.run( con, buf );
 				
+			}
+			else if( pack == Packages.USER_CREATE ){
+				UserCreatePackage p = (UserCreatePackage) Packages.USER_CREATE.getPackageInstance();
+				p.run( con, buf );
 			}
 			else{
 				code = UserManager.getInstance().run( name, pack, data );
 			}
 		}
+
+		if (code != ErrorCode.SUCCESS) {
+		
+			logger.debug( "[" + con.getRemoteAddress() + "]错误码:[" + code + "] 包:" + pack + "[" + packageNo + "] " + name );
+		}
 //		
-//		if (code != ErrorCode.SUCCESS) {
 //			SystemSendErrorCodePackage p = (SystemSendErrorCodePackage) Packages.SYSTEM_SEND_ERROR_CODE.getPackageInstance();
 //			p.run( con, code );
-//			logger.debug( "[" + con.getRemoteAddress() + "]错误码:[" + code + "] 包号:[" + pack + "] " + name );
+
 //
 //			// TODO DEBUG:整个if块似乎只用于用例测试，正式发布的时候可以考虑删除
 //			// TODO 断开连接？
@@ -86,8 +96,8 @@ public final class GameMainLogic implements IGameLogic {
 	public void exit(INonBlockingConnection con) throws IOException {
 		String name = (String) con.getAttachment();
 
-		System.out.println( name + "执行退出程序");
 		if( name != null ){
+			System.out.println( name + "执行退出程序");
 			
 			ErrorCode code = UserManager.getInstance().exit( name );
 			if (code != ErrorCode.SUCCESS) {

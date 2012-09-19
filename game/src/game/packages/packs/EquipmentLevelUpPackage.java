@@ -16,13 +16,13 @@ public class EquipmentLevelUpPackage  extends BasePackage {
 	
 	@Override
 	public void run(UserInfo user, ByteBuffer buf) throws IOException {
-		System.err.println( this.getClass());
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.err.println( this.getClass() + " end" );
+		//System.err.println( user.getCon().getId() + " " + this.getClass());
+//		try {
+//			//Thread.sleep(10000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		//System.err.println( user.getCon().getId() + " " + this.getClass() + " end " + System.nanoTime() );
 	}
 }
