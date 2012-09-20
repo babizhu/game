@@ -119,7 +119,7 @@ public class UserManager {
 
 		UserInfo user = getUserByName(name);
 		if( user != null ){
-			if( user.getPackageManager().safeCheck(pack) == false ){
+			if( user.getPackageManager().safeCheck( pack ) == false ){
 				return ErrorCode.PACKAGE_SAFE_CHECK_FAIL;
 			}
 			ByteBuffer buf = ByteBuffer.wrap( data );
@@ -127,7 +127,7 @@ public class UserManager {
 			return ErrorCode.SUCCESS;
 		}
 		else{
-			return ErrorCode.USER_NOT_LOGIN;
+			return ErrorCode.USER_NOT_FOUND;
 		}
 	}
 	
@@ -170,7 +170,7 @@ public class UserManager {
 			System.out.println( e.getKey() + "=" + e.getValue() );
 		}
 		
-		int count = 30000;
+		int count = 1000000;
 		ConcurrentHashMap<String, UserInfo> users = new ConcurrentHashMap<String, UserInfo>();
 		long begin = System.nanoTime();
 		for( int i = 0; i < count; i++ ){
@@ -207,6 +207,18 @@ public class UserManager {
 			}
 		}
 		System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f
+				+ "秒");
+		
+		begin = System.nanoTime();
+		
+		for( Entry<String, UserInfo> e : users.entrySet() ){
+			UserInfo u = e.getValue();
+			if( u.isOnline() ){
+				System.out.println( "3");
+			}
+			
+		}
+		System.out.println("for-each 循环用时" + (System.nanoTime() - begin) / 1000000000f
 				+ "秒");
 		
 	}

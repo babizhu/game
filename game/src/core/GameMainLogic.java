@@ -70,7 +70,12 @@ public final class GameMainLogic implements IGameLogic {
 				p.run( con, buf );
 			}
 			else{
-				code = UserManager.getInstance().run( name, pack, data );
+				if( name == null ){
+					code = ErrorCode.USER_NOT_LOGIN;
+				}
+				else{
+					code = UserManager.getInstance().run( name, pack, data );
+				}
 			}
 		}
 
@@ -78,14 +83,6 @@ public final class GameMainLogic implements IGameLogic {
 		
 			logger.debug( "[" + con.getRemoteAddress() + "]错误码:[" + code + "] 包:" + pack + "[" + packageNo + "] " + name );
 		}
-//		
-//			SystemSendErrorCodePackage p = (SystemSendErrorCodePackage) Packages.SYSTEM_SEND_ERROR_CODE.getPackageInstance();
-//			p.run( con, code );
-
-//
-//			// TODO DEBUG:整个if块似乎只用于用例测试，正式发布的时候可以考虑删除
-//			// TODO 断开连接？
-//		}
 	}
 
 	/**

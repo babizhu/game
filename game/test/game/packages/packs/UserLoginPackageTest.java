@@ -52,6 +52,18 @@ public class UserLoginPackageTest extends BasePackageTest {
 		return getData( nbc );
 	}
 	
+	@Test
+	/**
+	 * 测试一个玩家没有登录的情况下发送其他功能性包会不会报错，不过目前的架构是不会收到任何回应包
+	 */
+	public void notLoginTest() throws IOException{
+		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
+		
+		
+		new EquipmentLevelUpPackageTest().sendPackage(nbc, 0, (byte) 0);//暂时不用取得回应
+		//不会收到任何回应包
+	}
+	
 	/**
 	 *  客户端登陆之后发送三个包到服务器，在没有处理完第一个 包的时候（通过sleep），这里测试的是Packages.EQUIPMENT_LEVEL_UP<br>
 	 *  客户端在用另外一个连接发送相同的登陆包导致第一个登陆掉线，此时来测试三个包的执行情况
@@ -61,7 +73,6 @@ public class UserLoginPackageTest extends BasePackageTest {
 	 * @throws InterruptedException 
 	 */
 	@Test
-
 	public void concurrentLogin() throws IOException, InterruptedException{
 		
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );

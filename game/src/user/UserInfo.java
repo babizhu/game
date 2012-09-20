@@ -189,31 +189,46 @@ public class UserInfo {
 	public synchronized INonBlockingConnection getCon () {
 		return con;
 	}
+	
+	/**
+	 * 设置登录连接，方案如下：
+	 * 如果原本无con连接，直接赋值，并设置con的Attachment
+	 * 如果原本有连接，则返回USER_HAS_LOGIN标识，让客户端等待500ms后重试，并主动切断原有连接
+	 * 
+	 * con.setAttachment( name );这句代码可能造成死锁，但是好像也不能移到user锁之外，因为必须保证user的con为此con，而此con的attachment必须为user的name<br>
+	 * 保证不会在对con进行大规模加锁的封闭调用，则可以避免
+	 * 这属于不变条件
+	 * 
+	 * @param con
+	 * @param name
+	 * @return
+	 * @throws IOException
+	 */
 	public synchronized ErrorCode setConLogin ( INonBlockingConnection con, String name ) throws IOException {
 		ErrorCode code = ErrorCode.SUCCESS;
 		if( this.con != null ){
-			/**双重登陆的处理方案:关闭原有连接，返回一个已经录的错误，让原有登陆在完成所有的包之后，按正常流程关闭*/
 			this.con.close();
 			//this.con = null;
 			code = ErrorCode.USER_HAS_LOGIN;
 		}
 		else{
 			this.con = con;
-			con.setAttachment( name );//这个是非加锁的，应该不会造成死锁
+			con.setAttachment( name );
 			
 		}
 		return code;
 	}
+	
+	/**
+	 *  这里无需再次调用close函数，因为关闭连接无非
+	 * 	1、客户端主动发起，这个时候，连接已经关闭
+	 * 	2、服务器主动发起，在发起处，已经调用过close了
+	 * 
+	 * 	只需把con置为null即可
+	 * @throws IOException
+	 */
 	public synchronized void setConClose() throws IOException{
-		if( con != null ){
-			//con.close();
-			/**
-			 * 这里无需再次调用close函数，因为关闭连接无非
-			 * 1、客户端主动发起，这个时候，连接已经关闭
-			 * 2、服务器主动发起，在发起处，已经调用过close了
-			 */
-			con = null;
-		}
+		con = null;
 	}
 	public UserPackageManager getPackageManager () {
 		return packageManager;
