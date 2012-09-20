@@ -76,15 +76,16 @@ public enum Packages {
 	 */
 	public static void main(String[] args) {
 		Formatter f = new Formatter(System.out);
-		f.format("%-15s %-127s %-150s \n", "包号", "类别", "功能说明");
-		f.format("%-15s %-127s %-150s \n", "－－", "－－", "－－－－");
+		f.format("%-15s %-127s %-70s \n", "包号", "类别", "功能说明");
+		f.format("%-15s %-127s %-70s \n", "－－", "－－", "－－－－");
 		for( Packages p : Packages.values() ){
 			
 			Class<?> c = p.packageInstance.getClass();
 			PacketDescrip desc = c.getAnnotation(PacketDescrip.class);
 			String s = null;
 			s = (desc == null) ? "" : desc.desc();
-			f.format("%-8s %-50s %-150s \n", p.packageInstance.getPackageNo(), c.getName(),s );
+			String className = c.getName().substring( c.getName().lastIndexOf(".") + 1 );
+			f.format("%-8s %-50s %-70s \n", p.packageInstance.getPackageNo(), className, s );
 			
 		}
 	}
