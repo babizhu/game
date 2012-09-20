@@ -44,9 +44,14 @@ public enum Packages {
 		this.packageInstance.setPackageNo( number );
 	}
 	private static final Map<Short, Packages> numToEnum = new HashMap<Short, Packages>();
+	
 	static{
 		for( Packages a : values() ){
-			numToEnum.put( a.number, a );
+			
+			Packages p = numToEnum.put( a.number, a );
+			if( p != null ){
+				throw new RuntimeException( a.number + "重复了" );
+			}
 		}
 	}
 	
@@ -86,7 +91,6 @@ public enum Packages {
 			s = (desc == null) ? "" : desc.desc();
 			String className = c.getName().substring( c.getName().lastIndexOf(".") + 1 );
 			f.format("%-8s %-50s %-70s \n", p.packageInstance.getPackageNo(), className, s );
-			
 		}
 	}
 }

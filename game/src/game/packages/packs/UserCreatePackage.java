@@ -4,6 +4,7 @@
 package game.packages.packs;
 
 import game.packages.BasePackage;
+import game.packages.PacketDescrip;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -18,6 +19,9 @@ import util.ErrorCode;
  * @author liukun
  * 2012-8-26
  */
+
+@PacketDescrip(desc = "创建新玩家", structure = "")
+
 public class UserCreatePackage extends BasePackage {
 
 	@Override

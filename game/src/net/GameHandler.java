@@ -47,7 +47,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 	@Override
 	public boolean onConnect(INonBlockingConnection con) throws IOException, BufferUnderflowException, MaxReadSizeExceededException {
 		
-		con = ConnectionUtils.synchronizedConnection(con);
+		//con = ConnectionUtils.synchronizedConnection(con);
 		//System.out.println(con.getId() + " onConnect");
 
 //		UserInfo user = new UserInfo( con );
@@ -91,7 +91,6 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 
 			gameLogic.packageRun(con, packageNo, data);
 
-			// }
 		}
 
 		return true;

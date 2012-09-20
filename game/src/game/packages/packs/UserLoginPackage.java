@@ -15,13 +15,11 @@ import util.ErrorCode;
 
 
 @PacketDescrip(desc = "玩家登陆包", structure = "short用户名长度,byte[]用户名")
-
 public class UserLoginPackage extends BasePackage {
 	
 	@Override
 	public void run( UserInfo user, ByteBuffer buf ) throws IOException {
 		
-
 	}
 	
 	public void run( INonBlockingConnection con, ByteBuffer buf ) throws IOException {
