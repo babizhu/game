@@ -2,7 +2,6 @@ package game.packages;
 
 
 import game.packages.packs.*;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Formatter;
