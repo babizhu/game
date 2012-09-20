@@ -20,7 +20,6 @@ public class UserLoginPackage extends BasePackage {
 	@Override
 	public void run( UserInfo user, ByteBuffer buf ) throws IOException {
 		
-
 	}
 	
 	public void run( INonBlockingConnection con, ByteBuffer buf ) throws IOException {

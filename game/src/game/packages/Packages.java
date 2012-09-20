@@ -91,7 +91,6 @@ public enum Packages {
 			s = (desc == null) ? "" : desc.desc();
 			String className = c.getName().substring( c.getName().lastIndexOf(".") + 1 );
 			f.format("%-8s %-50s %-70s \n", p.packageInstance.getPackageNo(), className, s );
-			
 		}
 	}
 }

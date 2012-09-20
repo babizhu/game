@@ -34,5 +34,4 @@ public class MissionTask extends BaseTask {
 	public BaseTaskTemplet getTemplet() {
 		return templet;
 	}
-
 }

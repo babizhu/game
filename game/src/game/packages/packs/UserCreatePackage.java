@@ -21,6 +21,7 @@ import util.ErrorCode;
  */
 
 @PacketDescrip(desc = "创建新玩家", structure = "")
+
 public class UserCreatePackage extends BasePackage {
 
 	@Override

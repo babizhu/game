@@ -78,5 +78,5 @@ public enum TaskType {
 		}
 	};
 
-	 public abstract BaseTaskTemplet createNewTemplet() ;
+	 public abstract BaseTaskTemplet createNewTemplet();
 }
