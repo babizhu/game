@@ -17,6 +17,9 @@ public class MissionTask extends BaseTask {
 		templet = missionTaskTemplet;
 	}
 
+	/**
+	 * @param 	obj			关卡id
+	 */
 	@Override
 	public boolean doTask( UserInfo user, Object obj ) {
 		int missionId = (Integer) obj;

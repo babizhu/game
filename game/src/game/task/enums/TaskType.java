@@ -7,7 +7,7 @@ import game.task.templet.MissionTaskTemplet;
 import game.task.templet.PropTaskTemplet;
 
 /**
- * 人物类型
+ * 任务类型
  * @author liukun
  *
  */

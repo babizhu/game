@@ -44,9 +44,14 @@ public enum Packages {
 		this.packageInstance.setPackageNo( number );
 	}
 	private static final Map<Short, Packages> numToEnum = new HashMap<Short, Packages>();
+	
 	static{
 		for( Packages a : values() ){
-			numToEnum.put( a.number, a );
+			
+			Packages p = numToEnum.put( a.number, a );
+			if( p != null ){
+				throw new RuntimeException( a.number + "重复了" );
+			}
 		}
 	}
 	
