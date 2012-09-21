@@ -14,9 +14,23 @@ import user.UserInfo;
 import util.ErrorCode;
 import util.SystemTimer;
 
+/**
+ * 玩家任务管理器
+ * @author liukun
+ * 2012-9-21 下午05:45:18
+ * 
+ * 同步的思考：<br>
+ * 
+ */
 public class TaskManager {
 
-	private Map<Short,BaseTask> tasks = new HashMap<Short, BaseTask>();//为什么要用map，不用list，请参看@see PerfomanceTest测试情况
+	/**
+	 * 为什么要用map，不用list，请参考 
+	 * {@link test.PerfomanceTest}.
+	 * Short			为任务的模板id
+	 * BaseTask			所接任务
+	 */
+	private Map<Short,BaseTask> tasks = new HashMap<Short, BaseTask>();
 //	private List<BaseTask> 	tasks = new LinkedList<BaseTask>();
 	private UserInfo		user;
 
@@ -95,6 +109,8 @@ public class TaskManager {
 
 	/**
 	 * 添加第一个初始任务
+	 * 
+	 * @param		任务模板
 	 */
 	public void addFirstTask( BaseTaskTemplet templet ){
 		BaseTask task = templet.createTask();
@@ -103,7 +119,11 @@ public class TaskManager {
 		tasks.put( templet.getTempletId(), task );
 	}
 	
-	public Map<Short,BaseTask> getTasks(){
+	/**
+	 * 此方法应该为私有，但为了test方便，暂时用缺省的安全机制
+	 * @return
+	 */
+	Map<Short,BaseTask> getTasks(){
 		return tasks;
 	}
 	

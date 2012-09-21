@@ -5,7 +5,7 @@ import game.task.templet.MissionTaskTemplet;
 import user.UserInfo;
 
 /**
- * 闯关任务
+ * 通常是主线的闯关任务
  * @author admin
  *
  */

@@ -87,12 +87,17 @@ public class UserManager {
 		return sb.toString();
 	}
 	/**
-	 * 从数据库获取玩家信息,不管是否在线，只要该玩家确实在数据库中存在，就尽力保存到内存当中来，是否在线无所谓
+	 * 通过用户名从数据库获取玩家信息,不管是否在线，只要该玩家确实在数据库中存在，就尽力保存到内存当中来，是否在线无所谓
 	 * @param string
 	 * @return
 	 * 
+	 * 			如果不存在则返回null
+	 * 
 	 */
 	public UserInfo getUserByName(String name) {
+		if( name == null ){
+			return null;
+		}
 		if( onlineUsers.get( name ) == null ){
 			UserInfo user = new UserInfo( null, name );
 			ErrorCode code = db.get( user );
@@ -106,6 +111,20 @@ public class UserManager {
 	}
 	
 	/**
+	 * 从数据库获取玩家信息,不管是否在线，只要该玩家确实在数据库中存在，就尽力保存到内存当中来，是否在线无所谓
+	 * @param string
+	 * @return
+	 * 
+	 */
+	public UserInfo getUserByNickName(String nickName) {
+		String name = db.getNameByNickName(nickName);
+		if( name == null ){
+			return null;
+		}
+		return getUserByName(name);
+	}
+	
+	/**
 	 * 之所以要从这里运行run方法，主要是为了保证外层不再拥有user信息，<br>
 	 * 所有的user信息都是从onlineUsers中获取，这样可以缩小user被发布的范围，增加线程安全性
 	 * @param name
@@ -114,21 +133,18 @@ public class UserManager {
 	 * @return
 	 * @throws IOException 
 	 */
-	public ErrorCode run( String name, Packages pack, byte[] data ) throws IOException {
-		
+	public ErrorCode packageRun( String name, Packages pack, byte[] data ) throws IOException {
 
 		UserInfo user = getUserByName(name);
-		if( user != null ){
-			if( user.getPackageManager().safeCheck( pack ) == false ){
-				return ErrorCode.PACKAGE_SAFE_CHECK_FAIL;
-			}
-			ByteBuffer buf = ByteBuffer.wrap( data );
-			pack.run( user, buf );
-			return ErrorCode.SUCCESS;
-		}
-		else{
+		if( user == null ){
 			return ErrorCode.USER_NOT_FOUND;
 		}
+		if( user.getPackageManager().safeCheck( pack ) == false ){
+			return ErrorCode.PACKAGE_SAFE_CHECK_FAIL;
+		}
+		ByteBuffer buf = ByteBuffer.wrap( data );
+		pack.run( user, buf );
+		return ErrorCode.SUCCESS;
 	}
 	
 	/**
@@ -178,8 +194,7 @@ public class UserManager {
 			UserInfo u = new UserInfo(null, name );
 			users.put( name, u );
 		}
-		System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f
-				+ "秒");
+		System.out.println( "写入" + count +"个haspmap的entry用时" + (System.nanoTime() - begin) / 1000000000f + "秒" );
 		
 		java.util.Random r = new Random();
 		begin = System.nanoTime();
@@ -191,8 +206,7 @@ public class UserManager {
 			}
 		}
 		System.out.println();
-		System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f
-				+ "秒");
+		System.out.println( "随机10000次get一个拥有" + count +"个元素的hashMap用时" + (System.nanoTime() - begin) / 1000000000f + "秒" );
 		
 		begin = System.nanoTime();
 		
@@ -206,8 +220,7 @@ public class UserManager {
 				}
 			}
 		}
-		System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f
-				+ "秒");
+		System.out.println( "for循环遍历拥有" + count +"个元素的hashMap用时" + (System.nanoTime() - begin) / 1000000000f + "秒" );
 		
 		begin = System.nanoTime();
 		
@@ -218,9 +231,14 @@ public class UserManager {
 			}
 			
 		}
-		System.out.println("for-each 循环用时" + (System.nanoTime() - begin) / 1000000000f
-				+ "秒");
+		System.out.println( "for-each循环遍历拥有" + count +"个元素的hashMap用时" + (System.nanoTime() - begin) / 1000000000f + "秒" );
 		
+		begin = System.nanoTime();
+		String nickName = "巴比猪1";//真实存在的昵称
+		for( int i = 0; i < 1000; i++ ){
+			UserManager.getInstance().getUserByNickName(nickName);
+		}
+		System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
 	}
 
 }

@@ -29,7 +29,37 @@ public class UserInfoDataProvider {
 	}
 	
 	/**
-	 * 玩家尝试登陆命令
+	 * 通过用户昵称获取玩家的用户名
+	 * @param name
+	 * @return
+	 */
+	String getNameByNickName( String nickName ){
+		Connection con = DatabaseUtil.getConnection();
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT name from user_base where nick_name=?";
+			pst = con.prepareStatement( sql );
+			pst.setString( 1, nickName );
+			rs = pst.executeQuery();
+
+			if( rs.next() ) {
+				return rs.getString( "name" );
+			}
+			else{//数据库无此玩家
+				return null;
+			}			
+		} catch (SQLException e) {
+			logger.debug( e.getLocalizedMessage(), e );
+			return null;
+		}
+		finally{			
+			DatabaseUtil.close( rs, pst, con );
+		}
+	}
+	
+	/**
+	 * 从数据库中获取玩家信息
 	 * @param user
 	 * @return
 	 * 		DB_ERROR,USER_NOT_FOUND

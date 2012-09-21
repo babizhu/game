@@ -9,8 +9,8 @@ public interface ITask {
 	 * @param obj		进行任务所需要的参数
 	 * 
 	 * @return
-	 * 		true:	命中任务,无论是否完成<br>
-	 * 		flase:	未命中任务
+	 * 		true:		命中任务,无论是否完成<br>
+	 * 		flase:		未命中任务
 	 * 
 	 * @注意：如果该任务模板的checkNow属性true，一定要记住考虑@obj为null的情况
 	 */

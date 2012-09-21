@@ -10,7 +10,7 @@ public class CustomTask extends BaseTask implements ITask {
 	}
 
 	@Override
-	public boolean doTask(UserInfo user, Object obj) {
+	public boolean doTask( UserInfo user, Object obj ) {
 		long taskId = (Long)obj;
 		if( taskId == this.getId() ){
 			doneTask();

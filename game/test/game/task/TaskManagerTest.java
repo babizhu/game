@@ -43,6 +43,9 @@ public class TaskManagerTest {
 	}
 	
 	
+	/**
+	 * 分配第一个任务
+	 */
 	private void init(){
 		BaseTaskTemplet templet = TaskTempletCfg.getTempletById( (short) 10000 );
 		manager.addFirstTask( templet );//初始化，添加第一个任务
@@ -148,9 +151,7 @@ public class TaskManagerTest {
 		assertEquals( 10, count );
 		/********************************************************测试DIRECT_COUNT任务************************************************/
 
-		System.out.println( manager );
-		
-		
+		System.out.println( manager );		
 	}
 	
 	@Test

@@ -47,7 +47,7 @@ public class BaseUtil {
 
 		short len = buf.getShort();
 		if( buf.limit() - buf.position() < len ){
-			logger.debug( "decodeString error: content not enouth" );
+			logger.debug( "decodeString error: content not enouth,need length=" + len + " real len=" + (buf.limit() - buf.position()) );
 			return "";
 		}
 		byte[] content = new byte[len];

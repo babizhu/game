@@ -47,7 +47,7 @@ public class DatabaseUtilTest {
 	 * 测试数据库的连接池
 	 */
 	public void testPerfomance() throws SQLException{
-		int count = 100000;////测试次数
+		int count = 100000000;////测试次数
 		
 		long begin = System.nanoTime();
 		for( int i = 0; i < count; i++ ){
