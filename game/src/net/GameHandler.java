@@ -75,7 +75,8 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 				packageNo = con.readShort();
 				dataLength = con.readShort();
 				if (dataLength < 0 || dataLength > PACKAGE_LEN) {
-					// TODO 切断连接
+					
+					con.close();
 				}
 				data = con.readBytesByLength(dataLength);
 				foot = con.readByte();
@@ -86,6 +87,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 				return true;
 			}
 			if (!checkInputData(head, foot)) {
+				con.close();
 				// TODO 调用某个退出函数
 			}
 
@@ -109,7 +111,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 		}
 		return true;
 	}
-
+	
 	/**
 	 * 主动响应玩家关闭连接的事件
 	 */
@@ -117,7 +119,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 	public boolean onDisconnect(INonBlockingConnection con) throws IOException {
 		con = ConnectionUtils.synchronizedConnection(con);
 		//System.out.println(con.getId() + " onDisconnect " + System.nanoTime() );
-		gameLogic.exit(con);
+		gameLogic.exit( con );
 		return false;
 	}
 }

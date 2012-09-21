@@ -9,8 +9,8 @@ public interface ITask {
 	 * @param obj		进行任务所需要的参数
 	 * 
 	 * @return
-	 * 		true:	命中任务,无论是否完成<br>
-	 * 		flase:	未命中任务
+	 * 		true:		命中任务,无论是否完成<br>
+	 * 		flase:		未命中任务
 	 * 
 	 * @注意：如果该任务模板的checkNow属性true，一定要记住考虑@obj为null的情况
 	 */
@@ -55,5 +55,4 @@ public interface ITask {
 	 * @注意：如果有其他更复杂的数据结构，请自行在内部建立合适的bean类来保存，并在bean类中建立合适toString函数
 	 */
 	Object getParam( );
-
 }

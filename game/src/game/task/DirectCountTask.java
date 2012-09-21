@@ -1,10 +1,17 @@
 package game.task;
 
-
 import game.task.templet.BaseTaskTemplet;
 import game.task.templet.DirectCountTaskTemplet;
 import user.UserInfo;
 
+/**
+ * 直接计数类任务，例如：<br>
+ * 
+ * 1、扔垃圾十次，
+ *   
+ * @author admin
+ * 2012-9-21 下午12:01:33
+ */
 public class DirectCountTask extends BaseTask {
 
 	private DirectCountTaskTemplet 	templet;
@@ -18,6 +25,9 @@ public class DirectCountTask extends BaseTask {
 		this.templet = templet;
 	}
 	
+	/**
+	 * @param		obj			任务模板id
+	 */
 	@Override
 	public boolean doTask( UserInfo user, Object obj ) {
 		int templetId = (Integer) obj;

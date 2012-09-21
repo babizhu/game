@@ -1,6 +1,5 @@
 package game.task;
 
-
 import game.task.enums.TaskStatus;
 import user.UserInfo;
 import util.SystemTimer;
@@ -87,7 +86,7 @@ public abstract class BaseTask implements ITask{
 	}
 
 	/**
-	 * 完成任务时候需要做的通用任务
+	 * 完成任务时候需要做的通用操作
 	 */
 	void doneTask(){
 		setStatus( TaskStatus.NO_REWARD );

@@ -14,9 +14,22 @@ import user.UserInfo;
 import util.ErrorCode;
 import util.SystemTimer;
 
+/**
+ * 玩家任务管理器
+ * @author liukun
+ * 2012-9-21 下午05:45:18
+ * 
+ * 同步的思考：<br>
+ */
 public class TaskManager {
 
-	private Map<Short,BaseTask> tasks = new HashMap<Short, BaseTask>();//为什么要用map，不用list，请参看@see PerfomanceTest测试情况
+	/**
+	 * 为什么要用map，不用list，请参考 
+	 * {@link test.PerfomanceTest}.
+	 * Short			为任务的模板id
+	 * BaseTask			所接任务
+	 */
+	private Map<Short,BaseTask> tasks = new HashMap<Short, BaseTask>();
 //	private List<BaseTask> 	tasks = new LinkedList<BaseTask>();
 	private UserInfo		user;
 
@@ -32,7 +45,7 @@ public class TaskManager {
 	 * @return
 	 */
 	public ErrorCode acceptTask( short templetId ){
-		BaseTask task = this.getTaskByTempletId( templetId );
+		BaseTask task = this.getTaskCopyByTempletId( templetId );
 		if( task == null ){
 			return ErrorCode.TASK_NOT_FOUND;
 		}
@@ -56,7 +69,7 @@ public class TaskManager {
 	}
 	
 	public ErrorCode acceptAward( short templetId ){
-		BaseTask task = this.getTaskByTempletId( templetId );
+		BaseTask task = this.getTaskCopyByTempletId( templetId );
 		if( task == null ){
 			return ErrorCode.TASK_NOT_FOUND;
 		}
@@ -95,6 +108,8 @@ public class TaskManager {
 
 	/**
 	 * 添加第一个初始任务
+	 * 
+	 * @param		任务模板
 	 */
 	public void addFirstTask( BaseTaskTemplet templet ){
 		BaseTask task = templet.createTask();
@@ -103,7 +118,11 @@ public class TaskManager {
 		tasks.put( templet.getTempletId(), task );
 	}
 	
-	public Map<Short,BaseTask> getTasks(){
+	/**
+	 * 此方法应该为私有，但为了test方便，暂时用缺省的安全机制
+	 * @return
+	 */
+	Map<Short,BaseTask> getTasks(){
 		return tasks;
 	}
 	
@@ -150,7 +169,14 @@ public class TaskManager {
 		}
 	}
 	
-	public BaseTask getTaskByTempletId( short templetId ) {
+	/**
+	 * 返回一个copy供外层使用，确保hashMap内的数据不被发布到本类以外
+	 * @param templetId
+	 * @return
+	 */
+	public BaseTask getTaskCopyByTempletId( short templetId ) {
+		BaseTask t = tasks.get( templetId );
+		
 		return tasks.get( templetId );
 	}
 	
