@@ -20,14 +20,18 @@ import util.SystemTimer;
  * 2012-9-21 下午05:45:18
  * 
  * 同步的思考：<br>
+<<<<<<< HEAD
+=======
+ * 
+>>>>>>> branch 'master' of https://github.com/babizhu/game.git
  */
 public class TaskManager {
 
 	/**
 	 * 为什么要用map，不用list，请参考 
 	 * {@link test.PerfomanceTest}.
-	 * Short			为任务的模板id
-	 * BaseTask			所接任务
+	 * @param		Short				为任务的模板id
+	 * @param		BaseTask			所接任务
 	 */
 	private Map<Short,BaseTask> tasks = new HashMap<Short, BaseTask>();
 //	private List<BaseTask> 	tasks = new LinkedList<BaseTask>();

@@ -6,8 +6,13 @@ import user.UserInfo;
 
 /**
  * 通常是主线的闯关任务
+<<<<<<< HEAD
  * @author liukun
  * 2012-9-21 下午06:12:28
+=======
+ * @author admin
+ *
+>>>>>>> branch 'master' of https://github.com/babizhu/game.git
  */
 public class MissionTask extends BaseTask {
 
