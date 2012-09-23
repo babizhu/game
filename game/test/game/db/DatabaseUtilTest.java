@@ -79,6 +79,5 @@ public class DatabaseUtilTest {
 		
 		System.out.println( "耗时：" + (System.nanoTime() - begin) / 1000000000f + "秒" );
 	}
-
 	
 }

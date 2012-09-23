@@ -111,7 +111,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 		}
 		return true;
 	}
-
+	
 	/**
 	 * 主动响应玩家关闭连接的事件
 	 */

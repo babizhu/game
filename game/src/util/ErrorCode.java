@@ -27,6 +27,9 @@ public enum ErrorCode {
 	@ErrorCodeDescrip(desc = "玩家被ban，无法登陆")
 	USER_HAS_BAN,
 	
+	@ErrorCodeDescrip(desc = "无法重复接同一个任务")
+	TASK_HAS_ACCEPT,
+	
 	@ErrorCodeDescrip(desc = "任务没找到")
 	TASK_NOT_FOUND,
 	

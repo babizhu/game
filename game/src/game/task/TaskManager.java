@@ -6,9 +6,9 @@ import game.task.enums.TaskType;
 import game.task.templet.BaseTaskTemplet;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import user.UserInfo;
 import util.ErrorCode;
@@ -20,17 +20,19 @@ import util.SystemTimer;
  * 2012-9-21 下午05:45:18
  * 
  * 同步的思考：<br>
- * 
+ * 让此类自身成为线程安全的
  */
 public class TaskManager {
 
 	/**
 	 * 为什么要用map，不用list，请参考 
 	 * {@link test.PerfomanceTest}.
-	 * Short			为任务的模板id
-	 * BaseTask			所接任务
+	 * 
+	 * @param		Short				为任务的模板id
+	 * @param		BaseTask			所接任务
+	 * 
 	 */
-	private Map<Short,BaseTask> tasks = new HashMap<Short, BaseTask>();
+	private ConcurrentHashMap<Short,BaseTask> tasks = new ConcurrentHashMap<Short, BaseTask>();
 //	private List<BaseTask> 	tasks = new LinkedList<BaseTask>();
 	private UserInfo		user;
 
@@ -46,50 +48,58 @@ public class TaskManager {
 	 * @return
 	 */
 	public ErrorCode acceptTask( short templetId ){
-		BaseTask task = this.getTaskByTempletId( templetId );
+		BaseTask task = tasks.get( templetId );//this.getTaskCopyByTempletId( templetId );
 		if( task == null ){
 			return ErrorCode.TASK_NOT_FOUND;
-		}
-		if( task.getStatus() != TaskStatus.CAN_ACCEPT ){
-			return ErrorCode.UNKNOW_ERROR;
 		}
 		if( user.getLevel() < task.getTemplet().getNeedLevel() ){
 			return ErrorCode.LEVEL_NOT_ENOUGH;
 		}
-		
-		task.setStatus( TaskStatus.ACCEPT );
-		task.setAcceptTime( SystemTimer.currentTimeMillis() );
-		
-		if( task.getTemplet().isCheckNow() ){
-			doTask( task, null );
+		synchronized (task) {
+			
+			if( task.getStatus() != TaskStatus.CAN_ACCEPT ){
+				return ErrorCode.TASK_HAS_ACCEPT;
+			}
+			
+			task.setStatus( TaskStatus.ACCEPT );
+			task.setAcceptTime( SystemTimer.currentTimeMillis() );
+			
+			if( task.getTemplet().isCheckNow() ){
+				doTask( task, null );
+			}
+			
+			//TODO 写入数据库
 		}
-		
-		//TODO 写入数据库
 		//TODO 通知前端
 		return ErrorCode.SUCCESS;
 	}
 	
 	public ErrorCode acceptAward( short templetId ){
-		BaseTask task = this.getTaskByTempletId( templetId );
+		BaseTask task = tasks.get( templetId );
 		if( task == null ){
 			return ErrorCode.TASK_NOT_FOUND;
 		}
-		if( task.getStatus() != TaskStatus.NO_REWARD ){
-			return ErrorCode.UNKNOW_ERROR;
+		synchronized (task) {
+			if( task.getStatus() != TaskStatus.NO_REWARD ){
+				return ErrorCode.UNKNOW_ERROR;
+			}
+			task.setStatus( TaskStatus.FINISH );
+			task.setAcceptAwardTime( SystemTimer.currentTimeMillis() );
+			//TODO 写入数据库
 		}
-		task.setStatus( TaskStatus.FINISH );
-		task.setAcceptAwardTime( SystemTimer.currentTimeMillis() );
-		
 		tasks.remove( templetId );
 		
 		//TODO 玩家领奖
-		//TODO 写入数据库
 		//TODO 通知前端
 		
 		return ErrorCode.SUCCESS;		
 	}
 	/**
-	 * 完成一次任务
+	 * 完成一次任务，限制如下：
+	 * 	用户的待完成的任务中，不允许存在，同种类型（），而且参数也相同的任务，例如：
+	 * 	如果存在收集10个白色气球的任务，就不允许同时存在收取20个白色气球的任务，而收集黑色气球的任务则可以
+	 * 	
+	 * 
 	 * @param type
 	 * @param obj		完成任务所需要的参数
 	 * @return
@@ -97,10 +107,13 @@ public class TaskManager {
 	public ErrorCode doTask( TaskType type, Object obj ){
 		for( Entry<Short,BaseTask> e : tasks.entrySet() ){
 			BaseTask t = e.getValue();
-			if( t.getStatus() == TaskStatus.ACCEPT && t.getTemplet().getTaskType() == type ){
+			synchronized ( t ) {
 				
-				if( doTask( t, obj ) ){//限制：一次只允许完成一个任务，请策划确保不会出现两个需求相同的任务
-					return ErrorCode.SUCCESS;					
+				if( t.getStatus() == TaskStatus.ACCEPT && t.getTemplet().getTaskType() == type ){
+					
+					if( doTask( t, obj ) ){//限制：一次只允许完成一个任务，请策划确保不会出现两个需求相同的任务
+						return ErrorCode.SUCCESS;					
+					}
 				}
 			}
 		}
@@ -116,7 +129,7 @@ public class TaskManager {
 		BaseTask task = templet.createTask();
 		task.setStatus( TaskStatus.ACCEPT );//第一个任务缺省设置为已接状态
 		//TODO 写入数据库，填充id字段
-		tasks.put( templet.getTempletId(), task );
+		tasks.putIfAbsent( templet.getTempletId(), task );
 	}
 	
 	/**
@@ -163,14 +176,21 @@ public class TaskManager {
 		
 		if( templet.getSuccessorTemplet() != null ){
 			for( BaseTaskTemplet t : templet.getSuccessorTemplet() ){
-				tasks.put( t.getTempletId(), t.createTask() );
+				tasks.putIfAbsent( t.getTempletId(), t.createTask() );
 				//TODO 写入数据库
 				//TODO 通知客户端
 			}
 		}
 	}
 	
-	public BaseTask getTaskByTempletId( short templetId ) {
+	/**
+	 * 返回一个copy供外层使用，确保hashMap内的数据不被发布到本类以外
+	 * @param templetId
+	 * @return
+	 */
+	BaseTask getTaskCopyByTempletId( short templetId ) {
+		//BaseTask t = tasks.get( templetId );
+		
 		return tasks.get( templetId );
 	}
 	

@@ -102,7 +102,7 @@ public class UserInfoDataProvider {
 	
 	/**
 	 * 检测昵称或用户名在游戏中是否已经存在
-	 * @param uName
+	 * @param user
 	 * @return
 	 * 		true:	昵称或者用户名已存在
 	 */

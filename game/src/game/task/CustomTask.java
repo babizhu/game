@@ -22,5 +22,4 @@ public class CustomTask extends BaseTask implements ITask {
 	public BaseTaskTemplet getTemplet() {
 		return null;
 	}
-
 }

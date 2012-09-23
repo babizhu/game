@@ -1,6 +1,5 @@
 package game.task;
 
-
 import game.task.enums.TaskStatus;
 import user.UserInfo;
 import util.SystemTimer;

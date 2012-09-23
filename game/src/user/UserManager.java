@@ -1,7 +1,6 @@
 package user;
 
 import game.packages.Packages;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Map.Entry;

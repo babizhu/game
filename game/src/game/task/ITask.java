@@ -55,5 +55,4 @@ public interface ITask {
 	 * @注意：如果有其他更复杂的数据结构，请自行在内部建立合适的bean类来保存，并在bean类中建立合适toString函数
 	 */
 	Object getParam( );
-
 }

@@ -35,6 +35,5 @@ public class DirectTask extends BaseTask {
 	@Override
 	public BaseTaskTemplet getTemplet() {
 		return templet;
-	}
-	
+	}	
 }
