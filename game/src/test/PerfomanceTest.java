@@ -43,7 +43,7 @@ public class PerfomanceTest {
 			for( Entry<Short, BaseTask> e : taskMap.entrySet() ){
 				BaseTask t = e.getValue();
 				int i = 0;
-				if( t.getAcceptAwardTime() == 10 ){
+				if( t.getAcceptAwardSec() == 10 ){
 					i++;
 				}
 			}
@@ -59,7 +59,7 @@ public class PerfomanceTest {
 		for( int j = 0; j < 100000; j++ ){
 			for( BaseTask t : taskList ){
 				int i = 0;
-				if( t.getAcceptAwardTime() == 10 ){
+				if( t.getAcceptAwardSec() == 10 ){
 					i++;
 				}
 			}

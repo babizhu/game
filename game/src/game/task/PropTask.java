@@ -23,7 +23,9 @@ public class PropTask extends BaseTask {
 		int propId = (obj == null) ? templet.getPropId() : (Integer) obj;
 		
 		if( templet.getPropId() == propId ){
-			int count = 50;//50从背包中获取
+			int count = 50;//50从背包中获取，伪代码如下：
+			//propId = (Integer)obj
+			//int count = bag.getCount( propId );
 			if( count >= templet.getNeedCount() ){//任务完成
 				doneTask();
 				return true;

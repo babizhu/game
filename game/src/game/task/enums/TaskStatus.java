@@ -47,7 +47,7 @@ public enum TaskStatus {
 		this.number = (byte) number;
 	}
 	
-	public short toNum() {
+	public byte toNum() {
 		return number;
 	}
 	public static TaskStatus fromNum( byte n ){

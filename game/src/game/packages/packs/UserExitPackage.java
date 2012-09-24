@@ -7,7 +7,7 @@ import user.UserInfo;
 
 import game.packages.*;
 
-@PacketDescrip(desc = "玩家退出包")
+@PackageDescrip(desc = "玩家退出包")
 public class UserExitPackage extends BasePackage {
 
 

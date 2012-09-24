@@ -38,8 +38,8 @@
 	</task>
 	<task>
 		<id>10002</id>
-		<name>消灭10头巨狼</name>
-		<desc>去狼窝消灭10头变种巨狼</desc>
+		<name>消灭巨虎</name>
+		<desc>去虎窝消灭1头变种巨虎</desc>
 		<dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
         <button>我这就去</button>
 		<task_type>DIRECT</task_type>

@@ -21,17 +21,17 @@ public abstract class BaseTask implements ITask{
 	/**
 	 * 接任务的时间
 	 */
-	private long	acceptTime; 	
+	private int	acceptSec; 	
 	
 	/**
 	 * 完成任务时间，此时尚未领奖
 	 */
-	private long	doneTime;
+	private int	doneSec;
 	
 	/**
 	 * 领奖时间
 	 */
-	private	long	acceptAwardTime;	
+	private	int	acceptAwardSec;	
 	
 	/**
 	 * 此任务的状态
@@ -53,20 +53,20 @@ public abstract class BaseTask implements ITask{
 		this.status = status;
 	}
 
-	public long getAcceptTime () {
-		return acceptTime;
+	public int getAcceptSec () {
+		return acceptSec;
 	}
 
-	public void setAcceptTime ( long acceptTime ) {
-		this.acceptTime = acceptTime;
+	public void setAcceptSec ( int acceptTime ) {
+		this.acceptSec = acceptTime;
 	}
 
-	public long getDoneTime () {
-		return doneTime;
+	public int getDoneSec () {
+		return doneSec;
 	}
 
-	public void setDoneTime ( long finishTime ) {
-		this.doneTime = finishTime;
+	public void setDoneSec ( int doneSec ) {
+		this.doneSec = doneSec;
 	}
 
 	public long getId() {
@@ -77,12 +77,12 @@ public abstract class BaseTask implements ITask{
 		this.id = id;
 	}
 
-	public long getAcceptAwardTime () {
-		return acceptAwardTime;
+	public int getAcceptAwardSec () {
+		return acceptAwardSec;
 	}
 
-	public void setAcceptAwardTime ( long awardTime ) {
-		this.acceptAwardTime = awardTime;
+	public void setAcceptAwardSec ( int awardSec ) {
+		this.acceptAwardSec = awardSec;
 	}
 
 	/**
@@ -90,7 +90,7 @@ public abstract class BaseTask implements ITask{
 	 */
 	void doneTask(){
 		setStatus( TaskStatus.NO_REWARD );
-		setDoneTime( SystemTimer.currentTimeMillis() );
+		setDoneSec( SystemTimer.currentTimeSecond() );
 	}
 
 	@Override
@@ -113,9 +113,12 @@ public abstract class BaseTask implements ITask{
 
 	@Override
 	public String toString() {
-		return "BaseTask [id=" + id + ", acceptTime=" + acceptTime
-				+ ", doneTime=" + doneTime + ", acceptAwardTime="
-				+ acceptAwardTime + ", status=" + status + "]";
+		return "BaseTask [id=" + id + ", acceptSec=" + acceptSec
+				+ ", doneSec=" + doneSec + ", acceptAwardSec="
+				+ acceptAwardSec + ", status=" + status + "]";
+	}
+	
+	public static void main(String[] args) {
 	}
 	
 

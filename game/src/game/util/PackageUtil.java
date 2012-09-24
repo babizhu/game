@@ -2,7 +2,7 @@ package game.util;
 
 import game.packages.BasePackage;
 import game.packages.IPackage;
-import game.packages.PacketDescrip;
+import game.packages.PackageDescrip;
 
 import java.io.File;
 import java.io.IOException;
@@ -154,7 +154,7 @@ public class PackageUtil {
 		for ( BasePackage ap : packages ) {
 			if( ap != null ){
 				Class<?> c = ap.getClass();
-				PacketDescrip desc = c.getAnnotation(PacketDescrip.class);
+				PackageDescrip desc = c.getAnnotation(PackageDescrip.class);
 				String s = null;
 				s = (desc == null) ? "" : desc.desc();
 				f.format("%-8s %-50s %-150s \n", ap.getPackageNo(), c.getName(),	s );
