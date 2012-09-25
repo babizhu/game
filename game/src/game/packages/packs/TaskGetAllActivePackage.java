@@ -18,7 +18,7 @@ import util.BaseUtil;
  * @author liukun
  * 2012-9-25
  */
-public class TaskGetAllActive  extends BasePackage {
+public class TaskGetAllActivePackage  extends BasePackage {
 
 	/* (non-Javadoc)
 	 * @see game.packages.BasePackage#run(user.UserInfo, java.nio.ByteBuffer)
