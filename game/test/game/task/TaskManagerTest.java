@@ -136,7 +136,7 @@ public class TaskManagerTest {
 	
 	@Test
 	public void testDb(){
-		String name = "bbz4761";//测试之前临时从数据库中获取
+		String name = "bbz";//测试之前临时从数据库中获取
 		UserInfo user = new UserInfo( null, name);
 		assertEquals( 5, user.getTaskManager().getTasks().size() );
 	}
