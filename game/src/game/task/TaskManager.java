@@ -68,6 +68,7 @@ public class TaskManager {
 			if( task.getTemplet().isCheckNow() ){
 				doTask( task, null );
 			}
+
 			db.update( task, user.getName() );
 		}
 		//TODO 通知前端，似乎不需要在这里通知前端
@@ -127,8 +128,7 @@ public class TaskManager {
 	public void addFirstTask(  ){
 		BaseTaskTemplet templet = TaskTempletCfg.getTempletById( TaskTempletCfg.FIRST_TASK_ID );
 		BaseTask task = templet.createTask();
-//		task.setStatus( TaskStatus.CAN_ACCEPT );//第一个任务缺省设置为可接状态
-//		task.setAcceptSec( SystemTimer.currentTimeSecond() );
+
 		ErrorCode code = db.create( task, user.getName() );
 		if( code == ErrorCode.SUCCESS ){
 			tasks.putIfAbsent( templet.getTempletId(), task );
@@ -156,7 +156,11 @@ public class TaskManager {
 	
 	
 	/**
+<<<<<<< HEAD
 	 * 此方法应该为私有，避免对外发布。但为了test方便，暂时用缺省的安全机制
+=======
+	 * 此方法应该为私有，但为了test方便，暂时用缺省的安全机制
+>>>>>>> refs/remotes/origin/master
 	 * @return
 	 */
 	Map<Short,BaseTask> getTasks(){

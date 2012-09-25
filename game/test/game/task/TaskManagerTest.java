@@ -30,6 +30,7 @@ public class TaskManagerTest {
 		manager.addFirstTask();//初始化，添加第一个任务
 		ErrorCode code = manager.acceptTask( TaskTempletCfg.FIRST_TASK_ID );
 		assertEquals( ErrorCode.SUCCESS, code );
+
 		
 	}
 	@Test

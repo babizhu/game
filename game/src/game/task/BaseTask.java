@@ -84,6 +84,7 @@ public  class BaseTask implements ITask{
 		return acceptAwardSec;
 	}
 
+
 	public void setAcceptAwardSec ( int awardSec ) {
 		this.acceptAwardSec = awardSec;
 	}
@@ -137,6 +138,7 @@ public  class BaseTask implements ITask{
 	@Override
 	public BaseTaskTemplet getTemplet() {
 		return templet;
+
 	}
 	
 
