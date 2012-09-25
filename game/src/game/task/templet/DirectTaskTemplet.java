@@ -24,11 +24,4 @@ public class DirectTaskTemplet extends BaseTaskTemplet {
 	public void parseParam(String param) {
 		
 	}
-
-
-
-	
-
-	
-	
 }

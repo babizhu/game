@@ -32,6 +32,11 @@ public class TaskTempletCfg {
 	private static final String FILE = "resource/task.xml";
 	
 	/**
+	 * 初始任务的id号
+	 */
+	public static final short FIRST_TASK_ID = 10000;
+	
+	/**
 	 * 通过配置表读取任务模板
 	 */
 	private static void init(){

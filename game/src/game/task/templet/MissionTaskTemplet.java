@@ -17,7 +17,6 @@ public class MissionTaskTemplet extends BaseTaskTemplet{
 
 
 	public MissionTaskTemplet() {
-		super();
 		this.setTaskType( TaskType.MISSION );
 	}
 

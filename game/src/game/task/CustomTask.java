@@ -6,15 +6,15 @@ import user.UserInfo;
 public class CustomTask extends BaseTask implements ITask {
 
 	public CustomTask( BaseTaskTemplet templet) {
-		super(  );
+		super( templet );
 	}
 
 	@Override
 	public boolean doTask( UserInfo user, Object obj ) {
-		long taskId = (Long)obj;
-		if( taskId == this.getId() ){
-			doneTask();
-		}
+		//long taskId = (Long)obj;
+//		if( taskId == this.getId() ){
+//			doneTask();
+//		}
 		return true;
 	}
 

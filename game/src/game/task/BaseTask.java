@@ -1,7 +1,9 @@
 package game.task;
 
 import game.task.enums.TaskStatus;
+import game.task.templet.BaseTaskTemplet;
 import user.UserInfo;
+import util.BaseUtil;
 import util.SystemTimer;
 
 
@@ -11,27 +13,29 @@ import util.SystemTimer;
  * @author liukun
  * 
  */
-public abstract class BaseTask implements ITask{
+public  class BaseTask implements ITask{
 	
+	
+	private BaseTaskTemplet	templet;
 	/**
 	 * 任务流水id
 	 */
-	private long	id;
+	//private long	id;
 	
 	/**
 	 * 接任务的时间
 	 */
-	private long	acceptTime; 	
+	private int	acceptSec; 	
 	
 	/**
 	 * 完成任务时间，此时尚未领奖
 	 */
-	private long	doneTime;
+	private int	doneSec;
 	
 	/**
 	 * 领奖时间
 	 */
-	private	long	acceptAwardTime;	
+	private	int	acceptAwardSec;	
 	
 	/**
 	 * 此任务的状态
@@ -43,46 +47,45 @@ public abstract class BaseTask implements ITask{
 		return status;
 	}
 
-	public BaseTask() {
-		super();
+	public BaseTask(BaseTaskTemplet templet) {
 		this.status = TaskStatus.CAN_ACCEPT;
-		//this.templet = templet;
+		this.templet = templet;
 	}
 
 	public void setStatus(TaskStatus status) {
 		this.status = status;
 	}
 
-	public long getAcceptTime () {
-		return acceptTime;
+	public int getAcceptSec () {
+		return acceptSec;
 	}
 
-	public void setAcceptTime ( long acceptTime ) {
-		this.acceptTime = acceptTime;
+	public void setAcceptSec ( int acceptTime ) {
+		this.acceptSec = acceptTime;
 	}
 
-	public long getDoneTime () {
-		return doneTime;
+	public int getDoneSec () {
+		return doneSec;
 	}
 
-	public void setDoneTime ( long finishTime ) {
-		this.doneTime = finishTime;
+	public void setDoneSec ( int doneSec ) {
+		this.doneSec = doneSec;
 	}
 
-	public long getId() {
-		return id;
+//	public long getId() {
+//		return id;
+//	}
+//
+//	public void setId(long id) {
+//		this.id = id;
+//	}
+
+	public int getAcceptAwardSec () {
+		return acceptAwardSec;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public long getAcceptAwardTime () {
-		return acceptAwardTime;
-	}
-
-	public void setAcceptAwardTime ( long awardTime ) {
-		this.acceptAwardTime = awardTime;
+	public void setAcceptAwardSec ( int awardSec ) {
+		this.acceptAwardSec = awardSec;
 	}
 
 	/**
@@ -90,7 +93,7 @@ public abstract class BaseTask implements ITask{
 	 */
 	void doneTask(){
 		setStatus( TaskStatus.NO_REWARD );
-		setDoneTime( SystemTimer.currentTimeMillis() );
+		setDoneSec( SystemTimer.currentTimeSecond() );
 	}
 
 	@Override
@@ -113,9 +116,27 @@ public abstract class BaseTask implements ITask{
 
 	@Override
 	public String toString() {
-		return "BaseTask [id=" + id + ", acceptTime=" + acceptTime
-				+ ", doneTime=" + doneTime + ", acceptAwardTime="
-				+ acceptAwardTime + ", status=" + status + "]";
+		return "BaseTask [ acceptSec=" + BaseUtil.secondsToDateStr( acceptSec )
+				+ ", doneSec=" + BaseUtil.secondsToDateStr( doneSec ) + ", acceptAwardSec="
+				+ BaseUtil.secondsToDateStr( acceptAwardSec ) + ", status=" + status + "]";
+	}
+	
+	public static void main(String[] args) {
+	}
+
+	public void copy( BaseTask t ) {
+		this.acceptAwardSec = t.acceptAwardSec;
+		this.acceptSec = t.acceptSec;
+		this.doneSec = t.doneSec;
+		this.status = t.status;
+		this.templet = t.templet;
+		//this.param = t.param;
+		
+	}
+
+	@Override
+	public BaseTaskTemplet getTemplet() {
+		return templet;
 	}
 	
 

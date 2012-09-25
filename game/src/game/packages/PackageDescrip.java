@@ -11,7 +11,7 @@ import java.lang.annotation.RetentionPolicy;
  */
 //@Target (value = { ElementType.PACKAGE })
 @Retention(value = RetentionPolicy.RUNTIME)
-public @interface PacketDescrip {
+public @interface PackageDescrip {
 	/**
 	 * 包描述
 	 * @return

@@ -1,7 +1,7 @@
 package game.packages.packs;
 
 import game.packages.BasePackage;
-import game.packages.PacketDescrip;
+import game.packages.PackageDescrip;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -14,7 +14,7 @@ import util.BaseUtil;
 import util.ErrorCode;
 
 
-@PacketDescrip(desc = "玩家登陆包", structure = "short用户名长度,byte[]用户名")
+@PackageDescrip(desc = "玩家登陆包", structure = "short用户名长度,byte[]用户名")
 public class UserLoginPackage extends BasePackage {
 	
 	@Override

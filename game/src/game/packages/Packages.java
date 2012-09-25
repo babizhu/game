@@ -24,12 +24,12 @@ import user.UserInfo;
 public enum Packages {
 	
 
-	SYSTEM_SEND_ERROR_CODE( 100, new SystemSendErrorCodePackage() ),
-	USER_LOGIN( 201, new UserLoginPackage() ),
-	USER_CREATE( 202, new UserCreatePackage() ),
-	USER_EXIT( 203, new UserExitPackage() ), 
-	EQUIPMENT_LEVEL_UP( 501, new EquipmentLevelUpPackage() ),
-	DEAD_LOCK_TEST( 30000, new DeadLockTestPackage() ); 
+	SYSTEM_SEND_ERROR_CODE				( 100, 		new SystemSendErrorCodePackage() ),
+	USER_LOGIN							( 201, 		new UserLoginPackage() ),
+	USER_CREATE							( 202, 		new UserCreatePackage() ),
+	USER_EXIT							( 203, 		new UserExitPackage() ), 
+	EQUIPMENT_LEVEL_UP					( 501, 		new EquipmentLevelUpPackage() ),
+	DEAD_LOCK_TEST						( 30000, 	new DeadLockTestPackage() ); 
 				
 	//private final static Logger 			logger = LoggerFactory.getLogger( PackageDefine.class ); 
 	
@@ -82,10 +82,10 @@ public enum Packages {
 		Formatter f = new Formatter(System.out);
 		f.format("%-15s %-127s %-70s \n", "包号", "类别", "功能说明");
 		f.format("%-15s %-127s %-70s \n", "－－", "－－", "－－－－");
-		for( Packages p : Packages.values() ){
+		for( Packages p : values() ){
 			
 			Class<?> c = p.packageInstance.getClass();
-			PacketDescrip desc = c.getAnnotation(PacketDescrip.class);
+			PackageDescrip desc = c.getAnnotation(PackageDescrip.class);
 			String s = null;
 			s = (desc == null) ? "" : desc.desc();
 			String className = c.getName().substring( c.getName().lastIndexOf(".") + 1 );

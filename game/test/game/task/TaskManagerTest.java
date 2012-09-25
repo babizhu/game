@@ -1,15 +1,12 @@
 package game.task;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import game.task.cfg.TaskTempletCfg;
 import game.task.enums.TaskStatus;
 import game.task.enums.TaskType;
-import game.task.templet.BaseTaskTemplet;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import java.util.Random;
+
 import org.junit.Test;
 
 import user.UserInfo;
@@ -17,38 +14,22 @@ import util.ErrorCode;
 
 public class TaskManagerTest {
 
-	UserInfo user = new UserInfo( null, "bbz" );
+	/**
+	 * 	用户名不随机组成的话，manager.addFirstTask(  )函数会报错，因为同一个玩家不允许反复调用此函数
+	 */
+	UserInfo user = new UserInfo( null, "bbz" + new Random().nextInt( 100000) );
 	
 	TaskManager manager = new TaskManager( user );
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Test
-	public void testChangeStatus() {
-		//fail("Not yet implemented");
-	}
-	
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
 	
 	
 	/**
 	 * 分配第一个任务
 	 */
 	private void init(){
-		BaseTaskTemplet templet = TaskTempletCfg.getTempletById( (short) 10000 );
-		manager.addFirstTask( templet );//初始化，添加第一个任务
+		
+		manager.addFirstTask();//初始化，添加第一个任务
+		ErrorCode code = manager.acceptTask( TaskTempletCfg.FIRST_TASK_ID );
+		assertEquals( ErrorCode.SUCCESS, code );
 		
 	}
 	@Test
@@ -74,7 +55,6 @@ public class TaskManagerTest {
 		
 		int taskCount = 0;
 		init();
-		//System.out.println( manager );
 		
 		manager.doTask( TaskType.DIRECT , 10000001 );//做一个不存在的任务，玩家拥有任务数不变，依然为1
 		taskCount = 1;
@@ -109,7 +89,7 @@ public class TaskManagerTest {
 		code = manager.acceptTask( (short) 10001 );
 		assertEquals( ErrorCode.LEVEL_NOT_ENOUGH, code );//接一个新任务,报等级不够
 		
-		user.setLevel( TaskTempletCfg.getTempletById( (short) 10000 ).getNeedLevel() );//赋值合适的用户等级
+		user.setLevel( TaskTempletCfg.getTempletById( (short) 10001 ).getNeedLevel() );//赋值合适的用户等级
 		
 		code = manager.acceptTask( (short) 10001 );
 		assertEquals( ErrorCode.SUCCESS, code );//成功接一个任务
@@ -151,6 +131,13 @@ public class TaskManagerTest {
 		/********************************************************测试DIRECT_COUNT任务************************************************/
 
 		System.out.println( manager );		
+	}
+	
+	@Test
+	public void testDb(){
+		String name = "bbz4761";//测试之前临时从数据库中获取
+		UserInfo user = new UserInfo( null, name);
+		assertEquals( 5, user.getTaskManager().getTasks().size() );
 	}
 	
 	@Test

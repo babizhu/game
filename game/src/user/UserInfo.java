@@ -2,6 +2,7 @@ package user;
 
 import game.AwardType;
 import game.packages.Packages;
+import game.task.TaskManager;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -28,6 +29,11 @@ public class UserInfo {
 	 * 包管理器
 	 */
 	private final UserPackageManager					packageManager;
+	
+	/**
+	 * 任务管理器
+	 */
+	private TaskManager									taskManager;
 	
 	/**
 	 * 底层的网络连接，
@@ -112,6 +118,12 @@ public class UserInfo {
 		return strength;
 	}
 
+	synchronized public TaskManager getTaskManager(){
+		if( taskManager == null ){
+			taskManager = new TaskManager( this );
+		}
+		return taskManager;
+	}
 	
 	public synchronized int getMoney(  ){
 		return money;

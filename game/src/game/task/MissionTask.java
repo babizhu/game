@@ -1,25 +1,22 @@
 package game.task;
 
-import game.task.templet.BaseTaskTemplet;
 import game.task.templet.MissionTaskTemplet;
 import user.UserInfo;
 
 /**
  * 通常是主线的闯关任务
-<<<<<<< HEAD
+ * 
  * @author liukun
  * 2012-9-21 下午06:12:28
-=======
- * @author admin
- *
->>>>>>> branch 'master' of https://github.com/babizhu/game.git
+ * 
+ * 
  */
+
 public class MissionTask extends BaseTask {
 
-	private MissionTaskTemplet templet;
 	
 	public MissionTask(MissionTaskTemplet missionTaskTemplet) {
-		templet = missionTaskTemplet;
+		super(missionTaskTemplet);
 	}
 
 	/**
@@ -28,15 +25,11 @@ public class MissionTask extends BaseTask {
 	@Override
 	public boolean doTask( UserInfo user, Object obj ) {
 		int missionId = (Integer) obj;
-		if( missionId == templet.getMissionId() ){
+		MissionTaskTemplet mTemplet = (MissionTaskTemplet) getTemplet();
+		if( missionId == mTemplet.getMissionId() ){
 			super.doneTask();
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public BaseTaskTemplet getTemplet() {
-		return templet;
 	}
 }

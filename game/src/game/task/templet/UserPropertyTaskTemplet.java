@@ -18,7 +18,6 @@ public class UserPropertyTaskTemplet extends BaseTaskTemplet{
 
 
 	public UserPropertyTaskTemplet() {
-		super();
 		this.setTaskType( TaskType.MISSION );
 	}
 

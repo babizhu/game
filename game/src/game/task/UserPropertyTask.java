@@ -1,8 +1,7 @@
 package game.task;
 
-import user.UserInfo;
-import game.task.templet.BaseTaskTemplet;
 import game.task.templet.UserPropertyTaskTemplet;
+import user.UserInfo;
 
 /**
  * 检测玩家属性的任务
@@ -12,9 +11,8 @@ import game.task.templet.UserPropertyTaskTemplet;
  */
 public class UserPropertyTask extends BaseTask {
 
-	private UserPropertyTaskTemplet		templet;
 	public UserPropertyTask(UserPropertyTaskTemplet templet) {
-		this.templet = templet;
+		super(templet);
 	}
 	/**
 	 * obj可以是包含两个变量的数组
@@ -22,18 +20,16 @@ public class UserPropertyTask extends BaseTask {
 	@Override
 	public boolean doTask( UserInfo user, Object obj ) {
 		Object[] parm = (Object[]) obj;
-		//int property = 
-		if( (Integer) parm[0] == templet.getProperty() ){
+		int property = (Integer) parm[0]; 
+		UserPropertyTaskTemplet uTemplet = (UserPropertyTaskTemplet) getTemplet();
+		if( property == uTemplet.getProperty() ){
 			
 			//通过obj的第二个参数获取被改变的战士
 			//判断此此战士是否完成任务
+			System.out.println( );
 		}
 			
 		return false;
 	}
 
-	@Override
-	public BaseTaskTemplet getTemplet() {
-		return templet;
-	}
 }

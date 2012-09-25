@@ -1,6 +1,5 @@
 package game.task;
 
-import game.task.templet.BaseTaskTemplet;
 import game.task.templet.PropTaskTemplet;
 import user.UserInfo;
 
@@ -11,30 +10,25 @@ import user.UserInfo;
  */
 public class PropTask extends BaseTask {
 
-	private PropTaskTemplet		templet;
 	public PropTask( PropTaskTemplet templet) {
-		super( );
-		this.templet = templet;
+		super( templet );
 	}
 
 	@Override
 	public boolean doTask( UserInfo user, Object obj ) {
-		
-		int propId = (obj == null) ? templet.getPropId() : (Integer) obj;
-		
-		if( templet.getPropId() == propId ){
-			int count = 50;//50从背包中获取
-			if( count >= templet.getNeedCount() ){//任务完成
-				doneTask();
-				return true;
-			}			
-		}	
+		PropTaskTemplet pTemplet = (PropTaskTemplet)getTemplet();
+		int propId = (obj == null) ? 0 : (Integer) obj;
+		System.out.println( propId );
+		int count = 50;
+		//50应从背包中获取，伪代码如下：
+		//int count = bag.getCount( propId );
+		if( count >= pTemplet.getNeedCount() ){//任务完成
+			doneTask();
+			return true;
+		}			
+			
 		return false;
 	}
-
-	@Override
-	public BaseTaskTemplet getTemplet() {
-		return templet;
-	}
-
+	
+	
 }

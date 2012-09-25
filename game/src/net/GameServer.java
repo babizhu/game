@@ -15,6 +15,7 @@ import org.xsocket.connection.IHandler;
 import org.xsocket.connection.Server;
 
 import util.BaseUtil;
+import util.SystemTimer;
 import define.SystemCfg;
 
 /**
@@ -41,8 +42,8 @@ public class GameServer extends Server{
 		System.out.println("编码集= "+System.getProperty("file.encoding"));
 		System.out.println("编码集1= "+Charset.defaultCharset() );
 
-		System.out.println( BaseUtil.secondsToDateStr( System.currentTimeMillis() / 1000 ) + " server start now..." );
-        System.out.println( BaseUtil.secondsToDateStr( System.currentTimeMillis() / 1000 ) + " game version: " + SystemCfg.VERSION );        
+		System.out.println( BaseUtil.secondsToDateStr( SystemTimer.currentTimeSecond() ) + " server start now..." );
+        System.out.println( BaseUtil.secondsToDateStr( SystemTimer.currentTimeSecond() ) + " game version: " + SystemCfg.VERSION );        
 		
         InetAddress address = InetAddress.getByName( "localhost" );
 		

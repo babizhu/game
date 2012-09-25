@@ -1,20 +1,19 @@
 package game.task;
 
-import game.task.templet.BaseTaskTemplet;
 import game.task.templet.DirectCountTaskTemplet;
 import user.UserInfo;
 
 /**
  * 直接计数类任务，例如：<br>
  * 
- * 1、扔垃圾十次，
+ * 1、扔垃圾十次
+ * 2、挑战某个关卡10次
  *   
  * @author admin
  * 2012-9-21 下午12:01:33
  */
 public class DirectCountTask extends BaseTask {
 
-	private DirectCountTaskTemplet 	templet;
 	
 	/**
 	 * 此任务已经完成的次数
@@ -22,7 +21,7 @@ public class DirectCountTask extends BaseTask {
 	private	int						count;
 	
 	public DirectCountTask( DirectCountTaskTemplet templet ) {
-		this.templet = templet;
+		super( templet );
 	}
 	
 	/**
@@ -31,9 +30,10 @@ public class DirectCountTask extends BaseTask {
 	@Override
 	public boolean doTask( UserInfo user, Object obj ) {
 		int templetId = (Integer) obj;
-		if( templetId == templet.getTempletId() ){
+		if( templetId == getTemplet().getTempletId() ){
 			count++;
-			if( count >= templet.getNeedCount() ){
+			DirectCountTaskTemplet dTemplet = (DirectCountTaskTemplet)getTemplet(); 
+			if( count >= dTemplet.getNeedCount() ){
 				super.doneTask();
 			}
 			return true;
@@ -41,11 +41,7 @@ public class DirectCountTask extends BaseTask {
 		return false;
 	}
 
-	@Override
-	public BaseTaskTemplet getTemplet() {
-		return templet;
-	}
-	
+
 	@Override
 	public void parseParamFromDb ( String str ) {
 		count = Integer.parseInt( str );
@@ -71,5 +67,10 @@ public class DirectCountTask extends BaseTask {
 		BaseTask bt = (BaseTask) ot;
 		System.out.println( t.getParam() );
 		System.out.println( bt.getParam() );
+	}
+	
+	public void copy( BaseTask t ) {
+		super.copy(t);
+		this.count =(Integer) t.getParam();
 	}
 }
