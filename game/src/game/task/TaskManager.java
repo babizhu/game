@@ -71,7 +71,6 @@ public class TaskManager {
 
 			db.update( task, user.getName() );
 		}
-		//TODO 通知前端，似乎不需要在这里通知前端
 		return ErrorCode.SUCCESS;
 	}
 	
@@ -156,11 +155,7 @@ public class TaskManager {
 	
 	
 	/**
-<<<<<<< HEAD
 	 * 此方法应该为私有，避免对外发布。但为了test方便，暂时用缺省的安全机制
-=======
-	 * 此方法应该为私有，但为了test方便，暂时用缺省的安全机制
->>>>>>> refs/remotes/origin/master
 	 * @return
 	 */
 	Map<Short,BaseTask> getTasks(){

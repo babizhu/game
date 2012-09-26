@@ -97,6 +97,8 @@ public class TaskManagerTest {
 		
 		code = manager.acceptTask( (short) 10001 );
 		assertEquals( ErrorCode.TASK_HAS_ACCEPT, code );//反复接同一个任务,报未知错误
+		
+		
 		/********************************************************测试接任务*********************************************************/
 
 		
@@ -105,6 +107,9 @@ public class TaskManagerTest {
 		code = manager.acceptTask( (short) 10003 );//接10003任务，目前程序设定是开启的同时即完成该道具收集任务，并开启后继任务10004
 		assertEquals( ErrorCode.SUCCESS, code );
 		assertEquals( TaskStatus.NO_REWARD, manager.getTaskCopyByTempletId((short) 10003).getStatus() );//检测该任务是否完成
+		
+		user.setLevel( TaskTempletCfg.getTempletById( (short) 10004 ).getNeedLevel() );//赋值合适的用户等级
+		manager.acceptTask( (short) 10004 );//顺便接10004任务，方便TaskAcceptPackageTest类测试
 		/********************************************************测试一接就完成的任务************************************************/
 		
 		taskCount = 5;
@@ -136,7 +141,7 @@ public class TaskManagerTest {
 	
 	@Test
 	public void testDb(){
-		String name = "bbz";//测试之前临时从数据库中获取
+		String name = "bbz";//测试之前临时从数据库中获取测试所需合适的值
 		UserInfo user = new UserInfo( null, name);
 		assertEquals( 5, user.getTaskManager().getTasks().size() );
 	}
@@ -152,6 +157,7 @@ public class TaskManagerTest {
 		user.setLevel( TaskTempletCfg.getTempletById( (short) 10001 ).getNeedLevel() );//赋值合适的用户等级
 		//分别接这两个后继任务
 		manager.acceptTask( (short) 10001 );
+		user.setLevel( TaskTempletCfg.getTempletById( (short) 10002 ).getNeedLevel() );//赋值合适的用户等级
 		manager.acceptTask( (short) 10002 );
 		//System.out.println( manager );
 		manager.doTask( TaskType.DIRECT, 10002 );

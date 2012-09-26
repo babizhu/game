@@ -84,7 +84,7 @@
 		<location_id>1000301</location_id>
 		<auto_track>1</auto_track>
 		<award>MONEY,10000</award>
-		<need_level>1</need_level>
+		<need_level>2</need_level>
 		<check_now>0</check_now>
 	</task>
 	<task>

@@ -24,11 +24,23 @@ import user.UserInfo;
 public enum Packages {
 	
 
-	SYSTEM_SEND_ERROR_CODE				( 100, 		new SystemSendErrorCodePackage() ),
+	SYSTEM_SEND_ERROR_CODE				( 100, 		new SystemSendErrorCodePackage() ),	
+	/*********************************系统保留******************************************/
+	
 	USER_LOGIN							( 201, 		new UserLoginPackage() ),
 	USER_CREATE							( 202, 		new UserCreatePackage() ),
-	USER_EXIT							( 203, 		new UserExitPackage() ), 
-	EQUIPMENT_LEVEL_UP					( 501, 		new EquipmentLevelUpPackage() ),
+	USER_EXIT							( 203, 		new UserExitPackage() ),	
+	/*********************************用户系统******************************************/
+	
+	EQUIPMENT_LEVEL_UP					( 501, 		new EquipmentLevelUpPackage() ),	
+	/*********************************装备系统******************************************/
+	
+	TASK_GET_ALL_ACTIVE					( 701, 		new TaskGetAllActivePackage() ),
+	TASK_ACCEPT_AWARD					( 702, 		new TaskAcceptAwardPackage() ),
+	TASK_ACCEPT							( 703, 		new TaskAcceptPackage() ),
+	TASK_GET							( 704, 		new TaskGetPackage() ),
+	/*********************************任务系统******************************************/
+	
 	DEAD_LOCK_TEST						( 30000, 	new DeadLockTestPackage() ); 
 				
 	//private final static Logger 			logger = LoggerFactory.getLogger( PackageDefine.class ); 

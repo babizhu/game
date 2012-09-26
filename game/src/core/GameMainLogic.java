@@ -55,34 +55,53 @@ public final class GameMainLogic implements IGameLogic {
 		ErrorCode code = ErrorCode.SUCCESS;
 
 		String name = (String) con.getAttachment();
-		logger.debug( name + "[" + con.getId().substring( 16 ) + "] " + pack );
+		logger.debug( (buildStr( con, name ) + "通信包：" + (pack == null ? packageNo : pack)) );
 		if (pack == null) {
 			code = ErrorCode.PACKAGE_NOT_FOUND;
 		} else {
-			ByteBuffer buf = ByteBuffer.wrap( data );
-			if( pack == Packages.USER_LOGIN ){
-				UserLoginPackage p = (UserLoginPackage) Packages.USER_LOGIN.getPackageInstance();
-				p.run( con, buf );
-				
-			}
-			else if( pack == Packages.USER_CREATE ){
-				UserCreatePackage p = (UserCreatePackage) Packages.USER_CREATE.getPackageInstance();
-				p.run( con, buf );
-			}
-			else{
-				if( name == null ){
-					code = ErrorCode.USER_NOT_LOGIN;
+			try{
+				ByteBuffer buf = ByteBuffer.wrap( data );
+				if( pack == Packages.USER_LOGIN ){
+					UserLoginPackage p = (UserLoginPackage) Packages.USER_LOGIN.getPackageInstance();
+					p.run( con, buf );
+					
+				}
+				else if( pack == Packages.USER_CREATE ){
+					UserCreatePackage p = (UserCreatePackage) Packages.USER_CREATE.getPackageInstance();
+					p.run( con, buf );
 				}
 				else{
-					code = UserManager.getInstance().packageRun( name, pack, data );
+					if( name == null ){
+						code = ErrorCode.USER_NOT_LOGIN;
+					}
+					else{
+						code = UserManager.getInstance().packageRun( name, pack, data );
+					}
 				}
+			}
+			catch( Exception e ){
+				logger.debug( buildStr( con, name ) + "包执行异常：" , e );
 			}
 		}
 
 		if (code != ErrorCode.SUCCESS) {
 		
-			logger.debug( "[" + con.getRemoteAddress() + "]错误码:[" + code + "] 包:" + pack + "[" + packageNo + "] " + name );
+			logger.debug( buildStr( con, name ) + "错误码:[" + code + "] 包:" + pack + "[" + packageNo + "] " + name );
 		}
+	}
+	
+	/**
+	 * 针对被类，提供一个统一的提示信息前缀
+	 * @return
+	 */
+	private String buildStr( INonBlockingConnection con, String name ){
+		String s = name;
+		s += "[";
+		s += con.getId().substring( 21 );
+		s += ",";
+		s += con.getRemoteAddress();
+		s += "] ";
+		return s;
 	}
 
 	/**
@@ -94,7 +113,7 @@ public final class GameMainLogic implements IGameLogic {
 		String name = (String) con.getAttachment();
 
 		if( name != null ){
-			System.out.println( name + "执行退出程序");
+			System.out.println( buildStr(con, name) + "执行退出程序");
 			
 			ErrorCode code = UserManager.getInstance().exit( name );
 			if (code != ErrorCode.SUCCESS) {
