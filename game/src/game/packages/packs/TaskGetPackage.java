@@ -46,7 +46,12 @@ public class TaskGetPackage  extends BasePackage {
 		}
 	}
 	
-	public static void buildTask( BaseTask task, ByteBuffer buffer ){
+	/**
+	 * 组成一个任务的ByteBuffer内容，方便其他函数调用
+	 * @param task
+	 * @param buffer
+	 */
+	static void buildTask( BaseTask task, ByteBuffer buffer ){
 		buffer.putShort( task.getTemplet().getTempletId() );
 		buffer.put( task.getStatus().toNum() );
 		String param = task.getParam() == null ? "" : task.getParam().toString();

@@ -41,6 +41,9 @@ public enum Packages {
 	TASK_GET							( 704, 		new TaskGetPackage() ),
 	/*********************************任务系统******************************************/
 	
+	/*********************************背包系统******************************************/
+	
+	
 	DEAD_LOCK_TEST						( 30000, 	new DeadLockTestPackage() ); 
 				
 	//private final static Logger 			logger = LoggerFactory.getLogger( PackageDefine.class ); 
