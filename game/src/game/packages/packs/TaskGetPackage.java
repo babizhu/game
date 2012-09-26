@@ -51,6 +51,7 @@ public class TaskGetPackage  extends BasePackage {
 		buffer.put( task.getStatus().toNum() );
 		String param = task.getParam() == null ? "" : task.getParam().toString();
 		BaseUtil.encodeString( buffer, param );	
+
 	}
 
 }

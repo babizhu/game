@@ -29,6 +29,7 @@ public class TaskAcceptAwardPackage  extends BasePackage {
 		ErrorCode code = user.getTaskManager().acceptAward( templetId );
 		
 		ByteBuffer buffer = buildEmptyPackage( 16 );
+
 		buffer.putShort( (short) code.ordinal() );
 		buffer.putShort( templetId );
 		sendPackage( user.getCon(), buffer );
