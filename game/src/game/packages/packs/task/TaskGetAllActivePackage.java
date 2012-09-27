@@ -1,7 +1,7 @@
 /**
  * 
  */
-package game.packages.packs;
+package game.packages.packs.task;
 
 import game.packages.BasePackage;
 import game.packages.PackageDescrip;
@@ -27,11 +27,11 @@ public class TaskGetAllActivePackage  extends BasePackage {
 	 */
 	@Override
 	public void run(UserInfo user, ByteBuffer buf) throws IOException {
-		Map<Short,BaseTask> activeTasks = user.getTaskManager().getAllActive();
+		Map<Short,BaseTask> activeTasks = user.getTaskManager().getAllActiveCopy();
 		ByteBuffer buffer = buildEmptyPackage( 1024 );
 		buffer.put( (byte) activeTasks.size() );
 		for( BaseTask t : activeTasks.values() ){
-			TaskGetPackage.buildTask( t, buffer );			
+			TaskGetPackage.buildTaskBytes( t, buffer );	
 		}
 		
 		sendPackage( user.getCon(), buffer );

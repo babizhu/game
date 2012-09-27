@@ -72,7 +72,7 @@ public class TaskDataProvider {
 		task.setDoneSec(rs.getInt("done_sec"));
 		task.setAcceptAwardSec(rs.getInt("accept_award_sec"));
 		
-		task.parseParamFromDb( rs.getString("parm") );
+		task.parseParamFromStr( rs.getString("parm") );
 		task.setStatus( TaskStatus.fromNum( rs.getByte("status") ) );
 		return task;
 	}

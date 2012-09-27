@@ -1,7 +1,7 @@
 /**
  * 
  */
-package game.packages.packs;
+package game.packages.packs.task;
 
 import game.packages.BasePackage;
 import game.packages.PackageDescrip;
@@ -31,7 +31,7 @@ public class TaskGetPackage  extends BasePackage {
 		BaseTask task = user.getTaskManager().getTaskCopyByTempletId(templetId);
 		if( task != null ){
 			ByteBuffer buffer = buildEmptyPackage( 1024 );
-			buildTask( task, buffer);
+			buildTaskBytes( task, buffer);
 			sendPackage( user.getCon(), buffer );
 		}
 		
@@ -41,7 +41,7 @@ public class TaskGetPackage  extends BasePackage {
 		BaseTask task = user.getTaskManager().getTaskCopyByTempletId(templetId);
 		if( task != null ){
 			ByteBuffer buffer = buildEmptyPackage( 1024 );
-			buildTask( task, buffer);
+			buildTaskBytes( task, buffer);
 			sendPackage( user.getCon(), buffer );
 		}
 	}
@@ -51,11 +51,11 @@ public class TaskGetPackage  extends BasePackage {
 	 * @param task
 	 * @param buffer
 	 */
-	static void buildTask( BaseTask task, ByteBuffer buffer ){
+	static void buildTaskBytes( BaseTask task, ByteBuffer buffer ){
 		buffer.putShort( task.getTemplet().getTempletId() );
 		buffer.put( task.getStatus().toNum() );
 		String param = task.getParam() == null ? "" : task.getParam().toString();
-		BaseUtil.encodeString( buffer, param );	
+		BaseUtil.encodeString( buffer, param );
 
 	}
 

@@ -43,7 +43,7 @@ public class DirectCountTask extends BaseTask {
 
 
 	@Override
-	public void parseParamFromDb ( String str ) {
+	public void parseParamFromStr ( String str ) {
 		count = Integer.parseInt( str );
 	}
 

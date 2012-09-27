@@ -42,7 +42,7 @@ public interface ITask {
 	 * 对于扔十次垃圾，保留当前已经扔了多少次垃圾<br>
 	 * @param str
 	 */
-	void parseParamFromDb( String str ); 
+	void parseParamFromStr( String str ); 
 	
 	
 	/**
