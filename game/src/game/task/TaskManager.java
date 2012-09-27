@@ -241,7 +241,7 @@ public class TaskManager {
 	 * 获取玩家的所有的活动任务，代码先凑合用，需要修改，应该返回一个拷贝
 	 * @return
 	 */
-	public Map<Short, BaseTask> getAllActive() {
+	public Map<Short, BaseTask> getAllActiveCopy() {
 		// TODO Auto-generated method stub
 		return tasks;
 	}
@@ -250,7 +250,7 @@ public class TaskManager {
 		short templetId = 10000;
 		BaseTaskTemplet t = TaskTempletCfg.getTempletById( templetId );
 		BaseTask task = t.createTask();
-		task.parseParamFromDb( "" );
+		task.parseParamFromStr( "" );
 		
 	}
 

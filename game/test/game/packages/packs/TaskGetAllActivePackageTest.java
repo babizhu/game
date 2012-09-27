@@ -4,6 +4,9 @@ package game.packages.packs;
 import static org.junit.Assert.assertEquals;
 
 import game.packages.Packages;
+import game.task.BaseTask;
+import game.task.cfg.TaskTempletCfg;
+import game.task.enums.TaskStatus;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -12,6 +15,7 @@ import org.junit.Test;
 import org.xsocket.connection.BlockingConnection;
 import org.xsocket.connection.IBlockingConnection;
 
+import util.BaseUtil;
 import util.ErrorCode;
 import define.SystemCfg;
 
@@ -37,19 +41,26 @@ public class TaskGetAllActivePackageTest extends BasePackageTest  {
 		ByteBuffer buf = new UserLoginPackageTest().sendPackage( nbc, name );
 		ErrorCode code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.SUCCESS, code );
-		for( int i = 0; i < 200000; i++ )
+		int count = 100000;
+		for( int i = 0; i < count; i++ )
 		{
 			buf = sendPackage(nbc);
 			byte size = buf.get();
 			assertEquals( 5, size );
+			for( int t = 0; t < size; t++ ){
+				short templetId = buf.getShort();
+				BaseTask task = TaskTempletCfg.getTempletById(templetId).createTask();
+				
+				task.setStatus( TaskStatus.fromNum( buf.get() ) );
+				task.parseParamFromStr( BaseUtil.decodeString(buf) );
+				System.out.println( task );
+			}
+			System.out.println( i );
 		}
-		
-		//Thread.sleep( 2000 );
 	}
 
 	@Override
 	public short getPacketNo() {
-		// TODO Auto-generated method stub
 		return Packages.TASK_GET_ALL_ACTIVE.toNum();
 	}
 

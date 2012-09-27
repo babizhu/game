@@ -103,7 +103,7 @@ public  class BaseTask implements ITask{
 	}
 
 	@Override
-	public void parseParamFromDb ( String str ) {
+	public void parseParamFromStr ( String str ) {
 		
 	}
 
@@ -117,7 +117,7 @@ public  class BaseTask implements ITask{
 
 	@Override
 	public String toString() {
-		return "BaseTask [ acceptSec=" + BaseUtil.secondsToDateStr( acceptSec )
+		return getClass().getSimpleName() + " [ templetId=" + templet.getTempletId() + ", acceptSec=" + BaseUtil.secondsToDateStr( acceptSec )
 				+ ", doneSec=" + BaseUtil.secondsToDateStr( doneSec ) + ", acceptAwardSec="
 				+ BaseUtil.secondsToDateStr( acceptAwardSec ) + ", status=" + status + "]";
 	}

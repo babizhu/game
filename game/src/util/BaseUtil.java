@@ -33,7 +33,9 @@ public class BaseUtil {
 			throw new IllegalArgumentException("字符串长度超限");
 		}
 		buf.putShort((short) temp.length);
-		buf.put(temp);
+		if( temp.length != 0 ){
+			buf.put(temp);
+		}
 
 	}
 
@@ -46,13 +48,16 @@ public class BaseUtil {
 	public static String decodeString(ByteBuffer buf) {
 
 		short len = buf.getShort();
-		if( buf.limit() - buf.position() < len ){
-			logger.debug( "decodeString error: content not enouth,need length=" + len + " real len=" + (buf.limit() - buf.position()) );
-			return "";
+		if( len > 0 ){
+			if( buf.limit() - buf.position() < len ){
+				logger.debug( "decodeString error: content not enouth,need length=" + len + " real len=" + (buf.limit() - buf.position()) );
+				return "";
+			}
+			byte[] content = new byte[len];
+			buf.get(content);
+			return new String(content);
 		}
-		byte[] content = new byte[len];
-		buf.get(content);
-		return new String(content);
+		return "";
 	}
 
 	public static boolean isWindowsOS() {
