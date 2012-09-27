@@ -15,7 +15,7 @@ public abstract class BasePackageTest {
 	 * @param capacity
 	 * @return
 	 */
-	ByteBuffer createEmptyPackage( int capacity ){
+	protected ByteBuffer createEmptyPackage( int capacity ){
 		
 		ByteBuffer buff = ByteBuffer.allocate(capacity);
 		buff.put( BasePackage.HEAD );

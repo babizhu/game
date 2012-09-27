@@ -2,6 +2,7 @@ package game.task;
 
 import game.task.templet.BaseTaskTemplet;
 import user.UserInfo;
+import util.ErrorCode;
 
 public interface ITask {
 	/**
@@ -25,10 +26,11 @@ public interface ITask {
 	
 	
 	/**
-	 * 返回此任务的类型
+	 * 接任务，每个任务可能有自己 不同的条件， 
+	 * @param user TODO
 	 * @return
 	 */
-//	TaskType getTaskType();
+	ErrorCode acceptTask(UserInfo user );
 	
 	/**
 	 * 返回此任务关联的模板

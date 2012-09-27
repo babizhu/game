@@ -53,15 +53,12 @@ public class TaskManager {
 		if( task == null ){
 			return ErrorCode.TASK_NOT_FOUND;
 		}
-		if( user.getLevel() < task.getTemplet().getNeedLevel() ){
-			return ErrorCode.LEVEL_NOT_ENOUGH;
+		ErrorCode code = task.acceptTask(user);
+		
+		if( code != ErrorCode.SUCCESS ){
+			return code;
 		}
 		synchronized (task) {
-			
-			if( task.getStatus() != TaskStatus.CAN_ACCEPT ){
-				return ErrorCode.TASK_HAS_ACCEPT;
-			}
-			
 			task.setStatus( TaskStatus.ACCEPT );
 			task.setAcceptSec( SystemTimer.currentTimeSecond() );
 			

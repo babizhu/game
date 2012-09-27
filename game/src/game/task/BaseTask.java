@@ -4,6 +4,7 @@ import game.task.enums.TaskStatus;
 import game.task.templet.BaseTaskTemplet;
 import user.UserInfo;
 import util.BaseUtil;
+import util.ErrorCode;
 import util.SystemTimer;
 
 
@@ -139,6 +140,24 @@ public  class BaseTask implements ITask{
 	public BaseTaskTemplet getTemplet() {
 		return templet;
 
+	}
+
+	/**
+	 * 最简单的接任务条件，
+	 * 1、比较一下等级
+	 * 2、检测状态
+	 * 
+	 * 其他某个特殊条件留待具体任务自行扩展
+	 */
+	@Override
+	public ErrorCode acceptTask( UserInfo user ) {
+		if( user.getLevel() < getTemplet().getNeedLevel() ){
+			return ErrorCode.LEVEL_NOT_ENOUGH;
+		}
+		if( getStatus() != TaskStatus.CAN_ACCEPT ){
+			return ErrorCode.TASK_HAS_ACCEPT;
+		}  
+		return ErrorCode.SUCCESS;
 	}
 	
 

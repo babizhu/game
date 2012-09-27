@@ -1,9 +1,11 @@
-package game.packages.packs;
+package game.packages.packs.task;
 
 
 import static org.junit.Assert.assertEquals;
 
 import game.packages.Packages;
+import game.packages.packs.BasePackageTest;
+import game.packages.packs.UserLoginPackageTest;
 import game.task.BaseTask;
 import game.task.cfg.TaskTempletCfg;
 import game.task.enums.TaskStatus;
@@ -41,7 +43,7 @@ public class TaskGetAllActivePackageTest extends BasePackageTest  {
 		ByteBuffer buf = new UserLoginPackageTest().sendPackage( nbc, name );
 		ErrorCode code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.SUCCESS, code );
-		int count = 100000;
+		int count = 1000;
 		for( int i = 0; i < count; i++ )
 		{
 			buf = sendPackage(nbc);

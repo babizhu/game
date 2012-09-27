@@ -1,9 +1,11 @@
-package game.packages.packs;
+package game.packages.packs.task;
 
 
 import static org.junit.Assert.assertEquals;
 import game.db.DatabaseUtil;
 import game.packages.Packages;
+import game.packages.packs.BasePackageTest;
+import game.packages.packs.UserLoginPackageTest;
 import game.task.enums.TaskStatus;
 
 import java.io.IOException;
@@ -19,8 +21,8 @@ import org.xsocket.connection.IBlockingConnection;
 import util.ErrorCode;
 import define.SystemCfg;
 
-public class TaskAcceptAwardPackageTest  extends BasePackageTest{
-	
+public class TaskAcceptPackageTest extends BasePackageTest {
+
 	private ByteBuffer sendPackage( IBlockingConnection nbc, short templetId ) throws IOException{
 		
 		ByteBuffer buf = createContent( templetId );
@@ -43,18 +45,18 @@ public class TaskAcceptAwardPackageTest  extends BasePackageTest{
 		ErrorCode code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.SUCCESS, code );
 
-		short templetId = 10001;
+		short templetId = 10002;
 		buf = sendPackage( nbc,templetId );
 		code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.SUCCESS, code );
-		/************************可领奖正常任务**************************/
+		/************************可接任务**************************/
 		
 		
-		templetId = 10001;
+		templetId = 10002;
 		buf = sendPackage( nbc,templetId );
 		code = ErrorCode.values()[buf.getShort()];
-		assertEquals( ErrorCode.TASK_NOT_FOUND, code );
-		/************************已领奖（彻底完成）任务**************************/
+		assertEquals( ErrorCode.TASK_HAS_ACCEPT, code );
+		/************************已接任务**************************/
 		
 		templetId = -1;
 		buf = sendPackage( nbc,templetId );
@@ -62,33 +64,34 @@ public class TaskAcceptAwardPackageTest  extends BasePackageTest{
 		assertEquals( ErrorCode.TASK_NOT_FOUND, code );
 		/************************不存在的任务**************************/
 		
-		templetId = 10002;
+		templetId = 10003;
 		buf = sendPackage( nbc,templetId );
 		code = ErrorCode.values()[buf.getShort()];
-		assertEquals( ErrorCode.UNKNOW_ERROR, code );
-		/************************未接任务**************************/
-		
-		templetId = 10004;
-		buf = sendPackage( nbc,templetId );
-		code = ErrorCode.values()[buf.getShort()];
-		assertEquals( ErrorCode.UNKNOW_ERROR, code );
-		/************************已接任务**************************/
+		assertEquals( ErrorCode.TASK_HAS_ACCEPT, code );
+		/************************已经完成尚未领过奖的任务**************************/
 		
 		templetId = 10000;
 		buf = sendPackage( nbc,templetId );
 		code = ErrorCode.values()[buf.getShort()];
 		assertEquals( ErrorCode.TASK_NOT_FOUND, code );
-		/************************已完成任务**************************/
+		/************************领过奖的任务**************************/
 		
-		templetId = 10001;
+		templetId = 10004;
+		buf = sendPackage( nbc,templetId );
+		code = ErrorCode.values()[buf.getShort()];
+		assertEquals( ErrorCode.LEVEL_NOT_ENOUGH, code );
+		/************************接一个玩家等级不够的任务**************************/
+		
+		templetId = 10002;
 		restoreTask( templetId );
 		//Thread.sleep( 2000 );
 	}
+
 	/**
 	 * 还原修改的任务状态方便下一次测试
 	 * 
 	 *  1、关闭服务器
-	 *  2、把玩家bbz的10001号任务的状态设置为3
+	 *  2、把玩家bbz的10002号任务的状态设置为1
 	 * @param templetId
 	 */
 	private void restoreTask( short templetId ){
@@ -102,7 +105,7 @@ public class TaskAcceptAwardPackageTest  extends BasePackageTest{
 		int	i = 1;
 		try {
 			pst = con.prepareStatement( sql );
-			pst.setByte( i++, TaskStatus.NO_REWARD.toNum() );
+			pst.setByte( i++, TaskStatus.CAN_ACCEPT.toNum() );
 			pst.setShort( i++, templetId );
 			pst.setString( i++, name );
 			pst.executeUpdate();
@@ -112,9 +115,10 @@ public class TaskAcceptAwardPackageTest  extends BasePackageTest{
 		}
 		
 	}
+	
 	@Override
 	public short getPacketNo() {
 		// TODO Auto-generated method stub
-		return Packages.TASK_ACCEPT_AWARD.toNum();
+		return Packages.TASK_ACCEPT.toNum();
 	}
 }
