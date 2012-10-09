@@ -2,8 +2,6 @@ package game.bag;
 
 import java.util.Set;
 
-import util.ErrorCode;
-
 
 /**
  * 背包系统<br>
@@ -25,13 +23,12 @@ public interface IBag {
 	 * 返回null，意味删除失败<br>
 	 * 
 	 * @param 		unit		移除的内容
-	 * @param		position  	指定的位置 
 	 * 
 	 * @return
 	 *			 有变化的格子列表
 	 * 
 	 */
-	Set<IGrid> remove( PropUnit unit, short position );
+	Set<IGrid> remove( PropUnit unit );
 	
 	/**
 	 * 批量删除道具，通常用于合成物品，必须保证所有的材料都存在的时候才开始扣除，有如下约定：<br>
@@ -46,21 +43,31 @@ public interface IBag {
 	Set<IGrid> remove( PropUnit[] units  );
 
 	/**
-	 * 添加道具到背包
+	 * 添加单个道具到背包
 	 * 策略：要么全放，要么全不放
 	 * 返回null，意味添加失败<br>
 	 * 
 	 * @param 		unit
-	 * @param		position  指定的位置 
 	 * @return
 	 * 			有变化的格子列表
 	 */
-	Set<IGrid> put( PropUnit unit, short position );
+	Set<IGrid> put( PropUnit unit );
+	
+	/**
+	 * 添加多个道具到背包
+	 * 策略：要么全放，要么全不放
+	 * 返回null，意味添加失败<br>
+	 * 
+	 * @param 		units
+	 * @return
+	 * 			有变化的格子列表
+	 */
+	Set<IGrid> put( PropUnit[] units );
 	
 	/**
 	 * 整理格子
-	 */
-	void tidy();
+	 
+	void tidy();*/
 	
 	/**
 	 * 把位于source位置的道具移动到dest，<br>
@@ -70,8 +77,9 @@ public interface IBag {
 	 * 策略：要么全放，要么全不放
 	 * @param source
 	 * @param dest
-	 */
+	 
 	ErrorCode exchange( short source, short dest );
+*/
 
 
 }
