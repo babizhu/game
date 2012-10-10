@@ -14,8 +14,7 @@ import java.util.Set;
  * @author liukun
  * 2012-9-27 下午04:50:19
  */
-public interface IBag {
-	
+public interface IBag {	
 	/**
 	 * 获取count个类型为typeid的道具，并且从格子中删除它
 	 * 策略：要么全放，要么全不放
