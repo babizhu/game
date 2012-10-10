@@ -21,7 +21,7 @@ import util.ErrorCode;
  * 
  * @author liukun 2012-9-24 12:33:59
  */
-public class TaskDataProvider {
+class TaskDataProvider {
 	private final static Logger logger = LoggerFactory.getLogger(TaskDataProvider.class);
 	private static TaskDataProvider instance = new TaskDataProvider();
 	static  TaskDataProvider getInstance(){

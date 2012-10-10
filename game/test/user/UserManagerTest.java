@@ -65,7 +65,7 @@ public class UserManagerTest {
 
 	@Test
 	public void testGetUserByNickName() {
-		String nickName = null;
+		String nickName = null;//null昵称
 		UserInfo user = UserManager.getInstance().getUserByNickName(nickName);
 		assertEquals( user, null );
 		

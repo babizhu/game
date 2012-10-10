@@ -53,12 +53,13 @@ public class TaskManager {
 		if( task == null ){
 			return ErrorCode.TASK_NOT_FOUND;
 		}
-		ErrorCode code = task.acceptTask(user);
-		
-		if( code != ErrorCode.SUCCESS ){
-			return code;
-		}
 		synchronized (task) {
+			ErrorCode code = task.acceptTask( user );
+		
+			if( code != ErrorCode.SUCCESS ){
+				return code;
+			}
+		
 			task.setStatus( TaskStatus.ACCEPT );
 			task.setAcceptSec( SystemTimer.currentTimeSecond() );
 			
@@ -71,6 +72,12 @@ public class TaskManager {
 		return ErrorCode.SUCCESS;
 	}
 	
+	/**
+	 * 完成任务后，玩家领奖
+	 * 领奖功能似乎也应该做成接任务一样，放到各个任务自己的身上？2012-10-10
+	 * @param templetId
+	 * @return
+	 */
 	public ErrorCode acceptAward( short templetId ){
 		BaseTask task = tasks.get( templetId );
 		if( task == null ){
@@ -83,11 +90,10 @@ public class TaskManager {
 			task.setStatus( TaskStatus.FINISH );
 			task.setAcceptAwardSec( SystemTimer.currentTimeSecond() );
 			db.update( task, user.getName() );
+			//TODO 玩家领奖
+			//TODO 通知前端
 		}
-		tasks.remove( templetId );
-		
-		//TODO 玩家领奖
-		//TODO 通知前端
+		tasks.remove( templetId );		
 		
 		return ErrorCode.SUCCESS;		
 	}

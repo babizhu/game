@@ -1,11 +1,9 @@
 package user;
 
 import game.AwardType;
-import game.packages.Packages;
 import game.task.TaskManager;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,13 +150,15 @@ public class UserInfo {
 	
 	/**
 	 * 构造关键数据的日志文件
-	 * @param at
-	 * @param change
-	 * @param current
-	 * @param funcName
+	 * @param at			奖励类型
+	 * @param change		改动的数值
+	 * @param current		改动后的当前数值
+	 * @param funcName		改动函数
 	 */
 	private void buildLog( AwardType at, int change, int current, String funcName ){
-		
+		if( change == 0 ){
+			return;
+		}
 		StringBuilder sb = new StringBuilder();
 		sb.append( name );		//用户名
 		sb.append( "," );
@@ -169,7 +169,6 @@ public class UserInfo {
 		sb.append( current );	//当前值
 		sb.append( "," );
 		sb.append( funcName );	//调用的方法名
-		
 		
 		sb.toString();
 		
@@ -187,10 +186,6 @@ public class UserInfo {
 		return name;
 	}
 	
-//	public void setName( String name ) {
-//		this.name = name;
-//	}
-
 	public synchronized UserStatus getStatus () {
 		return status;
 	}
@@ -205,10 +200,11 @@ public class UserInfo {
 	/**
 	 * 设置登录连接，方案如下：
 	 * 如果原本无con连接，直接赋值，并设置con的Attachment
-	 * 如果原本有连接，则返回USER_HAS_LOGIN标识，让客户端等待500ms后重试，并主动切断原有连接
+	 * 如果原本有连接，则主动切断原有连接并返回USER_HAS_LOGIN标识，让客户端等待500ms后重试
 	 * 
 	 * con.setAttachment( name );这句代码可能造成死锁，但是好像也不能移到user锁之外，因为必须保证user的con为此con，而此con的attachment必须为user的name<br>
 	 * 保证不会在对con进行大规模加锁的封闭调用，则可以避免
+	 * 应该不会行成死锁，因为setAttachment函数仅仅在此处调用2012-10-10
 	 * 这属于不变条件
 	 * 
 	 * @param con
@@ -321,7 +317,9 @@ public class UserInfo {
 	/**
 	 * 运行包处理程序，多线程下，唯一的风险是getStatus()会不会在这里为UserStatus.LOGIN之后，被另外的线程修改为其他状态，导致竞态条件的产生<br>
 	 * 再想想
-	 */
+	 * 为什么不直接加锁解决呢？2012-10-10
+	 * 此函数已废弃2012-10-10
+	 
 	public ErrorCode run( Packages pack, byte[] data ){
 		
 		if( !packageManager.safeCheck( pack ) ){
@@ -344,7 +342,7 @@ public class UserInfo {
 		}
 		return ErrorCode.SUCCESS;
 				
-	}
+	}*/
 	@Override
 	public synchronized String toString() {
 		

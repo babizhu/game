@@ -55,7 +55,7 @@ public final class GameMainLogic implements IGameLogic {
 		ErrorCode code = ErrorCode.SUCCESS;
 
 		String name = (String) con.getAttachment();
-		logger.debug( (buildStr( con, name ) + "通信包：" + (pack == null ? packageNo : pack)) );
+		logger.debug( (buildPrefixStr( con, name ) + "通信包：" + (pack == null ? packageNo : pack)) );
 		if (pack == null) {
 			code = ErrorCode.PACKAGE_NOT_FOUND;
 		} else {
@@ -80,21 +80,21 @@ public final class GameMainLogic implements IGameLogic {
 				}
 			}
 			catch( Exception e ){
-				logger.debug( buildStr( con, name ) + "包执行异常：" , e );
+				logger.debug( buildPrefixStr( con, name ) + "包执行异常：" , e );
 			}
 		}
 
 		if (code != ErrorCode.SUCCESS) {
 		
-			logger.debug( buildStr( con, name ) + "错误码:[" + code + "] 包:" + pack + "[" + packageNo + "] " + name );
+			logger.debug( buildPrefixStr( con, name ) + "错误码:[" + code + "] 包:" + pack + "[" + packageNo + "] " + name );
 		}
 	}
 	
 	/**
-	 * 针对被类，提供一个统一的提示信息前缀
+	 * 针对此类，提供一个统一的提示信息前缀
 	 * @return
 	 */
-	private String buildStr( INonBlockingConnection con, String name ){
+	private String buildPrefixStr( INonBlockingConnection con, String name ){
 		String s = name;
 		s += "[";
 		s += con.getId().substring( 21 );
@@ -109,11 +109,11 @@ public final class GameMainLogic implements IGameLogic {
 	 * 
 	 */
 	@Override
-	public void exit(INonBlockingConnection con) throws IOException {
+	public void exit( INonBlockingConnection con ) throws IOException {
 		String name = (String) con.getAttachment();
 
 		if( name != null ){
-			System.out.println( buildStr(con, name) + "执行退出程序");
+			System.out.println( buildPrefixStr(con, name) + "执行退出程序");
 			
 			ErrorCode code = UserManager.getInstance().exit( name );
 			if (code != ErrorCode.SUCCESS) {

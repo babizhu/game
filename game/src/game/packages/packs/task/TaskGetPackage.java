@@ -19,7 +19,7 @@ import util.BaseUtil;
  * 2012-9-25
  */
 
-@PackageDescrip(desc = "获取玩家的某个指定任务，通常应该是服务器主动发起的")
+@PackageDescrip(desc = "告知玩家的某个指定任务的详细信息，通常应该是服务器主动发起的")
 public class TaskGetPackage  extends BasePackage {
 
 	/* (non-Javadoc)

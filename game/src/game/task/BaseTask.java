@@ -126,7 +126,7 @@ public  class BaseTask implements ITask{
 	public static void main(String[] args) {
 	}
 
-	public void copy( BaseTask t ) {
+	void copy( BaseTask t ) {
 		this.acceptAwardSec = t.acceptAwardSec;
 		this.acceptSec = t.acceptSec;
 		this.doneSec = t.doneSec;
@@ -147,7 +147,7 @@ public  class BaseTask implements ITask{
 	 * 1、比较一下等级
 	 * 2、检测状态
 	 * 
-	 * 其他某个特殊条件留待具体任务自行扩展
+	 * 其他某个特殊条件留待具体任务自行重载进行扩展
 	 */
 	@Override
 	public ErrorCode acceptTask( UserInfo user ) {

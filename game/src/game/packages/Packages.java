@@ -22,7 +22,7 @@ import user.UserInfo;
  * 
  * 30000以上为测试用(暂时)
  * 
- * @注意：为了传输方便，枚举对应的数字不得超过Short.MAX_VALUE
+ * @注意：为了传输方便，枚举对应的数字也就是包号不得超过Short.MAX_VALUE
  * @author liukun
  * 2012-8-25
  */
@@ -50,9 +50,7 @@ public enum Packages {
 	
 	
 	DEAD_LOCK_TEST						( 30000, 	new DeadLockTestPackage() ); 
-				
-	//private final static Logger 			logger = LoggerFactory.getLogger( PackageDefine.class ); 
-	
+		
 	private final short 			number;
 	private final BasePackage 		packageInstance;
 	
@@ -100,8 +98,8 @@ public enum Packages {
 	 */
 	public static void main(String[] args) {
 		Formatter f = new Formatter(System.out);
-		f.format("%-15s %-127s %-70s \n", "包号", "类别", "功能说明");
-		f.format("%-15s %-127s %-70s \n", "－－", "－－", "－－－－");
+		f.format("%-15s %-100s %-10s \n", "包号", "类别", "功能说明");
+		f.format("%-15s %-100s %-10s \n", "－－", "－－", "－－－－");
 		for( Packages p : values() ){
 			
 			Class<?> c = p.packageInstance.getClass();
@@ -109,7 +107,30 @@ public enum Packages {
 			String s = null;
 			s = (desc == null) ? "" : desc.desc();
 			String className = c.getName().substring( c.getName().lastIndexOf(".") + 1 );
-			f.format("%-8s %-50s %-70s \n", p.packageInstance.getPackageNo(), className, s );
+			f.format("%-8s %-40s %-10s \n", p.packageInstance.getPackageNo(), className, s );
 		}
+		System.out.println( "--------------------------HTML---------------------------------");
+		StringBuilder html = new StringBuilder( "<table><tr><td>包号</td><td>类别</td><td>功能说明</td></tr><tr>" );
+		for( Packages p : values() ){
+			
+			Class<?> c = p.packageInstance.getClass();
+			PackageDescrip desc = c.getAnnotation(PackageDescrip.class);
+			String s = null;
+			s = (desc == null) ? "" : desc.desc();
+			String className = c.getName().substring( c.getName().lastIndexOf(".") + 1 );
+		//	f.format("%-8s %-40s %-10s \n", p.packageInstance.getPackageNo(), className, s );
+			html.append( "<td>" );
+			html.append( p.packageInstance.getPackageNo() );
+			html.append( "</td><td>" );
+			html.append( className );
+			html.append( "</td><td>" );
+			html.append( s );
+			html.append( "</td></tr>" );
+			
+			
+		} 
+		html.append(  "</table>" );
+		System.out.println( html );
 	}
+	
 }
