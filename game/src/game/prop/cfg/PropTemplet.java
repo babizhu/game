@@ -6,5 +6,4 @@ package game.prop.cfg;
  * 2012-10-12 下午12:10:54
  */
 public class PropTemplet extends BasePropTemplet{	
-
 }
