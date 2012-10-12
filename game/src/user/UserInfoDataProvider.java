@@ -1,6 +1,5 @@
 package user;
 
-import game.db.DatabaseUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import util.ErrorCode;
 import util.SystemTimer;
+import util.db.DatabaseUtil;
 
 /**
  * 和数据库打交道

@@ -12,15 +12,39 @@ public class PropUnit {
 	/**
 	 * 道具ID
 	 */
-	IProp	prop;
+	private IProp	prop;
 	
 	/**
 	 * 道具数量
 	 */
-	short	count;
+	private short	count;
+	
 	
 	public PropUnit( IProp prop, short count ) {
 		this.prop = prop;
 		this.count = count;
 	}
+	
+	public IProp getProp() {
+		return prop;
+	}
+
+
+
+	public void setProp(IProp prop) {
+		this.prop = prop;
+	}
+
+
+
+	public short getCount() {
+		return count;
+	}
+
+
+
+	public void setCount(short count) {
+		this.count = count;
+	}
+
 }

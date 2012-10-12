@@ -1,6 +1,5 @@
 package game.task;
 
-import game.db.DatabaseUtil;
 import game.task.cfg.TaskTempletCfg;
 import game.task.enums.TaskStatus;
 
@@ -14,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import util.ErrorCode;
+import util.db.DatabaseUtil;
 
 /**
  * 和数据库打交道
@@ -32,25 +32,29 @@ class TaskDataProvider {
 	
 	
 	/**
-	 * 从数据库中获取玩家尚未完成的任务信息
+	 * 从数据库中获取玩家尚未最终完成（未领奖）的任务信息
 	 * @param user
 	 * @return
 	 * 		DB_ERROR,USER_NOT_FOUND
 	 */
-	ConcurrentHashMap<Short,BaseTask> getActiveTasksByName( String name ) {
+	ConcurrentHashMap<Short,BaseTask> getActiveTasksByName( String uname ) {
+		
 		ConcurrentHashMap<Short,BaseTask> map = new ConcurrentHashMap<Short, BaseTask>();
 		
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT * from task_base where status <>" + TaskStatus.FINISH.toNum() + " and name=?";
+			String sql = "SELECT templet_id,accept_sec,done_sec,accept_award_sec,parm,status " +
+					"from task_base " +
+					"where status <>" + TaskStatus.FINISH.toNum() + " and uname=?";
+			
 			pst = con.prepareStatement( sql );
-			pst.setString( 1, name );
+			pst.setString( 1, uname );
 			rs = pst.executeQuery();
 
 			while( rs.next() ){
-				BaseTask t = mapping(rs);
+				BaseTask t = mapping( rs );
 				map.put( t.getTemplet().getTempletId(), t );
 			}
 		} catch (SQLException e) {
@@ -81,22 +85,22 @@ class TaskDataProvider {
 	/**
 	 * 添加一个可接任务
 	 * @param task		任务
-	 * @param name		玩家名<br>
+	 * @param uname		玩家名<br>
 	 * 
 	 * status				字段缺省为可接，不用写入<br>
 	 * accept_award_sec		字段缺省为0，不用写入<br>
 	 * done_sec				字段缺省为0，不用写入<br>
 	 * @return
 	 */
-	ErrorCode create( BaseTask task, String name ) {
+	ErrorCode create( BaseTask task, String uname ) {
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;								  
-		String sql = "insert into task_base (name, templet_id, accept_sec, parm) "
+		String sql = "insert into task_base (uname, templet_id, accept_sec, parm) "
 			+ "values (?, ?, ?, ?)";
 		int	i = 1;
 		try {
 			pst = con.prepareStatement( sql );
-			pst.setString( i++, name );
+			pst.setString( i++, uname );
 			short s = task.getTemplet().getTempletId();
 			pst.setShort( i++, s );
 			pst.setInt( i++, task.getAcceptSec());
@@ -114,11 +118,11 @@ class TaskDataProvider {
 	/**
 	 * 修改玩家任务信息，针对某些改动比较频繁且重要的字段，可考虑专门做一个语法糖，优化的事情放到以后再说
 	 * @param task		任务
-	 * @param name		玩家名
+	 * @param uname		玩家名
 	 * @return
 	 * 		DB_ERROR
 	 */
-	ErrorCode update( BaseTask task, String name ) {
+	ErrorCode update( BaseTask task, String uname ) {
 		
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;	
@@ -128,7 +132,7 @@ class TaskDataProvider {
 				"accept_award_sec = ?, " +
 				"parm = ?, " +
 				"status = ? " +
-				"where templet_id = ? and name = ?";
+				"where templet_id = ? and uname = ?";
 		
 		int	i = 1;
 		try {
@@ -139,7 +143,7 @@ class TaskDataProvider {
 			pst.setString( i++, task.getParam() == null ? "" : task.getParam().toString() );
 			pst.setByte( i++, task.getStatus().toNum() );
 			pst.setShort( i++, task.getTemplet().getTempletId() );
-			pst.setString( i++, name );
+			pst.setString( i++, uname );
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			logger.debug( e.getLocalizedMessage(), e );

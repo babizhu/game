@@ -6,6 +6,16 @@ package game.battle;
  * 2012-9-27 下午05:41:53
  */
 public class BaseBattleStatus {
-	boolean attackerIsWin;
+	private boolean attackerIsWin;
+
+	public boolean isAttackerIsWin() {
+		return attackerIsWin;
+	}
+
+	public void setAttackerIsWin(boolean attackerIsWin) {
+		this.attackerIsWin = attackerIsWin;
+	}
+	
+	
 
 }

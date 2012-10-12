@@ -1,4 +1,4 @@
-package game.db;
+package util.db;
 
 import java.io.File;
 import java.sql.Connection;

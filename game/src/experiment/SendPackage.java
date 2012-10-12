@@ -1,4 +1,4 @@
-package test;
+package experiment;
 
 import game.packages.BasePackage;
 import game.packages.Packages;

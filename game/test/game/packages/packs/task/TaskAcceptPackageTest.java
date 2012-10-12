@@ -2,7 +2,6 @@ package game.packages.packs.task;
 
 
 import static org.junit.Assert.assertEquals;
-import game.db.DatabaseUtil;
 import game.packages.Packages;
 import game.packages.packs.BasePackageTest;
 import game.packages.packs.UserLoginPackageTest;
@@ -19,6 +18,7 @@ import org.xsocket.connection.BlockingConnection;
 import org.xsocket.connection.IBlockingConnection;
 
 import util.ErrorCode;
+import util.db.DatabaseUtil;
 import define.SystemCfg;
 
 public class TaskAcceptPackageTest extends BasePackageTest {

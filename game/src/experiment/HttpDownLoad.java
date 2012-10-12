@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test;
+package experiment;
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;

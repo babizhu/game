@@ -1,4 +1,4 @@
-package test;
+package experiment;
 
 import game.task.BaseTask;
 import game.task.DirectCountTask;
