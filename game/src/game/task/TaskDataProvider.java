@@ -30,7 +30,6 @@ class TaskDataProvider {
 	private TaskDataProvider(){
 	}
 	
-	
 	/**
 	 * 从数据库中获取玩家尚未最终完成（未领奖）的任务信息
 	 * @param user
@@ -79,8 +78,7 @@ class TaskDataProvider {
 		task.parseParamFromStr( rs.getString("parm") );
 		task.setStatus( TaskStatus.fromNum( rs.getByte("status") ) );
 		return task;
-	}
-	
+	}	
 	
 	/**
 	 * 添加一个可接任务
