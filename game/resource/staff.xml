@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--材料配置表-->
+
+<items>
+	<item>
+		<typeId>10000</typeId>
+		<name>黄金碎片</name>
+		<requiredLevel>1</requiredLevel>
+		<stackCap>100</stackCap>
+        <desc>可以用来打造黄金圣甲</desc>
+		<path>z3080001|603|5</path>
+		
+	</item>
+</items>

@@ -1,6 +1,6 @@
 package game.prop.cfg;
 
-public class BasePropTemplet {
+public abstract class BasePropTemplet {
 	
 	/**
 	 * 道具类型id
@@ -54,6 +54,8 @@ public class BasePropTemplet {
 		this.stackCap = stackCap;
 	}
 	
+	
+	public abstract void parseXml();
 	
 
 }

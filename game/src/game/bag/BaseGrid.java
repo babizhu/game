@@ -10,7 +10,7 @@ public class BaseGrid implements IGrid {
 	private	BasePropTemplet		templet;
 	
 	/**
-	 * 关联的道具id
+	 * 关联的道具id，不存在设置为0
 	 */
 	private long				propId;
 	
