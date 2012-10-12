@@ -16,7 +16,7 @@ import util.ErrorCode;
 import util.db.DatabaseUtil;
 
 /**
- * 和数据库打交道
+ * 任务系统相关的数据库方法
  * 单体
  * 
  * @author liukun 2012-9-24 12:33:59
@@ -29,7 +29,6 @@ class TaskDataProvider {
 	}
 	private TaskDataProvider(){
 	}
-	
 	
 	/**
 	 * 从数据库中获取玩家尚未最终完成（未领奖）的任务信息
