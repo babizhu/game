@@ -64,7 +64,7 @@ class BagDataProvider {
 	
 	private BaseGrid mapping(ResultSet rs) throws SQLException {
 		
-		int tid = rs.getInt( "templet_id" );
+		short tid = rs.getShort( "templet_id" );
 		BasePropTemplet templet = BasePropTempletCfg.getTempletById( tid );
 		if( templet == null ){
 			throw new IllegalAddException( "道具模板不存在 " + tid );

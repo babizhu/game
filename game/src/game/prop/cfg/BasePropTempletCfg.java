@@ -23,7 +23,7 @@ public class BasePropTempletCfg {
 	}
 	
 	/**
-	 * 通过配置表读取任务模板
+	 * 通过配置表读取道具模板
 	 */
 	private static void init(){
 		
@@ -58,15 +58,14 @@ public class BasePropTempletCfg {
 			e.printStackTrace();
 		} 
 	}
-		
-	
+			
 	
 	/**
 	 * 通过模板id获取模板
 	 * @param templetId
 	 * @return
 	 */
-	public static BasePropTemplet getTempletById( int templetId ){
+	public static BasePropTemplet getTempletById( short templetId ){
 		return propTemplets.get( templetId );
 	}
 	
