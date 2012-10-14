@@ -1,107 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--comment-->
+<!--任务配置表-->
 
 <tasks>
 	<task>
-		<id>10000</id>
+		<templetId>10000</templetId>
 		<name>寻找刘老爷</name>
+		<taskType>DIRECT</taskType>
 		<desc>去风之眼寻找世外高人刘大爷</desc>
 		<dialogue>我知道一个人，他可以帮助你。他名叫刘大爷，常在风之眼出没。</dialogue>
         <button>我这就去</button>
-		<task_type>DIRECT</task_type>
 		<successor>10001,10002</successor>
-		<task_prop>MAIN</task_prop>
+		<taskProp>MAIN</taskProp>
 		<param></param>
 		<npc>100900</npc>
-		<location_id>1000301</location_id>
-		<auto_track>1</auto_track>
+		<locationId>1000301</locationId>
+		<autoTrack>1</autoTrack>
 		<award>MONEY,10000</award>		
-		<need_level>0</need_level>
-		<check_now>0</check_now>
+		<requiredLevel>0</requiredLevel>
+		<checkNow>0</checkNow>
 	</task>	
 	<task>
-		<id>10001</id>
+		<templetId>10001</templetId>
 		<name>消灭巨狼</name>
+		<taskType>DIRECT</taskType>
 		<desc>去北寒极地消灭变种巨狼</desc>
 		<dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
         <button>我这就去</button>		
-		<task_type>DIRECT</task_type>
 		<successor>10003</successor>
-		<task_prop>MAIN</task_prop>
+		<taskProp>MAIN</taskProp>
 		<param></param>
 		<npc>100900</npc>
-		<location_id>1000301</location_id>
-		<auto_track>1</auto_track>
+		<locationId>1000301</locationId>
+		<autoTrack>1</autoTrack>
 		<award>MONEY,10000</award>
-		<need_level>1</need_level>
-		<check_now>0</check_now>
+		<requiredLevel>1</requiredLevel>
+		<checkNow>0</checkNow>
 	</task>
 	<task>
-		<id>10002</id>
+		<templetId>10002</templetId>
 		<name>消灭巨虎</name>
+		<taskType>DIRECT</taskType>
 		<desc>去虎窝消灭1头变种巨虎</desc>
 		<dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
         <button>我这就去</button>
-		<task_type>DIRECT</task_type>
 		<successor></successor>
-		<task_prop>BRANCH</task_prop>
+		<taskProp>BRANCH</taskProp>
 		<param></param>
 		<npc>100900</npc>
-		<location_id>1000301</location_id>
-		<auto_track>1</auto_track>
+		<locationId>1000301</locationId>
+		<autoTrack>1</autoTrack>
 		<award>MONEY,10000</award>
-		<need_level>1</need_level>
-		<check_now>0</check_now>
+		<requiredLevel>1</requiredLevel>
+		<checkNow>0</checkNow>
 	</task>
 	<task>
-		<id>10003</id>
+		<templetId>10003</templetId>
 		<name>搜集10件白霜之刃</name>
+		<taskType>PROP</taskType>
 		<desc>去暴风之眼收集10件白霜之刃</desc>
 		<dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
         <button>我这就去</button>
-		<task_type>PROP</task_type>
 		<successor>10004,10005</successor>
-		<task_prop>MAIN</task_prop>
+		<taskProp>MAIN</taskProp>
 		<param>100020345,10</param>
 		<npc>100900</npc>
-		<location_id>1000301</location_id>
-		<auto_track>1</auto_track>
+		<locationId>1000301</locationId>
+		<autoTrack>1</autoTrack>
 		<award>MONEY,10000</award>
-		<need_level>1</need_level>
-		<check_now>1</check_now>
+		<requiredLevel>1</requiredLevel>
+		<checkNow>1</checkNow>
 	</task>
 	<task>
-		<id>10004</id>
+		<templetId>10004</templetId>
 		<name>挑战邪恶的双子星长老</name>
+		<taskType>MISSION</taskType>
 		<desc>去暴风之眼挑战挑战邪恶的双子星长老</desc>
 		<dialogue>我知道一个人，他可以帮助你。他叫刘大爷，常在风之眼出没。</dialogue>
         <button>我这就去</button>
-		<task_type>MISSION</task_type>
 		<successor></successor>
-		<task_prop>MAIN</task_prop>
+		<taskProp>MAIN</taskProp>
 		<param>10000</param>
 		<npc>100900</npc>
-		<location_id>1000301</location_id>
-		<auto_track>1</auto_track>
+		<locationId>1000301</locationId>
+		<autoTrack>1</autoTrack>
 		<award>MONEY,10000</award>
-		<need_level>2</need_level>
-		<check_now>0</check_now>
+		<requiredLevel>2</requiredLevel>
+		<checkNow>0</checkNow>
 	</task>
 	<task>
-		<id>10005</id>
+		<templetId>10005</templetId>
 		<name>挑战英雄榜10次</name>
+		<taskType>DIRECT_COUNT</taskType>
 		<desc>连续挑战英雄榜上的英雄10次</desc>
 		<dialogue>我知道一个人，他可以帮助你挑战10次英雄榜上的英雄。</dialogue>
         <button>我这就去</button>
-		<task_type>DIRECT_COUNT</task_type>
 		<successor></successor>
-		<task_prop>MAIN</task_prop>
+		<taskProp>MAIN</taskProp>
 		<param>10</param>
 		<npc>100900</npc>
-		<location_id>1000301</location_id>
-		<auto_track>1</auto_track>
+		<locationId>1000301</locationId>
+		<autoTrack>1</autoTrack>
 		<award>MONEY,10000</award>
-		<need_level>1</need_level>
-		<check_now>0</check_now>
+		<requiredLevel>1</requiredLevel>
+		<checkNow>0</checkNow>
 	</task>
 </tasks>

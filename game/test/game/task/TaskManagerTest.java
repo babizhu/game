@@ -90,7 +90,7 @@ public class TaskManagerTest {
 		code = manager.acceptTask( (short) 10001 );
 		assertEquals( ErrorCode.LEVEL_NOT_ENOUGH, code );//接一个新任务,报等级不够
 		
-		user.setLevel( TaskTempletCfg.getTempletById( (short) 10001 ).getNeedLevel() );//赋值合适的用户等级
+		user.setLevel( TaskTempletCfg.getTempletById( (short) 10001 ).getRequiredLevel() );//赋值合适的用户等级
 		
 		code = manager.acceptTask( (short) 10001 );
 		assertEquals( ErrorCode.SUCCESS, code );//成功接一个任务
@@ -108,7 +108,7 @@ public class TaskManagerTest {
 		assertEquals( ErrorCode.SUCCESS, code );
 		assertEquals( TaskStatus.NO_REWARD, manager.getTaskCopyByTempletId((short) 10003).getStatus() );//检测该任务是否完成
 		
-		user.setLevel( TaskTempletCfg.getTempletById( (short) 10004 ).getNeedLevel() );//赋值合适的用户等级
+		user.setLevel( TaskTempletCfg.getTempletById( (short) 10004 ).getRequiredLevel() );//赋值合适的用户等级
 		manager.acceptTask( (short) 10004 );//顺便接10004任务，方便TaskAcceptPackageTest类测试
 		/********************************************************测试一接就完成的任务************************************************/
 		
@@ -154,10 +154,10 @@ public class TaskManagerTest {
 		init();
 		manager.doTask( TaskType.DIRECT, 10000 );//做一个直接完成任务，此任务拥有2个后继任务，都属于DIRECT任务
 		
-		user.setLevel( TaskTempletCfg.getTempletById( (short) 10001 ).getNeedLevel() );//赋值合适的用户等级
+		user.setLevel( TaskTempletCfg.getTempletById( (short) 10001 ).getRequiredLevel() );//赋值合适的用户等级
 		//分别接这两个后继任务
 		manager.acceptTask( (short) 10001 );
-		user.setLevel( TaskTempletCfg.getTempletById( (short) 10002 ).getNeedLevel() );//赋值合适的用户等级
+		user.setLevel( TaskTempletCfg.getTempletById( (short) 10002 ).getRequiredLevel() );//赋值合适的用户等级
 		manager.acceptTask( (short) 10002 );
 		//System.out.println( manager );
 		manager.doTask( TaskType.DIRECT, 10002 );

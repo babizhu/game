@@ -151,7 +151,7 @@ public  class BaseTask implements ITask{
 	 */
 	@Override
 	public ErrorCode acceptTask( UserInfo user ) {
-		if( user.getLevel() < getTemplet().getNeedLevel() ){
+		if( user.getLevel() < getTemplet().getRequiredLevel() ){
 			return ErrorCode.LEVEL_NOT_ENOUGH;
 		}
 		if( getStatus() != TaskStatus.CAN_ACCEPT ){

@@ -52,22 +52,25 @@ public class TaskTempletCfg {
 				
 				Element element = (Element) taskList.get( i );
 				//System.out.println( element.getChildText( "name" ) );
-				TaskType type = TaskType.valueOf( element.getChildText( "task_type" ) );
+				TaskType type = TaskType.valueOf( element.getChildText( "taskType" ) );
 				BaseTaskTemplet templet = type.createNewTemplet();
-				templet.setTempletId( Short.parseShort( element.getChildText( "id" ) ) );
+				templet.setTempletId( Short.parseShort( element.getChildText( "templetId" ) ) );
 				templet.setSuccessorTempletId( element.getChildText( "successor" ) );
 				templet.setName( element.getChildText( "name" ) );
-				templet.setTaskProperty( TaskProperty.valueOf( element.getChildText( "task_prop" ) ) );
+				templet.setTaskProperty( TaskProperty.valueOf( element.getChildText( "taskProp" ) ) );
 				templet.parseParam( element.getChildText( "param" ) );
-				templet.setNeedLevel( Byte.parseByte( element.getChildText( "need_level" ) ) );
-				String checkNow = element.getChildText( "check_now" );
+				templet.setRequiredLevel( Short.parseShort( element.getChildText( "requiredLevel" ) ) );
+				String checkNow = element.getChildText( "checkNow" );
 				templet.setCheckNow( ( checkNow.isEmpty() || checkNow.equals( "0" ) ? false : true ) );
 				
 				/*******************关闭打印****************************
 							System.out.println( templet );
 				********************************************************/
 				
-				taskTemplets.put( templet.getTempletId(), templet );
+				BaseTaskTemplet bt = taskTemplets.put( templet.getTempletId(), templet );
+				if( bt != null ){
+					throw new RuntimeException( "任务" + templet.getTempletId() + "重复了" );
+				}
 				
 			}
 		} catch (JDOMException e) {
@@ -76,12 +79,7 @@ public class TaskTempletCfg {
 			e.printStackTrace();
 		}   
 		
-		
-
-		   
-		
 		buildSuccessorTemplet();
-		
 	}
 	
 	/**

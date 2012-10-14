@@ -48,7 +48,7 @@ public enum Packages {
 	
 	/*********************************背包系统******************************************/
 	
-	
+	/*********************************测试系统******************************************/
 	DEAD_LOCK_TEST						( 30000, 	new DeadLockTestPackage() ); 
 		
 	private final short 			number;
@@ -67,7 +67,7 @@ public enum Packages {
 			
 			Packages p = numToEnum.put( a.number, a );
 			if( p != null ){
-				throw new RuntimeException( a.number + "重复了" );
+				throw new RuntimeException( "通信包" + a.number + "重复了" );
 			}
 		}
 	}

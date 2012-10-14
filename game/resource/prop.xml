@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--道具配置表-->
+
+<items>
+	<prop>
+		<templetId>10000</templetId>
+		<propType>STUFF</propType>
+		<name>黄金碎片</name>
+		<requiredLevel>1</requiredLevel>
+		<stackCap>100</stackCap>
+		<buyBack>300</buyBack>
+        <desc>可以用来打造黄金圣甲</desc>
+		<path>z3080001|603|5</path>		
+	</prop>	
+	<prop>
+		<templetId>18000</templetId>
+		<propType>EQUIPMENT</propType>
+		<name>五彩头盔</name>
+		<requiredLevel>1</requiredLevel>
+		<stackCap>1</stackCap>
+		<buyBack>3000</buyBack>
+        <desc>可以用来打造黄金圣甲</desc>
+		<path>z3080001|603|5</path>		
+		<upNum>30</upNum>
+		
+	</prop>
+	<prop>
+		<templetId>19000</templetId>
+		<propType>EQUIPMENT</propType>
+		<name>五彩头盔</name>
+		<requiredLevel>1</requiredLevel>
+		<stackCap>1</stackCap>
+		<buyBack>30000</buyBack>
+        <desc>可以用来打造黄金圣甲</desc>
+		<path>z3080001|603|5</path>
+		<upNum>300</upNum>
+		
+	</prop>
+	
+</items>

@@ -1,11 +1,13 @@
 package game.prop.cfg;
 
-public class BasePropTemplet {
+import org.jdom2.Element;
+
+public abstract class BasePropTemplet {
 	
 	/**
-	 * 道具类型id
+	 * 道具模版id
 	 */
-	private int 		typeId;
+	private short 		templetId;
 	
 	/**
 	 * 道具名称
@@ -21,13 +23,19 @@ public class BasePropTemplet {
 	 * 背包格子内叠加上限
 	 */
 	private short		stackCap;
+	
+	/**
+	 * 系统回购价格
+	 * @return
+	 */
+	private int			buyBack;
 
-	public int getTypeId() {
-		return typeId;
+	public short getTempletId() {
+		return templetId;
 	}
 
-	public void setTypeId( int typeId ) {
-		this.typeId = typeId;
+	public void setTempletId( short templetId ) {
+		this.templetId = templetId;
 	}
 
 	public String getName() {
@@ -55,5 +63,33 @@ public class BasePropTemplet {
 	}
 	
 	
+	public int getBuyBack() {
+		return buyBack;
+	}
+
+	public void setBuyBack(int buyBack) {
+		this.buyBack = buyBack;
+	}
+
+	/**
+	 * 根据不同的道具类型调用相应的道具解析函数
+	 * @param element
+	 * @return
+	 */
+	public void parse( Element element ){
+		setTempletId( Short.parseShort( element.getChildText( "templetId" ) ) );
+		setName( element.getChildText( "name" ) );
+		setStackCap( Short.parseShort( element.getChildText( "stackCap" ) ) );
+		setRequiredLevel( Short.parseShort( element.getChildText( "requiredLevel" ) ) );
+		setBuyBack( Integer.parseInt( element.getChildText( "buyBack" ) ) );
+	}
+
+	@Override
+	public String toString() {
+		return "BasePropTemplet [templetId=" + templetId + ", name=" + name
+				+ ", requiredLevel=" + requiredLevel + ", stackCap=" + stackCap
+				+ ", buyBack=" + buyBack + "]";
+	}
+
 
 }

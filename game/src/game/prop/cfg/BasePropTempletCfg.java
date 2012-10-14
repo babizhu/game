@@ -1,8 +1,6 @@
 package game.prop.cfg;
 
-import game.task.enums.TaskProperty;
-import game.task.enums.TaskType;
-import game.task.templet.BaseTaskTemplet;
+import game.prop.enums.PropType;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,10 +14,10 @@ import org.jdom2.input.SAXBuilder;
 
 public class BasePropTempletCfg {
 	
-	private static final Map<Integer,BasePropTemplet> propTemplets;	
-	private static final String FILE = "resource/task.xml";
+	private static final Map<Short,BasePropTemplet> propTemplets;	
+	private static final String FILE = "resource/prop.xml";
 	static{
-		propTemplets = new HashMap<Integer,BasePropTemplet>();
+		propTemplets = new HashMap<Short,BasePropTemplet>();
 		init();
 		
 	}
@@ -34,28 +32,24 @@ public class BasePropTempletCfg {
 		try {
 			document = builder.build( FILE );
 			Element root = document.getRootElement();  
-			List<?> taskList= root.getChildren( "task" ); 
+			List<?> taskList= root.getChildren( "prop" ); 
 			
 			for( int i = 0; i < taskList.size(); i++ ){
 				
 				Element element = (Element) taskList.get( i );
 				//System.out.println( element.getChildText( "name" ) );
-				TaskType type = TaskType.valueOf( element.getChildText( "task_type" ) );
-				BaseTaskTemplet templet = type.createNewTemplet();
-				templet.setTempletId( Short.parseShort( element.getChildText( "id" ) ) );
-				templet.setSuccessorTempletId( element.getChildText( "successor" ) );
-				templet.setName( element.getChildText( "name" ) );
-				templet.setTaskProperty( TaskProperty.valueOf( element.getChildText( "task_prop" ) ) );
-				templet.parseParam( element.getChildText( "param" ) );
-				templet.setNeedLevel( Byte.parseByte( element.getChildText( "need_level" ) ) );
-				String checkNow = element.getChildText( "check_now" );
-				templet.setCheckNow( ( checkNow.isEmpty() || checkNow.equals( "0" ) ? false : true ) );
+				PropType type = PropType.valueOf( element.getChildText( "propType" ) );
+				BasePropTemplet templet = type.createNewTemplet();
+				templet.parse( element );
 				
 				/*******************关闭打印****************************
 							System.out.println( templet );
 				********************************************************/
 				
-				//taskTemplets.put( templet.getTempletId(), templet );
+				BasePropTemplet bpt = propTemplets.put( templet.getTempletId(), templet );
+				if( bpt != null ){
+					throw new RuntimeException( "道具" + templet.getTempletId() + "重复了" );
+				}
 				
 			}
 		} catch (JDOMException e) {
@@ -66,14 +60,18 @@ public class BasePropTempletCfg {
 	}
 		
 	
+	
 	/**
 	 * 通过模板id获取模板
 	 * @param templetId
 	 * @return
 	 */
-	public static BasePropTemplet getTempletById( int id ){
-		return propTemplets.get( id );
+	public static BasePropTemplet getTempletById( int templetId ){
+		return propTemplets.get( templetId );
 	}
 	
+	public static void main(String[] args) {
+		System.out.println( propTemplets );
+	}
 
 }

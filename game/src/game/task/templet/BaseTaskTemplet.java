@@ -12,7 +12,7 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 	/**
 	 * 接此任务所需要的等级
 	 */
-	byte				needLevel;
+	short				requiredLevel;
 	
 	/**
 	 * 任务名称
@@ -145,19 +145,19 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 	
 	
 
-	public byte getNeedLevel () {
-		return needLevel;
+	public short getRequiredLevel () {
+		return requiredLevel;
 	}
 
-	public void setNeedLevel ( byte needLevel ) {
-		this.needLevel = needLevel;
+	public void setRequiredLevel ( short requiredLevel ) {
+		this.requiredLevel = requiredLevel;
 	}
 
 	@Override
 	public String toString() {
 		return "BaseTaskTemplet [name=" + name + ", type=" + taskType
 				+ ", templetId=" + templetId + ", taskProperty=" + taskProperty
-				+ ", needLevel=" + needLevel
+				+ ", requiredLevel=" + requiredLevel
 				+ ", checkNow=" + checkNow
 				+ ", successorTempletId=" + Arrays.toString(successorTempletId)
 				+ ", successorTemplet="
