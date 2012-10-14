@@ -1,6 +1,8 @@
 package game.prop.cfg;
 
+
 import org.jdom2.Element;
+
 
 public abstract class BasePropTemplet {
 	
@@ -90,6 +92,7 @@ public abstract class BasePropTemplet {
 				+ ", requiredLevel=" + requiredLevel + ", stackCap=" + stackCap
 				+ ", buyBack=" + buyBack + "]";
 	}
+
 
 
 }
