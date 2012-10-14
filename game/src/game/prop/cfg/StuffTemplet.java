@@ -1,6 +1,5 @@
 package game.prop.cfg;
 
-
 import org.jdom2.Element;
 
 public class StuffTemplet extends BasePropTemplet {
@@ -11,7 +10,6 @@ public class StuffTemplet extends BasePropTemplet {
 	@Override
 	public void parse(Element element) {
 		super.parse( element );
-
 	}
 
 }
