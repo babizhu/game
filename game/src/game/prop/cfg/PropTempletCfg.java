@@ -13,7 +13,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-public class BasePropTempletCfg {
+public class PropTempletCfg {
 	
 	private static final Map<Short,BasePropTemplet> propTemplets = new HashMap<Short,BasePropTemplet>();
 	private static final String FILE = "resource/prop.xml";

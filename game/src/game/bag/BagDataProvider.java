@@ -1,6 +1,6 @@
 package game.bag;
 
-import game.prop.cfg.BasePropTempletCfg;
+import game.prop.cfg.PropTempletCfg;
 import game.prop.templet.BasePropTemplet;
 
 import java.sql.Connection;
@@ -65,7 +65,7 @@ class BagDataProvider {
 	private BaseGrid mapping(ResultSet rs) throws SQLException {
 		
 		short tid = rs.getShort( "templet_id" );
-		BasePropTemplet templet = BasePropTempletCfg.getTempletById( tid );
+		BasePropTemplet templet = PropTempletCfg.getTempletById( tid );
 		if( templet == null ){
 			throw new IllegalAddException( "道具模板不存在 " + tid );
 		}

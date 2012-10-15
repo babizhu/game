@@ -2,7 +2,7 @@
  * 
  */
 package net;
-import game.prop.cfg.BasePropTempletCfg;
+import game.prop.cfg.PropTempletCfg;
 import game.task.cfg.TaskTempletCfg;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class GameServer extends Server{
 	 * 初始化系统配置文件
 	 */
 	private void readCfg(){
-		BasePropTempletCfg.init();
+		PropTempletCfg.init();
 		TaskTempletCfg.init();
 	}
 	public static void main(String[] args) throws IOException, JMException {
