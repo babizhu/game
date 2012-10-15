@@ -56,7 +56,7 @@ class BagDataProvider {
 		} catch (SQLException e) {
 			logger.debug( e.getLocalizedMessage(), e );
 		}
-		finally{			
+		finally{
 			DatabaseUtil.close( rs, pst, con );
 		}
 		return list;

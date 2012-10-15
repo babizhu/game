@@ -3,10 +3,7 @@
  */
 package game.prop.enums;
 
-import game.prop.cfg.*;
-import game.prop.templet.BasePropTemplet;
-import game.prop.templet.EquipmentTemplet;
-import game.prop.templet.StuffTemplet;
+import game.prop.templet.*;
 
 /**
  * @author liukun

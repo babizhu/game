@@ -36,7 +36,7 @@ class TaskDataProvider {
 	 * @return
 	 * 		DB_ERROR,USER_NOT_FOUND
 	 */
-	ConcurrentHashMap<Short,BaseTask> getActiveTasksByName( String uname ) {
+	ConcurrentHashMap<Short,BaseTask> getActiveTasksByUser( String uname ) {
 		
 		ConcurrentHashMap<Short,BaseTask> map = new ConcurrentHashMap<Short, BaseTask>();
 		

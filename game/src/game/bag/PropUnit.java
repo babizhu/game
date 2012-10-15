@@ -1,6 +1,5 @@
 package game.bag;
 
-import game.prop.IProp;
 
 /**
  * 单纯的bean信息，存放一些函数之间传递的参数--道具及数量
@@ -12,39 +11,33 @@ public class PropUnit {
 	/**
 	 * 道具ID
 	 */
-	private IProp	prop;
+	private final short 		templetId;
 	
 	/**
 	 * 道具数量
 	 */
-	private short	count;
+	private final short	count;
 	
 	
-	public PropUnit( IProp prop, short count ) {
-		this.prop = prop;
+	public PropUnit( short templetId, short count ) {
+		this.templetId = templetId;
 		this.count = count;
 	}
 	
-	public IProp getProp() {
-		return prop;
+	public short getTempletId() {
+		return templetId;
 	}
 
-
-
-	public void setProp(IProp prop) {
-		this.prop = prop;
-	}
-
-
+//	public void setTempletId(short templetId) {
+//		this.templetId = templetId;
+//	}
 
 	public short getCount() {
 		return count;
 	}
-
-
-
-	public void setCount(short count) {
-		this.count = count;
-	}
+//
+//	public void setCount(short count) {
+//		this.count = count;
+//	}
 
 }

@@ -2,6 +2,8 @@ package game.bag;
 
 import java.util.Set;
 
+import util.ErrorCode;
+
 /**
  * 背包系统<br>
  * 系统需求<br>
@@ -26,7 +28,7 @@ public interface IBag {
 	 *			 有变化的格子列表
 	 * 
 	 */
-	Set<IGrid> remove( PropUnit unit );
+	ErrorCode remove( PropUnit unit );
 	
 	/**
 	 * 批量删除道具，通常用于合成物品，必须保证所有的材料都存在的时候才开始扣除，有如下约定：<br>
@@ -38,7 +40,7 @@ public interface IBag {
 	 * 			有变化的格子列表
 	 * 
 	 */
-	Set<IGrid> remove( PropUnit[] units  );
+	Set<BaseGrid> remove( PropUnit[] units  );
 
 	/**
 	 * 添加单个道具到背包
@@ -49,7 +51,7 @@ public interface IBag {
 	 * @return
 	 * 			有变化的格子列表
 	 */
-	Set<IGrid> put( PropUnit unit );
+	Set<BaseGrid> put( PropUnit unit );
 	
 	/**
 	 * 添加多个道具到背包
@@ -60,7 +62,7 @@ public interface IBag {
 	 * @return
 	 * 			有变化的格子列表
 	 */
-	Set<IGrid> put( PropUnit[] units );
+	Set<BaseGrid> put( PropUnit[] units );
 	
 	/**
 	 * 整理格子
