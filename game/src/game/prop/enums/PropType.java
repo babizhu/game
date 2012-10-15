@@ -4,6 +4,9 @@
 package game.prop.enums;
 
 import game.prop.cfg.*;
+import game.prop.templet.BasePropTemplet;
+import game.prop.templet.EquipmentTemplet;
+import game.prop.templet.StuffTemplet;
 
 /**
  * @author liukun

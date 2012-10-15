@@ -1,6 +1,6 @@
 package game.prop;
 
-import game.prop.cfg.BasePropTemplet;
+import game.prop.templet.BasePropTemplet;
 
 public interface IProp {
 	

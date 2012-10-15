@@ -1,4 +1,4 @@
-package game.prop.cfg;
+package game.prop.templet;
 
 
 import org.jdom2.Element;

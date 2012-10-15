@@ -1,6 +1,7 @@
 package game.prop.cfg;
 
 import game.prop.enums.PropType;
+import game.prop.templet.BasePropTemplet;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,18 +15,16 @@ import org.jdom2.input.SAXBuilder;
 
 public class BasePropTempletCfg {
 	
-	private static final Map<Short,BasePropTemplet> propTemplets;	
+	private static final Map<Short,BasePropTemplet> propTemplets = new HashMap<Short,BasePropTemplet>();
 	private static final String FILE = "resource/prop.xml";
 	static{
-		propTemplets = new HashMap<Short,BasePropTemplet>();
-		init();
-		
+		//init();		
 	}
 	
 	/**
 	 * 通过配置表读取道具模板
 	 */
-	private static void init(){
+	public static void init(){
 		
 		SAXBuilder builder = new SAXBuilder();    
 		Document document;
@@ -57,6 +56,7 @@ public class BasePropTempletCfg {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
+		System.out.println( "道具配置文件解析完毕" );
 	}
 			
 	
@@ -70,6 +70,7 @@ public class BasePropTempletCfg {
 	}
 	
 	public static void main(String[] args) {
+		init();
 		System.out.println( propTemplets );
 	}
 

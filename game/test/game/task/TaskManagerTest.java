@@ -20,6 +20,9 @@ public class TaskManagerTest {
 	UserInfo user = new UserInfo( null, "bbz" + new Random().nextInt( 100000) );
 	
 	TaskManager manager = new TaskManager( user );
+	static{
+		TaskTempletCfg.init();
+	}
 	
 	
 	/**

@@ -1,7 +1,7 @@
 package game.bag;
 
-import game.prop.cfg.BasePropTemplet;
 import game.prop.cfg.BasePropTempletCfg;
+import game.prop.templet.BasePropTemplet;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

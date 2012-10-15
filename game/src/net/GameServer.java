@@ -2,6 +2,9 @@
  * 
  */
 package net;
+import game.prop.cfg.BasePropTempletCfg;
+import game.task.cfg.TaskTempletCfg;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -37,6 +40,13 @@ public class GameServer extends Server{
 		setIdleTimeoutMillis( 1000000000 );
 	}
 
+	/**
+	 * 初始化系统配置文件
+	 */
+	private void readCfg(){
+		BasePropTempletCfg.init();
+		TaskTempletCfg.init();
+	}
 	public static void main(String[] args) throws IOException, JMException {
 		
 		System.out.println("编码集= "+System.getProperty("file.encoding"));
@@ -45,14 +55,15 @@ public class GameServer extends Server{
 		System.out.println( BaseUtil.secondsToDateStr( SystemTimer.currentTimeSecond() ) + " server start now..." );
         System.out.println( BaseUtil.secondsToDateStr( SystemTimer.currentTimeSecond() ) + " game version: " + SystemCfg.VERSION );        
 		
+        
         InetAddress address = InetAddress.getByName( "localhost" );
 		
 		GameServer server = new GameServer( address, SystemCfg.PORT, new GameHandler() );
-		
-		ConnectionUtils.registerMBean( server );   
+		server.readCfg();
 
 		
 		server.start();
+		ConnectionUtils.registerMBean( server );   
 		
         //System.out.println( "日志: " + server.getStartUpLogMessage() );
 //		Map<String, Class> maps = server.getOptions();   

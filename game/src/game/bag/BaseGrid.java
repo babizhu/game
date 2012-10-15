@@ -1,6 +1,6 @@
 package game.bag;
 
-import game.prop.cfg.BasePropTemplet;
+import game.prop.templet.BasePropTemplet;
 
 public class BaseGrid implements IGrid {
 	

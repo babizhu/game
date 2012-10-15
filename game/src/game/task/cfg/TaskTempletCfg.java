@@ -22,11 +22,10 @@ import org.jdom2.input.SAXBuilder;
  *
  */
 public class TaskTempletCfg {
-	private static final Map<Short,BaseTaskTemplet> taskTemplets;
+	private static final Map<Short,BaseTaskTemplet> taskTemplets = new HashMap<Short, BaseTaskTemplet>();
 	
 	static{
-		taskTemplets = new HashMap<Short, BaseTaskTemplet>();
-		init();
+		
 		
 	}
 	private static final String FILE = "resource/task.xml";
@@ -39,7 +38,7 @@ public class TaskTempletCfg {
 	/**
 	 * 通过配置表读取任务模板
 	 */
-	private static void init(){
+	public static void init(){
 		
 		SAXBuilder builder = new SAXBuilder();    
 		Document document;
@@ -80,6 +79,8 @@ public class TaskTempletCfg {
 		}   
 		
 		buildSuccessorTemplet();
+		
+		System.out.println( "任务配置文件解析完毕" );
 	}
 	
 	/**
@@ -99,6 +100,7 @@ public class TaskTempletCfg {
 		return taskTemplets.get( templetId );
 	}
 	public static void main(String[] args) {
+		init();
 		short id = 10001;
 		System.out.println( TaskTempletCfg.getTempletById( id ) );
 	}
