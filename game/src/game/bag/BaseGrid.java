@@ -5,6 +5,11 @@ import game.prop.templet.BasePropTemplet;
 public class BaseGrid implements IGrid {
 	
 	/**
+	 * 格子所在背包的位置
+	 */
+	private short				position;
+	
+	/**
 	 * 道具的类型模板
 	 */
 	private	BasePropTemplet		templet;
@@ -17,16 +22,25 @@ public class BaseGrid implements IGrid {
 	/**
 	 * 当前格子拥有的物品数量
 	 */
-	private	int					count;
+	private	short				count;
 
+	/**
+	 * 格子是否被修改过，如果修改过则此格子的信息有必要发送至客户端同步信息
+	 */
+	private boolean				isModify = false;
 	
-	public BaseGrid(BasePropTemplet templet, long propId, int count) {
+	public BaseGrid(BasePropTemplet templet, long propId, short count, short position ) {
 		super();
 		this.templet = templet;
 		this.propId = propId;
 		this.count = count;
+		this.position = position;
 	}
 
+	public short getPosition(){
+		return position;
+	}
+	
 	public BasePropTemplet getTemplet() {
 		return templet;
 	}
@@ -43,12 +57,33 @@ public class BaseGrid implements IGrid {
 		this.propId = propId;
 	}
 
-	public int getCount() {
+	public short getCount() {
 		return count;
 	}
 
-	public void setCount(int count) {
+	public void setCount(short count) {
 		this.count = count;
+	}
+
+	public boolean isModify() {
+		return isModify;
+	}
+
+	public void setModify(boolean isModify) {
+		this.isModify = isModify;
+	}
+
+	/**
+	 * 扣除此格子中的道具
+	 * 如果要扣除的道具数量比实际情况多，则扣到0为止
+	 * @param needCount
+	 * @return
+	 */
+	public int remove( int needCount ) {
+		int realCount = count > needCount ? needCount : count;
+		count -= needCount;
+		isModify = true;
+		return realCount;
 	}
 	
 	

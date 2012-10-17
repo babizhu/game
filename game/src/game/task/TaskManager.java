@@ -39,7 +39,7 @@ public class TaskManager {
 	public TaskManager( UserInfo user ) {
 		super();
 		this.user = user;
-		tasks = db.getActiveTasksByName( user.getName() );
+		tasks = db.getActiveTasksByUser( user.getName() );
 	}
 	
 	/**

@@ -24,7 +24,7 @@ public abstract class BasePropTemplet {
 	/**
 	 * 背包格子内叠加上限
 	 */
-	private short		stackCap;
+	private short		stackCapacity;
 	
 	/**
 	 * 系统回购价格
@@ -56,12 +56,12 @@ public abstract class BasePropTemplet {
 		this.requiredLevel = requiredLevel;
 	}
 
-	public short getStackCap() {
-		return stackCap;
+	public short getStackCapacity() {
+		return stackCapacity;
 	}
 
-	public void setStackCap(short stackCap) {
-		this.stackCap = stackCap;
+	public void setStackCapacity(short stackCapacity) {
+		this.stackCapacity = stackCapacity;
 	}
 	
 	
@@ -81,7 +81,7 @@ public abstract class BasePropTemplet {
 	public void parse( Element element ){
 		setTempletId( Short.parseShort( element.getChildText( "templetId" ) ) );
 		setName( element.getChildText( "name" ) );
-		setStackCap( Short.parseShort( element.getChildText( "stackCap" ) ) );
+		setStackCapacity( Short.parseShort( element.getChildText( "stackCap" ) ) );
 		setRequiredLevel( Short.parseShort( element.getChildText( "requiredLevel" ) ) );
 		setBuyBack( Integer.parseInt( element.getChildText( "buyBack" ) ) );
 	}
@@ -89,7 +89,7 @@ public abstract class BasePropTemplet {
 	@Override
 	public String toString() {
 		return "BasePropTemplet [templetId=" + templetId + ", name=" + name
-				+ ", requiredLevel=" + requiredLevel + ", stackCap=" + stackCap
+				+ ", requiredLevel=" + requiredLevel + ", stackCap=" + stackCapacity
 				+ ", buyBack=" + buyBack + "]";
 	}
 

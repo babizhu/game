@@ -1,6 +1,6 @@
 package game.bag;
 
-import java.util.Set;
+import util.ErrorCode;
 
 /**
  * 背包系统<br>
@@ -14,23 +14,26 @@ import java.util.Set;
  * @author liukun
  * 2012-9-27 下午04:50:19
  */
-public interface IBag {	
+public interface IBag {
+	
+	
 	/**
-	 * 获取count个类型为typeid的道具，并且从格子中删除它
-	 * 策略：要么全放，要么全不放
-	 * 返回null，意味删除失败<br>
+	 * 从背包中移除count个类型为typeid的装备，或1个指定propId的道具<br><br>
+	 * 特别考虑要移除的是装备，但是并未指定propId的情况(从背包中根据图纸合成某个道具)：<br>
+	 * 这种情况，请设置unit的propId为0即可<br><br>
+	 * 策略：要么全移除，要么全不移除<br>
 	 * 
-	 * @param 		unit		移除的内容
+	 * @param 		unit		要移除的内容
 	 * 
 	 * @return
 	 *			 有变化的格子列表
 	 * 
 	 */
-	Set<IGrid> remove( PropUnit unit );
+	ErrorCode remove( PropUnit unit );
 	
 	/**
-	 * 批量删除道具，通常用于合成物品，必须保证所有的材料都存在的时候才开始扣除，有如下约定：<br>
-	 * 策略：要么全放，要么全不放
+	 * 批量删除道具，通常用于合成物品，必须保证所有的材料都存在的时候才开始扣除<br>
+	 * 策略：要么全移除，要么全不移除<br>
 	 * 返回null，意味删除失败<br>
 	 * 
 	 * @param units		为一个数组
@@ -38,29 +41,26 @@ public interface IBag {
 	 * 			有变化的格子列表
 	 * 
 	 */
-	Set<IGrid> remove( PropUnit[] units  );
+	ErrorCode remove( PropUnit[] units  );
 
 	/**
-	 * 添加单个道具到背包
-	 * 策略：要么全放，要么全不放
-	 * 返回null，意味添加失败<br>
+	 * 添加单个道具到背包<br>
+	 * 策略：要么全放，要么全不放<br>
 	 * 
 	 * @param 		unit
 	 * @return
-	 * 			有变化的格子列表
 	 */
-	Set<IGrid> put( PropUnit unit );
+	ErrorCode put( PropUnit unit );
 	
 	/**
-	 * 添加多个道具到背包
-	 * 策略：要么全放，要么全不放
-	 * 返回null，意味添加失败<br>
+	 * 添加多个道具到背包<br>
+	 * 策略：要么全放，要么全不放<br>
 	 * 
 	 * @param 		units
 	 * @return
-	 * 			有变化的格子列表
+	 * 			
 	 */
-	Set<IGrid> put( PropUnit[] units );
+	ErrorCode put( PropUnit[] units );
 	
 	/**
 	 * 整理格子

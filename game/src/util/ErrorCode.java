@@ -26,6 +26,10 @@ public enum ErrorCode {
 	
 	PACKAGE_SAFE_CHECK_FAIL("包的安全检测失败，用户短时间内发送大量相同的数据包到服务器端"),
 	
+	PROP_NOT_ENOUGH("道具数量不足"),
+	
+	GRID_NOT_ENOUGH( "空闲格子不足"),
+	
 	DB_ERROR("数据库错误"),
 	
 	UNKNOW_ERROR("未知错误");

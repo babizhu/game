@@ -36,7 +36,7 @@ class TaskDataProvider {
 	 * @return
 	 * 		DB_ERROR,USER_NOT_FOUND
 	 */
-	ConcurrentHashMap<Short,BaseTask> getActiveTasksByName( String uname ) {
+	ConcurrentHashMap<Short,BaseTask> getActiveTasksByUser( String uname ) {
 		
 		ConcurrentHashMap<Short,BaseTask> map = new ConcurrentHashMap<Short, BaseTask>();
 		
@@ -98,11 +98,12 @@ class TaskDataProvider {
 		int	i = 1;
 		try {
 			pst = con.prepareStatement( sql );
+			
 			pst.setString( i++, uname );
-			short s = task.getTemplet().getTempletId();
-			pst.setShort( i++, s );
+			pst.setShort( i++, task.getTemplet().getTempletId() );
 			pst.setInt( i++, task.getAcceptSec());
 			pst.setString( i++, task.getParam() == null ? "" : task.getParam().toString() );
+			
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			logger.debug( e.getLocalizedMessage(), e );
@@ -135,6 +136,7 @@ class TaskDataProvider {
 		int	i = 1;
 		try {
 			pst = con.prepareStatement( sql );
+			
 			pst.setInt( i++, task.getAcceptSec() );
 			pst.setInt( i++, task.getDoneSec() );
 			pst.setInt( i++, task.getAcceptAwardSec() );
@@ -142,6 +144,7 @@ class TaskDataProvider {
 			pst.setByte( i++, task.getStatus().toNum() );
 			pst.setShort( i++, task.getTemplet().getTempletId() );
 			pst.setString( i++, uname );
+			
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			logger.debug( e.getLocalizedMessage(), e );
