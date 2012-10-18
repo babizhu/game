@@ -1,5 +1,6 @@
 package game.bag;
 
+
 import game.prop.templet.BasePropTemplet;
 
 
@@ -14,23 +15,27 @@ public class PropUnit {
 	/**
 	 * 道具模板
 	 */
+
 	private final BasePropTemplet 	templet;
+
 	
 	/**
 	 * 道具数量
 	 */
-	private final short				count;
+
+	private final short	count;
+
 	
 	
+
 	public PropUnit( BasePropTemplet templet, short count, long propId ) {
 		this.templet = templet;
+
 		this.count = count;
 		this.propId = propId;
 	}
 	
-	public BasePropTemplet getTemplet() {
-		return templet;
-	}
+
 
 //	public void setTempletId(short templetId) {
 //		this.templetId = templetId;
@@ -39,10 +44,20 @@ public class PropUnit {
 	public short getCount() {
 		return count;
 	}
+
 	
 	public long getPropId() {
 		return propId;
 	}
+
+
+
+	public BasePropTemplet getTemplet() {
+		return templet;
+	}
+	
+	
+
 //
 //	public void setCount(short count) {
 //		this.count = count;

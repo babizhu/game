@@ -1,5 +1,7 @@
 package game.bag;
 
+import com.alibaba.druid.mock.MockArray;
+
 import game.prop.templet.BasePropTemplet;
 
 public class BaseGrid implements IGrid {
@@ -81,6 +83,7 @@ public class BaseGrid implements IGrid {
 	 */
 	public int remove( int needCount ) {
 		int realCount = count > needCount ? needCount : count;
+
 		count -= needCount;
 		isModify = true;
 		return realCount;
