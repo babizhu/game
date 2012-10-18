@@ -1,6 +1,5 @@
 package game.bag;
 
-import game.prop.templet.BasePropTemplet;
 import java.util.List;
 
 import user.UserInfo;
@@ -105,6 +104,7 @@ public class Bag implements IBag {
 	}
 	@Override
 	public ErrorCode remove(PropUnit[] units) {
+		return null;
 		
 	}
 
@@ -152,7 +152,7 @@ public class Bag implements IBag {
 	private boolean canPut( PropUnit unit ){
 		int free = 0;
 		for( BaseGrid g : grids ){
-			if( g.getTemplet() == unit.getProp().getTemplet() ){
+			if( g.getTemplet() == unit.getTemplet() ){
 				free += g.getTemplet().getStackCapacity() - g.getCount();
 			}
 			if( free >= unit.getCount() ){
@@ -161,7 +161,7 @@ public class Bag implements IBag {
 		}
 		int freeGrid = capacity - calcGridCount();//空闲的格子
 		for( int i = 0; i < freeGrid; i++ ){
-			free += unit.getProp().getTemplet().getStackCapacity();
+			free += unit.getTemplet().getStackCapacity();
 			if( free >= unit.getCount() ){
 				return true;
 			}
