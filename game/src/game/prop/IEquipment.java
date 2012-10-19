@@ -1,6 +1,5 @@
-package game.packages;
+package game.prop;
 
-import game.prop.IProp;
 
 public interface IEquipment extends IProp {
 	

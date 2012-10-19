@@ -1,7 +1,8 @@
 package game.fighter;
 
-import game.packages.IEquipment;
 import game.prop.EquipmentManager;
+import game.prop.IEquipment;
+import game.prop.PropManager;
 import game.prop.templet.EquipmentTemplet;
 import util.ErrorCode;
 
@@ -14,12 +15,16 @@ public class BaseFighter implements IFighter {
 	
 	@Override
 	public ErrorCode dress(long oldPropId, long newPropId) {
-		IEquipment equipment = EquipmentManager.getEquipmentById( newPropId );
-		if( equipment == null ){
-			return ErrorCode.PROP_NOT_FOUNTD;
-		}
-		
-		if( canDress( equipment ) == ErrorCode.SUCCESS ){
+//		
+//		IEquipment equipment = EquipmentManager.getEquipmentById( newPropId );
+//		if( equipment == null ){
+//			return ErrorCode.PROP_NOT_FOUNTD;
+//		}
+//		
+//		if( canDress( equipment ) == ErrorCode.SUCCESS ){
+//			
+//		}
+		synchronized ( PropManager.class ) {
 			
 		}
 		return ErrorCode.SUCCESS;

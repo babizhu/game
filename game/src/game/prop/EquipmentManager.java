@@ -1,8 +1,6 @@
 package game.prop;
 
 import game.bag.PropUnit;
-import game.fighter.IFighter;
-import game.packages.IEquipment;
 import util.ErrorCode;
 
 public class EquipmentManager implements IBag {
