@@ -53,7 +53,7 @@ public class UserExitPackageTest extends BasePackageTest {
 			user.setSex( buf.get() );								//性别
 			user.setAdult( buf.get() == 1? true:false  );			//是否成年
 			user.setStrength( buf.getShort()  );					//体力
-			user.changeMoney( buf.getInt(), "parse" );							//金币
+			user.changeCash( buf.getInt(), "UserExitPackageTest.parse" );							//金币
 			user.setLoginCount( buf.getShort() );					//登陆次数
 			user.setCreateTime( buf.getInt() );						//创建时间——秒数
 		}

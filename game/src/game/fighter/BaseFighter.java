@@ -2,7 +2,7 @@ package game.fighter;
 
 import game.prop.EquipmentManager;
 import game.prop.IEquipment;
-import game.prop.PropManager;
+import game.prop.PropDataManager;
 import game.prop.templet.EquipmentTemplet;
 import util.ErrorCode;
 
@@ -24,7 +24,7 @@ public class BaseFighter implements IFighter {
 //		if( canDress( equipment ) == ErrorCode.SUCCESS ){
 //			
 //		}
-		synchronized ( PropManager.class ) {
+		synchronized ( PropDataManager.class ) {
 			
 		}
 		return ErrorCode.SUCCESS;

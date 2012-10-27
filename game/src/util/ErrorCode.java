@@ -18,6 +18,10 @@ public enum ErrorCode {
 	
 	USER_HAS_BAN("玩家被ban，无法登陆"),
 	
+	USER_GOLD_NOT_ENOUTH("金币不足"),
+	
+	USER_CASH_NOT_ENOUTH("现金不足"),
+	
 	TASK_HAS_ACCEPT("无法重复接同一个任务"),
 	
 	TASK_NOT_FOUND("任务没找到"),

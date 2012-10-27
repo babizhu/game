@@ -1,5 +1,7 @@
 package game.prop.templet;
 
+import game.prop.BaseProp;
+
 import org.jdom2.Element;
 
 /***
@@ -38,6 +40,11 @@ public class EquipmentTemplet extends BasePropTemplet{
 		s = s.substring( 0, s.length() - 1 );//去掉"]"
 		return s + ", upNum=" + upNum + "]";
 	}
-	
+
+	@Override
+	public BaseProp createProp() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

@@ -1,6 +1,8 @@
 package game.prop.templet;
 
 
+import game.prop.BaseProp;
+
 import org.jdom2.Element;
 
 
@@ -31,6 +33,16 @@ public abstract class BasePropTemplet {
 	 * @return
 	 */
 	private int			buyBack;
+	
+	/**
+	 * 系统卖出价，单位点券
+	 */
+	private int			priceOfGold;
+	
+	/**
+	 * 系统卖出价，单位现金
+	 */
+	private int			priceOfCash;
 
 	public short getTempletId() {
 		return templetId;
@@ -86,13 +98,33 @@ public abstract class BasePropTemplet {
 		setBuyBack( Integer.parseInt( element.getChildText( "buyBack" ) ) );
 	}
 
+	public int getPriceOfGold() {
+		return priceOfGold;
+	}
+
+	public void setPriceOfGold(int priceOfGold) {
+		this.priceOfGold = priceOfGold;
+	}
+
+	public int getPriceOfCash() {
+		return priceOfCash;
+	}
+
+	public void setPriceOfCash(int priceOfCash) {
+		this.priceOfCash = priceOfCash;
+	}
+
 	@Override
 	public String toString() {
 		return "BasePropTemplet [templetId=" + templetId + ", name=" + name
-				+ ", requiredLevel=" + requiredLevel + ", stackCap=" + stackCapacity
-				+ ", buyBack=" + buyBack + "]";
+				+ ", requiredLevel=" + requiredLevel + ", stackCapacity="
+				+ stackCapacity + ", buyBack=" + buyBack + ", priceOfGold="
+				+ priceOfGold + ", priceOfCash=" + priceOfCash + "]";
 	}
 
+	public abstract BaseProp createProp();
+
+	
 
 
 }
