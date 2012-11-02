@@ -29,7 +29,12 @@ public enum AwardType {
 	/**
 	 * 道具
 	 */
-	PROP(4);
+	PROP(4),
+	
+	/**
+	 * 金币，点券
+	 */
+	GOLD(5);
 
 	private final int number;
 

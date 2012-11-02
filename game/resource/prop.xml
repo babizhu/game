@@ -8,9 +8,13 @@
 		<name>黄金碎片</name>
 		<requiredLevel>1</requiredLevel>
 		<stackCap>100</stackCap>
+		<priceOfCash>100</priceOfCash>
+		<priceOfGold>10</priceOfGold>
 		<buyBack>300</buyBack>
         <desc>可以用来打造黄金圣甲</desc>
-		<path>z3080001|603|5</path>		
+		<path>z3080001|603|5</path>	
+		<open>1</open>
+		<discount>1</discount>
 	</prop>	
 	<prop>
 		<templetId>18000</templetId>
@@ -19,10 +23,13 @@
 		<requiredLevel>1</requiredLevel>
 		<stackCap>1</stackCap>
 		<buyBack>3000</buyBack>
+		<priceOfCash>100</priceOfCash>
+		<priceOfGold>10</priceOfGold>
         <desc>可以用来打造黄金圣甲</desc>
 		<path>z3080001|603|5</path>		
 		<upNum>30</upNum>
-		
+		<open>1</open>
+		<discount>1</discount>
 	</prop>
 	<prop>
 		<templetId>19000</templetId>
@@ -30,11 +37,14 @@
 		<name>五彩头盔</name>
 		<requiredLevel>1</requiredLevel>
 		<stackCap>1</stackCap>
+		<priceOfCash>100</priceOfCash>
+		<priceOfGold>10</priceOfGold>
 		<buyBack>30000</buyBack>
         <desc>可以用来打造黄金圣甲</desc>
 		<path>z3080001|603|5</path>
 		<upNum>300</upNum>
-		
+		<open>1</open>
+		<discount>1</discount>
 	</prop>
 	
 </items>

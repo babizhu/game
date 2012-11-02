@@ -91,7 +91,7 @@ public class TaskManagerTest {
 		
 		/********************************************************测试接任务*********************************************************/
 		code = manager.acceptTask( (short) 10001 );
-		assertEquals( ErrorCode.LEVEL_NOT_ENOUGH, code );//接一个新任务,报等级不够
+		assertEquals( ErrorCode.USER_LEVEL_NOT_ENOUGH, code );//接一个新任务,报等级不够
 		
 		user.setLevel( TaskTempletCfg.getTempletById( (short) 10001 ).getRequiredLevel() );//赋值合适的用户等级
 		
@@ -99,7 +99,7 @@ public class TaskManagerTest {
 		assertEquals( ErrorCode.SUCCESS, code );//成功接一个任务
 		
 		code = manager.acceptTask( (short) 10001 );
-		assertEquals( ErrorCode.TASK_HAS_ACCEPT, code );//反复接同一个任务,报未知错误
+		assertEquals( ErrorCode.TASK_HAS_ACCEPTED, code );//反复接同一个任务,报未知错误
 		
 		
 		/********************************************************测试接任务*********************************************************/

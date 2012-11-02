@@ -115,8 +115,8 @@ public class UserManager {
 	 * @return
 	 * 
 	 */
-	public UserInfo getUserByNickName(String nickName) {
-		String name = db.getNameByNickName(nickName);
+	public UserInfo getUserByNickName( String nickName ) {
+		String name = db.getNameByNickName( nickName );
 		if( name == null ){
 			return null;
 		}
@@ -134,7 +134,7 @@ public class UserManager {
 	 */
 	public ErrorCode packageRun( String name, Packages pack, byte[] data ) throws IOException {
 
-		UserInfo user = getUserByName(name);
+		UserInfo user = getUserByName( name );
 		if( user == null ){
 			return ErrorCode.USER_NOT_FOUND;
 		}

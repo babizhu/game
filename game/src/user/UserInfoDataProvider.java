@@ -78,7 +78,7 @@ public class UserInfoDataProvider {
 				user.setLevel( rs.getShort("level") );
 				user.setNickName( rs.getString("nick_name") );
 				user.setStatus( UserStatus.fromNum( rs.getByte( "status" ) ) );
-				user.changeMoney( rs.getInt( "money" ), "get" );
+				user.changeCash( rs.getInt( "cash" ), "UserInfoDataProvider.get" );
 				user.setStrength( rs.getShort( "strength" ) );
 				user.setAdult( rs.getBoolean( "is_adult" ) ) ;
 				user.setCreateTime( rs.getInt( "create_time" ) );
@@ -145,7 +145,7 @@ public class UserInfoDataProvider {
 		}
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;								  
-		String sql = "insert into user_base(name,nick_name, sex, money, strength,create_time,is_adult) values" +
+		String sql = "insert into user_base(name,nick_name, sex, cash, strength,create_time,is_adult) values" +
 										  "(   ?,	     ?,   ?,	 ?,        ?,          ?,       ?)";
 		int	i = 1;
 		try {
@@ -153,7 +153,7 @@ public class UserInfoDataProvider {
 			pst.setString( i++, user.getName() );
 			pst.setString( i++, user.getNickName() );
 			pst.setByte( i++, user.getSex() );
-			pst.setInt( i++, user.getMoney() );
+			pst.setInt( i++, user.getCash() );
 			pst.setInt( i++, user.getStrength() );
 			pst.setInt( i++, SystemTimer.currentTimeSecond() );
 			pst.setBoolean( i++, user.isAdult() );
@@ -178,7 +178,7 @@ public class UserInfoDataProvider {
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;								  
 		String sql = "update user_base set " +
-				"money = ?," +
+				"cash = ?," +
 				"strength=?," +
 				"level=?," +
 				"status=?," +
@@ -188,7 +188,7 @@ public class UserInfoDataProvider {
 		int	i = 1;
 		try {
 			pst = con.prepareStatement( sql );
-			pst.setInt( i++, user.getMoney() );
+			pst.setInt( i++, user.getCash() );
 			pst.setShort( i++, user.getStrength() );
 			pst.setShort( i++, user.getLevel() );
 			pst.setByte( i++, user.getStatus().toNum() );

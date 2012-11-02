@@ -55,7 +55,7 @@ public class TaskAcceptPackageTest extends BasePackageTest {
 		templetId = 10002;
 		buf = sendPackage( nbc,templetId );
 		code = ErrorCode.values()[buf.getShort()];
-		assertEquals( ErrorCode.TASK_HAS_ACCEPT, code );
+		assertEquals( ErrorCode.TASK_HAS_ACCEPTED, code );
 		/************************已接任务**************************/
 		
 		templetId = -1;
@@ -67,7 +67,7 @@ public class TaskAcceptPackageTest extends BasePackageTest {
 		templetId = 10003;
 		buf = sendPackage( nbc,templetId );
 		code = ErrorCode.values()[buf.getShort()];
-		assertEquals( ErrorCode.TASK_HAS_ACCEPT, code );
+		assertEquals( ErrorCode.TASK_HAS_ACCEPTED, code );
 		/************************已经完成尚未领过奖的任务**************************/
 		
 		templetId = 10000;
@@ -79,7 +79,7 @@ public class TaskAcceptPackageTest extends BasePackageTest {
 		templetId = 10004;
 		buf = sendPackage( nbc,templetId );
 		code = ErrorCode.values()[buf.getShort()];
-		assertEquals( ErrorCode.LEVEL_NOT_ENOUGH, code );
+		assertEquals( ErrorCode.USER_LEVEL_NOT_ENOUGH, code );
 		/************************接一个玩家等级不够的任务**************************/
 		
 		templetId = 10002;

@@ -29,12 +29,10 @@ public enum PropType {
 		public EquipmentTemplet createNewTemplet() {
 			return new EquipmentTemplet();
 		}
-	},;
+	};
 
 	/**
 	 * @return
 	 */
 	public abstract BasePropTemplet createNewTemplet();
-	
-
 }

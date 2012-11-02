@@ -85,6 +85,7 @@ public class StuffPropManager implements IBag  {
 	public static void main(String[] args) {
 		Map<Short,Short> s = new HashMap<Short, Short>();
 		s.put( (short)1,(short)100);
+		Short tt =  s.get((short)10);
 		short t =  s.get((short)10);
 		System.out.println( t);
 		

@@ -49,9 +49,14 @@ public class UserInfo {
 	private UserStatus 									status = UserStatus.GUEST;
 
 	/**
-	 * 金币
+	 * 现金
 	 */
-	private int											money;
+	private int											cash;
+	
+	/**
+	 * 金币，点券
+	 */
+	private int											gold;
 	
 	/**
 	 * 体力
@@ -108,9 +113,14 @@ public class UserInfo {
 	 * 修改体力
 	 * @param change		增加为正数，减少为负数
 	 * @param funcName
-	 * @return				当前体力值
+	* @return 					< 0		体力扣除失败
+	 * 							>=0		当前拥有的体力
 	 */	
 	synchronized int changeStrength( int change, String funcName ){
+		if( strength + change < 0 ){
+			logger.debug( name + "拥有体力：" + strength + "欲扣除体力：" + change + "，出现负数，调用函数为" + funcName );
+			return -1;
+		}
 		strength += change;
 		buildLog( AwardType.STRENGTH, change, strength, funcName );
 		return strength;
@@ -123,18 +133,24 @@ public class UserInfo {
 		return taskManager;
 	}
 	
-	public synchronized int getMoney(  ){
-		return money;
+	public synchronized int getCash(  ){
+		return cash;
 	}
 	/**
 	 * 修改玩家的金币数量
 	 * @param change			增加为正数，减少为负数
 	 * @param funcName			调用的函数
 	 * 
-	 * @return 					当前拥有的金币
+	 * @return 					< 0		扣除失败
+	 * 							>=0		当前拥有的现金
 	 */
-	public synchronized int changeMoney( int change, String funcName ){
-		money += change;
+	public synchronized int changeCash( int change, String funcName ){
+		
+		if( cash + change < 0 ){
+			logger.debug( name + "拥有现金：" + cash + "欲扣除现金：" + change + "，出现负数，调用函数为" + funcName );
+			return -1;
+		}
+		cash += change;
 		
 		//TODO 处理防沉迷系统，其他的vip加成等信息
 		
@@ -143,8 +159,39 @@ public class UserInfo {
 //      String func = ele[2].getMethodName();
 //      System.out.println(func);
 
-		buildLog( AwardType.MONEY, change, money, funcName );
-		return money;
+		buildLog( AwardType.MONEY, change, cash, funcName );
+		return cash;
+	}
+	
+	
+	/**
+	 * 获取玩家金币
+	 * @return
+	 */
+	public synchronized int getGold(  ){
+		return gold;
+	}
+	/**
+	 * 修改玩家的金币数量
+	 * @param change			增加为正数，减少为负数
+	 * @param funcName			调用的函数
+	 * 
+	 * @return 					< 0		扣除失败
+	 * 							>=0		当前拥有的金币
+	 * 							
+	 */
+	public synchronized int changeGold( int change, String funcName ){
+		
+		if( gold + change < 0 ){
+			logger.debug( name + "现拥有金币：" + gold + "欲扣除金币：" + gold + "，出现负数，调用函数为" + funcName );
+			return -1;
+		}
+		gold += change;
+		
+		//TODO 处理防沉迷系统，其他的vip加成等信息
+		
+		buildLog( AwardType.GOLD, change, gold, funcName );
+		return cash;
 	}
 	
 	
@@ -156,9 +203,7 @@ public class UserInfo {
 	 * @param funcName		改动函数
 	 */
 	private void buildLog( AwardType at, int change, int current, String funcName ){
-		if( change == 0 ){
-			return;
-		}
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append( name );		//用户名
 		sb.append( "," );
@@ -348,7 +393,7 @@ public class UserInfo {
 		
 		String connStr = con == null ? "null" : con.getId();
 		return "UserInfo[name=" + name + ", conn=" + connStr 
-				+ ", status=" + status + ", money=" + money + ", strength="
+				+ ", status=" + status + ", money=" + cash + ", strength="
 				+ strength + ", nickName=" + nickName
 				+ ", level=" + level + ", createTime=" + BaseUtil.secondsToDateStr( createTime )
 				+ ", lastLogoutTime=" + BaseUtil.secondsToDateStr( lastLogoutTime ) + ", loginCount="

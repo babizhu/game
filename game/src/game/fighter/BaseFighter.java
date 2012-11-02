@@ -2,7 +2,7 @@ package game.fighter;
 
 import game.prop.EquipmentManager;
 import game.prop.IEquipment;
-import game.prop.PropManager;
+import game.prop.PropDataManager;
 import game.prop.templet.EquipmentTemplet;
 import util.ErrorCode;
 
@@ -11,7 +11,32 @@ public class BaseFighter implements IFighter {
 	/**
 	 * 等级
 	 */
-	short	level;
+	short			level;
+	
+	/**
+	 * 当前血量
+	 */
+	int				hp;
+	
+	/**
+	 * 血槽最大值
+	 */
+	int				hpMax;
+	
+	/**
+	 * 当前sp
+	 */
+	int				sp;
+	
+	/**
+	 * sp最大值
+	 */
+	int				spMax;
+	
+	/**
+	 * 速度
+	 */
+	int				speed;
 	
 	@Override
 	public ErrorCode dress(long oldPropId, long newPropId) {
@@ -24,7 +49,7 @@ public class BaseFighter implements IFighter {
 //		if( canDress( equipment ) == ErrorCode.SUCCESS ){
 //			
 //		}
-		synchronized ( PropManager.class ) {
+		synchronized ( PropDataManager.class ) {
 			
 		}
 		return ErrorCode.SUCCESS;
@@ -50,4 +75,49 @@ public class BaseFighter implements IFighter {
 		return level;
 	}
 
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+	public int getHpMax() {
+		return hpMax;
+	}
+
+	public void setHpMax(int hpMax) {
+		this.hpMax = hpMax;
+	}
+
+	public int getSp() {
+		return sp;
+	}
+
+	public void setSp(int sp) {
+		this.sp = sp;
+	}
+
+	public int getSpMax() {
+		return spMax;
+	}
+
+	public void setSpMax(int spMax) {
+		this.spMax = spMax;
+	}
+
+	public int getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	public void setLevel(short level) {
+		this.level = level;
+	}
+
+	
 }

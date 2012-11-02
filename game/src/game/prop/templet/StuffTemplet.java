@@ -12,4 +12,11 @@ public class StuffTemplet extends BasePropTemplet {
 		super.parse( element );
 	}
 
+	@Override
+	public boolean isEquipment() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
 }

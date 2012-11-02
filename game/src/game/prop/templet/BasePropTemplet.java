@@ -27,10 +27,30 @@ public abstract class BasePropTemplet {
 	private short		stackCapacity;
 	
 	/**
+	 * 是否出现在商城中
+	 */
+	private boolean		isOpen;
+	
+	/**
+	 * 折扣价
+	 */
+	private float		discount;
+	
+	/**
 	 * 系统回购价格
 	 * @return
 	 */
 	private int			buyBack;
+	
+	/**
+	 * 系统卖出价，单位金币，点券
+	 */
+	private int			priceOfGold;
+	
+	/**
+	 * 系统卖出价，单位现金
+	 */
+	private int			priceOfCash;
 
 	public short getTempletId() {
 		return templetId;
@@ -86,12 +106,45 @@ public abstract class BasePropTemplet {
 		setBuyBack( Integer.parseInt( element.getChildText( "buyBack" ) ) );
 	}
 
-	@Override
-	public String toString() {
-		return "BasePropTemplet [templetId=" + templetId + ", name=" + name
-				+ ", requiredLevel=" + requiredLevel + ", stackCap=" + stackCapacity
-				+ ", buyBack=" + buyBack + "]";
+	public int getPriceOfGold() {
+		return priceOfGold;
 	}
+
+	public void setPriceOfGold(int priceOfGold) {
+		this.priceOfGold = priceOfGold;
+	}
+
+	public int getPriceOfCash() {
+		return priceOfCash;
+	}
+
+	public void setPriceOfCash(int priceOfCash) {
+		this.priceOfCash = priceOfCash;
+	}
+
+	
+
+	public boolean isOpen() {
+		return isOpen;
+	}
+
+	public void setOpen(boolean isOpen) {
+		this.isOpen = isOpen;
+	}
+
+	public float getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(float discount) {
+		this.discount = discount;
+	}
+
+	/**
+	 * 判断此道具是否属于装备类（有唯一ID，不能叠加）
+	 * @return
+	 */
+	public abstract boolean isEquipment();
 
 
 

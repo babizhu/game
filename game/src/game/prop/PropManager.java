@@ -1,65 +1,29 @@
 package game.prop;
 
 import game.bag.PropUnit;
-
-import java.util.HashMap;
-import java.util.Map;
-
+import game.prop.templet.BasePropTemplet;
 import util.ErrorCode;
 
+public class PropManager {
 
-/**
- * 同步的思考
- * 
- * 	内部不要有外部的任何牵扯，加锁方式永远是：外部加锁，本类加锁
- * @author admin
- * 2012-10-19 下午05:13:29
- */
-public class PropManager implements IBag{
+	EquipmentManager e;
+	StuffPropManager s;
 	
-	private Map<Long,BaseProp> props = new HashMap<Long, BaseProp>();
-	private Map<Short,BaseProp> stuffs = new HashMap<Short, BaseProp>();
-	
-	public PropManager() {
+	ErrorCode put( PropUnit unit ){
+		
+		if( unit.getTemplet().isEquipment() ){
+			return e.put( unit );
+		}
+		else{
+			
+		}
+		return null;
 		
 	}
-
-	@Override
-	public ErrorCode remove(PropUnit unit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ErrorCode remove(PropUnit[] units) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ErrorCode put(PropUnit unit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ErrorCode put(PropUnit[] units) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
-	ErrorCode levelUp( long propId ){
-		return null;		
+	public boolean canPut( PropUnit unit ){
+		BasePropTemplet t = unit.getTemplet();
+		
+		return true;
 	}
-	
-	ErrorCode sell( long propId ){
-		return null;		
-	}
-	
-	ErrorCode buy( long propId ){
-		return null;		
-	}
-	
-	
-	
 }

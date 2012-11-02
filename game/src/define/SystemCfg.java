@@ -18,20 +18,21 @@ import util.SystemTimer;
 public class SystemCfg {
 	
 	private static final String FILE = "config/system.xml";
+
+	/**
+	 * 系统本次启动时间
+	 */
+	public static final long 	START_MILS = SystemTimer.currentTimeMillis();
+	
 	/**
 	 * 游戏区id
 	 */
 	public  static int 	GAME_DISTRICT;
 	
 	/**
-	 * 系统本次启动时间
-	 */
-	public static long 	START_MILS = SystemTimer.currentTimeMillis();
-	
-	/**
 	 * 端口
 	 */
-	public static int 	PORT;
+	public static  int 	PORT;
 	
 	/**
 	 * 系统版本

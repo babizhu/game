@@ -55,7 +55,9 @@ public enum Packages {
 	private final BasePackage 		packageInstance;
 	
 	Packages( int value, BasePackage packageInstance ) {
-		
+		if( value >= Short.MAX_VALUE || value < 0 ){
+			throw new IllegalArgumentException( "包号不符合规范：" + value );
+		}
 		this.number =  (short) value;
 		this.packageInstance = packageInstance;
 		this.packageInstance.setPackageNo( number );
@@ -88,7 +90,7 @@ public enum Packages {
 	 * @param buf
 	 * @throws IOException 
 	 */
-	public void run(UserInfo user, ByteBuffer buf) throws IOException {
+	public void run( UserInfo user, ByteBuffer buf ) throws IOException {
 		packageInstance.run( user, buf );
 	}
 	
