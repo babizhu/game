@@ -1,6 +1,8 @@
 package game.prop.templet;
 
 
+import game.prop.BaseProp;
+
 import org.jdom2.Element;
 
 
@@ -108,6 +110,7 @@ public abstract class BasePropTemplet {
 
 	public int getPriceOfGold() {
 		return priceOfGold;
+
 	}
 
 	public void setPriceOfGold(int priceOfGold) {
@@ -145,6 +148,7 @@ public abstract class BasePropTemplet {
 	 * @return
 	 */
 	public abstract boolean isEquipment();
+
 
 
 

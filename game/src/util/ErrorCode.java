@@ -37,6 +37,7 @@ public enum ErrorCode {
 	
 	
 	DB_ERROR("数据库错误"),	
+
 	UNKNOW_ERROR("未知错误") ;
 
 	private String desc;

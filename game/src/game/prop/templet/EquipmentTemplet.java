@@ -43,6 +43,7 @@ public class EquipmentTemplet extends BasePropTemplet{
 	public boolean isEquipment() {
 		// TODO Auto-generated method stub
 		return true;
+
 	}
 	
 }

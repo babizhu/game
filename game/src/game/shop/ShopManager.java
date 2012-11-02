@@ -1,7 +1,6 @@
 package game.shop;
 
 import game.AwardType;
-import game.prop.BaseProp;
 import game.prop.cfg.PropTempletCfg;
 import game.prop.templet.BasePropTemplet;
 import user.UserInfo;
@@ -64,6 +63,7 @@ public class ShopManager {
 		float f = 0.3f;
 		i *= f;
 		System.out.println( i );
+
 	}
 
 }
