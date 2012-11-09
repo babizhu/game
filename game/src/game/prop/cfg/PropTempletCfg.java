@@ -13,8 +13,16 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
+/**
+ * 道具配置表
+ * @author liukun
+ * 2012-10-31 上午08:22:31
+ */
 public class PropTempletCfg {
 	
+	/**
+	 * short for templetId
+	 */
 	private static final Map<Short,BasePropTemplet> propTemplets = new HashMap<Short,BasePropTemplet>();
 	private static final String FILE = "resource/prop.xml";
 	static{

@@ -1,7 +1,5 @@
 package game.prop.templet;
 
-import game.prop.BaseProp;
-
 import org.jdom2.Element;
 
 /***
@@ -42,9 +40,10 @@ public class EquipmentTemplet extends BasePropTemplet{
 	}
 
 	@Override
-	public BaseProp createProp() {
+	public boolean isEquipment() {
 		// TODO Auto-generated method stub
-		return null;
+		return true;
+
 	}
 	
 }

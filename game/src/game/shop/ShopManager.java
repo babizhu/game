@@ -1,7 +1,6 @@
 package game.shop;
 
 import game.AwardType;
-import game.prop.BaseProp;
 import game.prop.cfg.PropTempletCfg;
 import game.prop.templet.BasePropTemplet;
 import user.UserInfo;
@@ -23,29 +22,31 @@ public class ShopManager {
 	 * @return
 	 */
 	ErrorCode buy( UserInfo user, short templetId, short count, AwardType buyType ){
-		BasePropTemplet t = PropTempletCfg.getTempletById(templetId);
+		BasePropTemplet t = PropTempletCfg.getTempletById( templetId );
 		if( t == null ){
 			return ErrorCode.PROP_NOT_ENOUGH;
 		}
-		int number = 0;
-		number = buyType == AwardType.GOLD ? t.getPriceOfGold() : t.getPriceOfCash();
-		number *= count;
+		if( !t.isOpen() ){
+			return ErrorCode.SHOP_CANT_BUY;
+		}
+		int price = 0;
+		price = buyType == AwardType.GOLD ? t.getPriceOfGold() : t.getPriceOfCash();
+		price *= count;
+		price *= t.getDiscount();//考虑折扣
+		
 		synchronized (user) {
 			//if( user.getProp)//检测背包格子是否足够
 			if( buyType == AwardType.GOLD ){
-				if( user.changeGold( -number, "ShopManager.buy" ) < 0 ){
+				if( user.changeGold( -price, "ShopManager.buy" ) < 0 ){
 					return ErrorCode.USER_GOLD_NOT_ENOUTH;
 				}
 			}
 			else{
-				if( user.changeCash( -number, "ShopManager.buy" ) < 0 ){
+				if( user.changeCash( -price, "ShopManager.buy" ) < 0 ){
 					return ErrorCode.USER_CASH_NOT_ENOUTH;
 				}
 			}
-			
-			BaseProp p = t.createProp();
-			//写入背包和数据库
-			
+			//user.getProp
 		}
 		
 		//刷新客户端
@@ -56,6 +57,13 @@ public class ShopManager {
 	ErrorCode sell( UserInfo user, short templetId, short count ){
 		return null;
 		
+	}
+	public static void main(String[] args) {
+		int i = 90;
+		float f = 0.3f;
+		i *= f;
+		System.out.println( i );
+
 	}
 
 }

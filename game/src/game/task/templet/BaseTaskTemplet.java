@@ -53,8 +53,9 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 	 * 某某技能升级到某某级
 	 * 
 	 */
-	private	boolean	checkNow;	
+	private	boolean		checkNow;	
 	
+	private	GoalTemplet goal;
 	/**
 	 * 判断此任务在玩家接受的同时是否有必要立即检查一下
 	 * @return
@@ -181,6 +182,14 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 		s = s.substring( 0, s.length() - 1 );//去掉最后一个","
 		s += "]";
 		return s;
+	}
+
+	public GoalTemplet getGoal() {
+		return goal;
+	}
+
+	public void setGoal(GoalTemplet goal) {
+		this.goal = goal;
 	}
 	
 	

@@ -12,7 +12,7 @@ public class BaseBattleStatus {
 		return attackerIsWin;
 	}
 
-	public void setAttackerIsWin(boolean attackerIsWin) {
+	public void setAttackerIsWin( boolean attackerIsWin ) {
 		this.attackerIsWin = attackerIsWin;
 	}
 	

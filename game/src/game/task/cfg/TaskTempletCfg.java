@@ -62,6 +62,12 @@ public class TaskTempletCfg {
 				String checkNow = element.getChildText( "checkNow" );
 				templet.setCheckNow( ( checkNow.isEmpty() || checkNow.equals( "0" ) ? false : true ) );
 				
+				String goal = element.getChildText( "goal" );
+				if( goal != null ){
+					short goalId = Short.parseShort( goal );
+					templet.setGoal( GoalTempletCfg.getTempletById( goalId ) );
+				}
+				
 				/*******************关闭打印****************************
 							System.out.println( templet );
 				********************************************************/

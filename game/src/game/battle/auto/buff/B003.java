@@ -5,31 +5,37 @@ import game.battle.BaseBuff;
 import game.battle.BuffRunPoint;
 import game.battle.RunTimeFighter;
 
-
 /**
- * 不死之身，被攻击后，伤害值为1，持续2回合<br>
- * 运行点：BuffRunPoint.AFTER_DEFENDING
+ * 中毒效果
+ * 发招前，自身掉血500（技能中计算，并传过来）点，持续3个回合<br>
+ * 运行点：BuffRunPoint.BEFORE_ATTACK
  * @author liukun
  * 2012-11-1 上午11:01:24
  */
-public class B001 extends BaseBuff {
+public class B003 extends BaseBuff {
 
-	private static final int 	TURNS = 2;									//持续回合数
-	private int 				turn = TURNS;								
+	private static final int TURNS = 3;						//持续回合数
+	private int turn = TURNS;								//本buff已经生效的回合数，递减
+	/**
+	 * 要减的hp
+	 */
+	private final int skillDamage;
 	
-	public B001( RunTimeFighter rFighter) {
+	public B003( RunTimeFighter rFighter, int damage ) {
 		super( rFighter );
+		this.skillDamage = damage;
 	}
 
 	@Override
 	public int run( BaseBattle battle, int damage ) {
 		if( turn-- > 0 ){
-			return 1;
+			//TODO 中毒伤害的效果到战况信息中
+			return skillDamage;
 		}
 		else{
 			end();
-			return damage;
-		}		
+			return 0;
+		}
 	}
 
 	private void end() {
@@ -38,7 +44,7 @@ public class B001 extends BaseBuff {
 
 	@Override
 	public BuffRunPoint getBuffRunPoint() {
-		return BuffRunPoint.AFTER_DEFENDING;
+		return BuffRunPoint.BEFORE_ATTACK;
 	}
 	public static void main(String[] args) {
 		int turn = 2;

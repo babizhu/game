@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--目标配置表-->
+
+<goals>
+	<goal>
+		<templetId>10000</templetId>
+		<name>初试锋芒</name>
+		<desc>获取进入暴风之眼的通行证吧</desc>		
+	</goal>
+</goals>

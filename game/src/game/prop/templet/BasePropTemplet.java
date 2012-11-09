@@ -1,8 +1,6 @@
 package game.prop.templet;
 
 
-import game.prop.BaseProp;
-
 import org.jdom2.Element;
 
 
@@ -29,13 +27,23 @@ public abstract class BasePropTemplet {
 	private short		stackCapacity;
 	
 	/**
+	 * 是否出现在商城中
+	 */
+	private boolean		isOpen;
+	
+	/**
+	 * 折扣价
+	 */
+	private float		discount;
+	
+	/**
 	 * 系统回购价格
 	 * @return
 	 */
 	private int			buyBack;
 	
 	/**
-	 * 系统卖出价，单位点券
+	 * 系统卖出价，单位金币，点券
 	 */
 	private int			priceOfGold;
 	
@@ -100,6 +108,7 @@ public abstract class BasePropTemplet {
 
 	public int getPriceOfGold() {
 		return priceOfGold;
+
 	}
 
 	public void setPriceOfGold(int priceOfGold) {
@@ -114,17 +123,25 @@ public abstract class BasePropTemplet {
 		this.priceOfCash = priceOfCash;
 	}
 
-	@Override
-	public String toString() {
-		return "BasePropTemplet [templetId=" + templetId + ", name=" + name
-				+ ", requiredLevel=" + requiredLevel + ", stackCapacity="
-				+ stackCapacity + ", buyBack=" + buyBack + ", priceOfGold="
-				+ priceOfGold + ", priceOfCash=" + priceOfCash + "]";
+	public boolean isOpen() {
+		return isOpen;
 	}
 
-	public abstract BaseProp createProp();
+	public void setOpen(boolean isOpen) {
+		this.isOpen = isOpen;
+	}
 
-	
+	public float getDiscount() {
+		return discount;
+	}
 
+	public void setDiscount(float discount) {
+		this.discount = discount;
+	}
 
+	/**
+	 * 判断此道具是否属于装备类（有唯一ID，不能叠加）
+	 * @return
+	 */
+	public abstract boolean isEquipment();
 }

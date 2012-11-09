@@ -18,6 +18,7 @@
 		<award>MONEY,10000</award>		
 		<requiredLevel>0</requiredLevel>
 		<checkNow>0</checkNow>
+		<goal>1</goal>
 	</task>	
 	<task>
 		<templetId>10001</templetId>
@@ -103,5 +104,6 @@
 		<award>MONEY,10000</award>
 		<requiredLevel>1</requiredLevel>
 		<checkNow>0</checkNow>
+		<goal>1</goal>
 	</task>
 </tasks>
