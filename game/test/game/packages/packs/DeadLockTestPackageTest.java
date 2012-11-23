@@ -4,7 +4,7 @@
 package game.packages.packs;
 
 
-import game.packages.Packages;
+import game.packages.PackageManager;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -114,6 +114,6 @@ public class DeadLockTestPackageTest extends BasePackageTest {
 	 */
 	@Override
 	public short getPacketNo() {
-		return Packages.DEAD_LOCK_TEST.toNum();
+		return PackageManager.DEAD_LOCK_TEST.toNum();
 	}
 }

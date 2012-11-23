@@ -31,10 +31,9 @@ public class TaskManager {
 	 * @param		BaseTask			所接任务
 	 * 
 	 */
-	private final ConcurrentHashMap<Short,BaseTask> tasks;
-	private UserInfo		user;
-
-	private final TaskDataProvider db = TaskDataProvider.getInstance();	
+	private final ConcurrentHashMap<Short,BaseTask> 	tasks;
+	private UserInfo									user;
+	private final TaskDataProvider 						db = TaskDataProvider.getInstance();	
 
 	public TaskManager( UserInfo user ) {
 		super();

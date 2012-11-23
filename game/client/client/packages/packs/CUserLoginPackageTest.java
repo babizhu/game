@@ -2,7 +2,7 @@ package client.packages.packs;
 
 
 
-import game.packages.Packages;
+import game.packages.PackageManager;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -69,7 +69,7 @@ public class CUserLoginPackageTest extends BasePackageTest {
 
 	@Override
 	public short getPacketNo() {
-		return Packages.USER_LOGIN.toNum();
+		return PackageManager.USER_LOGIN.toNum();
 	}
 	
 	/**

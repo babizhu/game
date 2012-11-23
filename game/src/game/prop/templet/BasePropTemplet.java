@@ -125,8 +125,6 @@ public abstract class BasePropTemplet {
 		this.priceOfCash = priceOfCash;
 	}
 
-	
-
 	public boolean isOpen() {
 		return isOpen;
 	}
@@ -148,8 +146,5 @@ public abstract class BasePropTemplet {
 	 * @return
 	 */
 	public abstract boolean isEquipment();
-
-
-
 
 }

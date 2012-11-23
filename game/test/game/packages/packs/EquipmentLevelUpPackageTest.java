@@ -1,7 +1,7 @@
 package game.packages.packs;
 
 
-import game.packages.Packages;
+import game.packages.PackageManager;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -58,7 +58,7 @@ public class EquipmentLevelUpPackageTest extends BasePackageTest {
 
 	@Override
 	public short getPacketNo() {
-		return Packages.EQUIPMENT_LEVEL_UP.toNum();
+		return PackageManager.EQUIPMENT_LEVEL_UP.toNum();
 	}
 
 }

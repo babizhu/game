@@ -1,57 +1,102 @@
 package game.fighter;
 
+import game.battle.BaseBattle;
+import game.battle.auto.buff.BuffManager;
 import game.prop.EquipmentManager;
 import game.prop.IEquipment;
-import game.prop.PropDataManager;
 import game.prop.templet.EquipmentTemplet;
 import util.ErrorCode;
 
 public class BaseFighter implements IFighter {
 
 	/**
+	 * 所在阵型中的位置
+	 */
+	byte						position;
+	
+	/**
 	 * 等级
 	 */
-	short			level;
+	short						level;
 	
 	/**
 	 * 当前血量
 	 */
-	int				hp;
+	int							hp;
 	
 	/**
 	 * 血槽最大值
 	 */
-	int				hpMax;
+	int							hpMax;
 	
 	/**
 	 * 当前sp
 	 */
-	int				sp;
+	int							sp;
 	
 	/**
 	 * sp最大值
 	 */
-	int				spMax;
+	int							spMax;
 	
 	/**
 	 * 速度
 	 */
-	int				speed;
+	int							speed;
 	
+	/**
+	 * 物理攻击力
+	 */
+	int							phyAttack;
+	
+	/**
+	 * 是否允许出招
+	 */
+	private boolean 			isCanHit;
+	
+	/*
+	 * 是否处于战场的左边
+	 */
+	private boolean				isLeft;
+	
+	private BuffManager			buffManager;
+	
+	/**
+	 * 拷贝构造函数，通常用于战斗前的准备工作
+	 * @param f
+	 */
+	public BaseFighter( BaseFighter f, boolean isLeft ) {
+		position = f.position;
+		level = f.level;
+		hp = f.hp;
+		hpMax = f.hpMax;
+		sp = f.sp;
+		spMax = f.spMax;
+		speed = f.speed;
+		phyAttack = f.phyAttack;
+		isCanHit = true;
+		buffManager = new BuffManager();
+		this.isLeft = isLeft;
+		
+	}
+
+	public BaseFighter() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public ErrorCode dress(long oldPropId, long newPropId) {
-//		
-//		IEquipment equipment = EquipmentManager.getEquipmentById( newPropId );
-//		if( equipment == null ){
-//			return ErrorCode.PROP_NOT_FOUNTD;
-//		}
-//		
-//		if( canDress( equipment ) == ErrorCode.SUCCESS ){
-//			
-//		}
-		synchronized ( PropDataManager.class ) {
+		
+		
+		IEquipment equipment = EquipmentManager.getEquipmentById( newPropId );
+		if( equipment == null ){
+			return ErrorCode.PROP_NOT_FOUNTD;
+		}
+		
+		if( canDress( equipment ) == ErrorCode.SUCCESS ){
 			
 		}
+		
 		return ErrorCode.SUCCESS;
 	}
 	
@@ -119,5 +164,60 @@ public class BaseFighter implements IFighter {
 		this.level = level;
 	}
 
+	public int getPhyAttack() {
+		return phyAttack;
+	}
+
+	public void setPhyAttack( int phyAttack ) {
+		this.phyAttack = phyAttack;
+	}
+
+	public BuffManager getBm() {
+		return buffManager;
+	}
+
+	/**
+	 * 战士是否位于战场左边
+	 * @return
+	 */
+	public boolean isLeft() {
+		return isLeft;
+	}
+
+	public void setCanHit(boolean isCanHit) {
+		this.isCanHit = isCanHit;
+	}
+
+	public boolean isCanHit() {
+		return isCanHit;
+	}
+
+	public byte getPosition() {
+		return position;
+	}
+
+	public void setPosition( byte position ) {
+		this.position = position;
+	}
+
+	/**
+	 * 每次开战前必须进行的初始化工作
+	 * @param battle
+	 */
+	public void initForBattle( BaseBattle battle ){
+		buffManager = new BuffManager();
+		isCanHit = true;
+		
+	}
+	@Override
+	public String toString() {
+		return "BaseFighter [position=" + position + ", level=" + level
+				+ ", hp=" + hp + ", hpMax=" + hpMax + ", sp=" + sp + ", spMax="
+				+ spMax + ", speed=" + speed + ", phyAttack=" + phyAttack
+				+ ", isCanHit=" + isCanHit + ", isLeft=" + isLeft
+				+ ", buffManager=" + buffManager + "]";
+	}
+
+	
 	
 }

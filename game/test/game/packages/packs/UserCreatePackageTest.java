@@ -2,7 +2,7 @@ package game.packages.packs;
 
 
 import static org.junit.Assert.assertEquals;
-import game.packages.Packages;
+import game.packages.PackageManager;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -42,7 +42,7 @@ public class UserCreatePackageTest extends BasePackageTest{
 
 	@Override
 	public short getPacketNo() {
-		return Packages.USER_CREATE.toNum();
+		return PackageManager.USER_CREATE.toNum();
 	}
 	
 	@Test

@@ -1,5 +1,5 @@
 /**
-*	作者：admin
+*	作者：liukun
 *	时间：2011-10-20 下午05:19:20
 *	文件：BuffManager.java
 *
@@ -10,111 +10,80 @@
 */
 package game.battle.auto.buff;
 
-import game.battle.IBuff;
+import game.battle.BaseBuff;
+import game.battle.BuffRunPoint;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.lemon.ai.socket.packets.spiritgame.battle.AbstractBattle;
-import com.lemon.ai.socket.packets.spiritgame.elite_staff.Fighter;
-
-/**
- * 
- */
 public class BuffManager {
 	
-	private List<IBuff>						buffs = new ArrayList<IBuff>();
-	//private AbstractBattle						battle;
-	//private Fighter 							fighter;//拥有此buff list 的战士，某些buff运算需要，例如“迷惑视听”
-	
-	/**
-	 * @param fighter
-	 */
-	public BuffManager( Fighter fighter ) {
-		super();
-		this.fighter = fighter;
-		//this.battle = battle;
+	private List<BaseBuff>						buffs = new ArrayList<BaseBuff>();
+	public BuffManager( ) {
+		super( );
 	}
 	
+	/**
+	 * 清除该战士所有的负面buff效果
+	 */
+	public void removeDeBuff(  ){
+		for( BaseBuff buff : buffs ){
+			if( buff.isDeBuff() ){
+				buff.setRemove( true );
+			}
+		}
+	}
 	
 	/**
-	 * 清除该战士所有的buff效果
+	 * 添加一个buff
+	 * @param buff
+	 * @return
+	 * 		true	成功
 	 */
-	public void removeAllBuff( ){
-//		for( BuffBase buf : buffs ){
-//			if( !buf.remove )
-//			{
-//				buf.remove( battle );
-//			}
-//		}
-		buffs.clear();
-	}
-	public boolean add( BuffBase buff ){
-		
-		//有可能需要考虑buff之间的兼容关系, 是一个很麻烦的高难度过程		
-		buffs.add( buff );
-		return false;
+	public boolean add( BaseBuff buff ){
+		buffs.add( buff );		//有可能需要考虑buff之间的兼容关系, 是一个很麻烦的高难度过程
+		//如果没问题，添加成功
+		if( true ){
+			buff.start();
+		}
+		return true;
 	}
 	
 	/**
 	 * 根据时间点参数，运行相应的buff内容
-	 * 
-	 * @param pit		buff运行的时间点
-	 * @param hp		不考虑Buff情况下将被扣除的damage
-	 * 
-	 * @return	
-	 * 					经过buff之后，真正将被扣除的damage
+	 * @param damage
+	 * @param pt
+	 * @param battle
+	 * @return
 	 * 
 	 * 注意：这里只返回伤害值，除HP以外其余的buff效果，例如增加SP等，直接在run()内进行处理
 	 */
-	public float run( PointInTime pit, float damage ){
-		float tempDamage = damage;//一个buf所产生的临时伤害值
-		for( BuffBase buf : buffs ){
+	public int run( int damage, BuffRunPoint pt ){
+		int tempDamage = damage;//一个buf所产生的临时伤害值
+		for( BaseBuff buf : buffs ){
 			
-			if( buf.getPit() == pit && !buf.isRemove() ){
-				tempDamage = buf.run( tempDamage, battle, fighter );				
+			if( buf.getBuffRunPoint() == pt && !buf.isRemove() ){
+				
+				tempDamage += buf.run( tempDamage );
 			}
-		}
-		
+		}		
 		return tempDamage;
-	}	
-	
-	/**
-	 * @return the battle
-	 */
-	public AbstractBattle getBattle() {
-		return battle;
 	}
-
-
-	/**
-	 * @param battle the battle to set
-	 */
-	public void setBattle(AbstractBattle battle) {
-		this.battle = battle;
-	}
-
 
 	public static void main(String[] args) {
-		
-		
-		float n = 0;
-		//for( int i = 0; i < 16777219; i++ ){
-		long begin = System.nanoTime();
-		for( int i = 0; i < 10000; i++ ){
-			n += i;
+	
+		List<BaseBuff> list = new ArrayList<BaseBuff>();
+		for( int i = 0; i < 10; i++ ){
+			BaseBuff buf = new B001( null );
+			list.add( buf );			
 		}
-		System.out.println( (System.nanoTime() - begin ) / 1000000000f );
-		System.out.println( n );
 		
-		int nn = 0;
-		//for( int i = 0; i < 16777219; i++ ){
-		begin = System.nanoTime();
-		for( int i = 0; i < 10000; i++ ){
-			nn += i;
+		int i = 0;
+		for( BaseBuff buf : list ){
+			if( i++ == 5 ){
+				list.remove( i );
+				list.remove( buf );
+			}			
 		}
-		System.out.println( (System.nanoTime() - begin ) / 1000000000f );
-		System.out.println( nn );
 	}
-
 }

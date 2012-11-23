@@ -9,4 +9,9 @@ public class EquipmentManager {
 		return null;		
 	}
 
+	public static IEquipment getEquipmentById(long propId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

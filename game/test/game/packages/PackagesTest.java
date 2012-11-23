@@ -52,7 +52,7 @@ public class PackagesTest {
 	@Test
 	public void testPackages(){
 		short errNumber = 1;
-		Packages pack = Packages.fromNum( errNumber );
+		PackageManager pack = PackageManager.fromNum( errNumber );
 		assertEquals( null, pack );
 	}
 

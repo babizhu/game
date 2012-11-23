@@ -2,7 +2,7 @@ package client.packages.packs;
 
 
 
-import game.packages.Packages;
+import game.packages.PackageManager;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -84,7 +84,7 @@ public class UserExitPackageTest extends BasePackageTest {
 
 	@Override
 	public short getPacketNo() {
-		return Packages.USER_LOGIN.toNum();
+		return PackageManager.USER_LOGIN.toNum();
 	}
 	
 	public static void main(String[] args) throws IOException, InterruptedException {

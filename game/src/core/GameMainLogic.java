@@ -1,6 +1,6 @@
 package core;
 
-import game.packages.Packages;
+import game.packages.PackageManager;
 
 import game.packages.packs.UserCreatePackage;
 import game.packages.packs.UserLoginPackage;
@@ -40,34 +40,29 @@ public final class GameMainLogic implements IGameLogic {
 	 *            去除包头，包尾，包号，包长的附加信息的数据
 	 * 
 	 * <br>
-	 *            本函数原则上不主动发送包，函数尾部有个发送的错误信息包目前只用于用例测试，正式发布的时候应考虑删除<br>
-	 *            具体情况请查看{@link game.packages.packs.UserLoginPackageTest#Login}
-	 *            
-	 *  @注意：原本设计在这里对user进行加锁，保证同步，后来发现这样在交互类操作（精英挑战赛）会导致死锁，具体查看
-	 *  {@link game.packages.packs.DeadLockTestPackageTest#testDeadLock}
 	 * @throws IOException
 	 */
 	@Override
 	public void packageRun( INonBlockingConnection con, short packageNo, byte[] data ) throws IOException {
 		
-		Packages pack = Packages.fromNum( packageNo );
+		PackageManager pack = PackageManager.fromNum( packageNo );
 
 		ErrorCode code = ErrorCode.SUCCESS;
 
 		String name = (String) con.getAttachment();
 		logger.debug( (buildPrefixStr( con, name ) + "通信包：" + (pack == null ? packageNo : pack)) );
-		if (pack == null) {
+		if( pack == null ) {
 			code = ErrorCode.PACKAGE_NOT_FOUND;
 		} else {
 			try{
 				ByteBuffer buf = ByteBuffer.wrap( data );
-				if( pack == Packages.USER_LOGIN ){
-					UserLoginPackage p = (UserLoginPackage) Packages.USER_LOGIN.getPackageInstance();
+				if( pack == PackageManager.USER_LOGIN ){
+					UserLoginPackage p = (UserLoginPackage) PackageManager.USER_LOGIN.getPackageInstance();
 					p.run( con, buf );
 					
 				}
-				else if( pack == Packages.USER_CREATE ){
-					UserCreatePackage p = (UserCreatePackage) Packages.USER_CREATE.getPackageInstance();
+				else if( pack == PackageManager.USER_CREATE ){
+					UserCreatePackage p = (UserCreatePackage) PackageManager.USER_CREATE.getPackageInstance();
 					p.run( con, buf );
 				}
 				else{

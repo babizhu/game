@@ -2,7 +2,7 @@ package game.packages.packs.task;
 
 
 import static org.junit.Assert.assertEquals;
-import game.packages.Packages;
+import game.packages.PackageManager;
 import game.packages.packs.BasePackageTest;
 import game.packages.packs.UserLoginPackageTest;
 import game.task.enums.TaskStatus;
@@ -119,6 +119,6 @@ public class TaskAcceptPackageTest extends BasePackageTest {
 	@Override
 	public short getPacketNo() {
 		// TODO Auto-generated method stub
-		return Packages.TASK_ACCEPT.toNum();
+		return PackageManager.TASK_ACCEPT.toNum();
 	}
 }

@@ -1,7 +1,7 @@
 package experiment;
 
 import game.packages.BasePackage;
-import game.packages.Packages;
+import game.packages.PackageManager;
 
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -74,7 +74,7 @@ public class SendPackage {
 
 	public static void main ( String[] args ) {
 		for( int i = 0; i < 1; i++ ){
-			new SendPackage().sendPackage( (short) Packages.USER_LOGIN.toNum() );
+			new SendPackage().sendPackage( (short) PackageManager.USER_LOGIN.toNum() );
 		}
 	}
 }

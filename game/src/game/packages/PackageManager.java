@@ -26,7 +26,7 @@ import user.UserInfo;
  * @author liukun
  * 2012-8-25
  */
-public enum Packages {
+public enum PackageManager {
 	
 
 	SYSTEM_SEND_ERROR_CODE				( 100, 		new SystemSendErrorCodePackage() ),	
@@ -54,7 +54,7 @@ public enum Packages {
 	private final short 			number;
 	private final BasePackage 		packageInstance;
 	
-	Packages( int value, BasePackage packageInstance ) {
+	PackageManager( int value, BasePackage packageInstance ) {
 		if( value >= Short.MAX_VALUE || value < 0 ){
 			throw new IllegalArgumentException( "包号不符合规范：" + value );
 		}
@@ -62,12 +62,12 @@ public enum Packages {
 		this.packageInstance = packageInstance;
 		this.packageInstance.setPackageNo( number );
 	}
-	private static final Map<Short, Packages> numToEnum = new HashMap<Short, Packages>();
+	private static final Map<Short, PackageManager> numToEnum = new HashMap<Short, PackageManager>();
 	
 	static{
-		for( Packages a : values() ){
+		for( PackageManager a : values() ){
 			
-			Packages p = numToEnum.put( a.number, a );
+			PackageManager p = numToEnum.put( a.number, a );
 			if( p != null ){
 				throw new RuntimeException( "通信包" + a.number + "重复了" );
 			}
@@ -80,7 +80,7 @@ public enum Packages {
 	public short toNum() {
 		return number;
 	}
-	public static Packages fromNum( short n ){
+	public static PackageManager fromNum( short n ){
 		return numToEnum.get( n );
 	}
 	
@@ -100,9 +100,9 @@ public enum Packages {
 	 */
 	public static void main(String[] args) {
 		Formatter f = new Formatter(System.out);
-		f.format("%-15s %-100s %-10s \n", "包号", "类别", "功能说明");
-		f.format("%-15s %-100s %-10s \n", "－－", "－－", "－－－－");
-		for( Packages p : values() ){
+		f.format( "%-15s %-100s %-10s \n", "包号", "类别", "功能说明" );
+		f.format( "%-15s %-100s %-10s \n", "－－", "－－", "－－－－" );
+		for( PackageManager p : values() ){
 			
 			Class<?> c = p.packageInstance.getClass();
 			PackageDescrip desc = c.getAnnotation(PackageDescrip.class);
@@ -113,7 +113,7 @@ public enum Packages {
 		}
 		System.out.println( "--------------------------HTML---------------------------------");
 		StringBuilder html = new StringBuilder( "<table><tr><td>包号</td><td>类别</td><td>功能说明</td></tr><tr>" );
-		for( Packages p : values() ){
+		for( PackageManager p : values() ){
 			
 			Class<?> c = p.packageInstance.getClass();
 			PackageDescrip desc = c.getAnnotation(PackageDescrip.class);

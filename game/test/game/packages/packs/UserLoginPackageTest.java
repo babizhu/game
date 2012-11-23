@@ -2,7 +2,7 @@ package game.packages.packs;
 
 
 import static org.junit.Assert.assertEquals;
-import game.packages.Packages;
+import game.packages.PackageManager;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -200,6 +200,6 @@ public class UserLoginPackageTest extends BasePackageTest {
 	@Override
 	public short getPacketNo() {
 //		return -1;
-		return Packages.USER_LOGIN.toNum();
+		return PackageManager.USER_LOGIN.toNum();
 	}
 }

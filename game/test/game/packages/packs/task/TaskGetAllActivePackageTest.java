@@ -3,7 +3,7 @@ package game.packages.packs.task;
 
 import static org.junit.Assert.assertEquals;
 
-import game.packages.Packages;
+import game.packages.PackageManager;
 import game.packages.packs.BasePackageTest;
 import game.packages.packs.UserLoginPackageTest;
 import game.task.BaseTask;
@@ -63,7 +63,7 @@ public class TaskGetAllActivePackageTest extends BasePackageTest  {
 
 	@Override
 	public short getPacketNo() {
-		return Packages.TASK_GET_ALL_ACTIVE.toNum();
+		return PackageManager.TASK_GET_ALL_ACTIVE.toNum();
 	}
 
 }

@@ -113,7 +113,7 @@ public abstract class BasePackage implements IPackage {
 	public static void main(String[] args) {
 		ByteBuffer buf = ByteBuffer.allocate( 1024 );
 		buf.put( BasePackage.HEAD );
-		buf.putShort( Packages.USER_CREATE.toNum() );
+		buf.putShort( PackageManager.USER_CREATE.toNum() );
 		buf.putShort( (short) 4 );
 		buf.putInt( 88 );
 		buf.put( BasePackage.FOOT );

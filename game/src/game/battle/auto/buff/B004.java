@@ -4,46 +4,53 @@ import game.battle.BaseBuff;
 import game.battle.BuffRunPoint;
 import game.fighter.BaseFighter;
 
-
 /**
- * 不死之身<br>
- * 被攻击后，伤害值降低为1，持续2回合<br>
- * 运行点：BuffRunPoint.AFTER_DEFENDING
+ * 头晕目眩
+ * 停止1回合行动<br>
+ * 运行点：BuffRunPoint.DEFENDING
  * @author liukun
  * 2012-11-1 上午11:01:24
  */
-public class B001 extends BaseBuff {
+public class B004 extends BaseBuff {
 
-	private static final int 	TURNS = 2;									//持续回合数
+	private static final int TURNS = 1;						//持续回合数
 	
-	public B001( BaseFighter fighter ) {
+	public B004( BaseFighter fighter ) {
 		super( fighter );
 		duration = TURNS;
 	}
 
 	@Override
 	public int run( int damage ) {
-		if( duration-- > 0 ){
-			return 1;
-		}
-		else{
+		if( duration-- == 0 ){
 			stop();
-			return damage;
-		}		
+		}
+		return damage;
 	}
 
+	@Override
+	public void start() {
+		super.start();
+		self.setCanHit( false );
+	}
+	
+	@Override
+	protected void stop() {
+		super.stop();
+		self.setCanHit( true );
+	}
 
 	@Override
 	public BuffRunPoint getBuffRunPoint() {
 		return BuffRunPoint.AFTER_DEFENDING;
 	}
 	
+	
 	public static void main(String[] args) {
 		int turn = 2;
 		while( turn-- > 0 ){
 			System.out.println( turn );
 		}
-	
 	}
 	
 }
