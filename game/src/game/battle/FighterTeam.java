@@ -24,7 +24,7 @@ public class FighterTeam implements IFighterTeam {
 	private final Pet						pet;
 	
 	/**
-	 * 会自动生成参战人员的副本列表
+	 * 会自动生成参战人员的副本（通过深拷贝构造函数）列表
 	 * @param fighterList
 	 * @param pet
 	 * @param isLeft			是否位于战场的左边（攻击方）
