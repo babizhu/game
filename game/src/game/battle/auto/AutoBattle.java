@@ -206,10 +206,13 @@ public class AutoBattle extends BaseBattle {
 			defender.setSp( defender.getSp() + SP_TO_ADD );
 		}
 		
+
 		return doBlockAndCounterAttack( defender, attacker );
+
 	}
 
 	/**
+
 	 * 格挡并反击流程，不用考虑命中与暴击，同样也没考虑防御者身上的buff，暂时先这样，有需求在修改
 	 * @param attacker
 	 * @param defender
@@ -217,6 +220,7 @@ public class AutoBattle extends BaseBattle {
 	 * @return
 	 */
 	private boolean doBlockAndCounterAttack( BaseFighter attacker, BaseFighter defender ) {
+
 		if( attacker.getHp() == 0 ){
 			return false;
 		}
