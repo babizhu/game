@@ -41,6 +41,7 @@ public class FormationNine implements IFormation {
 	
 	@Override
 	public BaseFighter normalAttackWho( BaseFighter attacker, FighterTeam defender ) {
+		boolean defenderIsLeft = !attacker.isLeft(); 
 		List<BaseFighter> rowList = null;
 		int row = calcRow( attacker.getPosition() );
 		int[] rows = getAttackSequenceRow( row );
@@ -48,7 +49,6 @@ public class FormationNine implements IFormation {
 			rowList = getFightersByRow( i, defender );//获取本行被攻击的战士
 
 			if( rowList.size() > 0 ){
-				boolean defenderIsLeft = rowList.get(0).isLeft(); 
 				if( defenderIsLeft ){
 					return rowList.get( rowList.size() - 1 );//取最后一个
 				}

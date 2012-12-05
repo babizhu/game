@@ -17,7 +17,7 @@ public class BaseFighter implements IFighter {
 	/**
 	 * 等级
 	 */
-	short						level;
+	short						level = 1;
 	
 	/**
 	 * 当前血量
@@ -50,6 +50,44 @@ public class BaseFighter implements IFighter {
 	int							phyAttack;
 	
 	/**
+	 * 物理防御力
+	 */
+	int							phyDefend;
+	
+	/**
+	 * 命中率
+	 */
+	int							hitRate;			
+	
+	/**
+	 * 闪避率
+	 */
+	int							dodgeRate;	
+	
+	/**
+	 * 暴击
+	 */	
+	int							crit;
+	
+	/**
+	 * 反暴击
+	 */	
+	int							unCrit;
+	
+	/**
+	 * 格挡
+	 */
+	int							block;
+	
+	/**
+	 * 反格挡
+	 */
+	int							unBlock;
+	
+	
+	
+	
+	/**
 	 * 是否允许出招
 	 */
 	private boolean 			isCanHit;
@@ -74,6 +112,13 @@ public class BaseFighter implements IFighter {
 		spMax = f.spMax;
 		speed = f.speed;
 		phyAttack = f.phyAttack;
+		phyDefend = f.phyDefend;
+		hitRate = f.hitRate;
+		dodgeRate = f.dodgeRate;
+		crit = f.crit;
+		unCrit = f.unCrit;
+		block = f.block;
+		unBlock = f.unBlock;
 		isCanHit = true;
 		buffManager = new BuffManager();
 		this.isLeft = isLeft;
@@ -175,6 +220,14 @@ public class BaseFighter implements IFighter {
 	public BuffManager getBm() {
 		return buffManager;
 	}
+	
+	/**
+	 * 物防
+	 * @return
+	 */
+	public int getPhyDefend() {
+		return phyDefend;
+	}
 
 	/**
 	 * 战士是否位于战场左边
@@ -209,14 +262,86 @@ public class BaseFighter implements IFighter {
 		isCanHit = true;
 		
 	}
-	@Override
-	public String toString() {
-		return "BaseFighter [position=" + position + ", level=" + level
-				+ ", hp=" + hp + ", hpMax=" + hpMax + ", sp=" + sp + ", spMax="
-				+ spMax + ", speed=" + speed + ", phyAttack=" + phyAttack
-				+ ", isCanHit=" + isCanHit + ", isLeft=" + isLeft
-				+ ", buffManager=" + buffManager + "]";
+	
+
+	public void setHitRate(int hitRate) {
+		this.hitRate = hitRate;
 	}
+
+	public void setDodgeRate(int dodgeRate) {
+		this.dodgeRate = dodgeRate;
+	}
+
+	/**
+	 * 命中率
+	 * @return
+	 */
+	public int getHitRate() {
+		return hitRate;
+	}
+
+	/**
+	 * 闪避率
+	 * @return
+	 */
+	public int getDodgeRate() {
+		return dodgeRate;
+	}
+
+	
+
+	/**
+	 * 暴击
+	 * @return
+	 */
+	public int getCrit() {
+		return crit;
+	}
+
+	/**
+	 * 反暴击
+	 * @return
+	 */
+	public int getUnCrit() {
+		return unCrit;
+	}
+
+	/**
+	 * 格挡
+	 * @return
+	 */
+	public int getBlock() {
+		return block;
+	}
+
+	public void setBlock(int block) {
+		this.block = block;
+	}
+
+	/**
+	 * 反格挡
+	 * @return
+	 */
+	public int getUnBlock() {
+		return unBlock;
+	}
+
+	public void setUnBlock(int unBlock) {
+		this.unBlock = unBlock;
+	}
+
+	public void setPhyDefend(int phyDefend) {
+		this.phyDefend = phyDefend;
+	}
+
+	public void setCrit(int crit) {
+		this.crit = crit;
+	}
+
+	public void setUnCrit(int unCrit) {
+		this.unCrit = unCrit;
+	}
+
 
 	
 	

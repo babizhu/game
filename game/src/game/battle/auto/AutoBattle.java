@@ -18,7 +18,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import util.ErrorCode;
 
 /**
  * 自动回合制的战斗模式
@@ -29,6 +28,10 @@ public class AutoBattle extends BaseBattle {
 
 	private static final  Logger 		logger = LoggerFactory.getLogger( AutoBattle.class );
 	private static final IBattleUtil	until = AutoBattleUtil.INSTANCE;
+
+	private static final int 			SP_TO_ADD = 50;
+	private static final float 			BLOCK_DAMAGE_RATE = 0.5f;
+	
 	
 	private static final int 			MAX_ROUND = 50;//最大回合数
 
@@ -61,6 +64,9 @@ public class AutoBattle extends BaseBattle {
 	
 	private static final int 			SKILL_ATTACK_NEED_SP = 0;
 	
+	/**
+	 * 九宫格阵型
+	 */
 	private IFormation					formation = FormationNine.INSTANCE;	
 	
 	/**
@@ -102,7 +108,7 @@ public class AutoBattle extends BaseBattle {
 	}
 
 	@Override
-	public ErrorCode run() {
+	public void run() {
 		boolean isEnd = false;
 		while( !isEnd ){
 			pet();
@@ -118,7 +124,7 @@ public class AutoBattle extends BaseBattle {
 					isEnd = true;
 					break;
 				}
-				if( !currentAttacker.isCanHit() ){
+				if( currentAttacker.getHp() <= 0 || !currentAttacker.isCanHit() ){
 					continue;
 				}
 				
@@ -135,8 +141,7 @@ public class AutoBattle extends BaseBattle {
 						isEnd = true;
 						break;
 					}		
-				}
-				
+				}				
 			}
 			currentRound++;
 			if( currentRound == MAX_ROUND ){
@@ -145,16 +150,22 @@ public class AutoBattle extends BaseBattle {
 				isEnd = true;
 			}
 		}
-		// TODO Auto-generated method stub
-		return null;
 	}
 
-	private boolean doSkillAttack(BaseFighter currentAttacker,
-			FighterTeam currentDefenderTeam) {
-		// TODO Auto-generated method stub
+	private boolean doSkillAttack(BaseFighter currentAttacker, FighterTeam currentDefenderTeam) {
 		return false;
 	}
 
+//	/**
+//	 * 传入进攻团队，返回防守团队
+//	 * 传入防守团队，返回进攻团队
+//	 * @param team
+//	 * @return
+//	 */
+//	private FighterTeam reverseTeam( FighterTeam team ){
+//		return (team == attackers) ? defenders : attackers;
+//	}
+	
 	/**
 	 * 普通攻击
 	 * @param attacker		当前攻击者
@@ -176,9 +187,55 @@ public class AutoBattle extends BaseBattle {
 			return false;
 		}
 		
-		return false;
+		int damage = until.calcNormalAttackDamage( attacker, defender );
+		byte crit = until.calcCrit( attacker, defender );//计算暴击加成
+		damage *= crit;		
+		//执行运行时间点为【被普通或者技能攻击后，正式扣血前】DEFENDING的buff
+		damage = defender.getBm().run( (int) damage, BuffRunPoint.AFTER_DEFENDING );
+		
+		//boolean isBlockAndCounterAttack = until.isBlockAndCounterAttack( defender, attacker );	//暂时不考虑格挡这一说
+		warSituation.putInt( damage );
+		
+		if( reduceHp( defender, damage ) == true ){
+			return true;
+		}
+		
+
+		attacker.setSp( attacker.getSp() + SP_TO_ADD );
+		if( damage > 1 ){//防止不死之身之类的技能长久不结束
+			defender.setSp( defender.getSp() + SP_TO_ADD );
+		}
+		
+		return doCounterAttack( defender, attacker );
 	}
 
+	/**
+	 * 反击流程，不用考虑命中与暴击，同样也没考虑防御者身上的buff，暂时先这样，有需求在修改
+	 * @param attacker
+	 * @param defender
+	 * @param defenderTeam
+	 * @return
+	 */
+	private boolean doCounterAttack( BaseFighter attacker, BaseFighter defender ) {
+		if( attacker.getHp() == 0 ){
+			return false;
+		}
+		boolean isCounterAttack = until.isBlockAndCounterAttack( defender, attacker );	//判断是否反击
+		if( !isCounterAttack ){
+			return false;
+		}
+
+		int damage = until.calcNormalAttackDamage( attacker, defender );
+		damage *= BLOCK_DAMAGE_RATE;
+
+		warSituation.put( (byte) AttackType.COUNTER_ATTACK.toNumber() );//反击标识		
+		warSituation.put( attacker.getPosition() );//攻击者所在位置
+		warSituation.put( defender.getPosition() );//防御者所在位置
+		warSituation.putInt( (int) damage );//伤害值
+
+		return reduceHp( defender, damage );
+	}
+	
 	private void pet() {
 		Pet pet = attackers.getPet();
 		if( pet != null ){
@@ -198,12 +255,12 @@ public class AutoBattle extends BaseBattle {
 	}
 	/**
 	 * 对被攻击方进行扣hp等一系列操作<br>
-	 * 如果一方全军覆没，则设置本次战斗的胜方
+	 * 如果一方全军覆没，则返回true
 	 * 
 	 * @param defender			被攻击的战士
 	 * @param damage
 	 * @return
-	 * 			true			被攻击方全军覆没了
+	 * 			true			被攻击方全军覆没了<br>
 	 * 			false			被攻击方继续存活
 	 */
 	public boolean reduceHp( BaseFighter defender, int damage ){
@@ -254,6 +311,10 @@ public class AutoBattle extends BaseBattle {
 		int c1 = ++c;
 		System.out.println(c1);
 		
+		float r  = 0.5f;
+		int s= 100;
+		s *= r;
+		System.out.println( s );
 //		ByteBuffer b = ByteBuffer.allocate(10);
 //		b.put( 30);
 	}
