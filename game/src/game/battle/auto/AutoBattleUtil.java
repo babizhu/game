@@ -12,7 +12,7 @@ public class AutoBattleUtil implements IBattleUtil {
 	}
 	
 	@Override
-	public boolean isBlockAndCounterAttack( BaseFighter defender, BaseFighter attacker ) {
+	public boolean isBlockAndCounterAttack( BaseFighter attacker, BaseFighter defender ) {
 		int r = RandomUtil.getRandomInt( 0, 100 );//随机值
 		r = 50;//取消随机对测试的影响
 		float result = (float)(attacker.getBlock() + 500) / (defender.getUnBlock() + 500) - 1;

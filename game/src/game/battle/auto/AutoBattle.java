@@ -187,13 +187,28 @@ public class AutoBattle extends BaseBattle {
 			return false;
 		}
 		
+		/***************************************************计算正常伤害**************************************************/		
+		
 		int damage = until.calcNormalAttackDamage( attacker, defender );
-		byte crit = until.calcCrit( attacker, defender );//计算暴击加成
-		damage *= crit;		
-		//执行运行时间点为【被普通或者技能攻击后，正式扣血前】DEFENDING的buff
+		
+		/***************************************************计算暴击加成**************************************************/
+		
+		byte crit = until.calcCrit( attacker, defender );
+		damage *= crit;
+		
+		/***************************************************计算是否格挡**************************************************/
+		
+		boolean isBlockAndCounterAttack = until.isBlockAndCounterAttack( defender, attacker );
+		if( isBlockAndCounterAttack ){
+			damage *= BLOCK_DAMAGE_RATE;
+		}
+		
+		/***************************************************计算buff伤害**************************************************/
+		
 		damage = defender.getBm().run( (int) damage, BuffRunPoint.AFTER_DEFENDING );
 		
-		//boolean isBlockAndCounterAttack = until.isBlockAndCounterAttack( defender, attacker );	//暂时不考虑格挡这一说
+		/*****************************************************计算完成****************************************************/
+		
 		warSituation.putInt( damage );
 		
 		if( reduceHp( defender, damage ) == true ){
@@ -206,8 +221,10 @@ public class AutoBattle extends BaseBattle {
 			defender.setSp( defender.getSp() + SP_TO_ADD );
 		}
 		
-
-		return doBlockAndCounterAttack( defender, attacker );
+		if( isBlockAndCounterAttack ){
+			return doBlockAndCounterAttack( defender, attacker );
+		}
+		return false;
 
 	}
 
@@ -224,11 +241,7 @@ public class AutoBattle extends BaseBattle {
 		if( attacker.getHp() == 0 ){
 			return false;
 		}
-		boolean isCounterAttack = until.isBlockAndCounterAttack( defender, attacker );	//判断是否反击
-		if( !isCounterAttack ){
-			return false;
-		}
-
+		
 		int damage = until.calcNormalAttackDamage( attacker, defender );
 		damage *= BLOCK_DAMAGE_RATE;
 

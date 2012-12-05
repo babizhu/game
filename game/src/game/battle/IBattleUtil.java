@@ -34,6 +34,6 @@ public interface IBattleUtil {
 	 * @param attacker
 	 * @return
 	 */
-	boolean isBlockAndCounterAttack( BaseFighter defender, BaseFighter attacker );
+	boolean isBlockAndCounterAttack( BaseFighter attacker, BaseFighter defender );
 
 }

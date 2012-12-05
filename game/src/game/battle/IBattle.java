@@ -2,7 +2,6 @@ package game.battle;
 
 import java.nio.ByteBuffer;
 
-import util.ErrorCode;
 
 public interface IBattle {
 
