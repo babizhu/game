@@ -13,6 +13,7 @@ import game.task.enums.TaskStatus;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.xsocket.connection.BlockingConnection;
@@ -52,6 +53,7 @@ public class TaskGetAllActiveEventTest extends BaseEventTest  {
 		for( int i = 0; i < count; i++ )
 		{
 			buf = sendPackage( nbc );
+
 			byte size = buf.get();
 			assertEquals( 5, size );
 			for( int t = 0; t < size; t++ ){
@@ -67,7 +69,7 @@ public class TaskGetAllActiveEventTest extends BaseEventTest  {
 	}
 
 	@Override
-	public short getPacketNo() {
+	public short getEventId() {
 		return EventManager.TASK_GET_ALL_ACTIVE.toNum();
 	}
 

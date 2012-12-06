@@ -30,6 +30,7 @@ public class TaskAcceptEventTest extends BaseEventTest {
 		TaskTempletCfg.init();
 	}
 	
+
 	private ByteBuffer sendPackage( IBlockingConnection nbc, short templetId ) throws IOException{
 		
 		ByteBuffer buf = createContent( templetId );
@@ -107,7 +108,7 @@ public class TaskAcceptEventTest extends BaseEventTest {
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;	
 		String sql = "update task_base set status = ? " +
-				"where templet_id = ? and name = ?";
+				"where templet_id = ? and uname = ?";
 		
 		int	i = 1;
 		try {
@@ -117,6 +118,7 @@ public class TaskAcceptEventTest extends BaseEventTest {
 			pst.setString( i++, name );
 			pst.executeUpdate();
 		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			DatabaseUtil.close( null, pst, con );
 		}
@@ -124,7 +126,7 @@ public class TaskAcceptEventTest extends BaseEventTest {
 	}
 	
 	@Override
-	public short getPacketNo() {
+	public short getEventId() {
 		// TODO Auto-generated method stub
 		return EventManager.TASK_ACCEPT.toNum();
 	}

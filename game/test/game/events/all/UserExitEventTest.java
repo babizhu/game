@@ -92,7 +92,7 @@ public class UserExitEventTest extends BaseEventTest {
 	}
 	
 	@Override
-	public short getPacketNo() {
+	public short getEventId() {
 		return 0;
 	}
 
