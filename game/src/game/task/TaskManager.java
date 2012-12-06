@@ -20,6 +20,7 @@ import util.SystemTimer;
  * 
  * 同步的思考：<br>
  * 让此类自身成为线程安全的
+ * 似乎没有必要了，在当前的大同步情况下
  */
 public class TaskManager {
 

@@ -1,7 +1,7 @@
 package experiment;
 
-import game.packages.BasePackage;
-import game.packages.PackageManager;
+import game.events.BaseEvent;
+import game.events.EventManager;
 
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -38,11 +38,11 @@ public class SendPackage {
 		}
 		pack = ByteBuffer.allocate( 6 + data.limit() );//6 for 1(HEAD) + 2(PACKAGE NO) + 2(PACKAGE LEN) + 1(FOOT) = 6
 		
-		pack.put( BasePackage.HEAD );
+		pack.put( BaseEvent.HEAD );
 		pack.putShort( packageNo );
 		pack.putShort( (short) data.limit() );
 		pack.put( data );
-		pack.put( BasePackage.FOOT );
+		pack.put( BaseEvent.FOOT );
 		pack.flip();
 		
 		return pack;
@@ -74,7 +74,7 @@ public class SendPackage {
 
 	public static void main ( String[] args ) {
 		for( int i = 0; i < 1; i++ ){
-			new SendPackage().sendPackage( (short) PackageManager.USER_LOGIN.toNum() );
+			new SendPackage().sendPackage( (short) EventManager.USER_LOGIN.toNum() );
 		}
 	}
 }
