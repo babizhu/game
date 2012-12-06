@@ -1,8 +1,8 @@
 package game.util;
 
-import game.packages.BasePackage;
-import game.packages.IPackage;
-import game.packages.PackageDescrip;
+import game.events.BaseEvent;
+import game.events.IEvent;
+import game.events.EventDescrip;
 
 import java.io.File;
 import java.io.IOException;
@@ -147,38 +147,38 @@ public class PackageUtil {
 	/**
 	 * 打印所有的包情况，方便查询
 	 */
-	public static void printAllPakcets( BasePackage[] packages ) {
+	public static void printAllPakcets( BaseEvent[] packages ) {
 		Formatter f = new Formatter(System.out);
 		f.format("%-15s %-127s %-150s \n", "包号", "类别", "功能说明");
 		f.format("%-15s %-127s %-150s \n", "－－", "－－", "－－－－");
-		for ( BasePackage ap : packages ) {
+		for ( BaseEvent ap : packages ) {
 			if( ap != null ){
 				Class<?> c = ap.getClass();
-				PackageDescrip desc = c.getAnnotation(PackageDescrip.class);
+				EventDescrip desc = c.getAnnotation(EventDescrip.class);
 				String s = null;
 				s = (desc == null) ? "" : desc.desc();
-				f.format("%-8s %-50s %-150s \n", ap.getPackageNo(), c.getName(),	s );
+				f.format("%-8s %-50s %-150s \n", ap.getEventId(), c.getName(),	s );
 			}
 		}
 	}
 
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, SecurityException, NoSuchFieldException, IOException {
-		BasePackage p1 = null;
+		BaseEvent p1 = null;
 		// String p = "PacketTest";
 		String s = "game.packages";// 包文件夹
 		List<Class<?>> list = getClasses(s);
 		int max = 1000;
-		final BasePackage[] packets = new BasePackage[max];// 不存在0号包
+		final BaseEvent[] packets = new BaseEvent[max];// 不存在0号包
 
 		// 生成所有包的实例数组，供后面调用
 		for (Class<?> c : list) {
 			if (!c.isInterface() && !c.getName().contains("Base")) {
 
-				p1 = (BasePackage) c.newInstance();
+				p1 = (BaseEvent) c.newInstance();
 				// System.out.println( c.getName() + " ：" + p1.getPacketNo() );
 
-				int packetNo = p1.getPackageNo();
-				BasePackage ip = packets[packetNo];
+				int packetNo = p1.getEventId();
+				BaseEvent ip = packets[packetNo];
 				if( ip == null ) {
 					packets[packetNo] = p1;
 
@@ -191,14 +191,14 @@ public class PackageUtil {
 		System.out.println("---------------------------------------------------");
 		for (int i = 0; i < 100; i++) {
 			int packetNo = new Random().nextInt( packets.length );
-			IPackage ap = packets[packetNo];
+			IEvent ap = packets[packetNo];
 			System.out.print(i + ":\t");
 			if (ap == null) {
 				System.out.println(packetNo + "：不存在对应的包号");
 			} else {
 				ap.run(null, null);//传null，有些包可能会出错
 
-				if (ap.getPackageNo() == 4) {
+				if (ap.getEventId() == 4) {
 					// ((ShowBattle)ap).run( null, true, 234 );
 				}
 			}

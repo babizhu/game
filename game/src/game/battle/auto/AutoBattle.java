@@ -4,6 +4,7 @@ import game.battle.AttackType;
 import game.battle.BaseBattle;
 import game.battle.BuffRunPoint;
 import game.battle.FighterTeam;
+import game.battle.Flag;
 import game.battle.IBattleUtil;
 import game.battle.IFormation;
 import game.battle.Pet;
@@ -97,8 +98,7 @@ public class AutoBattle extends BaseBattle {
 	 * 初始化，按照速度对参战人员进行排序
 	 */
 	private void init(){		
-		for( BaseFighter f : attackers.getFighters() ){
-			
+		for( BaseFighter f : attackers.getFighters() ){			
 			fighters.add( f );
 		}
 		for( BaseFighter f : defenders.getFighters() ){
@@ -174,19 +174,21 @@ public class AutoBattle extends BaseBattle {
 	 */
 	private boolean doNormalAttack( BaseFighter attacker, FighterTeam defenderTeam ) {
 		warSituation.put( (byte) AttackType.NORMAL_ATTACK.toNumber() );
-		BaseFighter defender = formation.normalAttackWho( attacker, defenderTeam );
 		
+		BaseFighter defender = formation.normalAttackWho( attacker, defenderTeam );		
 		assert( defender != null );
 		
 		boolean hit = until.isHit( attacker, defender );
-		warSituation.put( (byte) (hit ? 1 : 0) );
+		
 		warSituation.put( attacker.getPosition() );//攻击者所在位置
 		warSituation.put( defender.getPosition() );//防御者所在位置	，为了方便客户端处理，把攻防两边的战士的位置，已串行化处理，攻方范围0-8，防御方9-17
+		warSituation.put( (byte) (hit ? 1 : 0) );
 
 		if( !hit ){
 			return false;
 		}
 		
+		byte flag = 0;
 		/***************************************************计算正常伤害**************************************************/		
 		
 		int damage = until.calcNormalAttackDamage( attacker, defender );
@@ -195,11 +197,15 @@ public class AutoBattle extends BaseBattle {
 		
 		byte crit = until.calcCrit( attacker, defender );
 		damage *= crit;
+		if( crit > 1 ){
+			flag = (byte) (flag | Flag.CRIT.toNumber());
+		}
 		
 		/***************************************************计算是否格挡**************************************************/
 		
 		boolean isBlockAndCounterAttack = until.isBlockAndCounterAttack( defender, attacker );
 		if( isBlockAndCounterAttack ){
+			flag = (byte) (flag | Flag.BLOCK.toNumber());
 			damage *= BLOCK_DAMAGE_RATE;
 		}
 		
@@ -209,12 +215,12 @@ public class AutoBattle extends BaseBattle {
 		
 		/*****************************************************计算完成****************************************************/
 		
+		warSituation.put( flag );
 		warSituation.putInt( damage );
 		
 		if( reduceHp( defender, damage ) == true ){
 			return true;
-		}
-		
+		}		
 
 		attacker.setSp( attacker.getSp() + SP_TO_ADD );
 		if( damage > 1 ){//防止不死之身之类的技能长久不结束
@@ -224,10 +230,11 @@ public class AutoBattle extends BaseBattle {
 		if( isBlockAndCounterAttack ){
 			return doBlockAndCounterAttack( defender, attacker );
 		}
+		
 		return false;
-
 	}
 
+	
 	/**
 
 	 * 格挡并反击流程，不用考虑命中与暴击，同样也没考虑防御者身上的buff，暂时先这样，有需求在修改
@@ -258,8 +265,6 @@ public class AutoBattle extends BaseBattle {
 		if( pet != null ){
 			pet.run( this );
 		}
-		// TODO Auto-generated method stub
-		
 	}
 
 	/**
@@ -332,6 +337,11 @@ public class AutoBattle extends BaseBattle {
 		int s= 100;
 		s *= r;
 		System.out.println( s );
+		
+		int a = 0;
+		a = a | Flag.BLOCK.toNumber();
+		a = a | Flag.CRIT.toNumber();
+		System.out.println( a );;
 //		ByteBuffer b = ByteBuffer.allocate(10);
 //		b.put( 30);
 	}

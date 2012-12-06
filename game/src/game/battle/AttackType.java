@@ -34,7 +34,6 @@ public enum AttackType {
 		number = (byte) n;
 	}
 	public byte toNumber() {
-		// TODO Auto-generated method stub
 		return number;
 	}
 

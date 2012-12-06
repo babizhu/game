@@ -1,9 +1,9 @@
 package core;
 
-import game.packages.PackageManager;
+import game.events.EventManager;
+import game.events.all.UserCreateEvent;
+import game.events.all.UserLoginEvent;
 
-import game.packages.packs.UserCreatePackage;
-import game.packages.packs.UserLoginPackage;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -45,7 +45,7 @@ public final class GameMainLogic implements IGameLogic {
 	@Override
 	public void packageRun( INonBlockingConnection con, short packageNo, byte[] data ) throws IOException {
 		
-		PackageManager pack = PackageManager.fromNum( packageNo );
+		EventManager pack = EventManager.fromNum( packageNo );
 
 		ErrorCode code = ErrorCode.SUCCESS;
 
@@ -56,13 +56,13 @@ public final class GameMainLogic implements IGameLogic {
 		} else {
 			try{
 				ByteBuffer buf = ByteBuffer.wrap( data );
-				if( pack == PackageManager.USER_LOGIN ){
-					UserLoginPackage p = (UserLoginPackage) PackageManager.USER_LOGIN.getPackageInstance();
+				if( pack == EventManager.USER_LOGIN ){
+					UserLoginEvent p = (UserLoginEvent) EventManager.USER_LOGIN.getEventInstance();
 					p.run( con, buf );
 					
 				}
-				else if( pack == PackageManager.USER_CREATE ){
-					UserCreatePackage p = (UserCreatePackage) PackageManager.USER_CREATE.getPackageInstance();
+				else if( pack == EventManager.USER_CREATE ){
+					UserCreateEvent p = (UserCreateEvent) EventManager.USER_CREATE.getEventInstance();
 					p.run( con, buf );
 				}
 				else{
