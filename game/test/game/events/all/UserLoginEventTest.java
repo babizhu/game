@@ -198,7 +198,7 @@ public class UserLoginEventTest extends BaseEventTest {
 	}
 
 	@Override
-	public short getPacketNo() {
+	public short getEventId() {
 //		return -1;
 		return EventManager.USER_LOGIN.toNum();
 	}

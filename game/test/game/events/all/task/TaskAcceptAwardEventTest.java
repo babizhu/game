@@ -23,6 +23,7 @@ import define.SystemCfg;
 
 public class TaskAcceptAwardEventTest  extends BaseEventTest{
 	
+	private static String name = "bbz";
 	private ByteBuffer sendPackage( IBlockingConnection nbc, short templetId ) throws IOException{
 		
 		ByteBuffer buf = createContent( templetId );
@@ -39,7 +40,7 @@ public class TaskAcceptAwardEventTest  extends BaseEventTest{
 	@Test
 	public void test() throws IOException, InterruptedException{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
-		String name = "bbz";
+		
 	
 		ByteBuffer buf = new UserLoginEventTest().sendPackage( nbc, name );
 		ErrorCode code = ErrorCode.values()[buf.getShort()];
@@ -95,11 +96,10 @@ public class TaskAcceptAwardEventTest  extends BaseEventTest{
 	 */
 	private void restoreTask( short templetId ){
 		 
-		String name = "bbz";
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;	
 		String sql = "update task_base set status = ? " +
-				"where templet_id = ? and name = ?";
+				"where templet_id = ? and uname = ?";
 		
 		int	i = 1;
 		try {
@@ -109,13 +109,14 @@ public class TaskAcceptAwardEventTest  extends BaseEventTest{
 			pst.setString( i++, name );
 			pst.executeUpdate();
 		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			DatabaseUtil.close( null, pst, con );
 		}
 		
 	}
 	@Override
-	public short getPacketNo() {
+	public short getEventId() {
 		// TODO Auto-generated method stub
 		return EventManager.TASK_ACCEPT_AWARD.toNum();
 	}

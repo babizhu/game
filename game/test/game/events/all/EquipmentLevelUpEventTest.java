@@ -57,7 +57,7 @@ public class EquipmentLevelUpEventTest extends BaseEventTest {
 	}
 
 	@Override
-	public short getPacketNo() {
+	public short getEventId() {
 		return EventManager.EQUIPMENT_LEVEL_UP.toNum();
 	}
 

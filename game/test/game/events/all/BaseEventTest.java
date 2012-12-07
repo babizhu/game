@@ -19,7 +19,7 @@ public abstract class BaseEventTest {
 		
 		ByteBuffer buff = ByteBuffer.allocate(capacity);
 		buff.put( BaseEvent.HEAD );
-		buff.putShort( getPacketNo() );
+		buff.putShort( getEventId() );
 		buff.putShort( (short) 0 );//长度占位符
 		return buff;
 	}
@@ -55,13 +55,13 @@ public abstract class BaseEventTest {
 		short len = nbc.readShort();
 		byte[] data = nbc.readBytesByLength( len );
 		byte foot = nbc.readByte();
-		if( head != BaseEvent.HEAD && foot != BaseEvent.FOOT && packageNo != getPacketNo() ){
+		if( head != BaseEvent.HEAD && foot != BaseEvent.FOOT && packageNo != getEventId() ){
 			System.out.println( "error : head=" + head + ",packageNo=" + packageNo + ",foot=" + foot );
 			return null;
 		}
 		return ByteBuffer.wrap( data );
 	}
 	
-	public abstract short getPacketNo ();
+	public abstract short getEventId ();
 
 }

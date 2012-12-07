@@ -41,7 +41,7 @@ public class UserCreateEventTest extends BaseEventTest{
 	}
 
 	@Override
-	public short getPacketNo() {
+	public short getEventId() {
 		return EventManager.USER_CREATE.toNum();
 	}
 	

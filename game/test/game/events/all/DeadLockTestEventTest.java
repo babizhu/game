@@ -113,7 +113,7 @@ public class DeadLockTestEventTest extends BaseEventTest {
 	 * @see game.packages.packs.PackageTest#getPacketNo()
 	 */
 	@Override
-	public short getPacketNo() {
+	public short getEventId() {
 		return EventManager.DEAD_LOCK_TEST.toNum();
 	}
 }
