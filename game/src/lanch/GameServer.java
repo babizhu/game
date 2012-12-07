@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net;
+package lanch;
 import game.prop.cfg.PropTempletCfg;
 import game.task.cfg.TaskTempletCfg;
 
@@ -11,6 +11,8 @@ import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 
 import javax.management.JMException;
+
+import net.GameHandler;
 
 import org.xsocket.connection.ConnectionUtils;
 import org.xsocket.connection.IConnection.FlushMode;
