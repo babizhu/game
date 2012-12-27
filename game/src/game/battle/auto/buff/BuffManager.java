@@ -51,10 +51,9 @@ public class BuffManager {
 	
 	/**
 	 * 根据时间点参数，运行相应的buff内容
-	 * @param damage
-	 * @param pt
-	 * @param battle
-	 * @return
+	 * @param damage		外层计算的伤害值
+	 * @param pt			运行的时间点
+	 * @return				buff之后的伤害值（有可能有变化，也可能没变化）<br>
 	 * 
 	 * 注意：这里只返回伤害值，除HP以外其余的buff效果，例如增加SP等，直接在run()内进行处理
 	 */

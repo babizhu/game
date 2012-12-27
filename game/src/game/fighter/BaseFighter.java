@@ -342,6 +342,11 @@ public class BaseFighter implements IFighter {
 		this.unCrit = unCrit;
 	}
 
+	public boolean isDie() {
+		// TODO Auto-generated method stub
+		return hp <= 0;
+	}
+
 
 	
 	

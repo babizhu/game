@@ -70,7 +70,7 @@ public class DeadLockTestEventTest extends BaseEventTest {
 	 */
 	public void sendDeadLoclTestPackage(IBlockingConnection nbc) {
 		ByteBuffer buf = createEmptyPackage(1024);
-		sendPacket( nbc, buf );
+		sendEvent( nbc, buf );
 	}
 
 	/**

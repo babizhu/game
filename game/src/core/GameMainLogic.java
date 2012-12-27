@@ -57,13 +57,23 @@ public final class GameMainLogic implements IGameLogic {
 			try{
 				ByteBuffer buf = ByteBuffer.wrap( data );
 				if( pack == EventManager.USER_LOGIN ){
-					UserLoginEvent p = (UserLoginEvent) EventManager.USER_LOGIN.getEventInstance();
-					p.run( con, buf );
+					if( name != null ){
+						code = ErrorCode.USER_HAS_LOGIN;
+					}
+					else{
+						UserLoginEvent p = (UserLoginEvent) EventManager.USER_LOGIN.getEventInstance();
+						p.run( con, buf );
+					}
 					
 				}
 				else if( pack == EventManager.USER_CREATE ){
-					UserCreateEvent p = (UserCreateEvent) EventManager.USER_CREATE.getEventInstance();
-					p.run( con, buf );
+					if( name != null ){
+						code = ErrorCode.USER_HAS_LOGIN;
+					}
+					else{
+						UserCreateEvent p = (UserCreateEvent) EventManager.USER_CREATE.getEventInstance();
+						p.run( con, buf );
+					}
 				}
 				else{
 					if( name == null ){

@@ -48,7 +48,7 @@ public class UserLoginEventTest extends BaseEventTest {
 	public ByteBuffer sendPackage( IBlockingConnection nbc, String name ) throws IOException{
 		//this.nbc = nbc;
 		ByteBuffer buf = createContent( name );
-		sendPacket( nbc, buf );
+		sendEvent( nbc, buf );
 		return getData( nbc );
 	}
 	

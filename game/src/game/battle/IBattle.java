@@ -1,6 +1,6 @@
 package game.battle;
 
-import java.nio.ByteBuffer;
+import game.battle.auto1.WarSituation;
 
 
 public interface IBattle {
@@ -15,7 +15,7 @@ public interface IBattle {
 	 * 返回战斗结束后需要获取的战斗信息
 	 * @return
 	 */
-	ByteBuffer getWarSituation();
+	WarSituation getWarSituation();
 	
 	/**
 	 * 攻击方是否获胜

@@ -159,11 +159,10 @@ public class UserManager {
 	 * @param data
 	 * @return
 	 * @throws IOException
+	 * 
+	 * 外层保证玩家不会重复登陆（重复发送登陆包）
 	 */
 	public ErrorCode login( INonBlockingConnection con, ByteBuffer buf ) throws IOException {
-		if( con.getAttachment() != null ){
-			return ErrorCode.USER_HAS_LOGIN;
-		}
 		
 		String name = util.BaseUtil.decodeString( buf );
 

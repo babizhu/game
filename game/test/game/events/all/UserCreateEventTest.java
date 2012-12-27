@@ -25,10 +25,10 @@ public class UserCreateEventTest extends BaseEventTest{
 	 * @return
 	 * @throws IOException 
 	 */
-	public ByteBuffer sendPackage( IBlockingConnection nbc, String name, String nickName, byte sex ) throws IOException{
+	public ByteBuffer sendEvent( IBlockingConnection nbc, String name, String nickName, byte sex ) throws IOException{
 		//this.nbc = nbc;
 		ByteBuffer buf = createContent( name, nickName, sex );
-		sendPacket( nbc, buf );
+		sendEvent( nbc, buf );
 		return getData( nbc );
 	}
 
@@ -50,17 +50,17 @@ public class UserCreateEventTest extends BaseEventTest{
 		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
 		
 		String name = "刘0" + new Random().nextInt( 1000000) + 1000000;//生成一个基本不容易重复的名字，方便测试
-		ByteBuffer buf = sendPackage( nbc, name, "nickname_" + name, (byte) 1 );
-		ErrorCode code = ErrorCode.values()[buf.getShort()];
+		ByteBuffer response = sendEvent( nbc, name, "nickname_" + name, (byte) 1 );
+		ErrorCode code = ErrorCode.values()[response.getShort()];
 		assertEquals( ErrorCode.SUCCESS, code );
 		
-		buf = sendPackage( nbc, name, "nickname_" + name, (byte) 1 );
-		code = ErrorCode.values()[buf.getShort()];
+		response = sendEvent( nbc, name, "nickname_" + name, (byte) 1 );
+		code = ErrorCode.values()[response.getShort()];
 		assertEquals( ErrorCode.USER_DUPLICATE_NAME, code );
 		
 		name = "刘0" + new Random().nextInt( 1000000) + 1000000;//生成一个基本不容易重复的名字，方便测试
-		buf = sendPackage( nbc, name, "巴比猪0", (byte) 1 );//测试昵称冲突
-		code = ErrorCode.values()[buf.getShort()];
+		response = sendEvent( nbc, name, "巴比猪0", (byte) 1 );//测试昵称冲突
+		code = ErrorCode.values()[response.getShort()];
 		assertEquals( ErrorCode.USER_DUPLICATE_NAME, code );
 	}
 

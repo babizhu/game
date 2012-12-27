@@ -51,7 +51,7 @@ public class EquipmentLevelUpEventTest extends BaseEventTest {
 	public ByteBuffer sendPackage( IBlockingConnection nbc,  long id, byte type  ) throws IOException{
 		//this.nbc = nbc;
 		ByteBuffer buf = createContent( id, type );
-		sendPacket( nbc, buf );
+		sendEvent( nbc, buf );
 		//return getData( nbc );
 		return null;
 	}

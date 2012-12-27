@@ -22,7 +22,7 @@ import org.junit.Test;
  */
 public class BaseEventTest {
 
-	UserLoginEvent p = new UserLoginEvent();//由于BasePackage无法实例化，这里用UserLoginPackage代替
+	UserLoginEvent event = new UserLoginEvent();//由于BasePackage无法实例化，这里用UserLoginPackage代替
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -56,12 +56,12 @@ public class BaseEventTest {
 	 */
 	@Test
 	public void testBuildEmptyPackage() {
-		ByteBuffer buf = p.buildEmptyPackage( 1024 );
+		ByteBuffer buf = event.buildEmptyPackage( 1024 );
 		assertEquals( 5, buf.position() );//5 for HEAD(byte) + packageNo(short) + len(short)
 		buf.flip();
 		
 		assertEquals( BaseEvent.HEAD, buf.get() );
-		assertEquals( p.getEventId(), buf.getShort() );
+		assertEquals( event.getEventId(), buf.getShort() );
 		assertEquals( 0, buf.getShort() );
 
 	}
@@ -82,7 +82,7 @@ public class BaseEventTest {
 		int limit = buf.limit();
 		int pos = buf.position();
 		
-		System.out.println( p.toString( buf ) );
+		System.out.println( event.toString( buf ) );
 		assertEquals( limit, buf.limit() );
 		assertEquals( pos, buf.position() );
 	}
