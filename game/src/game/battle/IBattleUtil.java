@@ -1,39 +1,34 @@
 package game.battle;
 
+import java.util.Comparator;
+
+import game.battle.auto1.AttackInfo;
 import game.fighter.BaseFighter;
 
 public interface IBattleUtil {
 
-	/**
-	 * 判断攻击是否命中
-	 * @param attacker
-	 * @param defender
-	 * @return
-	 */
-	boolean isHit(BaseFighter attacker, BaseFighter defender);
 
 	/**
-	 * 计算暴击加成，返回1意味着没有暴击，2则为双倍暴击，以此类推
+	 * 计算普通攻击的各种信息情况
 	 * @param attacker
 	 * @param defender
 	 * @return
 	 */
-	byte calcCrit( BaseFighter attacker, BaseFighter defender );
-
+	AttackInfo normalAttack(BaseFighter attacker, BaseFighter defender );
+	
 	/**
-	 * 计算普通攻击的伤害
+	 * 计算反击的伤害
 	 * @param attacker
 	 * @param defender
 	 * @return
 	 */
-	int calcNormalAttackDamage(BaseFighter attacker, BaseFighter defender );
-
+	int calcCounterAttackDamage( BaseFighter attacker, BaseFighter defender );
+	
 	/**
-	 * 计算是否格挡并反击，注意，为统一用词，还是计算attacker是否可以格挡并反击defender
-	 * @param defender
-	 * @param attacker
-	 * @return
+	 * 确定所有参战人员出手顺序的算法
 	 */
-	boolean isBlockAndCounterAttack( BaseFighter attacker, BaseFighter defender );
+	Comparator<BaseFighter> getOrderComparator();
+
+	
 
 }

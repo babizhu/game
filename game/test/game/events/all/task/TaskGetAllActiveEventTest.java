@@ -32,7 +32,7 @@ public class TaskGetAllActiveEventTest extends BaseEventTest  {
 	
 	private ByteBuffer sendPackage( IBlockingConnection nbc ) throws IOException{
 		ByteBuffer buf = createContent(  );
-		sendPacket( nbc, buf );
+		sendEvent( nbc, buf );
 		return getData( nbc );
 	}
 	

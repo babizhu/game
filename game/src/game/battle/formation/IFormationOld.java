@@ -1,11 +1,12 @@
-package game.battle;
+package game.battle.formation;
 
+import game.battle.FighterTeam;
 import game.fighter.BaseFighter;
 
 import java.util.List;
 
 
-public interface IFormation {
+public interface IFormationOld {
 
 	/**
 	 * 计算普通攻击应该攻击的战士

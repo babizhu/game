@@ -6,5 +6,7 @@ package game.battle;
  * 2012-9-27 下午05:44:22
  */
 public interface ISkill {
+	
+	boolean void
 
 }

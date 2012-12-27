@@ -146,7 +146,7 @@ public class UserInfoDataProvider {
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;								  
 		String sql = "insert into user_base(name,nick_name, sex, cash, strength,create_time,is_adult) values" +
-										  "(   ?,	     ?,   ?,	 ?,        ?,          ?,       ?)";
+										  "(   ?,	     ?,   ?,	?,        ?,          ?,       ?)";
 		int	i = 1;
 		try {
 			pst = con.prepareStatement( sql );

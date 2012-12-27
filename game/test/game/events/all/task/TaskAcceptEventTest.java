@@ -34,7 +34,7 @@ public class TaskAcceptEventTest extends BaseEventTest {
 	private ByteBuffer sendPackage( IBlockingConnection nbc, short templetId ) throws IOException{
 		
 		ByteBuffer buf = createContent( templetId );
-		sendPacket( nbc, buf );
+		sendEvent( nbc, buf );
 		return getData( nbc );
 	}
 	

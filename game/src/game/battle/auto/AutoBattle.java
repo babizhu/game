@@ -4,10 +4,10 @@ import game.battle.AttackType;
 import game.battle.BaseBattle;
 import game.battle.BuffRunPoint;
 import game.battle.FighterTeam;
-import game.battle.Flag;
 import game.battle.IBattleUtil;
-import game.battle.IFormation;
 import game.battle.Pet;
+import game.battle.formation.FormationNine;
+import game.battle.formation.IFormationOld;
 import game.fighter.BaseFighter;
 
 import java.nio.ByteBuffer;
@@ -68,7 +68,7 @@ public class AutoBattle extends BaseBattle {
 	/**
 	 * 九宫格阵型
 	 */
-	private IFormation					formation = FormationNine.INSTANCE;	
+	private IFormationOld					formation = FormationNine.INSTANCE;	
 	
 	/**
 	 * 对所有参战人员按速度进行排序
@@ -191,21 +191,21 @@ public class AutoBattle extends BaseBattle {
 		byte flag = 0;
 		/***************************************************计算正常伤害**************************************************/		
 		
-		int damage = until.calcNormalAttackDamage( attacker, defender );
+		int damage = until.normalAttack( attacker, defender );
 		
 		/***************************************************计算暴击加成**************************************************/
 		
 		byte crit = until.calcCrit( attacker, defender );
 		damage *= crit;
 		if( crit > 1 ){
-			flag = (byte) (flag | Flag.CRIT.toNumber());
+			flag = (byte) (flag | F111lag.CRIT.toNumber());
 		}
 		
 		/***************************************************计算是否格挡**************************************************/
 		
 		boolean isBlockAndCounterAttack = until.isBlockAndCounterAttack( defender, attacker );
 		if( isBlockAndCounterAttack ){
-			flag = (byte) (flag | Flag.BLOCK.toNumber());
+			flag = (byte) (flag | F111lag.BLOCK.toNumber());
 			damage *= BLOCK_DAMAGE_RATE;
 		}
 		
@@ -249,7 +249,7 @@ public class AutoBattle extends BaseBattle {
 			return false;
 		}
 		
-		int damage = until.calcNormalAttackDamage( attacker, defender );
+		int damage = until.normalAttack( attacker, defender );
 		damage *= BLOCK_DAMAGE_RATE;
 
 		warSituation.put( (byte) AttackType.COUNTER_ATTACK.toNumber() );//反击标识		
@@ -339,8 +339,8 @@ public class AutoBattle extends BaseBattle {
 		System.out.println( s );
 		
 		int a = 0;
-		a = a | Flag.BLOCK.toNumber();
-		a = a | Flag.CRIT.toNumber();
+		a = a | F111lag.BLOCK.toNumber();
+		a = a | F111lag.CRIT.toNumber();
 		System.out.println( a );;
 //		ByteBuffer b = ByteBuffer.allocate(10);
 //		b.put( 30);

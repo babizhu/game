@@ -171,6 +171,7 @@ public class UserInfo {
 	public synchronized int getGold(  ){
 		return gold;
 	}
+	
 	/**
 	 * 修改玩家的金币数量
 	 * @param change			增加为正数，减少为负数

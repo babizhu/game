@@ -27,7 +27,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 	 */
 	private static final int PACKAGE_LEN = 8192;
 	
-	private GameMainLogic gameLogic = GameMainLogic.getInstance();
+	private final GameMainLogic gameLogic = GameMainLogic.getInstance();
 
 	/*
 	 * (non-Javadoc)
@@ -91,7 +91,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 				// TODO 调用某个退出函数
 			}
 
-			gameLogic.packageRun(con, packageNo, data);
+			gameLogic.packageRun( con, packageNo, data );
 
 		}
 
@@ -105,7 +105,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 	 * @param foot
 	 * @return true 首尾包号正确 false 错误
 	 */
-	private boolean checkInputData(byte head, byte foot) {
+	private boolean checkInputData( byte head, byte foot ) {
 		if (head != BaseEvent.HEAD || foot != BaseEvent.FOOT) {
 			return false;
 		}

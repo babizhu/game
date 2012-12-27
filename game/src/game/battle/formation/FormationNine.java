@@ -1,20 +1,19 @@
-package game.battle.auto;
+package game.battle.formation;
 
 import game.battle.FighterTeam;
-import game.battle.IFormation;
 import game.fighter.BaseFighter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class FormationNine implements IFormation {
+public class FormationNine implements IFormationOld {
 
 	public static final int CELL_COUNT = 9;//九宫格总的格子数
 	public static final int COUNT_PER_ROW = 3;//每行的格子数
 	public static final int MAX_NUMBER_IN_FORMATION = 5;//一个阵型最大的参战人数  
 	
-	public static final IFormation INSTANCE = new FormationNine();
+	public static final IFormationOld INSTANCE = new FormationNine();
 	
 	private FormationNine(){
 		
