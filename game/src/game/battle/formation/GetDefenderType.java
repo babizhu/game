@@ -6,8 +6,6 @@ import java.util.List;
 import game.fighter.BaseFighter;
 
 public enum GetDefenderType {
-
-	
 	ROW {
 		@Override
 		public
