@@ -2,7 +2,7 @@ package game.battle;
 
 import java.util.Comparator;
 
-import game.battle.auto1.AttackInfo;
+import game.battle.auto.AttackInfo;
 import game.fighter.BaseFighter;
 
 public interface IBattleUtil {

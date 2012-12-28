@@ -1,24 +1,46 @@
 package game.battle.auto;
 
 
+import java.util.Comparator;
+
 import game.battle.IBattleUtil;
 import game.fighter.BaseFighter;
 import util.RandomUtil;
 
 public class AutoBattleUtil implements IBattleUtil {
 
-	public static final IBattleUtil INSTANCE = new AutoBattleUtil();
-	private AutoBattleUtil() {
+	private static final float 			BLOCK_DAMAGE_RATE = 0.5f;
+	
+	private static final IBattleUtil 	INSTANCE = new AutoBattleUtil();
+	private AutoBattleUtil() {}
+	public static final IBattleUtil getInstance(){
+		return INSTANCE;
 	}
 	
-	@Override
-	public boolean isBlockAndCounterAttack( BaseFighter attacker, BaseFighter defender ) {
+	/**
+	 * 出手顺序由速度确定
+	 */
+	private static final Comparator<BaseFighter> speedComparator = new Comparator<BaseFighter>(){
+		@Override
+		public int compare( BaseFighter f1, BaseFighter f2 ) {
+			return f2.getSpeed() - f1.getSpeed();
+		}
+	};
+	
+	/**
+	 * 是否格挡并反击
+	 * @param attacker
+	 * @param defender
+	 * @return
+	 */
+	private boolean isBlockAndCounterAttack( BaseFighter attacker, BaseFighter defender ) {
 		int r = RandomUtil.getRandomInt( 0, 100 );//随机值
 		r = 50;//取消随机对测试的影响
 		float result = (float)(attacker.getBlock() + 500) / (defender.getUnBlock() + 500) - 1;
 		result *= 100;
 		return result > r;	
 	}
+	
 	/**
 	 * 判断攻击者是否命中<br>
 	 * 公式				命中率 = （自身命中等级+500）/(敌方闪避等级+500)    随机一个数字（1~100），随机数小于等于命中值 即为命中			
@@ -29,8 +51,7 @@ public class AutoBattleUtil implements IBattleUtil {
 	 * 			false		未命中
 	 * 
 	 */
-	@Override
-	public boolean isHit( BaseFighter attacker, BaseFighter defender ) {
+	private boolean isHit( BaseFighter attacker, BaseFighter defender ) {
 		int r = RandomUtil.getRandomInt( 0, 100 );//随机值
 		r = 50;//取消随机对测试的影响
 		float result = (float)(attacker.getHitRate() + 500) / (defender.getDodgeRate() + 500);
@@ -38,8 +59,6 @@ public class AutoBattleUtil implements IBattleUtil {
 		return result > r;
 	}
 	
-
-	@Override
 	/**
 	 *	暴击率 =  （自身暴击等级 + 500)/（敌方韧性等级 + 500）- 1
 	 *
@@ -47,7 +66,7 @@ public class AutoBattleUtil implements IBattleUtil {
 	 * @param defender
 	 * @return 
 	 */
-	public byte calcCrit( BaseFighter attacker, BaseFighter defender ) {
+	private byte calcCrit( BaseFighter attacker, BaseFighter defender ) {
 		
 		byte crit = 1;//暴击加成
 		
@@ -61,8 +80,13 @@ public class AutoBattleUtil implements IBattleUtil {
 		return crit;
 	}
 
-	@Override
-	public int normalAttack( BaseFighter attacker, BaseFighter defender ) {
+	/**
+	 * 计算普通攻击的伤害值
+	 * @param attacker
+	 * @param defender
+	 * @return
+	 */
+	private int calcNormalAttackDamage( BaseFighter attacker, BaseFighter defender ) {
 		int r = RandomUtil.getRandomInt( 0, 40 );//伤害波动值，要求在-20~+20之间
 		r -= 20;
 		r = 0;//取消随机对测试的影响
@@ -72,13 +96,48 @@ public class AutoBattleUtil implements IBattleUtil {
 		return (int) damage;
 	}
 	
-
-	
+	@Override
+	public AttackInfo normalAttack( BaseFighter attacker, BaseFighter defender ) {
+		AttackInfo info = new AttackInfo();
+		boolean isHit = isHit(attacker, defender);
+		if( !isHit ){
+			return info;
+		}
+		
+		int crit  = calcCrit(attacker, defender);
+		boolean isBlock = this.isBlockAndCounterAttack(attacker, defender);
+		
+		int damage = calcNormalAttackDamage(attacker, defender) * crit;
+		if( isBlock ){
+			damage *= BLOCK_DAMAGE_RATE;
+		}
+		info.setCrit(crit);
+		info.SetBlock( isBlock );
+		
+		//TODO 补上buff的情况，比如防守方处于肉盾状态
+		info.setDamage(damage);
+		return info;
+	}
 	public static void main(String[] args) {
 		float r = 100f / 133;
 		System.out.println( r );
 		
 		r = (float)200 / 30;
 		System.out.println( r );
+		
+		int damage = 301;
+		damage *= BLOCK_DAMAGE_RATE;
+		System.out.println( damage);
 	}
+
+	@Override
+	public int calcCounterAttackDamage(BaseFighter attacker,
+			BaseFighter defender) {
+		return (int) (calcNormalAttackDamage(attacker, defender) * BLOCK_DAMAGE_RATE);
+	}
+	@Override
+	public Comparator<BaseFighter> getOrderComparator() {
+		return speedComparator;
+	}
+	
 }
