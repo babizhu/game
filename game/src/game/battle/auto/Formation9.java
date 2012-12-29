@@ -50,11 +50,11 @@ public class Formation9 implements IFormation{
 	 */
 	public boolean isAllDie(){
 		for( BaseFighter f : fighters ){
-			if( f.isDie() ){
+			if( !f.isDie() ){
 				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	@Override

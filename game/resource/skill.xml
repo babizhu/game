@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skills>
+	<skill>
+		<id>0</id>
+		<name>加班津贴</name>
+		<desc>恢复自身气血上限的15%给当前气血最低的友方单位。</desc>
+		<对自己xx>HP,公式1,0.15</对自己xx>
+		<对自己目标代码>getMinHp<对自己目标代码>
+		<对敌人xx>HP,公式1,0.15|SP,公式1,0.15</对敌人xx>
+		<对敌人目标代码>getMinHp<对敌人目标代码>
+		<>
+	</skill>
+</skills>

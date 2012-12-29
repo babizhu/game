@@ -32,7 +32,8 @@ public interface IFormation {
 	 * 是否所有的战士都已经死亡
 	 * @return
 	 */
-	boolean isAllDie();	
+	boolean isAllDie();
+	BaseFighter getMinHp();	
 	
 //	int		getRowByFighter( BaseFighter fighter );
 //	int		getColByFighter( BaseFighter fighter );

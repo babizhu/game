@@ -20,9 +20,9 @@ import org.slf4j.LoggerFactory;
  * @author liukun
  * 2012-9-27 下午05:52:32
  */
-public class AutoBattle1 extends BaseBattle {
+public class AutoBattle extends BaseBattle {
 
-	private static final Logger 		logger = LoggerFactory.getLogger( AutoBattle1.class );
+	private static final Logger 		logger = LoggerFactory.getLogger( AutoBattle.class );
 	private static final IBattleUtil	util = AutoBattleUtil.getInstance();
 
 	private static final int 			SKILL_ATTACK_NEED_SP = 0;
@@ -56,7 +56,7 @@ public class AutoBattle1 extends BaseBattle {
 	 */
 	private WarSituation				warSituation;	
 
-	public AutoBattle1( IFormation attackers, IFormation defenders ) {
+	public AutoBattle( IFormation attackers, IFormation defenders ) {
 		super();
 		
 		this.attackers = attackers;
