@@ -179,6 +179,7 @@ public class AutoBattle extends BaseBattle {
 	 * @return
 	 */
 	private boolean doAttack( BaseFighter attacker, IFormation currentDefender ) {
+
 		
 		BaseFighter defender = currentDefender.getDefender( attacker );
 		assert( defender != null );
