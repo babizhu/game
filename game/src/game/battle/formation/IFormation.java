@@ -26,15 +26,14 @@ public interface IFormation {
 	 * @param attacker	攻方
 	 * @return
 	 */
-	List<BaseFighter> getDefender( BaseFighter attacker, GetDefenderType type );
+	List<BaseFighter> getFighterOnEffect( BaseFighter attacker, ChooseFighters type );
 	
 	/**
 	 * 是否所有的战士都已经死亡
 	 * @return
 	 */
-	boolean isAllDie();	
+	boolean isAllDie();
 	
-//	int		getRowByFighter( BaseFighter fighter );
-//	int		getColByFighter( BaseFighter fighter );
+
 	
 }

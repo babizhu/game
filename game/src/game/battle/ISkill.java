@@ -1,5 +1,10 @@
 package game.battle;
 
+import game.battle.formation.IFormation;
+import game.fighter.BaseFighter;
+
+import java.util.List;
+
 /**
  * 战斗技能接口
  * @author liukun
@@ -7,6 +12,7 @@ package game.battle;
  */
 public interface ISkill {
 	
-	//boolean void
+
+	List<SkillResult> run(BaseFighter attacker, IFormation friend, IFormation enemy); 
 
 }

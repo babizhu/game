@@ -118,6 +118,7 @@ public class AutoBattleUtil implements IBattleUtil {
 		info.setDamage(damage);
 		return info;
 	}
+	
 	public static void main(String[] args) {
 		float r = 100f / 133;
 		System.out.println( r );

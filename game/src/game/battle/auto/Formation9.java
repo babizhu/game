@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import game.battle.Pet;
-import game.battle.formation.GetDefenderType;
+import game.battle.formation.ChooseFighters;
 import game.battle.formation.IFormation;
 import game.fighter.BaseFighter;
 
@@ -50,11 +50,11 @@ public class Formation9 implements IFormation{
 	 */
 	public boolean isAllDie(){
 		for( BaseFighter f : fighters ){
-			if( f.isDie() ){
+			if( !f.isDie() ){
 				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -83,6 +83,22 @@ public class Formation9 implements IFormation{
 		return null;
 	}
 
+	/**
+	 * 按行获取战士
+	 * @param row
+	 * @return
+	 */
+	private List<BaseFighter> getFightersByRow( BaseFighter attacker ) {
+		BaseFighter defender = getDefender( attacker );
+		int row = getRow( defender.getPosition() );
+		return getFightersByRow( row );
+	}
+	
+	/**
+	 * 按行获取战士
+	 * @param row
+	 * @return
+	 */
 	private List<BaseFighter> getFightersByRow( int row ) {
 		List<BaseFighter> ret = new ArrayList<BaseFighter>();
 		for( BaseFighter f : fighters ){
@@ -90,6 +106,38 @@ public class Formation9 implements IFormation{
 				ret.add( f );
 			}
 		}
+		return ret;
+	}
+	
+	/**
+	 * 获取自己
+	 * @param fighter
+	 * @return
+	 */
+	private List<BaseFighter> getFightersBySelf( BaseFighter fighter ) {
+		List<BaseFighter> ret = new ArrayList<BaseFighter>();
+		ret.add( fighter );
+		return ret;
+	}
+	
+	/**
+	 * 找出血量最少的战士
+	 * @return
+	 */
+	private List<BaseFighter> getFighterByMinHp() {
+		List<BaseFighter> ret = new ArrayList<BaseFighter>();
+		BaseFighter minHp = null;
+		for( BaseFighter f : fighters ){
+			if( f.getHp() > 0 ){
+				if( minHp == null ){
+					minHp = f;
+				}
+				else if( f.getHp() < minHp.getHp() ){
+					minHp = f;
+				}
+			}
+		}
+		ret.add( minHp );
 		return ret;
 	}
 	/**
@@ -127,9 +175,17 @@ public class Formation9 implements IFormation{
 	private int getRow(byte position) {
 		return position / COUNT_PER_ROW;
 	}
-	@Override
-	public List<BaseFighter> getDefender( BaseFighter attacker, GetDefenderType type ) {
-		return type.getDefender( attacker, this );
-	}
 	
+	@Override
+	public List<BaseFighter> getFighterOnEffect( BaseFighter attacker, ChooseFighters type ) {
+		switch( type ){
+		case ROW:
+			return getFightersByRow( attacker );
+		case SELF:
+			return getFightersBySelf( attacker );
+		case MIN_HP:
+			return getFighterByMinHp();
+		}
+		return fighters;
+	}
 }
