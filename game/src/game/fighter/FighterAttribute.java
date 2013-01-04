@@ -23,4 +23,5 @@ public enum FighterAttribute {
 	
 	public abstract AttackInfo run( BaseFighter fighter, int numToChange );
 
+
 }
