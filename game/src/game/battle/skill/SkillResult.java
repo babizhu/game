@@ -1,4 +1,4 @@
-package game.battle;
+package game.battle.skill;
 
 import java.util.ArrayList;
 import java.util.List;

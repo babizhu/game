@@ -1,5 +1,7 @@
 package game.battle;
 
+import game.battle.skill.ISkill;
+
 
 /**
  * 基础技能类

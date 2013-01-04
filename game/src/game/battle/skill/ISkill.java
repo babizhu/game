@@ -1,4 +1,4 @@
-package game.battle;
+package game.battle.skill;
 
 import game.battle.formation.IFormation;
 import game.fighter.BaseFighter;

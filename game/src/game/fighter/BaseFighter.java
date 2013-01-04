@@ -2,6 +2,7 @@ package game.fighter;
 
 import game.battle.BaseBattle;
 import game.battle.auto.buff.BuffManager;
+import game.battle.skill.SkillTemplet;
 import game.prop.EquipmentManager;
 import game.prop.IEquipment;
 import game.prop.templet.EquipmentTemplet;
@@ -345,6 +346,11 @@ public class BaseFighter implements IFighter {
 	public boolean isDie() {
 		// TODO Auto-generated method stub
 		return hp <= 0;
+	}
+
+	public SkillTemplet getSkillTemplet() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

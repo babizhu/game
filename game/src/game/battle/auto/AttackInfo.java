@@ -19,7 +19,7 @@ public class AttackInfo {
 	
 	/**
 	 * 是否反击
-	private static final int 			COUNTER_ATTACK = 2^4;
+	private static final int 			COUNTER_ATTACK = 2*2*2*2;
 	 */
 	
 	/**
@@ -70,7 +70,7 @@ public class AttackInfo {
 	
 	/**
 	 * 根据value的值把某一位置0或者置1
-	 * @param flag		如果要对第五位进行处理，则应该传入2^5，位数要从左边并且从0开始数
+	 * @param flag		如果要对第五位进行处理，则应该传入2的5次方，位数要从左边并且从0开始数
 	 * @param value		
 	 * 					true	置为1
 	 * 					false	置为0
@@ -109,11 +109,11 @@ public class AttackInfo {
 	}
 	
 	
-	public int getDamage() {
+	int getDamage() {
 		return damage;
 	}
 
-	public void setDamage(int damage) {
+	void setDamage(int damage) {
 		this.damage = damage;
 	}
 
@@ -124,6 +124,6 @@ public class AttackInfo {
 		System.out.println( f.getCrit() );
 		System.err.println( f.isHit() );
 		
-
+		System.out.write( 2^4);
 	}
 }
