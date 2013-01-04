@@ -1,6 +1,5 @@
 package game.fighter;
 
-import game.battle.auto.AttackInfo;
 
 public enum FighterAttribute {
 
@@ -21,7 +20,7 @@ public enum FighterAttribute {
 		}
 	};
 	
-	public abstract AttackInfo run( BaseFighter fighter, int numToChange );
+	public abstract void run( BaseFighter fighter, int numToChange );
 
 
 }

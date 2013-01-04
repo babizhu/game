@@ -4,6 +4,8 @@ package game.battle.auto;
 import java.util.Comparator;
 
 import game.battle.IBattleUtil;
+import game.battle.formula.IFormula;
+import game.battle.formula.NormalAttackFormula;
 import game.fighter.BaseFighter;
 import util.RandomUtil;
 
@@ -81,23 +83,16 @@ public class AutoBattleUtil implements IBattleUtil {
 	}
 
 	/**
-	 * 计算普通攻击的伤害值
+	 * 根据公式计算普通攻击的伤害值
 	 * @param attacker
 	 * @param defender
+	 * @param formula	计算公式
+	 * @param arguments	相应参数，如不存在，请放入null
 	 * @return
 	 */
-	private int calcNormalAttackDamage( BaseFighter attacker, BaseFighter defender ) {
-		int r = RandomUtil.getRandomInt( 0, 40 );//伤害波动值，要求在-20~+20之间
-		r -= 20;
-		r = 0;//取消随机对测试的影响
-		float damage = attacker.getPhyAttack() * ( 1f - ( defender.getPhyDefend()/( defender.getPhyDefend() + 10000f ) ) );
-		damage *= 1f + r / 100f;
-		damage *= ((float)attacker.getLevel() + 10)/ ((float)defender.getLevel() + 10);
-		return (int) damage;
-	}
-	
 	@Override
-	public AttackInfo normalAttack( BaseFighter attacker, BaseFighter defender ) {
+	public AttackInfo calcAttackInfo( BaseFighter attacker, BaseFighter defender, IFormula formula, float[] arguments ) {
+		
 		AttackInfo info = new AttackInfo();
 		boolean isHit = isHit(attacker, defender);
 		if( !isHit ){
@@ -107,7 +102,8 @@ public class AutoBattleUtil implements IBattleUtil {
 		int crit  = calcCrit(attacker, defender);
 		boolean isBlock = this.isBlockAndCounterAttack(attacker, defender);
 		
-		int damage = calcNormalAttackDamage(attacker, defender) * crit;
+		int damage = formula.run( attacker, defender, arguments );
+		damage *= crit;
 		if( isBlock ){
 			damage *= BLOCK_DAMAGE_RATE;
 		}
@@ -118,6 +114,8 @@ public class AutoBattleUtil implements IBattleUtil {
 		info.setDamage(damage);
 		return info;
 	}
+	
+	
 	
 	public static void main(String[] args) {
 		float r = 100f / 133;
@@ -132,9 +130,9 @@ public class AutoBattleUtil implements IBattleUtil {
 	}
 
 	@Override
-	public int calcCounterAttackDamage(BaseFighter attacker,
-			BaseFighter defender) {
-		return (int) (calcNormalAttackDamage(attacker, defender) * BLOCK_DAMAGE_RATE);
+	public int calcCounterAttackDamage(BaseFighter attacker, BaseFighter defender) {
+		int damage = NormalAttackFormula.getInstance().run(attacker, defender, null);
+		return (int) (damage * BLOCK_DAMAGE_RATE);
 	}
 	@Override
 	public Comparator<BaseFighter> getOrderComparator() {

@@ -6,6 +6,7 @@ import game.battle.IBattleUtil;
 import game.battle.Pet;
 import game.battle.formation.ChooseFighters;
 import game.battle.formation.IFormation;
+import game.battle.formula.NormalAttackFormula;
 import game.battle.skill.SkillEffect;
 import game.battle.skill.SkillTemplet;
 import game.fighter.BaseFighter;
@@ -115,7 +116,7 @@ public class AutoBattle extends BaseBattle {
 					}
 				}
 				else{
-					if( doAttack( currentAttacker, currentDefender ) ){
+					if( doNormalAttack( currentAttacker, currentDefender ) ){
 						isEnd = true;
 						break;
 					}		
@@ -187,13 +188,12 @@ public class AutoBattle extends BaseBattle {
 	 * @param defenderTeam	当前的防守队伍
 	 * @return
 	 */
-	private boolean doAttack( BaseFighter attacker, IFormation currentDefender ) {
-
+	private boolean doNormalAttack( BaseFighter attacker, IFormation currentDefender ) {
 
 		BaseFighter defender = currentDefender.getDefender( attacker );
 		assert( defender != null );
 		
-		AttackInfo info = util.normalAttack( attacker, defender );		
+		AttackInfo info = util.calcAttackInfo( attacker, defender, NormalAttackFormula.getInstance(), null );
 		warSituation.put( attacker, defender, info );
 		
 		if( reduceHp( defender, info.getDamage() ) == true ){
