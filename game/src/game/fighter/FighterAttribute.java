@@ -1,9 +1,17 @@
 package game.fighter;
 
-import game.battle.auto.AttackInfo;
 
 public enum FighterAttribute {
 
+	ENEMY_HP{
+
+		@Override
+		public void run(BaseFighter fighter, int numToChange) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	},
 	HP {
 		@Override
 		public
@@ -21,7 +29,7 @@ public enum FighterAttribute {
 		}
 	};
 	
-	public abstract AttackInfo run( BaseFighter fighter, int numToChange );
+	public abstract void run( BaseFighter fighter, int numToChange );
 
 
 }
