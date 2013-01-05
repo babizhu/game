@@ -7,7 +7,7 @@ public class SkillEffect {
 	
 	private FighterAttribute			attribute;
 	private IFormula					formula;
-	private float						argument1;
+	private float[]						arguments;
 	
 	
 	public FighterAttribute getAttribute() {
@@ -22,11 +22,11 @@ public class SkillEffect {
 	public void setFormula(IFormula formula) {
 		this.formula = formula;
 	}
-	public float getArgument1() {
-		return argument1;
+	public float[] getArguments() {
+		return arguments;
 	}
-	public void setArgument1(float argument1) {
-		this.argument1 = argument1;
+	public void setArgument(float[] arguments) {
+		this.arguments = arguments;
 	}
 	
 	

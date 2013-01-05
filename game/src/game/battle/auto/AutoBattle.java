@@ -136,8 +136,8 @@ public class AutoBattle extends BaseBattle {
 		ChooseFighters type = templet.getEnemys();
 		if( type != null ){
 			for( BaseFighter f : currentDefenderTeam.getFighterOnEffect( attacker, type ) ){
-				
-				if( doSkillEffect( f, templet.getEffectOnEnemy() ) )//此战士挂了
+				warSituation.putSkillAttackPrefix( attacker, templet.getId() );
+				if( doSkillEffect( attacker, f, templet.getEffectOnEnemy() ) )//此战士挂了
 				{
 					if( currentDefenderTeam.isAllDie() ){
 						return true;
@@ -146,6 +146,7 @@ public class AutoBattle extends BaseBattle {
 				}
 			}
 		}
+		/*****************************************************************************************/
 		type = templet.getFriends();
 		if( type != null ){
 			List<BaseFighter> friends = currentDefenderTeam.getFighterOnEffect(attacker, type );
@@ -154,29 +155,32 @@ public class AutoBattle extends BaseBattle {
 		
 	}
 	/**
-	 * 
-	 * @param fighter		受到技能影响的战士
+	 * @param attacker		发技能的战士
+	 * @param defender		受到技能影响的战士
 	 * @param effects		技能影响的内容
 	 * @return
 	 * 				true	此战士挂了
 	 * 				false	此战士未死
+	 * 
+	 *	注意：所有的对敌攻击中，ENEMY_HP必须排在最前面，后面的其他伤害都依赖于ENEMY_HP是否命中
 	 */
-	private boolean doSkillEffect( BaseFighter fighter, List<SkillEffect> effects ){
+	private boolean doSkillEffect( BaseFighter attacker, BaseFighter defender, List<SkillEffect> effects ){
+		boolean isHit = true;
 		
 		for( SkillEffect se : effects ){
-//			int numberToChange = se.getFormula().run( se.getArgument1() );
-//			se.getAttribute().run( fighter, numberToChange );
-//			
-//			//考虑warSituation
-//			if( se.getAttribute() == FighterAttribute.HP && fighter.getHp() <= 0 ){
-//				return true;
-//			}
-			switch( se.getAttribute() ){
-			case HP:
-				
-				break;
-			case SP:
-				break;
+			if( se.getAttribute() == FighterAttribute.ENEMY_HP ){
+				AttackInfo info = util.calcAttackInfo( attacker, defender, se.getFormula(), se.getArguments() );
+				warSituation.putSkillInfo( se.getAttribute(), defender, info );
+				if( reduceHp( defender, info.getDamage() ) == true ){
+					return true;
+				}
+			}
+			else{
+				if( isHit ){
+					int numberToChange = se.getFormula().run( attacker, defender, se.getArguments() );					
+					se.getAttribute().run( defender, numberToChange );
+					warSituation.putSkillInfo( se.getAttribute(), defender, numberToChange );
+				}
 			}
 		}
 		return false;
@@ -194,7 +198,7 @@ public class AutoBattle extends BaseBattle {
 		assert( defender != null );
 		
 		AttackInfo info = util.calcAttackInfo( attacker, defender, NormalAttackFormula.getInstance(), null );
-		warSituation.put( attacker, defender, info );
+		warSituation.putNormalAttack( attacker, defender, info );
 		
 		if( reduceHp( defender, info.getDamage() ) == true ){
 			return true;
@@ -225,7 +229,7 @@ public class AutoBattle extends BaseBattle {
 	 */
 	private boolean doBlockAndCounterAttack( BaseFighter attacker, BaseFighter defender ) {
 		
-		int damage = util.calcCounterAttackDamage(attacker, defender);
+		int damage = util.calcCounterAttackDamage( attacker, defender );
 		warSituation.putCounterAttackDamage( (int) damage );//伤害值
 		return reduceHp( defender, damage );
 	}

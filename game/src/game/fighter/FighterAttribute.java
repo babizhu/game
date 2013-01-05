@@ -3,6 +3,15 @@ package game.fighter;
 
 public enum FighterAttribute {
 
+	ENEMY_HP{
+
+		@Override
+		public void run(BaseFighter fighter, int numToChange) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	},
 	HP {
 		@Override
 		public
