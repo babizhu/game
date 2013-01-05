@@ -114,7 +114,6 @@ public class AutoBattleUtil implements IBattleUtil {
 		info.setDamage(damage);
 		return info;
 	}
-		
 	public static void main(String[] args) {
 		float r = 100f / 133;
 		System.out.println( r );
@@ -130,6 +129,7 @@ public class AutoBattleUtil implements IBattleUtil {
 	@Override
 	public int calcCounterAttackDamage(BaseFighter attacker, BaseFighter defender) {
 		int damage = NormalAttackFormula.getInstance().run( attacker, defender, null );
+
 		return (int) (damage * BLOCK_DAMAGE_RATE);
 	}
 	@Override
