@@ -130,7 +130,7 @@ public class AutoBattle extends BaseBattle {
 			}
 		}
 	}
-
+	
 	private boolean doSkillAttack(BaseFighter attacker, IFormation currentDefenderTeam) {
 		SkillTemplet templet = attacker.getSkillTemplet();
 		ChooseFighters type = templet.getEnemys();
