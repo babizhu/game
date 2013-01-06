@@ -28,7 +28,4 @@ public class SkillEffect {
 	public void setArgument(float[] arguments) {
 		this.arguments = arguments;
 	}
-	
-	
-
 }

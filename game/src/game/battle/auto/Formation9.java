@@ -178,6 +178,9 @@ public class Formation9 implements IFormation{
 	
 	@Override
 	public List<BaseFighter> getFighterOnEffect( BaseFighter attacker, ChooseFighters type ) {
+		if( type == null ){
+			return null;
+		}
 		switch( type ){
 		case ROW:
 			return getFightersByRow( attacker );
@@ -186,6 +189,13 @@ public class Formation9 implements IFormation{
 		case MIN_HP:
 			return getFighterByMinHp();
 		}
-		return fighters;
+		return null;
+	}
+	public static void main(String[] args) {
+		BaseFighter f = new BaseFighter();
+		List<BaseFighter> fighters = new ArrayList<BaseFighter>();
+		fighters.add( f );
+		Formation9 ff = new Formation9(fighters, false, null);
+		System.out.println( ff.getFighterOnEffect( null, null ));
 	}
 }

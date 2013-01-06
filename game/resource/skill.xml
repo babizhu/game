@@ -4,13 +4,20 @@
 		<id>0</id>
 		<name>加班津贴</name>
 		<desc>恢复自身气血上限的15%给当前气血最低的友方单位。</desc>
-		<友方受影响的战友算法>getMinHp</友方受影响的战友算法>
-		<运行方式>HP,公式1,0.1|</运行方式>
-		<对敌人xx></对敌人xx>
-		<对敌人目标代码></对敌人目标代码>
-		
-		
+		<friend>getMinHp</friend>
+		<friend_effect>HP,公式1,1.4|</friend_effect>		
 	</skill>
+	
+	<skill>
+		<id>1</id>
+		<name>狂风骤雨</name>
+		<desc>攻击对方血量最少的战士，同时降低战士20SP</desc>
+		<friend></friend>
+		<friend_effect></friend_effect>	
+		<enemy>getMinHp</enemy>
+		<enemy_effect>ENEMY_HP,公式1,1.4|sp,公式2,null</enemy_effect>
+	</skill>
+	
 	<skill>
 		<id>1</id>
 		<name>飞龙在天</name>

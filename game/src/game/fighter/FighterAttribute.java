@@ -3,7 +3,7 @@ package game.fighter;
 
 public enum FighterAttribute {
 
-	ENEMY_HP{
+	ENEMY_HP(1){
 
 		@Override
 		public void run(BaseFighter fighter, int numToChange) {
@@ -12,7 +12,7 @@ public enum FighterAttribute {
 		}
 		
 	},
-	HP {
+	HP(2) {
 		@Override
 		public
 		void run(BaseFighter fighter, int numToChange) {
@@ -20,7 +20,7 @@ public enum FighterAttribute {
 			fighter.setHp( fighter.getHp() + numToChange );
 			
 		}
-	},SP {
+	},SP(3) {
 		@Override
 		public
 		void run(BaseFighter fighter, int numToChange) {
@@ -31,5 +31,11 @@ public enum FighterAttribute {
 	
 	public abstract void run( BaseFighter fighter, int numToChange );
 
-
+	private final byte number;
+	FighterAttribute( int n ) {
+		number = (byte) n;
+	}
+	public byte toNumber() {
+		return number;
+	}
 }

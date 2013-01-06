@@ -5,7 +5,7 @@ import game.battle.formation.ChooseFighters;
 import java.util.List;
 
 public class SkillTemplet {
-	private int							id;
+	private byte						id;
 	private String						name;
 	private String						desc;
 	
@@ -29,11 +29,11 @@ public class SkillTemplet {
 	 */
 	private ChooseFighters				enemys;
 
-	public int getId() {
+	public byte getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(byte id) {
 		this.id = id;
 	}
 

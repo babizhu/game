@@ -130,29 +130,31 @@ public class AutoBattle extends BaseBattle {
 			}
 		}
 	}
-
-	private boolean doSkillAttack(BaseFighter attacker, IFormation currentDefenderTeam) {
+	
+	private boolean doSkillAttack( BaseFighter attacker, IFormation currentDefenderTeam ) {
 		SkillTemplet templet = attacker.getSkillTemplet();
-		ChooseFighters type = templet.getEnemys();
-		if( type != null ){
-			for( BaseFighter f : currentDefenderTeam.getFighterOnEffect( attacker, type ) ){
-				
+		
+		List<BaseFighter> enemys = currentDefenderTeam.getFighterOnEffect( attacker, templet.getEnemys() );
+		List<BaseFighter> friends = currentDefenderTeam.getFighterOnEffect( attacker, templet.getEnemys() );
+		byte count = (byte) ((enemys == null ? 0 : enemys.size()) + (friends == null ? 0 : friends.size()));
+		
+		warSituation.putSkillAttackPrefix( attacker, templet.getId(), count );
+		
+		if( enemys != null ){
+			for( BaseFighter f : enemys ){
+				warSituation.putFighter( f.getPosition() );
 				if( doSkillEffect( attacker, f, templet.getEffectOnEnemy() ) )//此战士挂了
 				{
 					if( currentDefenderTeam.isAllDie() ){
 						return true;
 					}
-					
 				}
 			}
 		}
 		/*****************************************************************************************/
-		type = templet.getFriends();
-		if( type != null ){
-			List<BaseFighter> friends = currentDefenderTeam.getFighterOnEffect(attacker, type );
+		if( friends != null ){
 		}
-		return false;
-		
+		return false;		
 	}
 	/**
 	 * @param attacker		发技能的战士
@@ -161,19 +163,27 @@ public class AutoBattle extends BaseBattle {
 	 * @return
 	 * 				true	此战士挂了
 	 * 				false	此战士未死
+	 * 
+	 *	注意：所有的SkillEffect中，ENEMY_HP必须排在最前面，后面的其他伤害都依赖于ENEMY_HP是否命中
 	 */
 	private boolean doSkillEffect( BaseFighter attacker, BaseFighter defender, List<SkillEffect> effects ){
 		boolean isHit = true;
+		warSituation.putEffectCount( (byte) effects.size() );
 		for( SkillEffect se : effects ){
 			if( se.getAttribute() == FighterAttribute.ENEMY_HP ){
-				return true;
+				AttackInfo info = util.calcAttackInfo( attacker, defender, se.getFormula(), se.getArguments() );
+				warSituation.putSkillInfo( se.getAttribute(), info );
+				if( reduceHp( defender, info.getDamage() ) == true ){
+					return true;
+				}
 			}
 			else{
-				if( isHit /** &&几率**/ ){
-					int numberToChange = se.getFormula().run( attacker, defender, se.getArguments() );
+				if( isHit && !defender.isDie() ){
+					int numberToChange = se.getFormula().run( attacker, defender, se.getArguments() );					
 					se.getAttribute().run( defender, numberToChange );
+					warSituation.putSkillInfo( se.getAttribute(), numberToChange );
 				}
-			}			
+			}
 		}
 		return false;
 	}
@@ -190,7 +200,7 @@ public class AutoBattle extends BaseBattle {
 		assert( defender != null );
 		
 		AttackInfo info = util.calcAttackInfo( attacker, defender, NormalAttackFormula.getInstance(), null );
-		warSituation.put( attacker, defender, info );
+		warSituation.putNormalAttack( attacker, defender, info );
 		
 		if( reduceHp( defender, info.getDamage() ) == true ){
 			return true;

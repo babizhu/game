@@ -2,6 +2,7 @@ package game.battle.auto;
 
 import game.battle.AttackType;
 import game.fighter.BaseFighter;
+import game.fighter.FighterAttribute;
 
 import java.nio.ByteBuffer;
 
@@ -26,8 +27,8 @@ public class WarSituation {
 	 * @param defender
 	 * @param info
 	 */
-	public void put(BaseFighter attacker, BaseFighter defender, AttackInfo info) {
-		situation.put( AttackType.NORMAL_ATTACK.toNumber()).put( attacker.getPosition() ).put( defender.getPosition() );
+	public void putNormalAttack( BaseFighter attacker, BaseFighter defender, AttackInfo info ) {
+		situation.put( AttackType.NORMAL_ATTACK.toNumber() ).put( attacker.getPosition() ).put( defender.getPosition() );
 		put( info );
 		
 	}
@@ -45,5 +46,52 @@ public class WarSituation {
 		situation.putInt( info.getDamage() );
 		situation.put( info.getRawData() );		
 	}
-	
+
+	/**
+	 * 放置技能攻击的前缀信息
+	 * @param attacker
+	 * @param skillId
+	 */
+	public void putSkillAttackPrefix( BaseFighter attacker, byte skillId, byte count ) {
+		situation.put( AttackType.SKILL_ATTACK.toNumber() ).put( attacker.getPosition() ).put( skillId ).put( count );
+	}
+
+	/**
+	 * 技能攻击中对敌人的攻击信息
+	 * @param attribute
+	 * @param defender
+	 * @param info
+	 */
+	public void putSkillInfo( FighterAttribute attribute, AttackInfo info ) {
+		situation.put( attribute.toNumber() );
+		put( info );
+		
+	}
+
+	/**
+	 * 技能攻击中，除开对敌人攻击的，其他信息的记录，例如加自己的hp，降低对方的sp等信息
+	 * @param attribute
+	 * @param defender
+	 * @param numberToChange
+	 */
+	public void putSkillInfo(FighterAttribute attribute, int numberToChange) {
+		situation.put( attribute.toNumber() ).putInt( numberToChange );
+		
+	}
+
+	/**
+	 * 配合技能攻击，单独放入受技能影响的战士位置
+	 * @param position
+	 */
+	public void putFighter(byte position) {
+		situation.put(position);		
+	}
+
+	/**
+	 * 配合技能攻击，单独放入战士受影响的属性个数
+	 * @param effectCount
+	 */
+	public void putEffectCount( byte effectCount ) {
+		situation.put( effectCount );
+	}	
 }

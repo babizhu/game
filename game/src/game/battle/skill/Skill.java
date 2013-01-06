@@ -13,6 +13,7 @@ public class Skill {
 	 * @return
 	 */
 	public AttackInfo doSkillAttack( BaseFighter attacker, BaseFighter defender, IFormula formula ){
+		return null;
 		
 	}
 }
