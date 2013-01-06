@@ -56,14 +56,19 @@ public class BuffManager {
 	 * @return				buff之后的伤害值（有可能有变化，也可能没变化）<br>
 	 * 
 	 * 注意：这里只返回伤害值，除HP以外其余的buff效果，例如增加SP等，直接在run()内进行处理
+	 * 
+	 * 思考：
+	 * 		如果有3个buf，一个是把所有的伤害变成1，还有一个是把所有的伤害增加20，第三个是把受到的伤害变成加血
+	 * 		如果有2个buf，一个是把所有的伤害变成1，还有一个是中毒效果，发招前自己减血100
+	 * 
 	 */
 	public int run( int damage, BuffRunPoint pt ){
-		int tempDamage = damage;//一个buf所产生的临时伤害值
+		int tempDamage = 0;//一个buf所产生的临时伤害值
 		for( BaseBuff buf : buffs ){
 			
 			if( buf.getBuffRunPoint() == pt && !buf.isRemove() ){
 				
-				tempDamage += buf.run( tempDamage );
+				tempDamage += buf.run( damage );
 			}
 		}		
 		return tempDamage;

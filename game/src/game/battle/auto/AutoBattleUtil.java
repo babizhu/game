@@ -3,6 +3,7 @@ package game.battle.auto;
 
 import java.util.Comparator;
 
+import game.battle.BuffRunPoint;
 import game.battle.IBattleUtil;
 import game.battle.formula.IFormula;
 import game.battle.formula.NormalAttackFormula;
@@ -91,7 +92,7 @@ public class AutoBattleUtil implements IBattleUtil {
 	 * @return
 	 */
 	@Override
-	public AttackInfo calcAttackInfo( BaseFighter attacker, BaseFighter defender, IFormula formula, float[] arguments ) {
+	public AttackInfo calcAttackInfo( BaseFighter attacker, BaseFighter defender, IFormula formula, Object arguments ) {
 		
 		AttackInfo info = new AttackInfo();
 		boolean isHit = isHit(attacker, defender);
@@ -110,7 +111,7 @@ public class AutoBattleUtil implements IBattleUtil {
 		info.setCrit(crit);
 		info.SetBlock( isBlock );
 		
-		//TODO 补上buff的情况，比如防守方处于肉盾状态
+		damage = defender.getBm().run( damage, BuffRunPoint.AFTER_DEFENDING );
 		info.setDamage(damage);
 		return info;
 	}

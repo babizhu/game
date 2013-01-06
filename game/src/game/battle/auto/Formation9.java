@@ -16,7 +16,7 @@ public class Formation9 implements IFormation{
 	static final byte 						TOTAL_COUNT = 9;
 	private static final int 				COUNT_PER_ROW = 3;
 	
-	private List<BaseFighter> 				fighters;
+	private List<BaseFighter> 				fighters = new ArrayList<BaseFighter>();
 	//private boolean							isLeft;
 	private Pet								pet;
 
@@ -35,10 +35,9 @@ public class Formation9 implements IFormation{
 		if( fighters == null || fighters.size() == 0 ){
 			throw new IllegalArgumentException( (isLeft == true ? "攻方" : "守方") + "战士列表为空或者数量为0" );
 		}
-		fighters = new ArrayList<BaseFighter>();
 		for( BaseFighter f : fighters ){
 			BaseFighter newFighter = new BaseFighter( f, isLeft );
-			fighters.add( newFighter );
+			this.fighters.add( newFighter );
 		}
 		this.pet = pet;
 	}

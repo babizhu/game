@@ -14,7 +14,7 @@ public class NormalAttackFormula implements IFormula{
 	 * 普通攻击伤害的计算公式
 	 */
 	@Override
-	public int run( BaseFighter attacker, BaseFighter defender, float[] arguments ) {
+	public int run( BaseFighter attacker, BaseFighter defender, Object arguments ) {
 
 		int r = RandomUtil.getRandomInt( 0, 40 );//伤害波动值，要求在-20~+20之间
 		r -= 20;

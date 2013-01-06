@@ -47,7 +47,7 @@ public interface IBattleUtil {
 	 * @param arguments
 	 * @return
 	 */
-	AttackInfo calcAttackInfo( BaseFighter attacker, BaseFighter defender,	IFormula formula, float[] arguments );
+	AttackInfo calcAttackInfo( BaseFighter attacker, BaseFighter defender,	IFormula formula, Object arguments );
 
 
 	
