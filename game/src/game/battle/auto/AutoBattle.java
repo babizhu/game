@@ -242,7 +242,6 @@ public class AutoBattle extends BaseBattle {
 			//pet.run( this );
 		}
 	}
-
 	
 	/**
 	 * 对被攻击方进行扣hp等一系列操作<br>
