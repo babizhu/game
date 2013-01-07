@@ -69,8 +69,8 @@ public class BuffManager {
 		for( BaseBuff buf : buffs ){
 			
 			if( buf.getBuffRunPoint() == pt && !buf.isRemove() ){
-				
 				tempDamage = buf.run( damage );
+
 			}
 		}		
 		return tempDamage;

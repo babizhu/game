@@ -114,6 +114,7 @@ public class AutoBattleUtil implements IBattleUtil {
 		
 		damage = defender.getBm().run( damage, BuffRunPoint.AFTER_DEFENDING );
 		info.setDamage( damage );
+
 		return info;
 	}
 	public static void main(String[] args) {

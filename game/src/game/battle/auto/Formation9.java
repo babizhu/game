@@ -19,6 +19,7 @@ public class Formation9 implements IFormation{
 	
 	private List<BaseFighter> 				fighters;
 	//private boolean						isLeft;
+
 	private Pet								pet;
 
 	
@@ -42,6 +43,7 @@ public class Formation9 implements IFormation{
 		for( BaseFighter f : fighters ){
 			//BaseFighter newFighter = new BaseFighter( f, isLeft );
 			f.initForBattle( isLeft );
+
 		}
 		this.pet = pet;
 	}
