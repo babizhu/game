@@ -4,7 +4,6 @@ import game.battle.BaseBattle;
 import game.battle.BuffRunPoint;
 import game.battle.IBattleUtil;
 import game.battle.Pet;
-import game.battle.formation.ChooseFighters;
 import game.battle.formation.IFormation;
 import game.battle.formula.NormalAttackFormula;
 import game.battle.skill.SkillEffect;
@@ -30,7 +29,7 @@ public class AutoBattle extends BaseBattle {
 	private static final Logger 		logger = LoggerFactory.getLogger( AutoBattle.class );
 	private static final IBattleUtil	util = AutoBattleUtil.getInstance();
 
-	private static final int 			SKILL_ATTACK_NEED_SP = 0;
+	private static final int 			SKILL_ATTACK_NEED_SP = 1000;
 	private static final int 			SP_TO_ADD = 50;		
 	private static final int 			MAX_ROUND = 50;//最大回合数
 
@@ -59,7 +58,7 @@ public class AutoBattle extends BaseBattle {
 	/**
 	 * 战况信息
 	 */
-	private WarSituation				warSituation;	
+	private WarSituation				warSituation = new WarSituation( 1024 );	
 
 	public AutoBattle( IFormation attackers, IFormation defenders ) {
 		super();		
@@ -73,12 +72,12 @@ public class AutoBattle extends BaseBattle {
 	 * 初始化，按照速度对参战人员进行排序
 	 */
 	private void init(){		
-		for( BaseFighter f : attackers.getAllFighters() ){			
-			allFighters.add( f );
-		}
+		
+		allFighters.addAll( attackers.getAllFighters() );
+		allFighters.addAll( defenders.getAllFighters() );
 		for( BaseFighter f : defenders.getAllFighters() ){
 			f.setPosition( (byte) (f.getPosition() + Formation9.TOTAL_COUNT) );
-			allFighters.add( f );
+			//TODO 如果是守方镜面翻转
 		}
 		Collections.sort( allFighters, util.getOrderComparator() );
 	}
@@ -107,7 +106,7 @@ public class AutoBattle extends BaseBattle {
 					continue;
 				}
 				
-				IFormation currentDefender = currentAttacker.isLeft() ?  defenders : attackers;
+				IFormation currentDefender = getEnemys( currentAttacker );
 				
 				if( currentAttacker.getSp() >= SKILL_ATTACK_NEED_SP ){
 					if( doSkillAttack( currentAttacker, currentDefender  ) ){
@@ -131,11 +130,19 @@ public class AutoBattle extends BaseBattle {
 		}
 	}
 	
+	private IFormation getFriends( BaseFighter fighter ){
+		return fighter.isLeft() ?  attackers : defenders;
+	}
+	private IFormation getEnemys( BaseFighter fighter ){
+		return fighter.isLeft() ?  defenders : attackers;
+	}
+	
 	private boolean doSkillAttack( BaseFighter attacker, IFormation currentDefenderTeam ) {
+		
 		SkillTemplet templet = attacker.getSkillTemplet();
 		
 		List<BaseFighter> enemys = currentDefenderTeam.getFighterOnEffect( attacker, templet.getEnemys() );
-		List<BaseFighter> friends = currentDefenderTeam.getFighterOnEffect( attacker, templet.getEnemys() );
+		List<BaseFighter> friends = getFriends(attacker).getFighterOnEffect( attacker, templet.getEnemys() );
 		byte count = (byte) ((enemys == null ? 0 : enemys.size()) + (friends == null ? 0 : friends.size()));
 		
 		warSituation.putSkillAttackPrefix( attacker, templet.getId(), count );
@@ -145,14 +152,16 @@ public class AutoBattle extends BaseBattle {
 				warSituation.putFighter( f.getPosition() );
 				if( doSkillEffect( attacker, f, templet.getEffectOnEnemy() ) )//此战士挂了
 				{
-					if( currentDefenderTeam.isAllDie() ){
-						return true;
-					}
+					return true;
 				}
 			}
 		}
 		/*****************************************************************************************/
 		if( friends != null ){
+			for( BaseFighter f : friends ){
+				warSituation.putFighter( f.getPosition() );
+				doSkillEffect( attacker, f, templet.getEffectOnEnemy() );
+			}
 		}
 		return false;		
 	}
@@ -170,16 +179,20 @@ public class AutoBattle extends BaseBattle {
 		boolean isHit = true;
 		warSituation.putEffectCount( (byte) effects.size() );
 		for( SkillEffect se : effects ){
-			if( se.getAttribute() == FighterAttribute.ENEMY_HP ){
+			if( se.getAttribute() == FighterAttribute.ENEMY_HP ){//和其他属性不同，技能攻击需要特殊处理
 				AttackInfo info = util.calcAttackInfo( attacker, defender, se.getFormula(), se.getArguments() );
 				warSituation.putSkillInfo( se.getAttribute(), info );
 				if( reduceHp( defender, info.getDamage() ) == true ){
 					return true;
 				}
+				isHit = info.isHit();
 			}
 			else{
 				if( isHit && !defender.isDie() ){
-					int numberToChange = se.getFormula().run( attacker, defender, se.getArguments() );					
+					int numberToChange = se.getFormula().run( attacker, defender, se.getArguments() );		
+//					if( attacker.isLeft() != defender.isLeft() ){//同一阵营这里是加，否则调整为负数，例如sp，同一阵营应该是加sp，敌对阵营应该是减sp
+//						numberToChange = -numberToChange;
+//					}
 					se.getAttribute().run( defender, numberToChange );
 					warSituation.putSkillInfo( se.getAttribute(), numberToChange );
 				}

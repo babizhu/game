@@ -1,6 +1,7 @@
 package game.battle.skill;
 
 import game.battle.formation.ChooseFighters;
+import game.battle.formula.IFormula;
 
 import java.util.List;
 
@@ -28,6 +29,12 @@ public class SkillTemplet {
 	 * 获取受技能影响的敌人的算法
 	 */
 	private ChooseFighters				enemys;
+	
+	/**
+	 * 计算buff是否出现的概率公式
+	 */
+	private IFormula					buffFormula;
+	private byte						buffId;
 
 	public byte getId() {
 		return id;

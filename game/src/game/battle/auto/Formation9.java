@@ -3,6 +3,7 @@ package game.battle.auto;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import game.battle.Pet;
 import game.battle.formation.ChooseFighters;
 import game.battle.formation.IFormation;
@@ -17,7 +18,7 @@ public class Formation9 implements IFormation{
 	private static final int 				COUNT_PER_ROW = 3;
 	
 	private List<BaseFighter> 				fighters;
-	//private boolean							isLeft;
+	//private boolean						isLeft;
 	private Pet								pet;
 
 	
@@ -26,19 +27,21 @@ public class Formation9 implements IFormation{
 		return pet;
 	}
 	/**
-	 * 利用拷贝构造函数，来深度拷贝一个战士列表
+	 * 
 	 * @param fighters
 	 * @param isLeft
 	 * @param pet
+	 * 
+	 * 注意：请在外层做好战士的拷贝工作
 	 */
-	public Formation9( List<BaseFighter> fighters, boolean isLeft, Pet pet ) {
-		if( fighters == null || fighters.size() == 0 ){
+	public Formation9( List<BaseFighter> fightersList, boolean isLeft, Pet pet ) {
+		if( fightersList == null || fightersList.size() == 0 ){
 			throw new IllegalArgumentException( (isLeft == true ? "攻方" : "守方") + "战士列表为空或者数量为0" );
 		}
-		fighters = new ArrayList<BaseFighter>();
+		fighters = fightersList;
 		for( BaseFighter f : fighters ){
-			BaseFighter newFighter = new BaseFighter( f, isLeft );
-			fighters.add( newFighter );
+			//BaseFighter newFighter = new BaseFighter( f, isLeft );
+			f.initForBattle( isLeft );
 		}
 		this.pet = pet;
 	}
@@ -173,7 +176,9 @@ public class Formation9 implements IFormation{
 	}
 	
 	private int getRow(byte position) {
-		return position / COUNT_PER_ROW;
+		int row = position / COUNT_PER_ROW;
+		row = row < COUNT_PER_ROW ? row : row - COUNT_PER_ROW;
+		return row;
 	}
 	
 	@Override

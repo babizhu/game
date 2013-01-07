@@ -4,6 +4,6 @@ import game.fighter.BaseFighter;
 
 public interface IFormula {
 
-	int run( BaseFighter attacker, BaseFighter defender, float[] arguments );
+	int run( BaseFighter attacker, BaseFighter defender, Object arguments );
 
 }

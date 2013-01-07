@@ -116,6 +116,14 @@ public class AttackInfo {
 	void setDamage(int damage) {
 		this.damage = damage;
 	}
+	
+	@Override
+	public String toString() {
+		return 	"是否命中" + isHit() +
+				" 是否格挡" + isBlock() +
+				" 暴击倍数" + getCrit() +
+				" 伤害值"	+ getDamage();	
+	}
 
 	public static void main(String[] args) {
 		AttackInfo f = new AttackInfo();

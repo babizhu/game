@@ -3,6 +3,7 @@ package game.battle.auto;
 
 import java.util.Comparator;
 
+import game.battle.BuffRunPoint;
 import game.battle.IBattleUtil;
 import game.battle.formula.IFormula;
 import game.battle.formula.NormalAttackFormula;
@@ -74,7 +75,7 @@ public class AutoBattleUtil implements IBattleUtil {
 		
 		int r = RandomUtil.getRandomInt( 0, 100 );//随机值
 		r = 10;//取消随机对测试的影响
-		float result = ( attacker.getCrit() + 500 ) / ( defender.getUnCrit() + 500 ) - 1;
+		float result = (float)( attacker.getCrit() + 500 ) / ( defender.getUnCrit() + 500 ) - 1;
 		result *= 100f;
 		if( result > r ){//发生了暴击
 			crit = (byte) RandomUtil.getRandomInt( 2, 4 );//计算实际的暴击范畴2-4
@@ -91,7 +92,7 @@ public class AutoBattleUtil implements IBattleUtil {
 	 * @return
 	 */
 	@Override
-	public AttackInfo calcAttackInfo( BaseFighter attacker, BaseFighter defender, IFormula formula, float[] arguments ) {
+	public AttackInfo calcAttackInfo( BaseFighter attacker, BaseFighter defender, IFormula formula, Object arguments ) {
 		
 		AttackInfo info = new AttackInfo();
 		boolean isHit = isHit(attacker, defender);
@@ -109,9 +110,10 @@ public class AutoBattleUtil implements IBattleUtil {
 		}
 		info.setCrit(crit);
 		info.SetBlock( isBlock );
+		info.SetHit( isHit );
 		
-		//TODO 补上buff的情况，比如防守方处于肉盾状态
-		info.setDamage(damage);
+		damage = defender.getBm().run( damage, BuffRunPoint.AFTER_DEFENDING );
+		info.setDamage( damage );
 		return info;
 	}
 	public static void main(String[] args) {

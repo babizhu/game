@@ -1,6 +1,5 @@
 package game.fighter;
 
-import game.battle.BaseBattle;
 import game.battle.auto.buff.BuffManager;
 import game.battle.skill.SkillTemplet;
 import game.prop.EquipmentManager;
@@ -10,6 +9,11 @@ import util.ErrorCode;
 
 public class BaseFighter implements IFighter {
 
+	/**
+	 * 名字
+	 */
+	String						name;
+	
 	/**
 	 * 所在阵型中的位置
 	 */
@@ -85,7 +89,10 @@ public class BaseFighter implements IFighter {
 	 */
 	int							unBlock;
 	
-	
+	/**
+	 * 技能模板
+	 */
+	SkillTemplet				skillTemplet;
 	
 	
 	/**
@@ -99,12 +106,22 @@ public class BaseFighter implements IFighter {
 	private boolean				isLeft;
 	
 	private BuffManager			buffManager;
+
+	/**
+	 * 每次开战前必须进行的初始化工作
+	 * @param battle
+	 */
+	public void initForBattle( boolean isLeft ){
+		buffManager = new BuffManager();
+		isCanHit = true;
+		this.isLeft = isLeft;
+	}
 	
 	/**
 	 * 拷贝构造函数，通常用于战斗前的准备工作
 	 * @param f
 	 */
-	public BaseFighter( BaseFighter f, boolean isLeft ) {
+	public BaseFighter( BaseFighter f ) {
 		position = f.position;
 		level = f.level;
 		hp = f.hp;
@@ -120,10 +137,10 @@ public class BaseFighter implements IFighter {
 		unCrit = f.unCrit;
 		block = f.block;
 		unBlock = f.unBlock;
-		isCanHit = true;
-		buffManager = new BuffManager();
-		this.isLeft = isLeft;
+		skillTemplet = f.skillTemplet;
+		name = f.name;
 		
+		//initForBattle( isLeft );
 	}
 
 	public BaseFighter() {
@@ -254,15 +271,6 @@ public class BaseFighter implements IFighter {
 		this.position = position;
 	}
 
-	/**
-	 * 每次开战前必须进行的初始化工作
-	 * @param battle
-	 */
-	public void initForBattle( BaseBattle battle ){
-		buffManager = new BuffManager();
-		isCanHit = true;
-		
-	}
 	
 
 	public void setHitRate(int hitRate) {
@@ -344,13 +352,35 @@ public class BaseFighter implements IFighter {
 	}
 
 	public boolean isDie() {
-		// TODO Auto-generated method stub
 		return hp <= 0;
 	}
 
 	public SkillTemplet getSkillTemplet() {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSkillTemplet(SkillTemplet skillTemplet) {
+		this.skillTemplet = skillTemplet;
+	}
+
+	@Override
+	public String toString() {
+		return "BaseFighter [name=" + name + ", position=" + position
+				+ ", level=" + level + ", hp=" + hp + ", hpMax=" + hpMax
+				+ ", sp=" + sp + ", spMax=" + spMax + ", speed=" + speed
+				+ ", phyAttack=" + phyAttack + ", phyDefend=" + phyDefend
+				+ ", hitRate=" + hitRate + ", dodgeRate=" + dodgeRate
+				+ ", crit=" + crit + ", unCrit=" + unCrit + ", block=" + block
+				+ ", unBlock=" + unBlock + ", skillTemplet=" + skillTemplet
+				+ ", isCanHit=" + isCanHit + ", isLeft=" + isLeft + "]";
 	}
 
 
