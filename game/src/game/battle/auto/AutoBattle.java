@@ -58,7 +58,7 @@ public class AutoBattle extends BaseBattle {
 	/**
 	 * 战况信息
 	 */
-	private WarSituation				warSituation = new WarSituation( 1024 );	
+	private BattleSituation				battleSituation = new BattleSituation( 1024 );	
 
 	public AutoBattle( IFormation attackers, IFormation defenders ) {
 		super();		
@@ -75,10 +75,7 @@ public class AutoBattle extends BaseBattle {
 		
 		allFighters.addAll( attackers.getAllFighters() );
 		allFighters.addAll( defenders.getAllFighters() );
-		for( BaseFighter f : defenders.getAllFighters() ){
-			f.setPosition( (byte) (f.getPosition() + Formation9.TOTAL_COUNT) );
-			//TODO 如果是守方镜面翻转
-		}
+		
 		Collections.sort( allFighters, util.getOrderComparator() );
 	}
 
@@ -91,7 +88,7 @@ public class AutoBattle extends BaseBattle {
 		boolean isEnd = false;
 		while( !isEnd ){
 			pet();
-			warSituation.putRoundFlag();
+			battleSituation.putRoundFlag();
 			for( BaseFighter currentAttacker : allFighters ){
 				if( currentAttacker.isDie() ){
 					continue;
@@ -145,11 +142,11 @@ public class AutoBattle extends BaseBattle {
 		List<BaseFighter> friends = getFriends(attacker).getFighterOnEffect( attacker, templet.getEnemys() );
 		byte count = (byte) ((enemys == null ? 0 : enemys.size()) + (friends == null ? 0 : friends.size()));
 		
-		warSituation.putSkillAttackPrefix( attacker, templet.getId(), count );
+		battleSituation.putSkillAttackPrefix( attacker, templet.getId(), count );
 		
 		if( enemys != null ){
 			for( BaseFighter f : enemys ){
-				warSituation.putFighter( f.getPosition() );
+				battleSituation.putFighter( f.getPosition() );
 				if( doSkillEffect( attacker, f, templet.getEffectOnEnemy() ) )//此战士挂了
 				{
 					return true;
@@ -159,7 +156,7 @@ public class AutoBattle extends BaseBattle {
 		/*****************************************************************************************/
 		if( friends != null ){
 			for( BaseFighter f : friends ){
-				warSituation.putFighter( f.getPosition() );
+				battleSituation.putFighter( f.getPosition() );
 				doSkillEffect( attacker, f, templet.getEffectOnEnemy() );
 			}
 		}
@@ -177,11 +174,11 @@ public class AutoBattle extends BaseBattle {
 	 */
 	private boolean doSkillEffect( BaseFighter attacker, BaseFighter defender, List<SkillEffect> effects ){
 		boolean isHit = true;
-		warSituation.putEffectCount( (byte) effects.size() );
+		battleSituation.putEffectCount( (byte) effects.size() );
 		for( SkillEffect se : effects ){
 			if( se.getAttribute() == FighterAttribute.ENEMY_HP ){//和其他属性不同，技能攻击需要特殊处理
 				AttackInfo info = util.calcAttackInfo( attacker, defender, se.getFormula(), se.getArguments() );
-				warSituation.putSkillInfo( se.getAttribute(), info );
+				battleSituation.putSkillInfo( se.getAttribute(), info );
 				if( reduceHp( defender, info.getDamage() ) == true ){
 					return true;
 				}
@@ -194,7 +191,7 @@ public class AutoBattle extends BaseBattle {
 //						numberToChange = -numberToChange;
 //					}
 					se.getAttribute().run( defender, numberToChange );
-					warSituation.putSkillInfo( se.getAttribute(), numberToChange );
+					battleSituation.putSkillInfo( se.getAttribute(), numberToChange );
 				}
 			}
 		}
@@ -213,7 +210,7 @@ public class AutoBattle extends BaseBattle {
 		assert( defender != null );
 		
 		AttackInfo info = util.calcAttackInfo( attacker, defender, NormalAttackFormula.getInstance(), null );
-		warSituation.putNormalAttack( attacker, defender, info );
+		battleSituation.putNormalAttack( attacker, defender, info );
 		
 		if( reduceHp( defender, info.getDamage() ) == true ){
 			return true;
@@ -245,7 +242,7 @@ public class AutoBattle extends BaseBattle {
 	private boolean doBlockAndCounterAttack( BaseFighter attacker, BaseFighter defender ) {
 		
 		int damage = util.calcCounterAttackDamage( attacker, defender );
-		warSituation.putCounterAttackDamage( (int) damage );//伤害值
+		battleSituation.putCounterAttackDamage( (int) damage );//伤害值
 		return reduceHp( defender, damage );
 	}
 	
@@ -278,8 +275,8 @@ public class AutoBattle extends BaseBattle {
 	}
 
 	@Override
-	public WarSituation getWarSituation() {
-		return warSituation;
+	public BattleSituation getBattleSituation() {
+		return battleSituation;
 	}
 	
 	@Override

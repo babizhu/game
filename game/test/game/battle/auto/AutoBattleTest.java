@@ -19,7 +19,6 @@ public class AutoBattleTest {
 	IFormation dFormation;
 	
 	void init(){
-		NpcFighterTempletCfg.init();
 		List<BaseFighter> attackers = new ArrayList<BaseFighter>();		
 		BaseFighter fighter = NpcFighterTempletCfg.getCopyById( (short) 1 );
 		attackers.add( fighter );
@@ -33,6 +32,7 @@ public class AutoBattleTest {
 	}
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		NpcFighterTempletCfg.init();
 	}
 
 	@AfterClass
@@ -53,8 +53,12 @@ public class AutoBattleTest {
 		
 		init();
 		
-		AutoBattle battle = new AutoBattle( aFormation, dFormation);
+		AutoBattle battle = new AutoBattle( aFormation, dFormation );
 		battle.run();
+		BattleSituation situation = battle.getBattleSituation();
+		init();
+		
+		new ParseBattleSituation( aFormation, dFormation, battle.getBattleSituation() ).parse();
 	}
 
 }

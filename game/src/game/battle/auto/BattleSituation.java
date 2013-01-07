@@ -6,11 +6,11 @@ import game.fighter.FighterAttribute;
 
 import java.nio.ByteBuffer;
 
-public class WarSituation {
+public class BattleSituation {
 	
 	private ByteBuffer	situation = null;
 	
-	public WarSituation( int size ){
+	public BattleSituation( int size ){
 		situation = ByteBuffer.allocate( size );
 	}
 	
@@ -93,5 +93,9 @@ public class WarSituation {
 	 */
 	public void putEffectCount( byte effectCount ) {
 		situation.put( effectCount );
+	}
+
+	public ByteBuffer getData() {
+		return situation;
 	}	
 }

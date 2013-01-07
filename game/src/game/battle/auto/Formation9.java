@@ -14,7 +14,7 @@ public class Formation9 implements IFormation{
 	/**
 	 * 阵型的总人数
 	 */
-	static final byte 						TOTAL_COUNT = 9;
+	private static final byte				TOTAL_COUNT = 9;
 	private static final int 				COUNT_PER_ROW = 3;
 	
 	private List<BaseFighter> 				fighters;
@@ -43,7 +43,10 @@ public class Formation9 implements IFormation{
 		for( BaseFighter f : fighters ){
 			//BaseFighter newFighter = new BaseFighter( f, isLeft );
 			f.initForBattle( isLeft );
-
+			if( !isLeft ){
+				f.setPosition( (byte) (f.getPosition() + TOTAL_COUNT) );
+				//TODO 镜面反转
+			}
 		}
 		this.pet = pet;
 	}

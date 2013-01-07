@@ -1,6 +1,6 @@
 package game.battle;
 
-import game.battle.auto.WarSituation;
+import game.battle.auto.BattleSituation;
 
 
 public interface IBattle {
@@ -15,7 +15,7 @@ public interface IBattle {
 	 * 返回战斗结束后需要获取的战斗信息
 	 * @return
 	 */
-	WarSituation getWarSituation();
+	BattleSituation getBattleSituation();
 	
 	/**
 	 * 攻击方是否获胜
