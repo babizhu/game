@@ -43,11 +43,13 @@ public class BattleSituation {
 	}
 	
 	private void put(AttackInfo info) {
+
 		situation.put( info.getRawData() );
 		if( info.isHit() ){
 			situation.putInt( info.getDamage() );
 		}
 		
+
 	}
 
 	/**

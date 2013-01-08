@@ -83,4 +83,5 @@ public class ParseBattleSituation {
 		System.out.println( "----------------------------------------------------------------" );
 		
 	}
+
 }
