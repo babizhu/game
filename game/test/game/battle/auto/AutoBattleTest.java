@@ -53,15 +53,15 @@ public class AutoBattleTest {
 	public void testRun() {
 		long begin = System.nanoTime();
 		
-		for( int i = 0; i < 1000000; i++ ){
+//		for( int i = 0; i < 1000000; i++ ){
 			init();
 		
-		AutoBattle battle = new AutoBattle( aFormation, dFormation );
-		battle.run();
-		}
+			AutoBattle battle = new AutoBattle( aFormation, dFormation );
+			battle.run();
+//		}
 		System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
-//		init();		
-//		new ParseBattleSituation( aFormation, dFormation, battle.getBattleSituation() ).parse();
+		init();		
+		new ParseBattleSituation( aFormation, dFormation, battle.getBattleSituation() ).parse();
 	}
 
 }

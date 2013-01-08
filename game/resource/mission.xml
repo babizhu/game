@@ -6,6 +6,11 @@
 		<name>水帘洞府</name>
 		<desc>探寻水帘洞</desc>
 		<npc1>1,2|3,4|</npc1>
+		<npc1Pet>0</npc1Pet>
+		<npc2>1,2|3,4|</npc2>
+		<npc2Pet>0</npc2Pet>
+		<npc3>1,2|3,4|</npc3>
+		<npc3Pet>0</npc3Pet>
 	</mission>
 	<mission>
 		<id>2</id>

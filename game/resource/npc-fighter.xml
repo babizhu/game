@@ -27,7 +27,7 @@
 		<phyDefend>1320</phyDefend>
 		<speed>1900</speed>
 		<hitRate>100</hitRate>
-		<dodgeRate>2000</dodgeRate>
+		<dodgeRate>200</dodgeRate>
 		<crit>430</crit>
 		<unCrit>100</unCrit>
 		<block>100</block>

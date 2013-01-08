@@ -1,9 +1,12 @@
 package game.mission.cfg;
 
+import game.battle.Pet;
 import game.battle.auto.Formation9;
 import game.battle.formation.IFormation;
+import game.fighter.BaseFighter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +68,9 @@ private static final Map<Short,MissionTemplet> missions = new HashMap<Short, Mis
 	
 	IFormation parseFormation( String str ){
 	
+		boolean isLeft = false;
+		List<BaseFighter> fightersList = new ArrayList<BaseFighter>();
+		Pet pet = null;
 		IFormation formation = new Formation9( fightersList, isLeft, pet );
 		return formation;
 	}
