@@ -43,6 +43,19 @@ public class AttackInfo {
 	 * 本次攻击的伤害值
 	 */
 	private int									damage;
+	
+	/**
+	 * 用于解析战况的时候使用
+	 * @param data
+	 * @param damage
+	 */
+	public AttackInfo(byte data ) {
+		super();
+		this.data = data;
+	}
+	
+	public AttackInfo(){}
+
 	/**
 	 * 获取网络传送用的raw数据的拷贝，就是一个byte
 	 * @return

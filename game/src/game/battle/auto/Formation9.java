@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 import game.battle.Pet;
 import game.battle.formation.ChooseFighters;
 import game.battle.formation.IFormation;
@@ -14,7 +15,7 @@ public class Formation9 implements IFormation{
 	/**
 	 * 阵型的总人数
 	 */
-	static final byte 						TOTAL_COUNT = 9;
+	private static final byte				TOTAL_COUNT = 9;
 	private static final int 				COUNT_PER_ROW = 3;
 	
 	private List<BaseFighter> 				fighters;
@@ -41,13 +42,31 @@ public class Formation9 implements IFormation{
 		}
 		fighters = fightersList;
 		for( BaseFighter f : fighters ){
-			//BaseFighter newFighter = new BaseFighter( f, isLeft );
 			f.initForBattle( isLeft );
-
+			if( !isLeft ){
+				formatDefender( f );
+			}
 		}
 		this.pet = pet;
 	}
 	
+	/**
+	 * 对防守方进行一系列改造，包括
+	 * 所有位置+9
+	 * 镜面翻转
+	 * 重新按照位置信息排序
+	 */
+	private void formatDefender( BaseFighter fighter ){
+		fighter.setPosition( (byte) (fighter.getPosition() + TOTAL_COUNT) );
+		byte position = fighter.getPosition();
+		if( position % COUNT_PER_ROW == 0 ){
+			position += 2;
+		}
+		else if( position % COUNT_PER_ROW == 2 ){
+			position -= 2;
+		}
+		fighter.setPosition( position );//镜面翻转
+	}
 	@Override
 	/**
 	 * 是否所有的战士都已经死亡

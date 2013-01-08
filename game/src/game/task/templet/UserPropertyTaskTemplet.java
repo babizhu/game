@@ -14,7 +14,7 @@ public class UserPropertyTaskTemplet extends BaseTaskTemplet{
 	 * 任务id
 	 */
 	int		property;		//属性类型，例如hp，攻击力等
-	int		needCount;		//所需要达到的参数	
+	int		needNumber;		//所需要达到的参数	
 
 
 	public UserPropertyTaskTemplet() {
@@ -38,13 +38,13 @@ public class UserPropertyTaskTemplet extends BaseTaskTemplet{
 		}
 		String p[] = param.split( "," );
 		property = Integer.parseInt( p[0] );
-		needCount = Integer.parseInt( p[1] );
+		needNumber = Integer.parseInt( p[1] );
 	}
 	
 	
 	
-	public int getNeedCount() {
-		return needCount;
+	public int getNeedNumber() {
+		return needNumber;
 	}
 
 	
@@ -56,6 +56,6 @@ public class UserPropertyTaskTemplet extends BaseTaskTemplet{
 	public String toString () {
 		String s = super.toString();
 		s = s.substring( 0, s.length() - 1 );//去掉"]"
-		return s + ", property=" + property + ", needCount=" + needCount + "]";
+		return s + ", property=" + property + ", needCount=" + needNumber + "]";
 	}
 }

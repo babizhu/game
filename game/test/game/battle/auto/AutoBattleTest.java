@@ -19,7 +19,6 @@ public class AutoBattleTest {
 	IFormation dFormation;
 	
 	void init(){
-		NpcFighterTempletCfg.init();
 		List<BaseFighter> attackers = new ArrayList<BaseFighter>();		
 		BaseFighter fighter = NpcFighterTempletCfg.getCopyById( (short) 1 );
 		attackers.add( fighter );
@@ -27,12 +26,15 @@ public class AutoBattleTest {
 		
 		List<BaseFighter> defenders = new ArrayList<BaseFighter>();		
 		BaseFighter fighter1 = NpcFighterTempletCfg.getCopyById( (short) 2 );
+
+		fighter1.setPosition( (byte) 2 );
 		defenders.add( fighter1 );
 		dFormation = new Formation9( defenders, false, null );
 		
 	}
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		NpcFighterTempletCfg.init();
 	}
 
 	@AfterClass
@@ -49,12 +51,17 @@ public class AutoBattleTest {
 
 	@Test
 	public void testRun() {
+		long begin = System.nanoTime();
 		
+		for( int i = 0; i < 1000000; i++ ){
+			init();
 		
-		init();
-		
-		AutoBattle battle = new AutoBattle( aFormation, dFormation);
+		AutoBattle battle = new AutoBattle( aFormation, dFormation );
 		battle.run();
+		}
+		System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
+//		init();		
+//		new ParseBattleSituation( aFormation, dFormation, battle.getBattleSituation() ).parse();
 	}
 
 }

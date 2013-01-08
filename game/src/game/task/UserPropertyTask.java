@@ -4,7 +4,8 @@ import game.task.templet.UserPropertyTaskTemplet;
 import user.UserInfo;
 
 /**
- * 检测玩家属性的任务
+ * 检测玩家属性的任务，例如
+ * 检测玩家的hp是否达到3000
  * 
  * @author liukun
  * 2012-8-22 下午02:49:05
@@ -15,7 +16,7 @@ public class UserPropertyTask extends BaseTask {
 		super(templet);
 	}
 	/**
-	 * obj可以是包含两个变量的数组
+	 * obj可以是包含两个变量的数组，一个是属性，一个是此属性需要达到的数值
 	 */
 	@Override
 	public boolean doTask( UserInfo user, Object obj ) {

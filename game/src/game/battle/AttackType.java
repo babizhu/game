@@ -1,5 +1,9 @@
 package game.battle;
 
+import java.util.HashMap;
+import java.util.Map;
+
+
 
 public enum AttackType {
 
@@ -35,6 +39,16 @@ public enum AttackType {
 	}
 	public byte toNumber() {
 		return number;
+	}
+	public static AttackType fromNumber( byte number ) {
+		return numToEnum.get( number );
+	}
+	
+	private static final Map<Byte, AttackType> numToEnum = new HashMap<Byte, AttackType>();
+	static{
+		for( AttackType a : values() ){
+			numToEnum.put( a.number, a );
+		}
 	}
 
 }
