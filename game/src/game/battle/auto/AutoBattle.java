@@ -285,32 +285,6 @@ public class AutoBattle extends BaseBattle {
 	}
 	
 	public static void main(String[] args) {
-		BaseFighter f = new BaseFighter();
-		f.setHp( 100 );
-		List<BaseFighter> list1 = new ArrayList<BaseFighter>();
-		list1.add( f );
 		
-		List<BaseFighter> list2 = new ArrayList<BaseFighter>();
-		list2.addAll( list1 );
-		
-		list1.get(0).setHp( 20 );
-		
-		System.out.println( list2.get(0).getHp() );
-		
-		System.out.println( list1.get(0) );
-		System.out.println( list2.get(0) );
-		
-		int c = 20;
-		int c1 = ++c;
-		System.out.println(c1);
-		
-		float r  = 0.5f;
-		int s= 100;
-		s *= r;
-		System.out.println( s );
-		
-	
-//		ByteBuffer b = ByteBuffer.allocate(10);
-//		b.put( 30);
 	}
 }

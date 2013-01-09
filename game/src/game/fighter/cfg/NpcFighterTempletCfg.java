@@ -21,8 +21,11 @@ import org.jdom2.input.SAXBuilder;
 public class NpcFighterTempletCfg {
 	private static final Map<Short,NpcFighter> npcFighters = new HashMap<Short, NpcFighter>();
 	
+	/**
+	 * 此配置表必须先于MissionTempletCfg初始化，因此无需提前手动调用
+	 */
 	static{
-		
+		init();
 		
 	}
 	private static final String FILE = "resource/npc-fighter.xml";
@@ -31,7 +34,7 @@ public class NpcFighterTempletCfg {
 	/**
 	 * 通过配置表读取Npc战士模板
 	 */
-	public static void init(){
+	private static void init(){
 		
 		SAXBuilder builder = new SAXBuilder();    
 		Document document;
@@ -90,7 +93,7 @@ public class NpcFighterTempletCfg {
 		return new NpcFighter( npc );
 	}
 	public static void main(String[] args) {
-		init();
+		
 		short id = 2;
 		System.out.println( getCopyById(id));
 	}

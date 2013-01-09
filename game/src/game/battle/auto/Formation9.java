@@ -19,35 +19,58 @@ public class Formation9 implements IFormation{
 	private static final int 				COUNT_PER_ROW = 3;
 	
 	private List<BaseFighter> 				fighters;
-	//private boolean						isLeft;
-
 	private Pet								pet;
 
 	
-	@Override
-	public Pet getPet() {
-		return pet;
-	}
 	/**
-	 * 
+	 * 复制一份实例用于战斗
+	 * @param formation
+	 * @return
+	 */
+	public Formation9( IFormation formation ){
+		List<BaseFighter> oldList = formation.getAllFighters();
+		List<BaseFighter> clonesList = new ArrayList<BaseFighter>();
+		for( BaseFighter bf : oldList ){
+			BaseFighter clone = new BaseFighter( bf );
+			clonesList.add( clone );
+		}
+		
+		fighters = clonesList;
+		pet = formation.getPet();//TODO 需要克隆一份
+	}
+	
+	/**
+	 * 生成阵型，参战的战士以及宠物信息会自动进行克隆
 	 * @param fighters
 	 * @param isLeft
 	 * @param pet
 	 * 
-	 * 注意：请在外层做好战士的拷贝工作
+	 * 
 	 */
 	public Formation9( List<BaseFighter> fightersList, boolean isLeft, Pet pet ) {
 		if( fightersList == null || fightersList.size() == 0 ){
 			throw new IllegalArgumentException( (isLeft == true ? "攻方" : "守方") + "战士列表为空或者数量为0" );
 		}
+		List<BaseFighter> clonesList = new ArrayList<BaseFighter>();
+		for( BaseFighter bf : fightersList ){
+			BaseFighter clone = new BaseFighter( bf );
+			clonesList.add( clone );
+		}
+		
+		fighters = clonesList;
+		pet = formation.getPet();//TODO 需要克隆一份
 		fighters = fightersList;
-		for( BaseFighter f : fighters ){
-			f.initForBattle( isLeft );
-			if( !isLeft ){
+		if( !isLeft ){
+			for( BaseFighter f : fighters ){
 				formatDefender( f );
-			}
+			}			
 		}
 		this.pet = pet;
+	}
+	
+	@Override
+	public Pet getPet() {
+		return pet;
 	}
 	
 	/**
@@ -55,6 +78,7 @@ public class Formation9 implements IFormation{
 	 * 所有位置+9
 	 * 镜面翻转
 	 * 重新按照位置信息排序
+	 * 这个代码就应该在这里执行，而不应该放到BaseBattle中，因为这个是和阵型密切相关的
 	 */
 	private void formatDefender( BaseFighter fighter ){
 		fighter.setPosition( (byte) (fighter.getPosition() + TOTAL_COUNT) );
@@ -66,6 +90,7 @@ public class Formation9 implements IFormation{
 			position -= 2;
 		}
 		fighter.setPosition( position );//镜面翻转
+		fighter.setLeft( false );
 	}
 	@Override
 	/**
@@ -217,6 +242,20 @@ public class Formation9 implements IFormation{
 		}
 		return null;
 	}
+	
+	
+	
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder( "{" );
+		for( BaseFighter f : fighters ){
+			sb.append( f.toSimpleString() );
+			sb.append( "|" );
+		}
+		sb.append( " pet=" + pet + "}");
+		return sb.toString();
+	}
+
 	public static void main(String[] args) {
 		BaseFighter f = new BaseFighter();
 		List<BaseFighter> fighters = new ArrayList<BaseFighter>();

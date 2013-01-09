@@ -4,6 +4,8 @@ import game.battle.Pet;
 import game.battle.auto.Formation9;
 import game.battle.formation.IFormation;
 import game.fighter.BaseFighter;
+import game.fighter.NpcFighter;
+import game.fighter.cfg.NpcFighterTempletCfg;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ private static final Map<Short,MissionTemplet> missions = new HashMap<Short, Mis
 				templet.setId( Short.parseShort( element.getChildText( "id" ) ) );
 				templet.setName( element.getChildText( "name" ) );
 				templet.setDesc( element.getChildText( "desc" ) );
-				
+				templet.setFormations( parseFormation( element ) );
 			
 				/*******************关闭打印****************************
 							System.out.println( npc );
@@ -63,16 +65,44 @@ private static final Map<Short,MissionTemplet> missions = new HashMap<Short, Mis
 			e.printStackTrace();
 		}   
 		
-		System.out.println( "npc 战士配置文件解析完毕" );
+		System.out.println( "主线关卡配置表解析完毕" );
 	}
 	
-	IFormation parseFormation( String str ){
-	
+	private static List<IFormation> parseFormation( Element element ){
+		List<IFormation> formations = new ArrayList<IFormation>();
 		boolean isLeft = false;
-		List<BaseFighter> fightersList = new ArrayList<BaseFighter>();
-		Pet pet = null;
-		IFormation formation = new Formation9( fightersList, isLeft, pet );
-		return formation;
+		for( int i = 0; i < 3; i++ ){
+			String nodeName = "npc" + i;
+			String content =  element.getChildText( nodeName );
+			if( content == null || content.isEmpty() ){
+				continue;
+			}
+			List<BaseFighter> fightersList = parseFighterList( content );
+			Pet pet = null;
+			IFormation formation = new Formation9( fightersList, isLeft, pet );
+			
+			formations.add( formation );
+		}
+		return formations;
+	}
+	
+	private static List<BaseFighter> parseFighterList( String content ){
+		List<BaseFighter> list = new ArrayList<BaseFighter>();
+		String[] fighterArr = content.split( "\\|" );
+		for( String s : fighterArr ){
+			Short fighterId = Short.parseShort( s.split( "," )[0] );
+			byte pos = Byte.parseByte( s.split( "," )[1] );
+			
+			if( pos < 0 || pos > 8 ) {
+				//System.out.println( str );
+				throw new RuntimeException( content + "错误，配置表中的战士位置必须满足: 0 <= pos <= 8!" );
+			}
+			
+			NpcFighter f = NpcFighterTempletCfg.getCopyById( fighterId );
+			f.setPosition( pos );//作为防守方，主动+9
+			list.add( f );
+		}
+		return list;
 	}
 	
 	/**
@@ -80,13 +110,15 @@ private static final Map<Short,MissionTemplet> missions = new HashMap<Short, Mis
 	 * @param templetId
 	 * @return
 	 */
-	public static MissionTemplet getCopyById( short templetId ){
-		return missions.get( templetId );
+	public static MissionTemplet getTempletById( short templetId ){
+		return  missions.get( templetId );
 	}
+	
+	
 	public static void main(String[] args) {
 		init();
-		short id = 2;
-		System.out.println( getCopyById(id));
+		System.out.println( getTempletById( (short) 2) );
+		
 	}
 
 }

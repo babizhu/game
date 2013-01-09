@@ -1,13 +1,17 @@
 package game.mission.cfg;
 
+import game.battle.auto.Formation9;
 import game.battle.formation.IFormation;
+
+import java.util.List;
 
 public class MissionTemplet {
 
-	short				id;
-	String				name;
-	String				desc;
-	IFormation[]		formations = new IFormation[3];
+	private short				id;
+	private String				name;
+	private String				desc;
+	private List<IFormation>	formations;
+	
 	public short getId() {
 		return id;
 	}
@@ -26,11 +30,24 @@ public class MissionTemplet {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public IFormation[] getFormations() {
-		return formations;
+//	public List<IFormation> getFormations() {
+//		return formations;
+//	}
+	/**
+	 * 获取某一波的战士阵型
+	 */
+	public IFormation getFormationCopy( int wave ){
+		
+		return new Formation9( formations.get( wave ) );
 	}
-	public void setFormations(IFormation[] formations) {
+	
+	public void setFormations( List<IFormation> formations ) {
 		this.formations = formations;
+	}
+	@Override
+	public String toString() {
+		return "MissionTemplet [id=" + id + ", name=" + name + ", desc=" + desc
+				+ ", formations=" + formations + "]";
 	}
 	
 	
