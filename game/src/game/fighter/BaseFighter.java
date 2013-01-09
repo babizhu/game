@@ -98,12 +98,12 @@ public class BaseFighter implements IFighter {
 	/**
 	 * 是否允许出招
 	 */
-	private boolean 			isCanHit;
+	private boolean 			isCanHit		= true;
 	
 	/*
 	 * 是否处于战场的左边
 	 */
-	private boolean				isLeft;
+	private boolean				isLeft			= true;
 	
 	private BuffManager			buffManager;
 
@@ -111,10 +111,8 @@ public class BaseFighter implements IFighter {
 	 * 每次开战前必须进行的初始化工作
 	 * @param battle
 	 */
-	public void initForBattle( boolean isLeft ){
+	private void initForBattle(){
 		buffManager = new BuffManager();
-		isCanHit = true;
-		this.isLeft = isLeft;
 	}
 	
 	/**
@@ -139,12 +137,10 @@ public class BaseFighter implements IFighter {
 		unBlock = f.unBlock;
 		skillTemplet = f.skillTemplet;
 		name = f.name;
-		
-		//initForBattle( isLeft );
+		//isLeft = f.isLeft;似乎不需要，留待观察
 	}
 
 	public BaseFighter() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -253,6 +249,10 @@ public class BaseFighter implements IFighter {
 	 */
 	public boolean isLeft() {
 		return isLeft;
+	}
+
+	public void setLeft(boolean isLeft) {
+		this.isLeft = isLeft;
 	}
 
 	public void setCanHit(boolean isCanHit) {
@@ -380,7 +380,12 @@ public class BaseFighter implements IFighter {
 				+ ", hitRate=" + hitRate + ", dodgeRate=" + dodgeRate
 				+ ", crit=" + crit + ", unCrit=" + unCrit + ", block=" + block
 				+ ", unBlock=" + unBlock + ", skillTemplet=" + skillTemplet
-				+ ", isCanHit=" + isCanHit + ", isLeft=" + isLeft + "]";
+				+ ", isCanHit=" + isCanHit + ", isLeft=" + isLeft + "]\r\n";
+	}
+
+	public String toSimpleString() {
+		return "name=" + name + ", position=" + position;
+		
 	}
 
 

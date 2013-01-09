@@ -10,7 +10,6 @@ public class NpcFighter extends BaseFighter {
 		super( npc );
 		desc = npc.desc;
 		id = npc.id;
-		initForBattle( false );
 	}
 
 	public NpcFighter() {
