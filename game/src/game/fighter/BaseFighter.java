@@ -111,7 +111,7 @@ public class BaseFighter implements IFighter {
 	 * 每次开战前必须进行的初始化工作
 	 * @param battle
 	 */
-	private void initForBattle(){
+	public void initForBattle(){
 		buffManager = new BuffManager();
 	}
 	
@@ -138,8 +138,6 @@ public class BaseFighter implements IFighter {
 		skillTemplet = f.skillTemplet;
 		name = f.name;
 		isLeft = f.isLeft;
-		
-		//initForBattle( isLeft );
 	}
 
 	public BaseFighter() {

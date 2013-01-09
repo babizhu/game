@@ -27,8 +27,8 @@ public class AutoBattleTest {
 //		defenders.add( fighter1 );
 //		dFormation = new Formation9( defenders, false, null );
 		short missionId = 1;
-		aFormation = MissionTempletCfg.getTempletById( missionId ).getFormationCopy( 0 );
-		dFormation = MissionTempletCfg.getTempletById( missionId ).getFormationCopy( 1 );
+		aFormation = MissionTempletCfg.getTempletById( missionId ).getFormationClone( 0 );
+		dFormation = MissionTempletCfg.getTempletById( missionId ).getFormationClone( 1 );
 		
 	}
 	@BeforeClass

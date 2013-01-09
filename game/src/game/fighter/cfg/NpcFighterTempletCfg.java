@@ -84,18 +84,18 @@ public class NpcFighterTempletCfg {
 	
 	
 	/**
-	 * 通过id获取战士的拷贝
+	 * 通过id获取战士的引用
 	 * @param templetId
 	 * @return
 	 */
-	public static NpcFighter getCopyById( short templetId ){
+	public static NpcFighter getNpcCloneById( short templetId ){
 		NpcFighter npc = npcFighters.get( templetId );
 		return new NpcFighter( npc );
 	}
 	public static void main(String[] args) {
 		
 		short id = 2;
-		System.out.println( getCopyById(id));
+		System.out.println( getNpcCloneById(id));
 	}
 
 }

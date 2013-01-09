@@ -23,7 +23,7 @@ public class Formation9 implements IFormation{
 
 	
 	/**
-	 * 复制一份实例用于战斗
+	 * 复制一份实例用于战斗，通常用于主线通关的mission的阵型
 	 * @param formation
 	 * @return
 	 */
@@ -54,18 +54,15 @@ public class Formation9 implements IFormation{
 		List<BaseFighter> clonesList = new ArrayList<BaseFighter>();
 		for( BaseFighter bf : fightersList ){
 			BaseFighter clone = new BaseFighter( bf );
+			if( !isLeft ){
+				formatForDefender( clone );
+			}
 			clonesList.add( clone );
 		}
 		
-		fighters = clonesList;
-		pet = formation.getPet();//TODO 需要克隆一份
-		fighters = fightersList;
-		if( !isLeft ){
-			for( BaseFighter f : fighters ){
-				formatDefender( f );
-			}			
-		}
-		this.pet = pet;
+		fighters = clonesList;		
+		this.pet = pet;//TODO有必要的话应该克隆
+
 	}
 	
 	@Override
@@ -73,14 +70,15 @@ public class Formation9 implements IFormation{
 		return pet;
 	}
 	
+	
 	/**
-	 * 对防守方进行一系列改造，包括
-	 * 所有位置+9
-	 * 镜面翻转
-	 * 重新按照位置信息排序
+	 * 对防守方进行一系列改造，包括<br>
+	 * 所有位置+9<br>
+	 * 镜面翻转<br>
+	 * 重新按照位置信息排序<br>
 	 * 这个代码就应该在这里执行，而不应该放到BaseBattle中，因为这个是和阵型密切相关的
 	 */
-	private void formatDefender( BaseFighter fighter ){
+	private void formatForDefender( BaseFighter fighter ){
 		fighter.setPosition( (byte) (fighter.getPosition() + TOTAL_COUNT) );
 		byte position = fighter.getPosition();
 		if( position % COUNT_PER_ROW == 0 ){

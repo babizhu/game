@@ -98,7 +98,7 @@ private static final Map<Short,MissionTemplet> missions = new HashMap<Short, Mis
 				throw new RuntimeException( content + "错误，配置表中的战士位置必须满足: 0 <= pos <= 8!" );
 			}
 			
-			NpcFighter f = NpcFighterTempletCfg.getCopyById( fighterId );
+			NpcFighter f = NpcFighterTempletCfg.getNpcCloneById( fighterId );
 			f.setPosition( pos );//作为防守方，主动+9
 			list.add( f );
 		}

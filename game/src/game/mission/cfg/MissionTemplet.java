@@ -34,9 +34,9 @@ public class MissionTemplet {
 //		return formations;
 //	}
 	/**
-	 * 获取某一波的战士阵型
+	 * 获取某一波的战士阵型的深度克隆数据
 	 */
-	public IFormation getFormationCopy( int wave ){
+	public IFormation getFormationClone( int wave ){
 		
 		return new Formation9( formations.get( wave ) );
 	}

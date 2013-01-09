@@ -91,6 +91,22 @@ public class SkillTemplet {
 	public void setEnemys(ChooseFighters enemys) {
 		this.enemys = enemys;
 	}
+
+	public IFormula getBuffFormula() {
+		return buffFormula;
+	}
+
+	public void setBuffFormula(IFormula buffFormula) {
+		this.buffFormula = buffFormula;
+	}
+
+	public byte getBuffId() {
+		return buffId;
+	}
+
+	public void setBuffId(byte buffId) {
+		this.buffId = buffId;
+	}
 	
 	
 
