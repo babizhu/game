@@ -23,7 +23,11 @@ public class Formation9 implements IFormation{
 
 	
 	/**
+<<<<<<< HEAD
 	 * 复制一份实例用于战斗，通常用于主线通关的mission的阵型
+=======
+	 * 复制一份实例用于战斗
+>>>>>>> refs/remotes/origin/master
 	 * @param formation
 	 * @return
 	 */
@@ -62,6 +66,7 @@ public class Formation9 implements IFormation{
 		
 		fighters = clonesList;		
 		this.pet = pet;//TODO有必要的话应该克隆
+
 	}
 	
 	@Override
@@ -70,10 +75,17 @@ public class Formation9 implements IFormation{
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * 对防守方进行一系列改造，包括<br>
 	 * 所有位置+9<br>
 	 * 镜面翻转<br>
 	 * 重新按照位置信息排序<br>
+=======
+	 * 对防守方进行一系列改造，包括
+	 * 所有位置+9
+	 * 镜面翻转
+	 * 重新按照位置信息排序
+>>>>>>> refs/remotes/origin/master
 	 * 这个代码就应该在这里执行，而不应该放到BaseBattle中，因为这个是和阵型密切相关的
 	 */
 	private void formatDefender( BaseFighter fighter ){

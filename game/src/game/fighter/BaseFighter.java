@@ -138,6 +138,7 @@ public class BaseFighter implements IFighter {
 		skillTemplet = f.skillTemplet;
 		name = f.name;
 		//isLeft = f.isLeft;似乎不需要，留待观察
+
 	}
 
 	public BaseFighter() {
