@@ -55,6 +55,7 @@ public class AutoBattleTest {
 
 	@Test
 	public void testRun() {
+		
 		int count = 2;//循环次数
 		long begin = System.nanoTime();
 		AutoBattle battle= null;
@@ -64,7 +65,8 @@ public class AutoBattleTest {
 			battle = new AutoBattle( aFormation, dFormation );
 			battle.run();
 		}
-		System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
+		
+		System.out.println("总共用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
 		init();		
 		new ParseBattleSituation( aFormation, dFormation, battle.getBattleSituation() ).parse();
 	}
