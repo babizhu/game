@@ -40,27 +40,30 @@ public class Formation9 implements IFormation{
 	}
 	
 	/**
-	 * 生成阵型，参战的战士以及宠物信息会自动进行克隆
 	 * @param fighters
 	 * @param isLeft
 	 * @param pet
 	 * 
-	 * 
+	 *	如有必要，请在调用处对 fightersList 进行克隆处理
 	 */
 	public Formation9( List<BaseFighter> fightersList, boolean isLeft, Pet pet ) {
-		if( fightersList == null || fightersList.size() == 0 ){
-			throw new IllegalArgumentException( (isLeft == true ? "攻方" : "守方") + "战士列表为空或者数量为0" );
-		}
-		List<BaseFighter> clonesList = new ArrayList<BaseFighter>();
-		for( BaseFighter bf : fightersList ){
-			BaseFighter clone = new BaseFighter( bf );
-			if( !isLeft ){
-				formatForDefender( clone );
-			}
-			clonesList.add( clone );
-		}
+//		if( fightersList == null || fightersList.size() == 0 ){
+//			throw new IllegalArgumentException( (isLeft == true ? "攻方" : "守方") + "战士列表为空或者数量为0" );
+//		}
+//		List<BaseFighter> clonesList = new ArrayList<BaseFighter>();
+//		for( BaseFighter bf : fightersList ){
+////			BaseFighter clone = new BaseFighter( bf );
+//			if( !isLeft ){
+//				formatForDefender( bf );
+//			}
+//		}
 		
-		fighters = clonesList;		
+		fighters = fightersList;
+		if( !isLeft ){
+			for( BaseFighter bf : fightersList ){
+				formatForDefender( bf );
+			}
+		}
 		this.pet = pet;//TODO有必要的话应该克隆
 
 	}

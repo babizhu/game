@@ -41,15 +41,15 @@ private static final Map<Short,MissionTemplet> missions = new HashMap<Short, Mis
 			List<?> list = root.getChildren( "mission" ); 
 			
 			for( int i = 0; i < list.size(); i++ ){
-				MissionTemplet templet = new MissionTemplet( );
 				Element element = (Element) list.get( i );
-				templet.setId( Short.parseShort( element.getChildText( "id" ) ) );
-				templet.setName( element.getChildText( "name" ) );
-				templet.setDesc( element.getChildText( "desc" ) );
-				templet.setFormations( parseFormation( element ) );
+				short id = Short.parseShort( element.getChildText( "id" ) );
+				String name = element.getChildText( "name" );
+				String desc = element.getChildText( "desc" );
+				List<IFormation> formations = parseFormation( element );
+				MissionTemplet templet = new MissionTemplet( id, name, desc, formations );
 			
 				/*******************关闭打印****************************
-							System.out.println( npc );
+							System.out.println( templet );
 				********************************************************/
 				
 				MissionTemplet temp = missions.put( templet.getId(), templet );
@@ -70,7 +70,7 @@ private static final Map<Short,MissionTemplet> missions = new HashMap<Short, Mis
 	
 	private static List<IFormation> parseFormation( Element element ){
 		List<IFormation> formations = new ArrayList<IFormation>();
-		boolean isLeft = false;
+		boolean isLeft = false;//NPC通常作为防守方出现
 		for( int i = 0; i < 3; i++ ){
 			String nodeName = "npc" + i;
 			String content =  element.getChildText( nodeName );
@@ -94,12 +94,11 @@ private static final Map<Short,MissionTemplet> missions = new HashMap<Short, Mis
 			byte pos = Byte.parseByte( s.split( "," )[1] );
 			
 			if( pos < 0 || pos > 8 ) {
-				//System.out.println( str );
 				throw new RuntimeException( content + "错误，配置表中的战士位置必须满足: 0 <= pos <= 8!" );
 			}
 			
 			NpcFighter f = NpcFighterTempletCfg.getNpcCloneById( fighterId );
-			f.setPosition( pos );//作为防守方，主动+9
+			f.setPosition( pos );
 			list.add( f );
 		}
 		return list;
@@ -117,7 +116,7 @@ private static final Map<Short,MissionTemplet> missions = new HashMap<Short, Mis
 	
 	public static void main(String[] args) {
 		init();
-		System.out.println( getTempletById( (short) 2) );
+		System.out.println( getTempletById( (short) 1) );
 		
 	}
 

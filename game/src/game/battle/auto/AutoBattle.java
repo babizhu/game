@@ -29,7 +29,7 @@ public class AutoBattle extends BaseBattle {
 	private static final Logger 		logger = LoggerFactory.getLogger( AutoBattle.class );
 	private static final IBattleUtil	util = AutoBattleUtil.getInstance();
 
-	private static final int 			SKILL_ATTACK_NEED_SP = 1000;
+	private static final int 			SKILL_ATTACK_NEED_SP = 10000;
 	private static final int 			SP_TO_ADD = 50;		
 	private static final int 			MAX_ROUND = 50;//最大回合数
 
@@ -104,7 +104,6 @@ public class AutoBattle extends BaseBattle {
 				}
 				
 				IFormation currentDefender = getEnemys( currentAttacker );
-				
 				if( currentAttacker.getSp() >= SKILL_ATTACK_NEED_SP ){
 					if( doSkillAttack( currentAttacker, currentDefender  ) ){
 						isEnd = true;
