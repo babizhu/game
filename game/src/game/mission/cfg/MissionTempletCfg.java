@@ -101,6 +101,7 @@ private static final Map<Short,MissionTemplet> missions = new HashMap<Short, Mis
 			f.setPosition( pos );
 			list.add( f );
 		}
+		//按位置排序
 		return list;
 	}
 	

@@ -1,6 +1,8 @@
 package game.battle.auto;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -21,6 +23,16 @@ public class Formation9 implements IFormation{
 	private List<BaseFighter> 				fighters;
 	private Pet								pet;
 
+	/**
+	 * 按照位置从低到高进行排序，否则计算被攻击战士的时候可能出错
+	 */
+	public static final Comparator<BaseFighter> posComparator = new Comparator<BaseFighter>(){
+		@Override
+		public int compare( BaseFighter f1, BaseFighter f2 ) {
+			return f1.getPosition() - f2.getPosition();
+		}
+	};
+	
 	
 	/**
 	 * 复制一份实例用于战斗，通常用于主线通关的mission的阵型
@@ -60,11 +72,14 @@ public class Formation9 implements IFormation{
 		
 		fighters = fightersList;
 		if( !isLeft ){
-			for( BaseFighter bf : fightersList ){
+			for( BaseFighter bf : fighters ){
 				formatForDefender( bf );
 			}
+			//由于存在镜面翻转，这里需要重新排序
+			Collections.sort( fighters, posComparator );
 		}
-		this.pet = pet;//TODO有必要的话应该克隆
+		this.pet = pet;
+		//TODO有必要的话应该克隆
 
 	}
 	
@@ -76,8 +91,8 @@ public class Formation9 implements IFormation{
 	
 	/**
 	 * 对防守方进行一系列改造，包括<br>
-	 * 所有位置+9<br>
-	 * 镜面翻转<br>
+	 * 所有位置+9(九宫格战斗)<br>
+	 * 防守方镜面翻转<br>
 	 * 重新按照位置信息排序<br>
 	 * 这个代码就应该在这里执行，而不应该放到BaseBattle中，因为这个是和阵型密切相关的
 	 */

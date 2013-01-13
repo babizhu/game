@@ -5,7 +5,7 @@
 		<id>1</id>
 		<name>水帘洞府</name>
 		<desc>探寻水帘洞</desc>
-		<npc0>1,2|3,4|</npc0>
+		<npc0>1,2|3,0|</npc0>
 		<npcPet0>0</npcPet0>
 		<npc1>1,2</npc1>
 		<npcPet1>0</npcPet1>

@@ -33,7 +33,8 @@ public class AutoBattleTest {
 //		dFormation = new Formation9( defenders, false, null );
 		short missionId = 1;
 		//aFormation = MissionTempletCfg.getTempletById( missionId ).getFormationClone( 0 );
-		dFormation = MissionTempletCfg.getTempletById( missionId ).getFormationClone( 0 );
+		dFormation = MissionTempletCfg.getTempletById( missionId ).getFormationCloneByWave( 0 );
+		System.out.println( dFormation );
 		
 	}
 	@BeforeClass
@@ -56,7 +57,7 @@ public class AutoBattleTest {
 	@Test
 	public void testRun() {
 		
-		int count = 2;//循环次数
+		int count = 1000000;//循环次数
 		long begin = System.nanoTime();
 		AutoBattle battle= null;
 		for( int i = 0; i < count; i++ ){
@@ -67,8 +68,8 @@ public class AutoBattleTest {
 		}
 		
 		System.out.println("总共用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
-		init();		
-		new ParseBattleSituation( aFormation, dFormation, battle.getBattleSituation() ).parse();
+//		init();		
+//		new ParseBattleSituation( aFormation, dFormation, battle.getBattleSituation() ).parse();
 	}
 
 }

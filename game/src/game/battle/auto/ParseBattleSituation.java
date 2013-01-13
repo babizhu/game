@@ -44,7 +44,7 @@ public class ParseBattleSituation {
 		//System.out.println( "字节数:" + endPosition );
 		//int i = 0;
 		
-		String ret = "攻\t防\t命      暴    格\t\t伤害\t反击\t";
+		String ret = "攻\t防\t命      暴    格\t伤害\t反击\t";
 		System.out.println( ret );
 		
 		while( data.position() < endPosition ){	
