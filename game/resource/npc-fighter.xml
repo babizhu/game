@@ -16,6 +16,7 @@
 		<unCrit>100</unCrit>
 		<block>100</block>
 		<unBlock>100</unBlock>
+		<skillTemplet>1</skillTemplet>
 	</fight>
 	<fight>
 		<id>2</id>
@@ -32,6 +33,7 @@
 		<unCrit>100</unCrit>
 		<block>100</block>
 		<unBlock>100</unBlock>
+		<skillTemplet>1</skillTemplet>
 	</fight>
 	<fight>
 		<id>3</id>
@@ -48,6 +50,7 @@
 		<unCrit>100</unCrit>
 		<block>100</block>
 		<unBlock>100</unBlock>
+		<skillTemplet>1</skillTemplet>
 	</fight>
 
 </fights>
