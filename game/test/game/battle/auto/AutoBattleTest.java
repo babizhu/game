@@ -37,7 +37,7 @@ public class AutoBattleTest {
 		short missionId = 1;
 		//aFormation = MissionTempletCfg.getTempletById( missionId ).getFormationClone( 0 );
 		dFormation = MissionTempletCfg.getTempletById( missionId ).getFormationCloneByWave( 0 );
-		System.out.println( dFormation );
+//		System.out.println( dFormation );
 		
 	}
 	@BeforeClass
