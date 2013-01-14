@@ -23,6 +23,9 @@ public class AutoBattleTest {
 		List<BaseFighter> attackers = new ArrayList<BaseFighter>();		
 		BaseFighter fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 1 );
 		attackers.add( fighter );
+		fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 2 );
+		fighter.setPosition( (byte) 3 );
+		attackers.add( fighter );
 		aFormation = new Formation9( attackers, true, null );
 //		
 //		List<BaseFighter> defenders = new ArrayList<BaseFighter>();		
@@ -57,7 +60,7 @@ public class AutoBattleTest {
 	@Test
 	public void testRun() {
 		
-		int count = 1000000;//循环次数
+		int count = 2;//循环次数
 		long begin = System.nanoTime();
 		AutoBattle battle= null;
 		for( int i = 0; i < count; i++ ){
@@ -68,8 +71,8 @@ public class AutoBattleTest {
 		}
 		
 		System.out.println("总共用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
-//		init();		
-//		new ParseBattleSituation( aFormation, dFormation, battle.getBattleSituation() ).parse();
+		init();		
+		new ParseBattleSituation( aFormation, dFormation, battle.getBattleSituation() ).parse();
 	}
 
 }

@@ -167,8 +167,9 @@ public class Formation9 implements IFormation{
 	private List<BaseFighter> getFightersByRow( int row ) {
 		List<BaseFighter> ret = new ArrayList<BaseFighter>();
 		for( BaseFighter f : fighters ){
-			if( getRow( f.getPosition() ) == row ){
+			if( !f.isDie() && getRow( f.getPosition() ) == row ){
 				ret.add( f );
+				
 			}
 		}
 		return ret;
