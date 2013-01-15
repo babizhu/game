@@ -2,7 +2,9 @@ package game.battle.auto;
 
 import game.battle.AttackType;
 import game.battle.formation.IFormation;
+import game.battle.skill.cfg.SkillTempletCfg;
 import game.fighter.BaseFighter;
+import game.fighter.FighterAttribute;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -83,13 +85,36 @@ public class ParseBattleSituation {
 		byte attackerPos = data.get();
 		byte skillId = data.get();
 		byte count = data.get();//受到技能影响的战士数量
+		String output = attackerPos + "\t" + SkillTempletCfg.getSkillTempletById(skillId).getName() + "\t";
 		for( int i = 0; i < count; i++ ){
 			byte defenderPos = data.get();
+			output += defenderPos + "\t";
+			BaseFighter defender = getFighterByPos( defenderPos );
 			byte effectCount = data.get();
+			boolean isHit = true;
 			for( int n = 0; n < effectCount; n++ ){
 				
+				FighterAttribute fa = FighterAttribute.fromNumber( data.get() );
+				output += fa + "\t";
+				if( fa == FighterAttribute.ENEMY_HP ){
+					AttackInfo info = new AttackInfo( data.get() );
+					isHit = info.isHit();
+					if( isHit ){
+						int damage = data.getInt();
+						output += damage + "\t";
+						defender.setHp( defender.getHp() - damage );
+					}
+				}
+				else{
+					if( isHit && !defender.isDie() ){
+						int numToChange = data.getInt();
+						fa.run(defender, numToChange);
+						output += numToChange + "\t";
+					}
+				}
 			}
 		}
+		System.out.println( output );
 		
 	}
 

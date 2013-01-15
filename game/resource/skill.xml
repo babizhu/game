@@ -19,7 +19,7 @@
 		<friend></friend>
 		<friend_effect></friend_effect>	
 		<enemy>NORMAL_ATTACK</enemy>
-		<enemy_effect>ENEMY_HP,SkillAttackFormula,4</enemy_effect>
+		<enemy_effect>ENEMY_HP,SkillAttackFormula,6</enemy_effect>
 	</skill>
 	<skill>
 		<id>3</id>

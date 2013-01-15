@@ -178,7 +178,8 @@ public class AutoBattle extends BaseBattle {
 			if( se.getAttribute() == FighterAttribute.ENEMY_HP ){//和其他属性不同，技能攻击需要特殊处理
 				AttackInfo info = util.calcAttackInfo( attacker, defender, se.getFormula(), se.getArguments() );
 				battleSituation.putSkillInfo( se.getAttribute(), info );
-				if( reduceHp( defender, info.getDamage() ) == true ){
+				
+				if( info.isHit() && reduceHp( defender, info.getDamage() ) == true ){
 					return true;
 				}
 				isHit = info.isHit();

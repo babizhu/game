@@ -23,9 +23,9 @@ public class AutoBattleTest {
 		List<BaseFighter> attackers = new ArrayList<BaseFighter>();		
 		BaseFighter fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 1 );
 		attackers.add( fighter );
-//		fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 2 );
-//		fighter.setPosition( (byte) 3 );
-//		attackers.add( fighter );
+		fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 2 );
+		fighter.setPosition( (byte) 3 );
+		attackers.add( fighter );
 		aFormation = new Formation9( attackers, true, null );
 //		
 //		List<BaseFighter> defenders = new ArrayList<BaseFighter>();		

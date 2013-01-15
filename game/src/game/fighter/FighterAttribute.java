@@ -1,6 +1,10 @@
 package game.fighter;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
+
 public enum FighterAttribute {
 
 	ENEMY_HP(1){
@@ -37,5 +41,15 @@ public enum FighterAttribute {
 	}
 	public byte toNumber() {
 		return number;
+	}
+	private static final Map<Byte, FighterAttribute> numToEnum = new HashMap<Byte, FighterAttribute>();
+	static{
+		for( FighterAttribute a : values() ){
+			numToEnum.put( a.number, a );
+		}
+	}
+	public static FighterAttribute fromNumber( byte n ){
+		return numToEnum.get( n );
+		
 	}
 }
