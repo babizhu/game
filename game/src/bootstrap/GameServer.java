@@ -1,7 +1,7 @@
 /**
  * 
  */
-package lanch;
+package bootstrap;
 import game.prop.cfg.PropTempletCfg;
 import game.task.cfg.TaskTempletCfg;
 

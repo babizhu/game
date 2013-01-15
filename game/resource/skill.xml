@@ -5,7 +5,7 @@
 	<skill>
 		<id>1</id>
 		<name>落井下石</name>
-		<desc>攻击对方血量最少的战士，同时降低战士20SP，对己方所有展示增加100血</desc>
+		<desc>攻击对方血量最少的战士，同时降低战士20SP，对己方所有战士增加100血</desc>
 		<friend>ALL</friend>
 		<friend_effect>HP,DirectOutputFormula,100</friend_effect>	
 		<enemy>MIN_HP</enemy>

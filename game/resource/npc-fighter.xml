@@ -16,7 +16,7 @@
 		<unCrit>100</unCrit>
 		<block>100</block>
 		<unBlock>100</unBlock>
-		<skillTempletId>2</skillTempletId>
+		<skillTempletId>1</skillTempletId>
 	</fight>
 	<fight>
 		<id>2</id>
