@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class HouseMDStudy {
 
-	private int count = 0;
+	int count = 0;
 	void excute( int n ) throws InterruptedException{
 		count++;
 		Thread.sleep( n * 1000 );

@@ -1,7 +1,7 @@
 package game.battle.skill;
 
 import game.battle.formation.ChooseFighters;
-import game.battle.formula.IFormula;
+import game.battle.formula.Formula;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class SkillTemplet {
 	/**
 	 * 获取受技能影响的同伴的算法
 	 */
-	private ChooseFighters				friends;
+	private ChooseFighters				friend;
 	
 	/**
 	 * 对敌的算法
@@ -28,12 +28,12 @@ public class SkillTemplet {
 	/**
 	 * 获取受技能影响的敌人的算法
 	 */
-	private ChooseFighters				enemys;
+	private ChooseFighters				enemy;
 	
 	/**
 	 * 计算buff是否出现的概率公式
 	 */
-	private IFormula					buffFormula;
+	private Formula						buffFormula;
 	private byte						buffId;
 
 	public byte getId() {
@@ -69,11 +69,11 @@ public class SkillTemplet {
 	}
 
 	public ChooseFighters getFriends() {
-		return friends;
+		return friend;
 	}
 
-	public void setFriends(ChooseFighters friends) {
-		this.friends = friends;
+	public void setFriend(ChooseFighters friends) {
+		this.friend = friends;
 	}
 
 	public List<SkillEffect> getEffectOnEnemy() {
@@ -85,18 +85,18 @@ public class SkillTemplet {
 	}
 
 	public ChooseFighters getEnemys() {
-		return enemys;
+		return enemy;
 	}
 
-	public void setEnemys(ChooseFighters enemys) {
-		this.enemys = enemys;
+	public void setEnemy(ChooseFighters enemy) {
+		this.enemy = enemy;
 	}
 
-	public IFormula getBuffFormula() {
+	public Formula getBuffFormula() {
 		return buffFormula;
 	}
 
-	public void setBuffFormula(IFormula buffFormula) {
+	public void setBuffFormula( Formula buffFormula ) {
 		this.buffFormula = buffFormula;
 	}
 
@@ -107,7 +107,16 @@ public class SkillTemplet {
 	public void setBuffId(byte buffId) {
 		this.buffId = buffId;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "SkillTemplet [id=" + id + ", name=" + name + ", desc=" + desc
+				+ ", effectOnFriend=" + effectOnFriend + ", friend=" + friend
+				+ ", effectOnEnemy=" + effectOnEnemy + ", enemy=" + enemy
+				+ ", buffFormula=" + buffFormula + ", buffId=" + buffId + "]";
+	}
+	public static void main(String[] args) {
+		System.out.println( 23);
+	}
 
 }

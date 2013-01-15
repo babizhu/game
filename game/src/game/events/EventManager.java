@@ -99,7 +99,7 @@ public enum EventManager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Formatter f = new Formatter(System.out);
+		Formatter f = new Formatter( System.out );
 		f.format( "%-15s %-100s %-10s \n", "包号", "类别", "功能说明" );
 		f.format( "%-15s %-100s %-10s \n", "－－", "－－", "－－－－" );
 		for( EventManager p : values() ){
@@ -133,6 +133,7 @@ public enum EventManager {
 		} 
 		html.append(  "</table>" );
 		System.out.println( html );
+		f.close();
 	}
 	
 }

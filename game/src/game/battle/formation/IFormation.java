@@ -19,7 +19,7 @@ public interface IFormation {
 	 * @param attacker	攻方
 	 * @return
 	 */
-	BaseFighter getDefender( BaseFighter attacker );
+	BaseFighter getBaseDefender( BaseFighter attacker );
 	
 	/**
 	 * 根据类型来得到相应的受到效果的战士列表

@@ -23,9 +23,9 @@ public class AutoBattleTest {
 		List<BaseFighter> attackers = new ArrayList<BaseFighter>();		
 		BaseFighter fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 1 );
 		attackers.add( fighter );
-		fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 2 );
-		fighter.setPosition( (byte) 3 );
-		attackers.add( fighter );
+//		fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 2 );
+//		fighter.setPosition( (byte) 3 );
+//		attackers.add( fighter );
 		aFormation = new Formation9( attackers, true, null );
 //		
 //		List<BaseFighter> defenders = new ArrayList<BaseFighter>();		
@@ -34,7 +34,7 @@ public class AutoBattleTest {
 //		fighter1.setPosition( (byte) 2 );
 //		defenders.add( fighter1 );
 //		dFormation = new Formation9( defenders, false, null );
-		short missionId = 1;
+		short missionId = 2;
 		//aFormation = MissionTempletCfg.getTempletById( missionId ).getFormationClone( 0 );
 		dFormation = MissionTempletCfg.getTempletById( missionId ).getFormationCloneByWave( 0 );
 //		System.out.println( dFormation );
@@ -60,7 +60,7 @@ public class AutoBattleTest {
 	@Test
 	public void testRun() {
 		
-		int count = 2;//循环次数
+		int count = 1;//循环次数
 		long begin = System.nanoTime();
 		AutoBattle battle= null;
 		for( int i = 0; i < count; i++ ){

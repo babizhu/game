@@ -160,6 +160,7 @@ public class PackageUtil {
 				f.format("%-8s %-50s %-150s \n", ap.getEventId(), c.getName(),	s );
 			}
 		}
+		f.close();
 	}
 
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, SecurityException, NoSuchFieldException, IOException {

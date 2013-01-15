@@ -1,13 +1,13 @@
 package game.battle.auto;
 
 
-import java.util.Comparator;
-
 import game.battle.BuffRunPoint;
 import game.battle.IBattleUtil;
-import game.battle.formula.IFormula;
-import game.battle.formula.NormalAttackFormula;
+import game.battle.formula.Formula;
 import game.fighter.BaseFighter;
+
+import java.util.Comparator;
+
 import util.RandomUtil;
 
 public class AutoBattleUtil implements IBattleUtil {
@@ -92,7 +92,7 @@ public class AutoBattleUtil implements IBattleUtil {
 	 * @return
 	 */
 	@Override
-	public AttackInfo calcAttackInfo( BaseFighter attacker, BaseFighter defender, IFormula formula, Object arguments ) {
+	public AttackInfo calcAttackInfo( BaseFighter attacker, BaseFighter defender, Formula formula, float[] arguments ) {
 		
 		AttackInfo info = new AttackInfo();
 		boolean isHit = isHit(attacker, defender);
@@ -131,7 +131,7 @@ public class AutoBattleUtil implements IBattleUtil {
 
 	@Override
 	public int calcCounterAttackDamage(BaseFighter attacker, BaseFighter defender) {
-		int damage = NormalAttackFormula.getInstance().run( attacker, defender, null );
+		int damage = Formula.NormalAttackFormula.run( attacker, defender, null );
 
 		return (int) (damage * BLOCK_DAMAGE_RATE);
 	}

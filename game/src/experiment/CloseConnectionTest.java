@@ -80,5 +80,7 @@ public class CloseConnectionTest extends Server{
 		
 		server.start();
 		
+		server.close();
+		
 	}
 }

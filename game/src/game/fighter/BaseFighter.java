@@ -358,7 +358,7 @@ public class BaseFighter implements IFighter {
 	}
 
 	public SkillTemplet getSkillTemplet() {
-		return null;
+		return skillTemplet;
 	}
 
 	public String getName() {
@@ -381,7 +381,7 @@ public class BaseFighter implements IFighter {
 				+ ", phyAttack=" + phyAttack + ", phyDefend=" + phyDefend
 				+ ", hitRate=" + hitRate + ", dodgeRate=" + dodgeRate
 				+ ", crit=" + crit + ", unCrit=" + unCrit + ", block=" + block
-				+ ", unBlock=" + unBlock + ", skillTemplet=" + skillTemplet
+				+ ", unBlock=" + unBlock + ", skillTemplet=" + skillTemplet.getName()
 				+ ", isCanHit=" + isCanHit + ", isLeft=" + isLeft + "]\r\n";
 	}
 

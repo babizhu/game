@@ -1,10 +1,10 @@
 package game.battle;
 
-import java.util.Comparator;
-
 import game.battle.auto.AttackInfo;
-import game.battle.formula.IFormula;
+import game.battle.formula.Formula;
 import game.fighter.BaseFighter;
+
+import java.util.Comparator;
 
 public interface IBattleUtil {
 
@@ -47,7 +47,7 @@ public interface IBattleUtil {
 	 * @param arguments
 	 * @return
 	 */
-	AttackInfo calcAttackInfo( BaseFighter attacker, BaseFighter defender,	IFormula formula, Object arguments );
+	AttackInfo calcAttackInfo( BaseFighter attacker, BaseFighter defender,	Formula formula, float[] arguments );
 
 
 	

@@ -6,7 +6,7 @@
 		<name>齐天大圣</name>
 		<desc>获取进入暴风之眼的通行证吧</desc>
 		<hpMax>180999</hpMax>
-		<spMax>75</spMax>
+		<spMax>1000</spMax>
 		<phyAttack>19773</phyAttack>
 		<phyDefend>1320</phyDefend>
 		<speed>1900</speed>
@@ -16,7 +16,7 @@
 		<unCrit>100</unCrit>
 		<block>100</block>
 		<unBlock>100</unBlock>
-		<skillTemplet>1</skillTemplet>
+		<skillTempletId>1</skillTempletId>
 	</fight>
 	<fight>
 		<id>2</id>
@@ -33,13 +33,13 @@
 		<unCrit>100</unCrit>
 		<block>100</block>
 		<unBlock>100</unBlock>
-		<skillTemplet>1</skillTemplet>
+		<skillTempletId>1</skillTempletId>
 	</fight>
 	<fight>
 		<id>3</id>
 		<name>乐观的小兵</name>
 		<desc>我是一个小兵，但我会成为大将军</desc>
-		<hpMax>180999</hpMax>
+		<hpMax>180000</hpMax>
 		<spMax>75</spMax>
 		<phyAttack>19773</phyAttack>
 		<phyDefend>1320</phyDefend>
@@ -50,7 +50,7 @@
 		<unCrit>100</unCrit>
 		<block>100</block>
 		<unBlock>100</unBlock>
-		<skillTemplet>1</skillTemplet>
+		<skillTempletId>1</skillTempletId>
 	</fight>
 
 </fights>

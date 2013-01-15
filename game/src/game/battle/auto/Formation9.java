@@ -1,16 +1,14 @@
 package game.battle.auto;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-
-
 import game.battle.Pet;
 import game.battle.formation.ChooseFighters;
 import game.battle.formation.IFormation;
 import game.fighter.BaseFighter;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Formation9 implements IFormation{
 
@@ -128,7 +126,7 @@ public class Formation9 implements IFormation{
 	}
 	
 	@Override
-	public BaseFighter getDefender( BaseFighter attacker ) {
+	public BaseFighter getBaseDefender( BaseFighter attacker ) {
 		boolean defenderIsLeft = !attacker.isLeft(); 
 		List<BaseFighter> rowList = null;
 		int row = getRow( attacker.getPosition() );
@@ -154,7 +152,7 @@ public class Formation9 implements IFormation{
 	 * @return
 	 */
 	private List<BaseFighter> getFightersByRow( BaseFighter attacker ) {
-		BaseFighter defender = getDefender( attacker );
+		BaseFighter defender = getBaseDefender( attacker );
 		int row = getRow( defender.getPosition() );
 		return getFightersByRow( row );
 	}
@@ -183,6 +181,17 @@ public class Formation9 implements IFormation{
 	private List<BaseFighter> getFightersBySelf( BaseFighter fighter ) {
 		List<BaseFighter> ret = new ArrayList<BaseFighter>();
 		ret.add( fighter );
+		return ret;
+	}
+
+	/**
+	 * 技能攻击模式下，找出普通攻击下被攻击的战士对象
+	 * @param attacker
+	 * @return
+	 */
+	private List<BaseFighter> getFightersByNormal(BaseFighter attacker) {
+		List<BaseFighter> ret = new ArrayList<BaseFighter>();
+		ret.add( getBaseDefender( attacker ) );
 		return ret;
 	}
 	
@@ -256,12 +265,19 @@ public class Formation9 implements IFormation{
 			return getFightersBySelf( attacker );
 		case MIN_HP:
 			return getFighterByMinHp();
+		case NORMAL_ATTACK:
+			return getFightersByNormal( attacker );
+		case ALL:
+			return getAllFighters();
+		default:
+			break;
 		}
 		return null;
 	}
 	
 	
 	
+
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder( "{" );

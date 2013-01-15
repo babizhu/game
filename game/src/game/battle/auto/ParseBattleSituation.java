@@ -12,17 +12,30 @@ import java.util.List;
 public class ParseBattleSituation {
 
 	IFormation 				attackers,defenders;
-	BattleSituation 		situation;
+	//BattleSituation 		situation;
 	ByteBuffer 				data;
 	
-	public ParseBattleSituation(IFormation aFormation, IFormation dFormation, BattleSituation situation ) {
+	public ParseBattleSituation( IFormation aFormation, IFormation dFormation, BattleSituation situation ) {
 		attackers = aFormation;
 		defenders = dFormation;
-		this.situation = situation;
-		data = this.situation.getData();
+		//this.situation = situation;
+		data = situation.getData();
 		data.flip();
 	}
 
+	private BaseFighter getFighterByPos( byte pos ){
+		for( BaseFighter f : attackers.getAllFighters() ){
+			if( f.getPosition() == pos ){
+				return f;
+			}
+		}
+		for( BaseFighter f : defenders.getAllFighters() ){
+			if( f.getPosition() == pos ){
+				return f;
+			}
+		}
+		return null;
+	}
 	/**
 	 * 解析战况信息
 	 */
@@ -58,9 +71,26 @@ public class ParseBattleSituation {
 				parseNormalAttack();
 				break;
 			case SKILL_ATTACK:
+				parseSkillAttack();
+				break;
+			default:
 				break;
 			}
 		}
+	}
+
+	private void parseSkillAttack() {
+		byte attackerPos = data.get();
+		byte skillId = data.get();
+		byte count = data.get();//受到技能影响的战士数量
+		for( int i = 0; i < count; i++ ){
+			byte defenderPos = data.get();
+			byte effectCount = data.get();
+			for( int n = 0; n < effectCount; n++ ){
+				
+			}
+		}
+		
 	}
 
 	private void parseNormalAttack() {
@@ -78,6 +108,21 @@ public class ParseBattleSituation {
 		System.out.println( attackerPos + "\t" + defenderPos + "\t"
 				+ info.isHit() + "|" + info.getCrit() + "|" + info.isBlock() + "\t"
 				+ damage + "\t" + counterAttackDamage );
+		
+		
+		BaseFighter attacker = getFighterByPos(attackerPos);
+		BaseFighter defender = getFighterByPos(defenderPos);		
+		if( info.isHit() ){
+			attacker.setSp( attacker.getSp() + AutoBattle.SP_TO_ADD );
+			if( info.getDamage() > 1 ){//防止不死之身之类的技能长久不结束
+				defender.setSp( defender.getSp() + AutoBattle.SP_TO_ADD );
+			}
+		
+			defender.setHp( defender.getHp() - damage );
+			if( info.isBlock() ){
+				attacker.setHp( attacker.getHp() - counterAttackDamage );
+			}
+		}		
 	}
 
 	private void parseRound() {

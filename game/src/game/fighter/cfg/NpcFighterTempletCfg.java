@@ -1,5 +1,7 @@
 package game.fighter.cfg;
 
+import game.battle.skill.SkillTemplet;
+import game.battle.skill.cfg.SkillTempletCfg;
 import game.fighter.NpcFighter;
 
 import java.io.IOException;
@@ -62,6 +64,8 @@ public class NpcFighterTempletCfg {
 				npc.setUnCrit( Integer.parseInt( element.getChildText( "unCrit" ) ) );
 				npc.setBlock( Integer.parseInt( element.getChildText( "block" ) ) );
 				npc.setUnBlock( Integer.parseInt( element.getChildText( "unBlock" ) ) );
+				SkillTemplet skillTemplet = SkillTempletCfg.getSkillTempletById( Byte.parseByte( element.getChildText( "skillTempletId" ) ) );
+				npc.setSkillTemplet( skillTemplet  );
 			
 				/*******************关闭打印****************************
 							System.out.println( npc );
@@ -95,7 +99,7 @@ public class NpcFighterTempletCfg {
 	public static void main(String[] args) {
 		
 		short id = 2;
-		System.out.println( getNpcCloneById(id));
+		System.out.println( getNpcCloneById( id ) );
 	}
 
 }

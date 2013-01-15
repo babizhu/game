@@ -171,6 +171,7 @@ public class Test {
 		System.out.println("关闭连接"
 				+ JdbcStatManager.getInstance().getConnectionstat()
 						.getCloseCount() + "次！");
+		dataSource.close();
 
 	}
 

@@ -5,7 +5,7 @@ import game.battle.BuffRunPoint;
 import game.battle.IBattleUtil;
 import game.battle.Pet;
 import game.battle.formation.IFormation;
-import game.battle.formula.NormalAttackFormula;
+import game.battle.formula.Formula;
 import game.battle.skill.SkillEffect;
 import game.battle.skill.SkillTemplet;
 import game.fighter.BaseFighter;
@@ -29,8 +29,8 @@ public class AutoBattle extends BaseBattle {
 	private static final Logger 		logger = LoggerFactory.getLogger( AutoBattle.class );
 	private static final IBattleUtil	util = AutoBattleUtil.getInstance();
 
-	private static final int 			SKILL_ATTACK_NEED_SP = 10000;
-	private static final int 			SP_TO_ADD = 50;		
+	private static final int 			SKILL_ATTACK_NEED_SP = 1000;
+	public static final int 			SP_TO_ADD = 50;		
 	private static final int 			MAX_ROUND = 50;//最大回合数
 
 	/**
@@ -138,7 +138,7 @@ public class AutoBattle extends BaseBattle {
 		SkillTemplet templet = attacker.getSkillTemplet();
 		
 		List<BaseFighter> enemys = currentDefenderTeam.getFighterOnEffect( attacker, templet.getEnemys() );
-		List<BaseFighter> friends = getFriends(attacker).getFighterOnEffect( attacker, templet.getEnemys() );
+		List<BaseFighter> friends = getFriends(attacker).getFighterOnEffect( attacker, templet.getFriends() );
 		byte count = (byte) ((enemys == null ? 0 : enemys.size()) + (friends == null ? 0 : friends.size()));
 		
 		battleSituation.putSkillAttackPrefix( attacker, templet.getId(), count );
@@ -156,7 +156,7 @@ public class AutoBattle extends BaseBattle {
 		if( friends != null ){
 			for( BaseFighter f : friends ){
 				battleSituation.putFighter( f.getPosition() );
-				doSkillEffect( attacker, f, templet.getEffectOnEnemy() );
+				doSkillEffect( attacker, f, templet.getEffectOnFriend() );
 			}
 		}
 		return false;		
@@ -164,7 +164,7 @@ public class AutoBattle extends BaseBattle {
 	/**
 	 * @param attacker		发技能的战士
 	 * @param defender		受到技能影响的战士
-	 * @param effects		技能影响的内容
+	 * @param effects		技能影响的内容@see SkillEffect
 	 * @return
 	 * 				true	此战士挂了
 	 * 				false	此战士未死
@@ -186,9 +186,6 @@ public class AutoBattle extends BaseBattle {
 			else{
 				if( isHit && !defender.isDie() ){
 					int numberToChange = se.getFormula().run( attacker, defender, se.getArguments() );		
-//					if( attacker.isLeft() != defender.isLeft() ){//同一阵营这里是加，否则调整为负数，例如sp，同一阵营应该是加sp，敌对阵营应该是减sp
-//						numberToChange = -numberToChange;
-//					}
 					se.getAttribute().run( defender, numberToChange );
 					battleSituation.putSkillInfo( se.getAttribute(), numberToChange );
 				}
@@ -205,25 +202,27 @@ public class AutoBattle extends BaseBattle {
 	 */
 	private boolean doNormalAttack( BaseFighter attacker, IFormation currentDefender ) {
 
-		BaseFighter defender = currentDefender.getDefender( attacker );
+		BaseFighter defender = currentDefender.getBaseDefender( attacker );
 		assert( defender != null );
 		
-		AttackInfo info = util.calcAttackInfo( attacker, defender, NormalAttackFormula.getInstance(), null );
+		AttackInfo info = util.calcAttackInfo( attacker, defender, Formula.NormalAttackFormula, null );
 		battleSituation.putNormalAttack( attacker, defender, info );
 		
 		if( reduceHp( defender, info.getDamage() ) == true ){
 			return true;
 		}
 
-		attacker.setSp( attacker.getSp() + SP_TO_ADD );
-		
-		if( !defender.isDie() ){
-			if( info.getDamage() > 1 ){//防止不死之身之类的技能长久不结束
-				defender.setSp( defender.getSp() + SP_TO_ADD );
-			}
-		
-			if( info.isBlock() ){
-				return doBlockAndCounterAttack( defender, attacker );
+		if( info.isHit() ){//未命中，不存在反击，这个逻辑可根据实际情况进行修改
+			attacker.setSp( attacker.getSp() + SP_TO_ADD );
+			
+			if( !defender.isDie() ){
+				if( info.getDamage() > 1 ){//防止不死之身之类的技能长久不结束
+					defender.setSp( defender.getSp() + SP_TO_ADD );
+				}
+			
+				if( info.isBlock() ){
+					return doBlockAndCounterAttack( defender, attacker );
+				}
 			}
 		}
 		return false;
