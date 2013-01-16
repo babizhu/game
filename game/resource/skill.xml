@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skills>
-	
-	
+<!--技能配置表-->
+<!--注意：所有的SkillEffect中，ENEMY_HP必须排在最前面，后面的其他伤害都依赖于ENEMY_HP是否命中-->
+<skills xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<skill>
 		<id>1</id>
 		<name>落井下石</name>
 		<desc>攻击对方血量最少的战士，同时降低战士20SP，对己方所有战士增加100血</desc>
 		<friend>ALL</friend>
-		<friend_effect>HP,DirectOutputFormula,100</friend_effect>	
+		<friend_effect>HP,DirectOutputFormula,100</friend_effect>
 		<enemy>MIN_HP</enemy>
 		<enemy_effect>ENEMY_HP,SkillAttackFormula,2|SP,DirectOutputFormula,-20</enemy_effect>
 	</skill>
-	
 	<skill>
 		<id>2</id>
 		<name>飞龙在天</name>
 		<desc>单体攻击</desc>
-		<friend></friend>
-		<friend_effect></friend_effect>	
 		<enemy>NORMAL_ATTACK</enemy>
 		<enemy_effect>ENEMY_HP,SkillAttackFormula,6</enemy_effect>
 	</skill>
@@ -25,9 +22,14 @@
 		<id>3</id>
 		<name>杀破狼</name>
 		<desc>进行十字攻击</desc>
-		<friend></friend>
-		<friend_effect></friend_effect>	
 		<enemy>CROSS</enemy>
 		<enemy_effect>ENEMY_HP,SkillAttackFormula,2</enemy_effect>
+	</skill>
+	<skill>
+		<id>4</id>
+		<name>妙手回春</name>
+		<desc>恢复本方战士攻击者的25%的hp</desc>
+		<friend>ALL</friend>
+		<friend_effect>HP,HpFormula,1,0.25</friend_effect>
 	</skill>
 </skills>

@@ -1,10 +1,15 @@
-package game.battle.skill;
 
+package game.battle.skill;
 import java.util.Arrays;
 
 import game.battle.formula.Formula;
 import game.fighter.FighterAttribute;
 
+/**
+ * 存放技能效果的容易，包含受影响的属性（hp，sp，speed等），公式，相关参数
+ * @author liukun
+ * 2013-1-16 上午10:14:01
+ */
 public class SkillEffect {
 	
 	private FighterAttribute			attribute;

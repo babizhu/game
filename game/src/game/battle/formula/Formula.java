@@ -6,6 +6,7 @@ import game.fighter.BaseFighter;
 public enum Formula {
 	/**
 	 * 普通攻击的计算公式
+	 * 无参数
 	 */
 	NormalAttackFormula {
 		@Override
@@ -22,7 +23,9 @@ public enum Formula {
 	},
 	
 	/**
-	 * 技能攻击伤害的计算公式，技能攻击，伤害直接*2
+	 * 技能攻击伤害的计算公式
+	 * 参数意义:	
+	 * 		arguments[0] 普通伤害的倍数	
 	 */
 	SkillAttackFormula {
 		@Override
@@ -39,7 +42,26 @@ public enum Formula {
 		}
 	},
 	/**
-	 * 输入多少返回多少，最简单的公式
+	 * 按比例恢复hp<br>
+	 * 参数意义:
+	 * 		arguments[0]==1则按照攻击者的hpMax进行计算，否则按照防守者的hpMax进行计算<br>
+	 * 		arguments[1] 计算比例
+	 * 
+	 */
+	HpFormula{
+
+		@Override
+		public int run( BaseFighter attacker, BaseFighter defender, float[] arguments ) {
+			if( arguments[0] == 1 ){
+				return (int) (attacker.getHpMax() * arguments[1]);
+			}
+			return (int) (defender.getHpMax() * arguments[1]);
+		}
+		
+	},
+	/**
+	 * 输入多少返回多少<br>
+	 * 参数意义：arguments[0]为输入的数值
 	 */
 	DirectOutputFormula{
 

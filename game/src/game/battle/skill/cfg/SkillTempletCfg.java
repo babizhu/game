@@ -55,13 +55,13 @@ private static final Map<Byte,SkillTemplet> skillTemplets = new HashMap<Byte, Sk
 				templet.setName( element.getChildText( "name" ) );
 				templet.setDesc( element.getChildText( "desc" ) );
 				String enemy = element.getChildText( "enemy" );
-				if( !enemy.isEmpty() ){
+				if( enemy != null && !enemy.isEmpty() ){
 					templet.setEnemy( ChooseFighters.valueOf( enemy ) );
 					templet.setEffectOnEnemy( parseSkillEffect( element.getChildText( "enemy_effect" ) ) );
 				}
 				
 				String friend = element.getChildText( "friend" );
-				if( !friend.isEmpty() ){
+				if( friend != null && !friend.isEmpty() ){
 					templet.setFriend( ChooseFighters.valueOf( friend ) );
 					templet.setEffectOnFriend( parseSkillEffect( element.getChildText( "friend_effect" ) ) );
 				}

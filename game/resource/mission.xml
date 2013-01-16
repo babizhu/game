@@ -16,6 +16,9 @@
 		<id>2</id>
 		<name>暴风之眼</name>
 		<desc>获取进入暴风之眼的通行证吧</desc>
-		<npc0>2,2|3,1|</npc0>
+		<npc0>3,2|</npc0>
+		<npcPet0>0</npcPet0>
+		<npc1>2,2|3,1|</npc1>
+		<npcPet1>0</npcPet1>
 	</mission>
 </missions>

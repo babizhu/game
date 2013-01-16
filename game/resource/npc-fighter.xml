@@ -4,7 +4,7 @@
 	<fight>
 		<id>1</id>
 		<name>齐天大圣</name>
-		<desc>获取进入暴风之眼的通行证吧</desc>
+		<desc>被压山下500年后的不败英雄</desc>
 		<hpMax>180999</hpMax>
 		<spMax>1000</spMax>
 		<phyAttack>19773</phyAttack>
@@ -45,7 +45,7 @@
 		<phyDefend>1320</phyDefend>
 		<speed>1900</speed>
 		<hitRate>100</hitRate>
-		<dodgeRate>200</dodgeRate>
+		<dodgeRate>2000</dodgeRate>
 		<crit>430</crit>
 		<unCrit>100</unCrit>
 		<block>100</block>

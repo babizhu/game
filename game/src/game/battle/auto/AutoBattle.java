@@ -163,8 +163,9 @@ public class AutoBattle extends BaseBattle {
 	}
 	/**
 	 * @param attacker		发技能的战士
-	 * @param defender		受到技能影响的战士
-	 * @param effects		技能影响的内容@see SkillEffect
+	 * @param defender		受此技能影响的具体的某个战士
+	 * @param effects		技能影响的内容 
+	 * @see game.battle.skill.SkillEffect
 	 * @return
 	 * 				true	此战士挂了
 	 * 				false	此战士未死

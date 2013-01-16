@@ -104,6 +104,9 @@ public class ParseBattleSituation {
 						output += damage + "\t";
 						defender.setHp( defender.getHp() - damage );
 					}
+					else{
+						break;
+					}
 				}
 				else{
 					if( isHit && !defender.isDie() ){
