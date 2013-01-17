@@ -100,6 +100,13 @@ public class BaseFighter implements IFighter {
 	 */
 	private boolean 			isCanHit		= true;
 	
+	/**
+	 * 是否混乱，如果混乱，那么加血会加对方，而攻击会攻击己方，甚至有可能攻击自己，这里可能存在一些问题，最好和策划仔细讨论：
+	 * 前端是否好做自己打自己的动画
+	 * 
+	 */
+	private boolean				isHunluan		= false;
+	
 	/*
 	 * 是否处于战场的左边
 	 */
@@ -205,6 +212,10 @@ public class BaseFighter implements IFighter {
 		this.sp = sp;
 	}
 
+	/**
+	 * @see #spMax
+	 * @return
+	 */
 	public int getSpMax() {
 		return spMax;
 	}
@@ -372,6 +383,20 @@ public class BaseFighter implements IFighter {
 	public void setSkillTemplet(SkillTemplet skillTemplet) {
 		this.skillTemplet = skillTemplet;
 	}
+	
+	
+
+	public boolean isHunluan() {
+		return isHunluan;
+	}
+
+	/**
+	 * @see #isHunluan
+	 * @param isHunluan
+	 */
+	public void setHunluan(boolean isHunluan) {
+		this.isHunluan = isHunluan;
+	}
 
 	@Override
 	public String toString() {
@@ -381,8 +406,9 @@ public class BaseFighter implements IFighter {
 				+ ", phyAttack=" + phyAttack + ", phyDefend=" + phyDefend
 				+ ", hitRate=" + hitRate + ", dodgeRate=" + dodgeRate
 				+ ", crit=" + crit + ", unCrit=" + unCrit + ", block=" + block
-				+ ", unBlock=" + unBlock + ", skillTemplet=" + skillTemplet.getName()
-				+ ", isCanHit=" + isCanHit + ", isLeft=" + isLeft + "]\r\n";
+				+ ", unBlock=" + unBlock + ", skillTemplet=" + skillTemplet
+				+ ", isCanHit=" + isCanHit + ", isHunluan=" + isHunluan
+				+ ", isLeft=" + isLeft + ", buffManager=" + buffManager + "]";
 	}
 
 	public String toSimpleString() {

@@ -83,6 +83,11 @@ public class AutoBattle extends BaseBattle {
 		return fighter.isLeft() ?  attackers : defenders;
 	}
 	
+//	private boolean action( BaseFighter attacker ){
+//		
+//		return false;
+//	}
+	
 	@Override
 	public void run() {
 		boolean isEnd = false;
@@ -103,18 +108,26 @@ public class AutoBattle extends BaseBattle {
 					continue;
 				}
 				
-				IFormation currentDefender = getEnemys( currentAttacker );
+				IFormation currentDefenders;
+				//一切ok之后，可以考虑混乱的状态
+				if( !currentAttacker.isHunluan() ){
+					currentDefenders = getFriends( currentAttacker );
+				}else{
+					
+					currentDefenders = getEnemys( currentAttacker );
+				}
+				
 				if( currentAttacker.getSp() >= SKILL_ATTACK_NEED_SP ){
-					if( doSkillAttack( currentAttacker, currentDefender  ) ){
+					if( doSkillAttack( currentAttacker, currentDefenders  ) ){
 						isEnd = true;
 						break;
 					}
 				}
 				else{
-					if( doNormalAttack( currentAttacker, currentDefender ) ){
+					if( doNormalAttack( currentAttacker, currentDefenders ) ){
 						isEnd = true;
 						break;
-					}		
+					}
 				}				
 			}
 			currentRound++;

@@ -16,7 +16,7 @@ public enum FighterAttribute {
 		}
 		
 	},
-	HP(2) {
+	ADD_HP(2) {
 		@Override
 		public
 		void run(BaseFighter fighter, int numToChange) {
