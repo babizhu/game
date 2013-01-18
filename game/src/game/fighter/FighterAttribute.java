@@ -7,12 +7,11 @@ import java.util.Map;
 
 public enum FighterAttribute {
 
-	ENEMY_HP(1){
+	SUB_HP(1){
 
 		@Override
 		public void run(BaseFighter fighter, int numToChange) {
-			// TODO Auto-generated method stub
-			
+			new Exception( "No implent this method!——ENEMY_HP.run()" );
 		}
 		
 	},

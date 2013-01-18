@@ -17,6 +17,9 @@ public class ParseBattleSituation {
 	//BattleSituation 		situation;
 	ByteBuffer 				data;
 	
+	private IFormation getFriend( BaseFighter fighter ){
+		return fighter.isLeft() ? attackers : defenders;
+	}
 	public ParseBattleSituation( IFormation aFormation, IFormation dFormation, BattleSituation situation ) {
 		attackers = aFormation;
 		defenders = dFormation;
@@ -96,25 +99,30 @@ public class ParseBattleSituation {
 				
 				FighterAttribute fa = FighterAttribute.fromNumber( data.get() );
 				output += fa + "\t";
-				if( fa == FighterAttribute.ENEMY_HP ){
+				if( fa == FighterAttribute.SUB_HP ){
 					AttackInfo info = new AttackInfo( data.get() );
 					isHit = info.isHit();
 					if( isHit ){
 						int damage = data.getInt();
 						output += damage + "\t";
 						defender.setHp( defender.getHp() - damage );
+						if( getFriend( defender ).isAllDie() ){
+							return;
+						}
+						if( defender.isDie() ){
+							break;
+						}
 					}
 					else{
 						break;
 					}
 				}
 				else{
-					if( isHit && !defender.isDie() ){
-						int numToChange = data.getInt();
-						fa.run(defender, numToChange);
-						output += numToChange + "\t";
-					}
+					int numToChange = data.getInt();
+					fa.run(defender, numToChange);
+					output += numToChange + "\t";
 				}
+				
 			}
 		}
 		System.out.println( output );

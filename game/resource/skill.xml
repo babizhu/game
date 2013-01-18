@@ -10,14 +10,14 @@
 		<friend>ALL</friend>
 		<friend_effect>ADD_HP,DirectOutputFormula,100</friend_effect>
 		<enemy>MIN_HP</enemy>
-		<enemy_effect>ENEMY_HP,SkillAttackFormula,2|SP,DirectOutputFormula,-20</enemy_effect>
+		<enemy_effect>SUB_HP,SkillAttackFormula,11|SP,DirectOutputFormula,-20</enemy_effect>
 	</skill>
 	<skill>
 		<id>2</id>
 		<name>飞龙在天</name>
 		<desc>单体攻击</desc>
 		<enemy>NORMAL_ATTACK</enemy>
-		<enemy_effect>ENEMY_HP,SkillAttackFormula,6</enemy_effect>
+		<enemy_effect>SUB_HP,SkillAttackFormula,6</enemy_effect>
 		<buffId>0</buffId>
 		<buffFormula></buffFormula>
 	</skill>
@@ -26,7 +26,7 @@
 		<name>杀破狼</name>
 		<desc>进行十字攻击</desc>
 		<enemy>CROSS</enemy>
-		<enemy_effect>ENEMY_HP,SkillAttackFormula,2</enemy_effect>
+		<enemy_effect>SUB_HP,SkillAttackFormula,2</enemy_effect>
 	</skill>
 	<skill>
 		<id>4</id>

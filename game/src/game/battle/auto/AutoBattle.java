@@ -78,15 +78,26 @@ public class AutoBattle extends BaseBattle {
 		
 		Collections.sort( allFighters, util.getOrderComparator() );
 	}
-
-	private IFormation getFormation( BaseFighter fighter ){
-		return fighter.isLeft() ?  attackers : defenders;
-	}
-	
-//	private boolean action( BaseFighter attacker ){
-//		
-//		return false;
+//	private IFormation getFriends( BaseFighter fighter ){
+//		return fighter.isLeft() ?  attackers : defenders;
 //	}
+//	private IFormation getEnemys( BaseFighter fighter ){
+//		return fighter.isLeft() ?  defenders : attackers;
+//	}
+
+	/**
+	 * 根据传入的战士获取相应的阵形
+	 * @param fighter
+	 * @param isFriend	
+	 * 			true：输入战士的阵形		false:相反的阵形
+	 * @return
+	 */
+	private IFormation getFormation( BaseFighter fighter, boolean isFriend ){
+		if( isFriend ){
+			return fighter.isLeft() ?  attackers : defenders;
+		}
+		return fighter.isLeft() ? defenders : attackers;
+	}
 	
 	@Override
 	public void run() {
@@ -109,12 +120,12 @@ public class AutoBattle extends BaseBattle {
 				}
 				
 				IFormation currentDefenders;
-				//一切ok之后，可以考虑混乱的状态
-				if( !currentAttacker.isHunluan() ){
-					currentDefenders = getFriends( currentAttacker );
+				//混乱的状态
+				if( currentAttacker.isHunluan() ){
+					currentDefenders = getFormation( currentAttacker, true );
 				}else{
 					
-					currentDefenders = getEnemys( currentAttacker );
+					currentDefenders = getFormation( currentAttacker, false );
 				}
 				
 				if( currentAttacker.getSp() >= SKILL_ATTACK_NEED_SP ){
@@ -128,7 +139,7 @@ public class AutoBattle extends BaseBattle {
 						isEnd = true;
 						break;
 					}
-				}				
+				}
 			}
 			currentRound++;
 			if( currentRound == MAX_ROUND ){
@@ -139,19 +150,13 @@ public class AutoBattle extends BaseBattle {
 		}
 	}
 	
-	private IFormation getFriends( BaseFighter fighter ){
-		return fighter.isLeft() ?  attackers : defenders;
-	}
-	private IFormation getEnemys( BaseFighter fighter ){
-		return fighter.isLeft() ?  defenders : attackers;
-	}
 	
 	private boolean doSkillAttack( BaseFighter attacker, IFormation currentDefenderTeam ) {
 		
 		SkillTemplet templet = attacker.getSkillTemplet();
 		
 		List<BaseFighter> enemys = currentDefenderTeam.getFighterOnEffect( attacker, templet.getEnemys() );
-		List<BaseFighter> friends = getFriends(attacker).getFighterOnEffect( attacker, templet.getFriends() );
+		List<BaseFighter> friends = getFormation( attacker, false ).getFighterOnEffect( attacker, templet.getFriends() );
 		byte count = (byte) ((enemys == null ? 0 : enemys.size()) + (friends == null ? 0 : friends.size()));
 		
 		battleSituation.putSkillAttackPrefix( attacker, templet.getId(), count );
@@ -159,7 +164,7 @@ public class AutoBattle extends BaseBattle {
 		if( enemys != null ){
 			for( BaseFighter f : enemys ){
 				battleSituation.putFighter( f.getPosition() );
-				if( doSkillEffect( attacker, f, templet.getEffectOnEnemy() ) )//此战士挂了
+				if( doSkillEffect( attacker, f, templet.getEffectOnEnemy() ) )//此战士所在团队挂了
 				{
 					return true;
 				}
@@ -174,6 +179,7 @@ public class AutoBattle extends BaseBattle {
 		}
 		return false;		
 	}
+	
 	/**
 	 * @param attacker		发技能的战士
 	 * @param defender		受此技能影响的具体的某个战士
@@ -189,7 +195,7 @@ public class AutoBattle extends BaseBattle {
 		boolean isHit = true;
 		battleSituation.putEffectCount( (byte) effects.size() );
 		for( SkillEffect se : effects ){
-			if( se.getAttribute() == FighterAttribute.ENEMY_HP ){//和其他属性不同，技能攻击需要特殊处理
+			if( se.getAttribute() == FighterAttribute.SUB_HP ){//和其他属性不同，技能攻击需要特殊处理
 				AttackInfo info = util.calcAttackInfo( attacker, defender, se.getFormula(), se.getArguments() );
 				battleSituation.putSkillInfo( se.getAttribute(), info );
 				
@@ -280,7 +286,7 @@ public class AutoBattle extends BaseBattle {
 		defender.setHp( defender.getHp() - damage );
 		
 		if( defender.isDie() ){//被攻击战士已经挂了			
-			if( getFormation( defender ).isAllDie() ){
+			if( getFormation( defender, true ).isAllDie() ){
 				return true;
 			}
 		}

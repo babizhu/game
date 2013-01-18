@@ -122,7 +122,14 @@ public class Formation9 implements IFormation{
 
 	@Override
 	public List<BaseFighter> getAllFighters() {
-		return fighters;
+		List<BaseFighter> ret = new ArrayList<BaseFighter>();
+		for( BaseFighter f : fighters ){
+			if( !f.isDie() ){
+				ret.add( f );
+				
+			}
+		}
+		return ret;
 	}
 	
 	@Override
