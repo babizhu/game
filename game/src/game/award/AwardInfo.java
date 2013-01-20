@@ -7,6 +7,32 @@ public class AwardInfo {
 	private AwardType 		award;
 	private short			propId;
 	private int				number;
+	
+	/**
+	 * 道具奖励
+	 * @param award
+	 * @param propId
+	 * @param number
+	 */
+	public AwardInfo(AwardType award, short propId, int number) {
+		super();
+		this.award = award;
+		this.propId = propId;
+		this.number = number;
+	}
+	
+	/**
+	 * 不包括道具的奖励
+	 * @param award
+	 * @param number
+	 */
+	public AwardInfo(AwardType award, int number) {
+		super();
+		this.award = award;
+		this.number = number;
+	}
+
+
 	public AwardType getAward() {
 		return award;
 	}

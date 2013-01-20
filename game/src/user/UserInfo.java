@@ -196,8 +196,20 @@ public class UserInfo {
 		return cash;
 	}
 	
+	public int changeAward( AwardType type, int number, String funcName ){
+		int result = 0;
+		switch( type ){
+		case CASH:
+			result = this.changeCash( number );
+		}
+		if( result == -1 ){
+			logger.debug( name + "奖励类型：" + type + "欲改变数值：" + number + "，出现负数，调用函数为" + funcName );
+		}
+		buildLog( type, number, result, funcName );
+		return result;
+	}
 	public void getAward( AwardInfo award, String funcName ){
-		int result;
+		int result = 0;
 		switch( award.getAward() ){
 		case CASH:
 			result = this.changeCash( award.getNumber() );
@@ -205,7 +217,7 @@ public class UserInfo {
 		if( result == -1 ){
 			logger.debug( name + "奖励类型：" + award.getAward() + "欲改变数值：" + award.getNumber() + "，出现负数，调用函数为" + funcName );
 		}
-		buildLog( award.getAward(), award.getNumber(), cash, funcName );
+		buildLog( award.getAward(), award.getNumber(), result, funcName );
 	}
 	
 	/**

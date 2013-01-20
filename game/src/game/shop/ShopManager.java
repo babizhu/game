@@ -42,7 +42,7 @@ public class ShopManager {
 				}
 			}
 			else{
-				if( user.changeCash( -price, "ShopManager.buy" ) < 0 ){
+				if( user.changeAward( AwardType.CASH, -price, "ShopManager.buy" ) < 0 ){
 					return ErrorCode.USER_CASH_NOT_ENOUTH;
 				}
 			}

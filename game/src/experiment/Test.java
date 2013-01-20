@@ -1,5 +1,8 @@
 package experiment;
 
+import game.award.AwardInfo;
+import game.award.AwardType;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -180,7 +183,9 @@ public class Test {
 		UserInfo user = new UserInfo( null, "bbz" );
 		long begin = System.nanoTime();
 		for (int i = 0; i < count; i++) {
-			user.changeCash( 500, "test7" );
+			AwardInfo award = new AwardInfo( AwardType.CASH, 500 );
+			user.getAward( award, "test7" );
+//			user.changeCash( 500, "test7" );
 		}
 		System.out.println("执行" + count + "次，耗时：" + (System.nanoTime() - begin)
 				/ 1000000000f + "秒");
