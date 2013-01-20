@@ -20,7 +20,7 @@ import util.BaseUtil;
  */
 
 @EventDescrip(desc = "告知玩家的某个指定任务的详细信息，通常应该是服务器主动发起的")
-public class TaskGetEvent  extends BaseEvent {
+public class TaskGetEvent extends BaseEvent {
 
 	/* (non-Javadoc)
 	 * @see game.packages.BasePackage#run(user.UserInfo, java.nio.ByteBuffer)

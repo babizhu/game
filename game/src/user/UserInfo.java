@@ -1,6 +1,7 @@
 package user;
 
-import game.AwardType;
+import game.award.AwardInfo;
+import game.award.AwardType;
 import game.task.TaskManager;
 
 import java.io.IOException;
@@ -141,13 +142,13 @@ public class UserInfo {
 	 * @param change			增加为正数，减少为负数
 	 * @param funcName			调用的函数
 	 * 
-	 * @return 					< 0		扣除失败
+	 * @return 					-1		扣除失败
 	 * 							>=0		当前拥有的现金
 	 */
-	public synchronized int changeCash( int change, String funcName ){
+	private int changeCash( int change ){
 		
 		if( cash + change < 0 ){
-			logger.debug( name + "拥有现金：" + cash + "欲扣除现金：" + change + "，出现负数，调用函数为" + funcName );
+			
 			return -1;
 		}
 		cash += change;
@@ -159,7 +160,7 @@ public class UserInfo {
 //      String func = ele[2].getMethodName();
 //      System.out.println(func);
 
-		buildLog( AwardType.MONEY, change, cash, funcName );
+//		buildLog( AwardType.CASH, change, cash, funcName );
 		return cash;
 	}
 	
@@ -195,6 +196,17 @@ public class UserInfo {
 		return cash;
 	}
 	
+	public void getAward( AwardInfo award, String funcName ){
+		int result;
+		switch( award.getAward() ){
+		case CASH:
+			result = this.changeCash( award.getNumber() );
+		}
+		if( result == -1 ){
+			logger.debug( name + "奖励类型：" + award.getAward() + "欲改变数值：" + award.getNumber() + "，出现负数，调用函数为" + funcName );
+		}
+		buildLog( award.getAward(), award.getNumber(), cash, funcName );
+	}
 	
 	/**
 	 * 构造关键数据的日志文件

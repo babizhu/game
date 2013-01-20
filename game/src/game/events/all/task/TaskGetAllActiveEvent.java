@@ -27,7 +27,7 @@ public class TaskGetAllActiveEvent  extends BaseEvent {
 	 */
 	@Override
 	public void run(UserInfo user, ByteBuffer buf) throws IOException {
-		Map<Short,BaseTask> activeTasks = user.getTaskManager().getAllActiveCopy();
+		Map<Short,BaseTask> activeTasks = user.getTaskManager().getAllActiveTasksCopy();
 		ByteBuffer buffer = buildEmptyPackage( 1024 );
 		buffer.put( (byte) activeTasks.size() );
 		for( BaseTask t : activeTasks.values() ){

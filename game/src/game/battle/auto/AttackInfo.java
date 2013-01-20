@@ -64,15 +64,27 @@ public class AttackInfo {
 		return data;
 	}
 	
+	/**
+	 * @see #HIT
+	 * @return
+	 */
 	boolean isHit(){
 		return getBitValue( HIT );
 	}
 	
+	/**
+	 * @see #HIT
+	 * @return
+	 */
 	void SetHit( boolean isHit ){
 		setBitValue( HIT, isHit );
 		
 	}
 	
+	/**
+	 * @see #BLOCK
+	 * @return
+	 */
 	boolean isBlock(){
 		return getBitValue( BLOCK );
 	}
@@ -101,8 +113,8 @@ public class AttackInfo {
 	}
 	
 	/**
-	 * 获取暴击率
-	 * 1	无暴击
+	 * 获取暴击倍数<br>
+	 * 1:	无暴击
 	 * @return
 	 */
 	byte getCrit(){

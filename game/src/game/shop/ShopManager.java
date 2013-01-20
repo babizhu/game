@@ -1,6 +1,6 @@
 package game.shop;
 
-import game.AwardType;
+import game.award.AwardType;
 import game.prop.cfg.PropTempletCfg;
 import game.prop.templet.BasePropTemplet;
 import user.UserInfo;

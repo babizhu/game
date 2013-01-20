@@ -33,7 +33,7 @@ public class Formation9 implements IFormation{
 	
 	
 	/**
-	 * 复制一份实例用于战斗，通常用于主线通关的mission的阵型
+	 * 复制一份实例用于战斗，通常用于复制主线通关的mission的阵型，位于阵型的左边或者右边已经确定
 	 * @param formation
 	 * @return
 	 */
@@ -57,9 +57,9 @@ public class Formation9 implements IFormation{
 	 *	如有必要，请在调用处对 fightersList 进行克隆处理
 	 */
 	public Formation9( List<BaseFighter> fightersList, boolean isLeft, Pet pet ) {
-//		if( fightersList == null || fightersList.size() == 0 ){
-//			throw new IllegalArgumentException( (isLeft == true ? "攻方" : "守方") + "战士列表为空或者数量为0" );
-//		}
+		if( fightersList == null || fightersList.size() == 0 ){
+			throw new IllegalArgumentException( (isLeft == true ? "攻方" : "守方") + "战士列表为空或者数量为0" );
+		}
 //		List<BaseFighter> clonesList = new ArrayList<BaseFighter>();
 //		for( BaseFighter bf : fightersList ){
 ////			BaseFighter clone = new BaseFighter( bf );
@@ -74,8 +74,8 @@ public class Formation9 implements IFormation{
 				formatForDefender( bf );
 			}
 			//由于存在镜面翻转，这里需要重新排序
-			Collections.sort( fighters, posComparator );
 		}
+		Collections.sort( fighters, posComparator );
 		this.pet = pet;
 		//TODO有必要的话应该克隆
 

@@ -27,13 +27,7 @@ public class AutoBattleTest {
 		fighter.setPosition( (byte) 3 );
 		attackers.add( fighter );
 		aFormation = new Formation9( attackers, true, null );
-//		
-//		List<BaseFighter> defenders = new ArrayList<BaseFighter>();		
-//		BaseFighter fighter1 = NpcFighterTempletCfg.getCopyById( (short) 2 );
-//
-//		fighter1.setPosition( (byte) 2 );
-//		defenders.add( fighter1 );
-//		dFormation = new Formation9( defenders, false, null );
+//	
 		short missionId = 2;
 		//aFormation = MissionTempletCfg.getTempletById( missionId ).getFormationClone( 0 );
 		dFormation = MissionTempletCfg.getTempletById( missionId ).getFormationCloneByWave( 0 );

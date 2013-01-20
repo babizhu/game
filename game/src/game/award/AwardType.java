@@ -1,4 +1,4 @@
-package game;
+package game.award;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ public enum AwardType {
 	/**
 	 * 金币
 	 */
-	MONEY(1),
+	CASH(1),
 
 	/**
 	 * 体力，控制玩家的战斗时间
@@ -35,32 +35,35 @@ public enum AwardType {
 	 * 金币，点券
 	 */
 	GOLD(5);
+	
+	//abstract void accept( UserInfo user, int number, short propId, String funcName );
 
-	private final int number;
+	private final byte number;
 
 	AwardType(int n) {
-		number = n;
+		number = (byte) n;
 	}
 
-	private static final Map<Integer, AwardType> intToEnum = new HashMap<Integer, AwardType>();
+	private static final Map<Byte, AwardType> intToEnum = new HashMap<Byte, AwardType>();
 	static {
 		for (AwardType a : values()) {
 			intToEnum.put(a.number, a);
 		}
 	}
+	
 
-	public static AwardType fromInt(int n) {
+	public static AwardType fromNumber(int n) {
 		return intToEnum.get(n);
 	}
 
-	public int toInt() {
+	public byte toNumber() {
 		return number;
 	}
 
 	public static void main(String[] args) {
-		AwardType at = AwardType.MONEY;
+		AwardType at = AwardType.CASH;
 		System.out.println(at);
 		AwardType at1 = AwardType.valueOf("STRENGTH");
-		System.out.println(at1.toInt());
+		System.out.println(at1.toNumber());
 	}
 }
