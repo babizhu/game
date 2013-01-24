@@ -2,6 +2,7 @@
  * 
  */
 package bootstrap;
+import game.mission.cfg.MissionTempletCfg;
 import game.prop.cfg.PropTempletCfg;
 import game.task.cfg.TaskTempletCfg;
 
@@ -48,6 +49,7 @@ public class GameServer extends Server{
 	private void readCfg(){
 		PropTempletCfg.init();
 		TaskTempletCfg.init();
+		MissionTempletCfg.init();
 	}
 	public static void main(String[] args) throws IOException, JMException {
 		

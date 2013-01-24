@@ -22,7 +22,7 @@ public abstract class BaseEventTest {
 	 * @param capacity
 	 * @return
 	 */
-	ByteBuffer createEmptyPackage( int capacity ){
+	ByteBuffer createEmptyEvent( int capacity ){
 		
 		ByteBuffer buff = ByteBuffer.allocate(capacity);
 		buff.put( BaseEvent.HEAD );
