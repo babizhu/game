@@ -6,7 +6,7 @@
 		<name>齐天大圣</name>
 		<desc>被压山下500年后的不败英雄</desc>
 		<hpMax>180999</hpMax>
-		<spMax>1000</spMax>
+		<spMax>100</spMax>
 		<phyAttack>19773</phyAttack>
 		<phyDefend>1320</phyDefend>
 		<speed>1900</speed>

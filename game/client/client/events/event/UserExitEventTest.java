@@ -2,7 +2,6 @@ package client.events.event;
 
 
 
-import game.award.AwardType;
 import game.events.EventManager;
 
 import java.io.IOException;
@@ -37,7 +36,7 @@ public class UserExitEventTest extends BaseEventTest {
 	 * @return
 	 */
 	public ByteBuffer createContent( String name ){
-		ByteBuffer buf = createEmptyPackage(1024);
+		ByteBuffer buf = createEmptyEvent(1024);
 		BaseUtil.encodeString( buf, name );
 		return buf;
 	}
@@ -54,7 +53,7 @@ public class UserExitEventTest extends BaseEventTest {
 			user.setSex( buf.get() );								//性别
 			user.setAdult( buf.get() == 1? true:false  );			//是否成年
 			user.setStrength( buf.getShort()  );					//体力
-			user.changeAward( AwardType.CASH, buf.getInt(), "UserExitPackageTest.parse" );//金币
+			user.setCash( buf.getInt() );//金币
 			user.setLoginCount( buf.getShort() );					//登陆次数
 			user.setCreateTime( buf.getInt() );						//创建时间——秒数
 		}

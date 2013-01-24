@@ -97,13 +97,23 @@ public class UserInfo {
 	
 	/**
 	 * 构造函数，保持一个尽量精简的构造函数
+	 * @param sex 
+	 * @param nickName 
 	 */
+	public UserInfo( INonBlockingConnection con, String name, String nickName, byte sex ) {
+		this.con = con;
+		this.packageManager = new UserPackageManager();
+		this.name = name;
+		this.nickName = nickName;
+		this.sex = sex;
+	}
+	
 	public UserInfo( INonBlockingConnection con, String name ) {
 		this.con = con;
 		this.packageManager = new UserPackageManager();
 		this.name = name;
 	}
-	
+
 	public synchronized short getLevel () {
 		return level;
 	}
@@ -134,7 +144,9 @@ public class UserInfo {
 		return taskManager;
 	}
 	
-	public synchronized int getCash(  ){
+	
+	
+	public int getCash(  ){
 		return cash;
 	}
 	/**
@@ -142,10 +154,12 @@ public class UserInfo {
 	 * @param change			增加为正数，减少为负数
 	 * @param funcName			调用的函数
 	 * 
-	 * @return 					-1		扣除失败
-	 * 							>=0		当前拥有的现金
+	 * @return 					-1		扣除失败<br>
+	 * 							>=0		当前拥有的现金<br>
+	 * 
+	 * 注意：仅仅用于从数据库中进行初始化操作，其余的修改请调用{@link #changeAward(AwardType, int, String)}
 	 */
-	private int changeCash( int change ){
+	public int setCash( int change ){
 		
 		if( cash + change < 0 ){
 			
@@ -178,29 +192,41 @@ public class UserInfo {
 	 * @param change			增加为正数，减少为负数
 	 * @param funcName			调用的函数
 	 * 
-	 * @return 					< 0		扣除失败
-	 * 							>=0		当前拥有的金币
-	 * 							
+	 * @return 					< 0		扣除失败<br>
+	 * 							>=0		当前拥有的金币<br>
+	 * 
+	 * 	注意：仅仅用于从数据库中进行初始化操作，其余的修改请调用{@link #changeAward(AwardType, int, String)}
 	 */
-	public synchronized int changeGold( int change, String funcName ){
+	public int setGold( int change ){
 		
 		if( gold + change < 0 ){
-			logger.debug( name + "现拥有金币：" + gold + "欲扣除金币：" + gold + "，出现负数，调用函数为" + funcName );
 			return -1;
 		}
 		gold += change;
 		
 		//TODO 处理防沉迷系统，其他的vip加成等信息
 		
-		buildLog( AwardType.GOLD, change, gold, funcName );
 		return cash;
 	}
 	
+	/**
+	 * 玩家涉及到属性的更改操作
+	 * @param type
+	 * @param number
+	 * @param funcName
+	 * @return
+	 * 		>=0	:返回此属性的当前值
+	 * 		-1	:扣除失败，余值不足
+	 * 		
+	 */
 	public int changeAward( AwardType type, int number, String funcName ){
 		int result = 0;
 		switch( type ){
 		case CASH:
-			result = this.changeCash( number );
+			result = this.setCash( number );
+			break;
+		default:
+			throw new IllegalArgumentException( type + "属性不存在相应函数" );
 		}
 		if( result == -1 ){
 			logger.debug( name + "奖励类型：" + type + "欲改变数值：" + number + "，出现负数，调用函数为" + funcName );
@@ -208,11 +234,14 @@ public class UserInfo {
 		buildLog( type, number, result, funcName );
 		return result;
 	}
+	
 	public void getAward( AwardInfo award, String funcName ){
 		int result = 0;
 		switch( award.getAward() ){
 		case CASH:
-			result = this.changeCash( award.getNumber() );
+			result = this.setCash( award.getNumber() );
+		default:
+			break;
 		}
 		if( result == -1 ){
 			logger.debug( name + "奖励类型：" + award.getAward() + "欲改变数值：" + award.getNumber() + "，出现负数，调用函数为" + funcName );

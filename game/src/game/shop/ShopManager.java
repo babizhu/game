@@ -37,7 +37,7 @@ public class ShopManager {
 		synchronized (user) {
 			//if( user.getProp)//检测背包格子是否足够
 			if( buyType == AwardType.GOLD ){
-				if( user.changeGold( -price, "ShopManager.buy" ) < 0 ){
+				if( user.changeAward( AwardType.GOLD, -price, "ShopManager.buy" ) < 0 ){
 					return ErrorCode.USER_GOLD_NOT_ENOUTH;
 				}
 			}

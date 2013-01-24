@@ -1,9 +1,6 @@
 package user;
 
 
-import game.award.AwardInfo;
-import game.award.AwardType;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -81,8 +78,7 @@ public class UserInfoDataProvider {
 				user.setLevel( rs.getShort("level") );
 				user.setNickName( rs.getString("nick_name") );
 				user.setStatus( UserStatus.fromNum( rs.getByte( "status" ) ) );
-				AwardInfo award = new AwardInfo( AwardType.CASH, rs.getInt( "cash" ) );
-				user.getAward( award, "UserInfoDataProvider.get" );
+				user.setCash( rs.getInt( "cash" ) );
 				
 				user.setStrength( rs.getShort( "strength" ) );
 				user.setAdult( rs.getBoolean( "is_adult" ) ) ;
@@ -209,4 +205,5 @@ public class UserInfoDataProvider {
 		}
 		return ErrorCode.SUCCESS;
 	}
+	
 }

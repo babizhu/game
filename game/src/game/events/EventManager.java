@@ -2,6 +2,7 @@ package game.events;
 
 
 import game.events.all.*;
+import game.events.all.battle.SendBattleSituation;
 import game.events.all.task.TaskAcceptAwardEvent;
 import game.events.all.task.TaskAcceptEvent;
 import game.events.all.task.TaskGetAllActiveEvent;
@@ -45,6 +46,8 @@ public enum EventManager {
 	TASK_ACCEPT							( 703, 		new TaskAcceptEvent() ),
 	TASK_GET							( 704, 		new TaskGetEvent() ),
 	/*********************************任务系统******************************************/
+	SEND_BATTLE_SITUATION				( 801, 		new SendBattleSituation() ),
+	/*********************************战斗系统******************************************/
 	
 	/*********************************背包系统******************************************/
 	

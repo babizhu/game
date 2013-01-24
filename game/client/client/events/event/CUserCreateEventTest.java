@@ -27,7 +27,7 @@ public class CUserCreateEventTest extends BaseEventTest {
 	 * @return
 	 */
 	public ByteBuffer createContent( String name, String nickName ){
-		ByteBuffer buf = createEmptyPackage( 1024 );
+		ByteBuffer buf = createEmptyEvent( 1024 );
 		BaseUtil.encodeString( buf, name );					//用户名
 		BaseUtil.encodeString( buf, nickName );				//昵称
 		buf.put( (byte) 1 );								//性别

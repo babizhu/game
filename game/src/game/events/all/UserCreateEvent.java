@@ -32,14 +32,11 @@ public class UserCreateEvent extends BaseEvent {
 
 	public void run( INonBlockingConnection con, ByteBuffer buf ) throws IOException {
 		String name = util.BaseUtil.decodeString( buf );		//用户名
-		UserInfo user = new UserInfo(con, name);
-
 		String nickName = util.BaseUtil.decodeString( buf );	//昵称
-		user.setNickName(nickName);
 		byte sex = buf.get();									//性别
-		user.setSex(sex);
-		
-		
+
+		UserInfo user = new UserInfo(con, name, nickName, sex );
+				
 		ErrorCode code = UserManager.getInstance().create( user );
 		
 		ByteBuffer buffer = buildEmptyPackage( 8 );

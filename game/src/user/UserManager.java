@@ -63,7 +63,7 @@ public class UserManager {
 	 * @param user
 	 * @return
 	 */
-	public ErrorCode create( UserInfo user ){
+	public synchronized ErrorCode create( UserInfo user ){
 		ErrorCode code = db.create( user ) ;
 		if( code == ErrorCode.SUCCESS ){
 			user.getTaskManager().addFirstTask();
@@ -111,7 +111,7 @@ public class UserManager {
 	}
 	
 	/**
-	 * 从数据库获取玩家信息,不管是否在线，只要该玩家确实在数据库中存在，就尽力保存到内存当中来，是否在线无所谓
+	 * 通过昵称获取玩家信息
 	 * @param string
 	 * @return
 	 * 

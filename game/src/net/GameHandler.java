@@ -14,6 +14,7 @@ import org.xsocket.connection.IDisconnectHandler;
 import org.xsocket.connection.IIdleTimeoutHandler;
 import org.xsocket.connection.INonBlockingConnection;
 
+
 import core.GameMainLogic;
 
 /**
@@ -75,7 +76,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 				packageNo = con.readShort();
 				dataLength = con.readShort();
 				if (dataLength < 0 || dataLength > PACKAGE_LEN) {
-					
+					System.err.println( "网络错误，dataLength = " + dataLength );
 					con.close();
 				}
 				data = con.readBytesByLength(dataLength);

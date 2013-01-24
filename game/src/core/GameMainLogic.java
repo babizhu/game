@@ -118,7 +118,7 @@ public final class GameMainLogic implements IGameLogic {
 		String name = (String) con.getAttachment();
 
 		if( name != null ){
-			System.out.println( buildPrefixStr(con, name) + "执行退出程序");
+			System.out.println( buildPrefixStr( con, name ) + "执行退出程序");
 			
 			ErrorCode code = UserManager.getInstance().exit( name );
 			if (code != ErrorCode.SUCCESS) {

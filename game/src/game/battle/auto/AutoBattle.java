@@ -156,7 +156,7 @@ public class AutoBattle extends BaseBattle {
 		SkillTemplet templet = attacker.getSkillTemplet();
 		
 		List<BaseFighter> enemys = currentDefenderTeam.getFighterOnEffect( attacker, templet.getEnemys() );
-		List<BaseFighter> friends = getFormation( attacker, false ).getFighterOnEffect( attacker, templet.getFriends() );
+		List<BaseFighter> friends = getFormation( attacker, true ).getFighterOnEffect( attacker, templet.getFriends() );
 		byte count = (byte) ((enemys == null ? 0 : enemys.size()) + (friends == null ? 0 : friends.size()));
 		
 		battleSituation.putSkillAttackPrefix( attacker, templet.getId(), count );
