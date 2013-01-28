@@ -58,6 +58,8 @@ public class AwardManager {
 	
 	public void add( AwardInfo info ){
 		long id = maxID.incrementAndGet();
+
+
 		
 	}
 	
