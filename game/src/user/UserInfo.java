@@ -1,7 +1,7 @@
 package user;
 
 import game.award.AwardInfo;
-import game.award.AwardType;
+import game.award.AwardContent;
 import game.task.TaskManager;
 
 import java.io.IOException;
@@ -133,7 +133,7 @@ public class UserInfo {
 			return -1;
 		}
 		strength += change;
-		buildLog( AwardType.STRENGTH, change, strength, funcName );
+		buildLog( AwardContent.STRENGTH, change, strength, funcName );
 		return strength;
 	}
 
@@ -157,7 +157,7 @@ public class UserInfo {
 	 * @return 					-1		扣除失败<br>
 	 * 							>=0		当前拥有的现金<br>
 	 * 
-	 * 注意：仅仅用于从数据库中进行初始化操作，其余的修改请调用{@link #changeAward(AwardType, int, String)}
+	 * 注意：仅仅用于从数据库中进行初始化操作，其余的修改请调用{@link #changeAward(AwardContent, int, String)}
 	 */
 	public int setCash( int change ){
 		
@@ -195,7 +195,7 @@ public class UserInfo {
 	 * @return 					< 0		扣除失败<br>
 	 * 							>=0		当前拥有的金币<br>
 	 * 
-	 * 	注意：仅仅用于从数据库中进行初始化操作，其余的修改请调用{@link #changeAward(AwardType, int, String)}
+	 * 	注意：仅仅用于从数据库中进行初始化操作，其余的修改请调用{@link #changeAward(AwardContent, int, String)}
 	 */
 	public int setGold( int change ){
 		
@@ -219,7 +219,7 @@ public class UserInfo {
 	 * 		-1	:扣除失败，余值不足
 	 * 		
 	 */
-	public int changeAward( AwardType type, int number, String funcName ){
+	public int changeAward( AwardContent type, int number, String funcName ){
 		int result = 0;
 		switch( type ){
 		case CASH:
@@ -235,7 +235,7 @@ public class UserInfo {
 		return result;
 	}
 	
-	public void getAward( AwardInfo award, String funcName ){
+	public ErrorCode getAward( AwardInfo award, String funcName ){
 		int result = 0;
 		switch( award.getAward() ){
 		case CASH:
@@ -247,6 +247,10 @@ public class UserInfo {
 			logger.debug( name + "奖励类型：" + award.getAward() + "欲改变数值：" + award.getNumber() + "，出现负数，调用函数为" + funcName );
 		}
 		buildLog( award.getAward(), award.getNumber(), result, funcName );
+		/**
+		 * 考虑背包满的情况
+		 */
+		return ErrorCode.SUCCESS;
 	}
 	
 	/**
@@ -256,7 +260,7 @@ public class UserInfo {
 	 * @param current		改动后的当前数值
 	 * @param funcName		改动函数
 	 */
-	private void buildLog( AwardType at, int change, int current, String funcName ){
+	private void buildLog( AwardContent at, int change, int current, String funcName ){
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append( name );		//用户名

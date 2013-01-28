@@ -1,6 +1,6 @@
 package game.shop;
 
-import game.award.AwardType;
+import game.award.AwardContent;
 import game.prop.cfg.PropTempletCfg;
 import game.prop.templet.BasePropTemplet;
 import user.UserInfo;
@@ -21,7 +21,7 @@ public class ShopManager {
 	 * @param buyType				购买类型
 	 * @return
 	 */
-	ErrorCode buy( UserInfo user, short templetId, short count, AwardType buyType ){
+	ErrorCode buy( UserInfo user, short templetId, short count, AwardContent buyType ){
 		BasePropTemplet t = PropTempletCfg.getTempletById( templetId );
 		if( t == null ){
 			return ErrorCode.PROP_NOT_ENOUGH;
@@ -30,19 +30,19 @@ public class ShopManager {
 			return ErrorCode.SHOP_CANT_BUY;
 		}
 		int price = 0;
-		price = buyType == AwardType.GOLD ? t.getPriceOfGold() : t.getPriceOfCash();
+		price = buyType == AwardContent.GOLD ? t.getPriceOfGold() : t.getPriceOfCash();
 		price *= count;
 		price *= t.getDiscount();//考虑折扣
 		
 		synchronized (user) {
 			//if( user.getProp)//检测背包格子是否足够
-			if( buyType == AwardType.GOLD ){
-				if( user.changeAward( AwardType.GOLD, -price, "ShopManager.buy" ) < 0 ){
+			if( buyType == AwardContent.GOLD ){
+				if( user.changeAward( AwardContent.GOLD, -price, "ShopManager.buy" ) < 0 ){
 					return ErrorCode.USER_GOLD_NOT_ENOUTH;
 				}
 			}
 			else{
-				if( user.changeAward( AwardType.CASH, -price, "ShopManager.buy" ) < 0 ){
+				if( user.changeAward( AwardContent.CASH, -price, "ShopManager.buy" ) < 0 ){
 					return ErrorCode.USER_CASH_NOT_ENOUTH;
 				}
 			}
