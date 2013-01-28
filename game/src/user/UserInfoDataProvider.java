@@ -19,7 +19,7 @@ import util.db.DatabaseUtil;
  * 
  * @author liukun 2012-8-20 下午05:53:59
  */
-public class UserInfoDataProvider {
+class UserInfoDataProvider {
 	private final static Logger logger = LoggerFactory.getLogger(UserInfoDataProvider.class);
 	private static UserInfoDataProvider instance = new UserInfoDataProvider();
 	static  UserInfoDataProvider getInstance(){

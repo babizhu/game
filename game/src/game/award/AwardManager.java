@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import user.UserInfo;
 import util.ErrorCode;
+import util.db.DatabaseUtil;
 
 /**
  * 奖品中心
@@ -16,7 +17,7 @@ public class AwardManager {
 	private final UserInfo				user;
 	private Map<Long,Award>				awards;
 	
-	private static AtomicLong			ID;
+	
 
 	public AwardManager(UserInfo user) {
 		super();
@@ -52,7 +53,11 @@ public class AwardManager {
 		return user.getAward(info, "getAwardContent" );
 	}
 	
-	public void add( AwardInfo info ){
+	public void add( Award award ){
+		long id = maxID.incrementAndGet();
+		
+
+
 		
 	}
 	

@@ -53,7 +53,7 @@ public enum AwardContent {
 	
 
 	public static AwardContent fromNumber(int n) {
-		return intToEnum.get(n);
+		return intToEnum.get((byte)n);
 	}
 
 	public byte toNumber() {

@@ -11,7 +11,7 @@ public enum FighterAttribute {
 
 		@Override
 		public void run(BaseFighter fighter, int numToChange) {
-			new Exception( "No implent this method!——ENEMY_HP.run()" );
+			throw new NoSuchMethodError( "No implent this method!——ENEMY_HP.run()" );
 		}
 		
 	},
