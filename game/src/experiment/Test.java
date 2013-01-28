@@ -1,7 +1,7 @@
 package experiment;
 
 import game.award.AwardInfo;
-import game.award.AwardType;
+import game.award.AwardContent;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -183,7 +183,7 @@ public class Test {
 		UserInfo user = new UserInfo( null, "bbz" );
 		long begin = System.nanoTime();
 		for (int i = 0; i < count; i++) {
-			AwardInfo award = new AwardInfo( AwardType.CASH, 500 );
+			AwardInfo award = new AwardInfo( AwardContent.CASH, 500 );
 			user.getAward( award, "test7" );
 //			user.changeCash( 500, "test7" );
 		}

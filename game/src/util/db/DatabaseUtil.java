@@ -102,6 +102,16 @@ public class DatabaseUtil {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 获取最大id
+	 * @param tableName
+	 * @param col
+	 * @return
+	 */
+	public static long getMaxId( String tableName, String col ){
+		return  0;
+	}
 
 	public static void main ( String[] args ) {
 		
