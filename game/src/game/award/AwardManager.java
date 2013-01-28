@@ -1,11 +1,9 @@
 package game.award;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 import user.UserInfo;
 import util.ErrorCode;
-import util.db.DatabaseUtil;
 
 /**
  * 奖品中心
@@ -54,9 +52,7 @@ public class AwardManager {
 	}
 	
 	public void add( Award award ){
-		long id = maxID.incrementAndGet();
 		
-
 
 		
 	}
