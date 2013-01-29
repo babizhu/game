@@ -1,4 +1,4 @@
-package game.bag;
+package game.prop;
 
 
 import game.prop.templet.BasePropTemplet;

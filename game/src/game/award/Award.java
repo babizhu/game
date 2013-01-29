@@ -18,6 +18,15 @@ public class Award {
 		this.type = type;
 		this.setContent(content);
 	}
+	
+	/**
+	 * 通过规范的字符串来生成，格式如下
+	 * @param type
+	 * @param str
+	 */
+	public Award( AwardType type, String str ){
+		this.type = type;
+	}
 
 	public AwardType getType() {
 		return type;

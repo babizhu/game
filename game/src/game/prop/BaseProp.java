@@ -42,6 +42,4 @@ public abstract class BaseProp implements IProp{
 		this.count = count;
 	}
 	
-	
-
 }

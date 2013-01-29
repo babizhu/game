@@ -1,7 +1,6 @@
 package game.prop;
 
 import util.ErrorCode;
-import game.bag.PropUnit;
 
 public class EquipmentManager {
 
@@ -10,7 +9,6 @@ public class EquipmentManager {
 	}
 
 	public static IEquipment getEquipmentById(long propId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

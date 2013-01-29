@@ -11,28 +11,38 @@ import game.prop.templet.*;
  */
 public enum PropType {
 	/**
-	 *	材料类道具 
+	 *	材料类道具 ，不具备唯一id
 	 */
 	STUFF {
 		@Override
-		public BasePropTemplet createNewTemplet() {
+		public BasePropTemplet create() {
 			return new StuffTemplet();
 		}
 	},
 	
 	/**
 	
-	 * 装备类道具
+	 * 装备类道具，具备唯一id
 	 */
 	EQUIPMENT {
 		@Override
-		public EquipmentTemplet createNewTemplet() {
+		public EquipmentTemplet create() {
 			return new EquipmentTemplet();
 		}
+	},
+	/**
+	 * 升级用的大礼包道具，不具备唯一id
+	 */
+	LEVEL_UP_GIFT_PACK{
+		@Override
+		public LevelUpGiftPackTemplet create() {
+			return new LevelUpGiftPackTemplet();
+		}
 	};
+	
 
 	/**
 	 * @return
 	 */
-	public abstract BasePropTemplet createNewTemplet();
+	public abstract BasePropTemplet create();
 }

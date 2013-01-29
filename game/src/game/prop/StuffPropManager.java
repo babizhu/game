@@ -1,6 +1,5 @@
 package game.prop;
 
-import game.bag.PropUnit;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,23 +23,21 @@ public class StuffPropManager implements IBag  {
 	
 	@Override
 	public ErrorCode put( PropUnit unit ){
-		synchronized ( bm ) {
-			if( bm.getFreeGridCount() < calcNeedGridCount( unit ) ){
-				return ErrorCode.GRID_NOT_ENOUGH;
-			}
-		
-			short templetId = unit.getTemplet().getTempletId();
-			Short c = stuffs.get( templetId );
-			if( c == null ){
-				stuffs.put( (short) templetId, unit.getCount() );
-				//TODO 同步数据库
-			}
-			else{
-				c = (short) (c + unit.getCount());
-				stuffs.put( templetId, c );
-				//TODO 同步数据库
-			}
+		if (bm.getFreeGridCount() < calcNeedGridCount(unit)) {
+			return ErrorCode.GRID_NOT_ENOUGH;
 		}
+
+		short templetId = unit.getTemplet().getTempletId();
+		Short c = stuffs.get(templetId);
+		if (c == null) {
+			stuffs.put((short) templetId, unit.getCount());
+			// TODO 同步数据库
+		} else {
+			c = (short) (c + unit.getCount());
+			stuffs.put(templetId, c);
+			// TODO 同步数据库
+		}
+
 		return ErrorCode.SUCCESS;
 	}
 
@@ -82,12 +79,14 @@ public class StuffPropManager implements IBag  {
 		}
 		return needGrid;
 	}
+	
+	
 	public static void main(String[] args) {
 		Map<Short,Short> s = new HashMap<Short, Short>();
 		s.put( (short)1,(short)100);
 		Short tt =  s.get((short)10);
-		short t =  s.get((short)10);
-		System.out.println( t);
+		//short t =  s.get((short)10);
+		System.out.println( tt);
 		
 	}
 

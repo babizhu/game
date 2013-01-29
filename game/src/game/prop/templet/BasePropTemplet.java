@@ -1,8 +1,6 @@
 package game.prop.templet;
 
 
-import game.prop.BaseProp;
-
 import org.jdom2.Element;
 
 

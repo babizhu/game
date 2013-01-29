@@ -40,14 +40,14 @@ class AwardDataProvider {
 	 * @return
 	 * 		DB_ERROR,USER_NOT_FOUND
 	 */
-	ErrorCode get( String uName ) {
+	ErrorCode get( String uname ) {
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
 			String sql = "SELECT * from user_award where user_name=?";
 			pst = con.prepareStatement( sql );
-			pst.setString( 1, uName );
+			pst.setString( 1, uname );
 			rs = pst.executeQuery();
 
 			if( rs.next() ) {

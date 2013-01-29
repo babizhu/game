@@ -1,6 +1,5 @@
 package game.prop;
 
-import game.bag.PropUnit;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,12 +21,12 @@ public class PropDataManager implements IBag{
 	/**
 	 * long for 装备Id
 	 */
-	private Map<Long,BaseProp> props = new HashMap<Long, BaseProp>();//不可重叠道具（通常指装备），道具具备唯一ID
+	private Map<Long,BaseProp> props = new HashMap<Long, BaseProp>();//不可重叠道具（通常指装备），具备唯一ID
 	
 	/**
 	 * short for 模板Id
 	 */
-	private Map<Short,BaseProp> stuffs = new HashMap<Short, BaseProp>();//可重叠道具（通常指材料），道具不具备唯一ID
+	private Map<Short,BaseProp> stuffs = new HashMap<Short, BaseProp>();//可重叠道具（通常指材料），不具备唯一ID
 	
 	public PropDataManager() {
 		

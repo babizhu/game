@@ -1,6 +1,5 @@
 package game.prop;
 
-import game.bag.PropUnit;
 import game.prop.templet.BasePropTemplet;
 import util.ErrorCode;
 

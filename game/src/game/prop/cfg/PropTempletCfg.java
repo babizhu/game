@@ -46,7 +46,7 @@ public class PropTempletCfg {
 				Element element = (Element) taskList.get( i );
 				//System.out.println( element.getChildText( "name" ) );
 				PropType type = PropType.valueOf( element.getChildText( "propType" ) );
-				BasePropTemplet templet = type.createNewTemplet();
+				BasePropTemplet templet = type.create();
 				templet.parse( element );
 				
 				/*******************关闭打印****************************

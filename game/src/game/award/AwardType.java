@@ -12,7 +12,11 @@ public enum AwardType {
 	/**
 	 * 大礼包
 	 */
-	GIFT;
+	GIFT, 
+	/**
+	 * 升级大礼包
+	 */
+	LEVEL_UP_GIFT_PACK;
 	
 
 }

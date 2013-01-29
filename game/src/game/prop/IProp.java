@@ -1,7 +1,7 @@
 package game.prop;
 
-import util.ErrorCode;
 import game.prop.templet.BasePropTemplet;
+import util.ErrorCode;
 
 public interface IProp {
 	
@@ -12,5 +12,7 @@ public interface IProp {
 	BasePropTemplet	getTemplet( );
 	
 	ErrorCode put( BaseProp prop );
+	
+//	ErrorCode run( UserInfo user );
 
 }
