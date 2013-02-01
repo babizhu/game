@@ -90,7 +90,7 @@ class TaskDataProvider {
 	 * done_sec				字段缺省为0，不用写入<br>
 	 * @return
 	 */
-	ErrorCode create( BaseTask task, String uname ) {
+	ErrorCode add( BaseTask task, String uname ) {
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;								  
 		String sql = "insert into task_base (uname, templet_id, accept_sec, parm) "

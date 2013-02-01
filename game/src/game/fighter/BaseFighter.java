@@ -2,8 +2,8 @@ package game.fighter;
 
 import game.battle.auto.buff.BuffManager;
 import game.battle.skill.SkillTemplet;
-import game.prop.EquipmentManager;
-import game.prop.IEquipment;
+import game.prop.equipment.EquipmentManager;
+import game.prop.equipment.IEquipment;
 import game.prop.templet.EquipmentTemplet;
 import util.ErrorCode;
 

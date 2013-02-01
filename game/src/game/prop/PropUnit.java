@@ -30,7 +30,6 @@ public class PropUnit {
 
 	public PropUnit( BasePropTemplet templet, short count, long propId ) {
 		this.templet = templet;
-
 		this.count = count;
 		this.propId = propId;
 	}

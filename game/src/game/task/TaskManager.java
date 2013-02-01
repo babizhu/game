@@ -131,7 +131,7 @@ public class TaskManager {
 		BaseTaskTemplet templet = TaskTempletCfg.getTempletById( TaskTempletCfg.FIRST_TASK_ID );
 		BaseTask task = templet.createTask();
 
-		ErrorCode code = db.create( task, user.getName() );
+		ErrorCode code = db.add( task, user.getName() );
 		if( code == ErrorCode.SUCCESS ){
 			tasks.putIfAbsent( templet.getTempletId(), task );
 		}
@@ -187,7 +187,7 @@ public class TaskManager {
 			 
 			for( BaseTaskTemplet s : successor ){
 				BaseTask newTask = s.createTask();
-				db.create( newTask, user.getName() );
+				db.add( newTask, user.getName() );
 				tasks.putIfAbsent( s.getTempletId(), newTask );
 				//TODO 通知客户端
 			}
