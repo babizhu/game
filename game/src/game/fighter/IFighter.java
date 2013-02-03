@@ -1,6 +1,5 @@
 package game.fighter;
 
-import util.ErrorCode;
 
 public interface IFighter {
 	
@@ -9,7 +8,7 @@ public interface IFighter {
 	 * @param propId	要穿的装备ID
 	 * @return
 	 */
-	ErrorCode dress( long oldPropId, long newPropId );
+	//ErrorCode dress( long oldPropId, long newPropId );
 	
 	/**
 	 * 返回该战士的等级

@@ -92,6 +92,8 @@ public class UserInfo {
 	private byte										sex						= 1;
 	
 	private boolean										isAdult					= true;
+
+	private short 										bagCapacity;
 	
 
 	
@@ -466,8 +468,15 @@ public class UserInfo {
 		return (con != null && con.isOpen());
 	}
 
+	public short getBagCapacity() {
+		return bagCapacity;
+	}
 
-public static void main ( String[] args ) {
+	public void setBagCapacity(short bagCapacity) {
+		this.bagCapacity = bagCapacity;
+	}
+
+	public static void main ( String[] args ) {
 //	long begin = System.nanoTime();
 //	for( int i = 0; i < 100000000; i++ ){
 //		UserInfo user = new UserInfo(null, "bbz");
@@ -477,6 +486,8 @@ public static void main ( String[] args ) {
 //	System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
 //		
 	}
+
+
 
 
 	

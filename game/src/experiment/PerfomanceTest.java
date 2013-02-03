@@ -42,7 +42,6 @@ public class PerfomanceTest {
 		for( int j = 0; j < 100000; j++ ){
 			for( Entry<Short, BaseTask> e : taskMap.entrySet() ){
 				BaseTask t = e.getValue();
-				@SuppressWarnings("unused")
 				int i = 0;
 				if( t.getAcceptAwardSec() == 10 ){
 					i++;
@@ -59,7 +58,6 @@ public class PerfomanceTest {
 		long begin = System.nanoTime();
 		for( int j = 0; j < 100000; j++ ){
 			for( BaseTask t : taskList ){
-				@SuppressWarnings("unused")
 				int i = 0;
 				if( t.getAcceptAwardSec() == 10 ){
 					i++;

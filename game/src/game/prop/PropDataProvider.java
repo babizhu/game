@@ -5,6 +5,7 @@ import game.prop.cfg.PropTempletCfg;
 import game.prop.equipment.Equipment;
 import game.prop.templet.BasePropTemplet;
 import game.prop.templet.EquipmentTemplet;
+import game.util.GameUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,7 +32,7 @@ public class PropDataProvider {
 	private static PropDataProvider 	instance = new PropDataProvider();
 	private static AtomicLong			maxID;
 	static{
-		maxID = new AtomicLong( DatabaseUtil.getMaxId( "equipment_base", "id" ) );
+		maxID = new AtomicLong( GameUtil.buildIdWithDistrict( DatabaseUtil.getMaxId( "equipment_base", "id" ) ) );
 	}
 	public static  PropDataProvider getInstance(){
 		return instance;
@@ -46,7 +47,29 @@ public class PropDataProvider {
 	 * @return
 	 */
 	public Map<Short, Integer> getAllStuffs(String uname) {
-		return null;
+		Connection con = DatabaseUtil.getConnection();
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		Map<Short,Integer> stuffs = new HashMap<Short, Integer>();
+		
+		String sql = "select * from stuff_base where uname=?";
+		
+		try {
+			pst = con.prepareStatement( sql );
+			pst.setString( 1, uname );
+			rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				short typeId = rs.getShort("typeid");
+				int	count = rs.getInt( "count" );
+				stuffs.put( typeId, count );
+			}
+		} catch (SQLException e) {
+			logger.debug( e.getLocalizedMessage(), e );
+		} finally {
+			DatabaseUtil.close( null, pst, con );
+		}
+		return stuffs;
 	}
 	
 	public ErrorCode changeStuff( PropUnit stuff, String uname, boolean isNew ){
@@ -68,7 +91,7 @@ public class PropDataProvider {
 					+ "values (?, ?, ? )";
 		}
 		else{
-			sql = "update equipment_base set count = ? where uname = ? and typeid=? ) ";
+			sql = "update stuff_base set count = count+? where uname = ? and typeid=?";
 		}
 		int i = 1;
 		try {
@@ -99,7 +122,6 @@ public class PropDataProvider {
 			pst.setString( i++, uname );
 			pst.setShort( i++, equipment.getLevel() );
 			pst.setString( i++, equipment.getGemStr() );
-			pst.setString( i++, equipment.getGemStr() );
 			pst.setShort( i++, templet.getTempletId() );
 			pst.executeUpdate();
 		} catch (SQLException e) {
@@ -109,7 +131,6 @@ public class PropDataProvider {
 			DatabaseUtil.close( null, pst, con );
 		}
 		return equipment;
-//		return ErrorCode.SUCCESS;
 	}
 		
 	/**
@@ -194,5 +215,35 @@ public class PropDataProvider {
 		equipment.setLevel( level );
 		equipment.setGem( rs.getString( "gem" ) );
 		return equipment;
+	}
+	
+	/**
+	 * 删除所有道具表中所有道具，通常用于测试用例
+	 * @param uname
+	 */
+	void removeAll( String uname ){
+		Connection con = DatabaseUtil.getConnection();
+		PreparedStatement pst1 = null;
+		PreparedStatement pst2 = null;
+		String sql1 = "delete from equipment_base where uname = ?";
+		String sql2 = "delete from stuff_base where uname = ?";
+		try { 
+			pst1 = con.prepareStatement( sql1 );
+			pst1.setString( 1, uname );			
+			pst1.executeUpdate(); 
+			
+			pst2 = con.prepareStatement( sql2 );
+			pst2.setString( 1, uname );			
+			pst2.executeUpdate(); 
+			
+ 		} catch (SQLException e) {
+ 			logger.debug( e.getLocalizedMessage(), e );
+		} finally { 
+			DatabaseUtil.close( null, pst1, con );
+			DatabaseUtil.close( null, pst2, con );
+		}
+	}
+	public static void main(String[] args) {
+		PropDataProvider.getInstance().removeAll( "刘昆0" );
 	}
 }

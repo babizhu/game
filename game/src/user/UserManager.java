@@ -121,7 +121,7 @@ public class UserManager {
 		if( name == null ){
 			return null;
 		}
-		return getUserByName(name);
+		return getUserByName( name );
 	}
 	
 	/**

@@ -30,7 +30,7 @@ public enum ErrorCode {
 	FIGHTER_LEVEL_NOT_ENOUGH( "战士等级不足" ),
 	
 	/*****************************************背包相关操作*********************************/
-	GRID_NOT_ENOUGH( "空闲格子不足" ),
+	BAG_IS_FULL( "空闲格子不足" ),
 	
 	/*****************************************商城相关操作*********************************/
 	SHOP_CANT_BUY( "此商品不能从商店中购买" ),
@@ -39,9 +39,10 @@ public enum ErrorCode {
 	AWARD_NOT_FOUND( "奖品不存在"),
 	
 	
+	
 	DB_ERROR("数据库错误"),	
 
-	UNKNOW_ERROR("未知错误"),  ;
+	UNKNOW_ERROR("未知错误");
 
 	private String desc;
 	ErrorCode( String desc ) {

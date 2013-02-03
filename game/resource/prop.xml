@@ -7,11 +7,26 @@
 		<propType>STUFF</propType>
 		<name>黄金碎片</name>
 		<requiredLevel>1</requiredLevel>
-		<stackCap>100</stackCap>
+		<stackCap>10</stackCap>
 		<priceOfCash>100</priceOfCash>
 		<priceOfGold>10</priceOfGold>
 		<buyBack>300</buyBack>
         <desc>可以用来打造黄金圣甲</desc>
+		<path>z3080001|603|5</path>	
+		<open>1</open>
+		<discount>1</discount>
+	</prop>	
+	
+	<prop>
+		<templetId>10001</templetId>
+		<propType>STUFF</propType>
+		<name>黄金图纸</name>
+		<requiredLevel>1</requiredLevel>
+		<stackCap>10</stackCap>
+		<priceOfCash>100</priceOfCash>
+		<priceOfGold>10</priceOfGold>
+		<buyBack>300</buyBack>
+        <desc>打造黄金圣甲的必备之物</desc>
 		<path>z3080001|603|5</path>	
 		<open>1</open>
 		<discount>1</discount>

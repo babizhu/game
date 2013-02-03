@@ -6,8 +6,11 @@ public class Bag {
 	/**
 	 * 背包容量
 	 */
-	private short		 			capacity;
-	
+	private final short		 			capacity;
+	/**
+	 * 空白格子
+	 */
+	private short						free;
 
 
 	public Bag( short capacity ) {
@@ -20,10 +23,11 @@ public class Bag {
 	 */
 	//List<>
 	public int getFreeGridCount() {
-		// TODO Auto-generated method stub
-		int use = 10;
-		int free = capacity - use;
 		return free;
+	}
+	
+	public short getCapacity() {
+		return capacity;
 	}
 	
 

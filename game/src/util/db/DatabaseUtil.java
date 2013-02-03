@@ -2,6 +2,7 @@ package util.db;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +12,8 @@ import java.util.List;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
@@ -19,11 +22,11 @@ public class DatabaseUtil {
 	/**
 	 * 配置文件的路径
 	 */
-	private static final String	FILE	= "config/db.xml";
+	private static final String			FILE	= "config/db.xml";
 
 	
-
-	private static DruidDataSource dataSource		= new DruidDataSource();
+	private final static Logger 		logger = LoggerFactory.getLogger( DatabaseUtil.class );
+	private static DruidDataSource 		dataSource		= new DruidDataSource();
 	
 	static{
 		init();
@@ -104,13 +107,31 @@ public class DatabaseUtil {
 	}
 	
 	/**
-	 * 获取最大id
+	 * 获取数据库某张表的最大id
 	 * @param tableName
 	 * @param col
 	 * @return
 	 */
 	public static long getMaxId( String tableName, String col ){
-		return  0;
+		Connection con = DatabaseUtil.getConnection();
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		String sql = "select max(" + col + ") from " + tableName;
+		
+		try {
+			pst = con.prepareStatement( sql );
+			rs = pst.executeQuery();
+			
+			if (rs.next()) {
+				return rs.getLong( 1 );
+			}
+		} catch (SQLException e) {
+			logger.debug( e.getLocalizedMessage(), e );
+		} finally {
+			DatabaseUtil.close( null, pst, con );
+		}
+		return 0;
 	}
 
 	public static void main ( String[] args ) {

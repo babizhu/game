@@ -86,6 +86,7 @@ class UserInfoDataProvider {
 				user.setLastLogoutTime( rs.getInt( "lastlogout_time" ) );
 				user.setLoginCount( rs.getShort( "login_count" ) );
 				user.setSex( rs.getByte( "sex" ) );
+				user.setBagCapacity( rs.getShort("bag_capacity" ) );
 				
 			}
 			else{//数据库无此玩家

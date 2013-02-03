@@ -13,8 +13,8 @@ import game.prop.templet.BasePropTemplet;
 public class Equipment extends BaseProp{
 	private final BasePropTemplet		templet;
 	private final long					id;
-	private short						level;
-	private Gem[]						gems;
+	private short						level = 1;
+	private Gem[]						gems = new Gem[0];
 	
 	public Equipment(BasePropTemplet templet, long id) {
 		super();
@@ -43,6 +43,9 @@ public class Equipment extends BaseProp{
 	 * @return
 	 */
 	public String getGemStr() {
+		if( gems.length == 0 ){
+			return "";
+		}
 		StringBuilder sb = new StringBuilder();
 		for( Gem g : gems ){
 			sb.append( g.getId() );
