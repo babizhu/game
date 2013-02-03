@@ -72,17 +72,24 @@ public class PropDataProvider {
 		return stuffs;
 	}
 	
-	public ErrorCode changeStuff( PropUnit stuff, String uname, boolean isNew ){
-		if( stuff.getCount() == 0 ){
+	/**
+	 * 删除材料
+	 * @param templetId
+	 * @param result		这里应该为负值！！
+	 * @param uname
+	 * @return
+	 */
+	public ErrorCode removeStuff( short templetId, int result, String uname ){
+		if( result == 0 ){
 			//TODO:删除此材料
 		}
 		else{
-			addStuff(stuff, uname, isNew);
+			return addStuff( templetId, result, uname, false );
 		}
 		return ErrorCode.SUCCESS;
 	}
 	
-	public ErrorCode addStuff( PropUnit stuff, String uname, boolean isNew ){
+	public ErrorCode addStuff( short templetId, int count, String uname, boolean isNew ){
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;	
 		String sql;
@@ -96,9 +103,9 @@ public class PropDataProvider {
 		int i = 1;
 		try {
 			pst = con.prepareStatement( sql );
-			pst.setInt( i++, stuff.getCount() );
+			pst.setInt( i++, count );
 			pst.setString( i++, uname );
-			pst.setShort( i++, stuff.getTemplet().getTempletId() );
+			pst.setShort( i++, templetId );
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			logger.debug( e.getLocalizedMessage(), e );

@@ -70,4 +70,23 @@ public class EquipmentManager implements IpropManager {
 		return equipments.get( propId );
 	}
 
+	@Override
+	public ErrorCode checkPropIsEnough(PropUnit unit) {
+		return null;
+	}
+	
+	/**
+	 * 装备升级
+	 * @param id
+	 * @return
+	 */
+	public ErrorCode levelUp( long id ){
+		Equipment e = equipments.get( id );
+		if( e == null ){
+			return ErrorCode.PROP_NOT_FOUNTD;
+		}
+		return ErrorCode.SUCCESS;
+	}
+
+	
 }

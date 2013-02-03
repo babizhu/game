@@ -19,4 +19,11 @@ public interface IpropManager {
 	 * @return
 	 */
 	int getGridCount();
+	
+	/**
+	 * 检查所需的道具数量是否足够
+	 * @param unit
+	 * @return
+	 */
+	ErrorCode checkPropIsEnough( PropUnit unit );
 }

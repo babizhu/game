@@ -63,7 +63,7 @@ public class StuffPropManager implements IpropManager  {
 		Integer count = stuffs.get( templetId );
 		boolean isNew = (count==null);
 		
-		ErrorCode code = db.addStuff( unit, uname, isNew );
+		ErrorCode code = db.addStuff( templetId, unit.getCount(), uname, isNew );
 		if( code == ErrorCode.SUCCESS ){
 			if( !isNew ){
 				count += unit.getCount();
@@ -73,14 +73,43 @@ public class StuffPropManager implements IpropManager  {
 		return code;
 	}
 	
+	@Override
+	public ErrorCode checkPropIsEnough( PropUnit unit ){
+		int needCount = unit.getCount();
+		short templetId = unit.getTemplet().getTempletId();
+		Integer c = stuffs.get( templetId );
+		if( c == null ){
+			return ErrorCode.PROP_NOT_FOUNTD;
+		}
+		if( c < needCount ){
+			return ErrorCode.PROP_NOT_ENOUGH;
+		}
+		return ErrorCode.SUCCESS;
+	}
+	
 	@Override	
 	/**
-	 * 移除物品
+	 * 移除物品，是否需要检测逻辑？
 	 * @param unit
 	 * @return
 	 */
 	public ErrorCode remove( PropUnit unit ){
+		short templetId = unit.getTemplet().getTempletId();
+		int result = stuffs.get( templetId ) - unit.getCount();
+//		boolean isDelete = ( result == 0 );
+		
+		ErrorCode code = db.removeStuff( templetId, -result, uname );
+		if( code != ErrorCode.SUCCESS ){
+			return code;
+		}
+		if( result == 0 ){
+			stuffs.remove( templetId );
+		}
+		else{
+			stuffs.put( templetId, result );
+		}
 		return ErrorCode.SUCCESS;
+		
 	}
 	
 	public static void main(String[] args) {
@@ -102,4 +131,6 @@ public class StuffPropManager implements IpropManager  {
 		}
 		return count;
 	}
+
+	
 }
