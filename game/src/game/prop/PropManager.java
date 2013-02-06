@@ -29,7 +29,7 @@ public class PropManager {
 	}
 
 
-	ErrorCode add( PropUnit unit ){
+	public ErrorCode add( PropUnit unit ){
 		IpropManager m = getManager( unit );
 		int needGridCount = m.calcNeedGridCount( unit ); 
 		if( needGridCount > freeGridCount ){
@@ -40,6 +40,10 @@ public class PropManager {
 			freeGridCount -= needGridCount;//更新剩余的空闲格子数目
 		}
 		return code;
+	}
+	
+	public ErrorCode remove( PropUnit unit ){
+		return getManager(unit).remove(unit);
 	}
 	
 	private IpropManager getManager( PropUnit unit ){
@@ -56,6 +60,21 @@ public class PropManager {
 	}
 	public Equipment getEquipmentById(long propId) {
 		return equipments.getEquipmentById( propId );
+	}
+	
+	/**
+	 * 道具升级，可能会包括装备，宝石等，参数会根据实际需求进行调整
+	 * @param propId
+	 * @return
+	 */
+	public ErrorCode levelUp( long propId ){
+		return equipments.levelUp( propId );
+		
+	}
+	
+	public ErrorCode mix( long propId ){
+		return null;
+		
 	}
 		
 }
