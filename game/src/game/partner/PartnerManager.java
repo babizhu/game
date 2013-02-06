@@ -1,5 +1,7 @@
 package game.partner;
 
+import java.util.Map;
+
 import game.battle.formation.IFormation;
 import user.UserInfo;
 import util.ErrorCode;
@@ -10,12 +12,15 @@ import util.ErrorCode;
  * 2013-2-5 下午2:14:22
  */
 public class PartnerManager {
-	private final UserInfo			user;
-	private IFormation				formation;
+	private final Map<Long, PartnerBase>		partners;
+	private final UserInfo						user;
+	private IFormation							formation;
+	private PartnerDataProvider					db = PartnerDataProvider.getInstance();
 	
 	public PartnerManager(UserInfo user) {
 		super();
 		this.user = user;
+		partners = db.getAll( user.getName() );s
 	}
 
 
@@ -45,7 +50,7 @@ public class PartnerManager {
 	 * 计算此战士的各种加成
 	 * @param partner
 	 */
-	void calcAbility( Partner partner ){
+	void calcAbility( PartnerBase partner ){
 		
 	}
 
