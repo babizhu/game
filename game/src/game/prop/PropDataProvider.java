@@ -4,7 +4,6 @@ package game.prop;
 import game.prop.cfg.PropTempletCfg;
 import game.prop.equipment.Equipment;
 import game.prop.templet.BasePropTemplet;
-import game.prop.templet.EquipmentTemplet;
 import game.util.GameUtil;
 
 import java.sql.Connection;
@@ -116,28 +115,30 @@ public class PropDataProvider {
 		return ErrorCode.SUCCESS;
 	}
 	
-	public Equipment addEquipment( EquipmentTemplet templet, String uname ) {
+	public ErrorCode addEquipment( Equipment equipment, String uname ) {
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;			
-		Equipment equipment = new Equipment( templet, maxID.incrementAndGet() );
 		String sql = "insert into equipment_base (id, uname, level, gem, typeid) "
 				+ "values (?, ?, ?, ?,?)";
 		int i = 1;
+		long id = maxID.incrementAndGet();
+		equipment.setId( id );
 		try {
 			pst = con.prepareStatement( sql );
-			pst.setLong( i++, equipment.getId() );
+			pst.setLong( i++, id );
 			pst.setString( i++, uname );
 			pst.setShort( i++, equipment.getLevel() );
 			pst.setString( i++, equipment.getGemStr() );
-			pst.setShort( i++, templet.getTempletId() );
+			pst.setShort( i++, equipment.getTemplet().getTempletId() );
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			logger.debug( e.getLocalizedMessage(), e );
-			return null;
+			return ErrorCode.DB_ERROR;
 		} finally {
 			DatabaseUtil.close( null, pst, con );
 		}
-		return equipment;
+		
+		return ErrorCode.SUCCESS;
 	}
 		
 	/**
@@ -214,12 +215,11 @@ public class PropDataProvider {
 	}
 	 
 	private Equipment mappingEquipment( ResultSet rs ) throws SQLException {
-		long id = rs.getLong( "id" );
-		short level = rs.getShort("level");
-		BasePropTemplet templet = PropTempletCfg.getTempletById( rs.getShort("typeId") );
-		Equipment equipment  = new Equipment( templet, id );
+		BasePropTemplet templet = PropTempletCfg.getTempletById( rs.getShort("typeid") );
+		Equipment equipment  = new Equipment( templet );
 		
-		equipment.setLevel( level );
+		equipment.setId( rs.getLong( "id" ) );
+		equipment.setLevel( rs.getShort("level") );
 		equipment.setGem( rs.getString( "gem" ) );
 		return equipment;
 	}

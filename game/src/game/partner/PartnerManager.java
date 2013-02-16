@@ -1,5 +1,6 @@
 package game.partner;
 
+import java.util.List;
 import java.util.Map;
 
 import game.battle.formation.IFormation;
@@ -8,11 +9,11 @@ import util.ErrorCode;
 
 /**
  * 伙伴管理器
- * @author Administrator
+ * @author liukun
  * 2013-2-5 下午2:14:22
  */
 public class PartnerManager {
-	private final Map<Long, PartnerBase>		partners;
+	private final List<PartnerBase>				partners;
 	private final UserInfo						user;
 	private IFormation							formation;
 	private PartnerDataProvider					db = PartnerDataProvider.getInstance();
@@ -20,7 +21,7 @@ public class PartnerManager {
 	public PartnerManager(UserInfo user) {
 		super();
 		this.user = user;
-		partners = db.getAll( user.getName() );s
+		partners = db.getAll( user.getName() );
 	}
 
 
