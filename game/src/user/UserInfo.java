@@ -2,6 +2,8 @@ package user;
 
 import game.award.AwardInfo;
 import game.award.AwardContent;
+import game.prop.equipment.Equipment;
+import game.prop.equipment.EquipmentManager;
 import game.task.TaskManager;
 
 import java.io.IOException;
@@ -28,6 +30,11 @@ public class UserInfo {
 	 * 包管理器
 	 */
 	private final UserPackageManager					packageManager;
+	
+	/**
+	 * 道具管理器
+	 */
+	private	EquipmentManager							equipmentManager;
 	
 	/**
 	 * 任务管理器
@@ -139,13 +146,6 @@ public class UserInfo {
 		return strength;
 	}
 
-	synchronized public TaskManager getTaskManager(){
-		if( taskManager == null ){
-			taskManager = new TaskManager( this );
-		}
-		return taskManager;
-	}
-	
 	
 	
 	public int getCash(  ){
@@ -476,6 +476,20 @@ public class UserInfo {
 		this.bagCapacity = bagCapacity;
 	}
 
+	public Equipment getEquipmentManager() {
+		if( equipmentManager == null ){
+			equipmentManager = new EquipmentManager( this );
+		}
+		return equipmentManager;
+	}
+	
+	public TaskManager getTaskManager(){
+		if( taskManager == null ){
+			taskManager = new TaskManager( this );
+		}
+		return taskManager;
+	}
+
 	public static void main ( String[] args ) {
 //	long begin = System.nanoTime();
 //	for( int i = 0; i < 100000000; i++ ){
@@ -490,7 +504,9 @@ public class UserInfo {
 
 
 
+
 	
 	
 
 }
+

@@ -3,7 +3,6 @@ package game.prop.equipment;
 import game.prop.IpropManager;
 import game.prop.PropDataProvider;
 import game.prop.PropUnit;
-import game.prop.templet.EquipmentTemplet;
 
 import java.util.Map;
 
@@ -34,13 +33,14 @@ public class EquipmentManager implements IpropManager {
 	@Override
 	public ErrorCode add( PropUnit unit ) {
 		for( int i = 0; i < unit.getCount(); i++ ){
-			Equipment e = db.addEquipment( (EquipmentTemplet) unit.getTemplet(), uname );
+			Equipment e = new Equipment( unit.getTemplet() );
+			ErrorCode code = db.addEquipment( e, uname );
 			
-			if( e != null ){
+			if( code == ErrorCode.SUCCESS ){
 				equipments.put( e.getId(), e );
 			}
 			else{
-				return ErrorCode.DB_ERROR;
+				return code;
 			}
 		}
 		return ErrorCode.SUCCESS;

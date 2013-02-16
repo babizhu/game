@@ -7,19 +7,18 @@ import game.prop.templet.BasePropTemplet;
 
 /**
  * 装备类
- * @author Administrator
+ * @author liukun
  * 2013-1-31 下午4:30:31
  */
 public class Equipment extends BaseProp{
 	private final BasePropTemplet		templet;
-	private final long					id;
+	private long						id;
 	private short						level = 1;
 	private Gem[]						gems = new Gem[0];
 	
-	public Equipment(BasePropTemplet templet, long id) {
+	public Equipment(BasePropTemplet templet ) {
 		super();
 		this.templet = templet;
-		this.id = id;
 	}
 
 	public BasePropTemplet getTemplet() {
@@ -39,7 +38,7 @@ public class Equipment extends BaseProp{
 	}
 
 	/**
-	 * 获取宝石字符串用于数据库存储
+	 * 获取用逗号分割的宝石id字符串用于数据库存储
 	 * @return
 	 */
 	public String getGemStr() {
@@ -65,6 +64,10 @@ public class Equipment extends BaseProp{
 			Gem g = new Gem();
 			gems[i] = g;
 		}
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 }
