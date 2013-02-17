@@ -5,8 +5,11 @@ import game.prop.equipment.Equipment;
 
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 
 import user.UserInfo;
+=======
+>>>>>>> refs/remotes/origin/master
 
 public class PartnerBase extends BaseFighter{
 
@@ -76,6 +79,7 @@ public class PartnerBase extends BaseFighter{
 			long id = Long.parseLong( s );
 			Equipment equipment = user.getEquipmentManager()
 		}
+
 		
 	}
 	
