@@ -41,11 +41,11 @@ public class PropManagerTest {
 	public void testPropManager() {
 		String name = "bbz";
 		UserInfo user = UserManager.getInstance().getUserByName(name );
-		PropManager pm = new PropManager(user);
+		PropManager pm = user.getPropManager();
 		assertEquals( 25, pm.getFreeGridCount() );
 		
 		Equipment e = pm.getEquipmentById( 4 );
-		assertEquals( 10, e.getLevel() );
+		assertEquals( 1, e.getLevel() );
 		assertEquals( 18000, e.getTemplet().getTempletId() );
 		
 	}
@@ -57,7 +57,7 @@ public class PropManagerTest {
 	public void testAdd() {
 		String name = "刘昆0";
 		UserInfo user = UserManager.getInstance().getUserByName(name );
-		PropManager pm = new PropManager(user);
+		PropManager pm = user.getPropManager();
 		
 		short templetId = 10000;
 		short count = 101;
@@ -88,7 +88,7 @@ public class PropManagerTest {
 		unit = new PropUnit( templetId, 52 );		
 		pm.add( unit );
 		assertEquals( 29, pm.getFreeGridCount() );
-		/************************第五次添加52个材料，此材料背包不存在，额外占用6格子*************************/
+		/************************第五次添加52个材料，此材料在背包不存在，额外占用6格子*************************/
 
 		unit = new PropUnit( (short) 18000, 4 );		
 		pm.add( unit );
@@ -106,7 +106,13 @@ public class PropManagerTest {
 
 	@Test
 	public void testGetEquipmentById() {
-		//fail("Not yet implemented");
+		String name = "bbz";
+		UserInfo user = UserManager.getInstance().getUserByName(name );
+		PropManager pm = user.getPropManager();
+		long id = 1;
+		Equipment e = pm.getEquipmentById( id );
+		assertEquals( 1, e.getLevel() );
+		System.out.println( e );
 	}
 
 }

@@ -5,11 +5,8 @@ import game.prop.equipment.Equipment;
 
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
 
 import user.UserInfo;
-=======
->>>>>>> refs/remotes/origin/master
 
 public class PartnerBase extends BaseFighter{
 
@@ -58,7 +55,7 @@ public class PartnerBase extends BaseFighter{
 	 * 获取用逗号分割的装备id字符串用于数据库存储
 	 * @return
 	 */
-	public String getEquipmentToStr() {
+	public String getEquipmentStr() {
 		if( equipments.size() == 0 ){
 			return "";
 		}
@@ -70,22 +67,14 @@ public class PartnerBase extends BaseFighter{
 		return sb.substring( 0, sb.length() - 1 );
 	}
 
-	public void buildEquipment( String str ){
-		
-	}
 	public void setEquipmentFromStr(String str, UserInfo user) {
 		String[] estr = str.split( "," );
 		for( String s : estr ){
 			long id = Long.parseLong( s );
-			Equipment equipment = user.getEquipmentManager()
-		}
-
-		
+			Equipment equipment = user.getPropManager().getEquipmentById( id );
+			equipment.setInBag( false );
+			equipments.add( equipment );
+		}		
 	}
-	
-	
-	
-	
-	
 	
 }

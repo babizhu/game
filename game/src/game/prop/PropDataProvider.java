@@ -59,9 +59,9 @@ public class PropDataProvider {
 			rs = pst.executeQuery();
 			
 			while (rs.next()) {
-				short typeId = rs.getShort("typeid");
+				short templetId = rs.getShort("templet_id");
 				int	count = rs.getInt( "count" );
-				stuffs.put( typeId, count );
+				stuffs.put( templetId, count );
 			}
 		} catch (SQLException e) {
 			logger.debug( e.getLocalizedMessage(), e );
@@ -74,7 +74,7 @@ public class PropDataProvider {
 	/**
 	 * 删除材料
 	 * @param templetId
-	 * @param result		这里应该为负值！！
+	 * @param result		当前拥有的材料数量	
 	 * @param uname
 	 * @return
 	 */
@@ -83,26 +83,27 @@ public class PropDataProvider {
 			//TODO:删除此材料
 		}
 		else{
-			return addStuff( templetId, result, uname, false );
+			return changeStuff( templetId, result, uname, false );
 		}
 		return ErrorCode.SUCCESS;
 	}
 	
-	public ErrorCode addStuff( short templetId, int count, String uname, boolean isNew ){
+	
+	public ErrorCode changeStuff( short templetId, int result, String uname, boolean isNew ){
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;	
 		String sql;
 		if( isNew ){
-			sql = "insert into stuff_base ( count,uname, typeid ) "
+			sql = "insert into stuff_base ( count,uname, templet_id ) "
 					+ "values (?, ?, ? )";
 		}
 		else{
-			sql = "update stuff_base set count = count+? where uname = ? and typeid=?";
+			sql = "update stuff_base set count = ? where uname = ? and templet_id=?";
 		}
 		int i = 1;
 		try {
 			pst = con.prepareStatement( sql );
-			pst.setInt( i++, count );
+			pst.setInt( i++, result );
 			pst.setString( i++, uname );
 			pst.setShort( i++, templetId );
 			pst.executeUpdate();
@@ -118,7 +119,7 @@ public class PropDataProvider {
 	public ErrorCode addEquipment( Equipment equipment, String uname ) {
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;			
-		String sql = "insert into equipment_base (id, uname, level, gem, typeid) "
+		String sql = "insert into equipment_base (id, uname, level, gem, templet_id) "
 				+ "values (?, ?, ?, ?,?)";
 		int i = 1;
 		long id = maxID.incrementAndGet();
@@ -215,7 +216,7 @@ public class PropDataProvider {
 	}
 	 
 	private Equipment mappingEquipment( ResultSet rs ) throws SQLException {
-		BasePropTemplet templet = PropTempletCfg.getTempletById( rs.getShort("typeid") );
+		BasePropTemplet templet = PropTempletCfg.getTempletById( rs.getShort("templet_id") );
 		Equipment equipment  = new Equipment( templet );
 		
 		equipment.setId( rs.getLong( "id" ) );
@@ -252,5 +253,6 @@ public class PropDataProvider {
 	}
 	public static void main(String[] args) {
 		PropDataProvider.getInstance().removeAll( "刘昆0" );
+		System.out.println( "测试道具清除完毕");
 	}
 }

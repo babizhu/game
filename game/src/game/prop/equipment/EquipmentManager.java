@@ -6,6 +6,7 @@ import game.prop.PropUnit;
 
 import java.util.Map;
 
+import user.UserInfo;
 import util.ErrorCode;
 
 /**
@@ -20,21 +21,22 @@ public class EquipmentManager implements IpropManager {
 	 */
 	private final Map<Long,Equipment> 	equipments;
 	private final PropDataProvider		db = PropDataProvider.getInstance();
-	private final String				uname;
+	private final UserInfo				user;
 	
-	public EquipmentManager( String uname ) {
-		this.uname = uname;
-		equipments = db.getAllEquipments( uname );
+	public EquipmentManager( UserInfo user ) {
+		this.user = user;
+		equipments = db.getAllEquipments( user.getName() );
 	}
 
 	/**
 	 * 是否有必要考虑同时加入多件装备的功能需求，这里虽然已经实现了此功能，但感觉代码难度增加，出错几率增大，是否值得？
+	 * 有可能存在部分写入数据库的问题
 	 */
 	@Override
 	public ErrorCode add( PropUnit unit ) {
 		for( int i = 0; i < unit.getCount(); i++ ){
 			Equipment e = new Equipment( unit.getTemplet() );
-			ErrorCode code = db.addEquipment( e, uname );
+			ErrorCode code = db.addEquipment( e, user.getName() );
 			
 			if( code == ErrorCode.SUCCESS ){
 				equipments.put( e.getId(), e );

@@ -1,5 +1,8 @@
 package game.prop.equipment;
 
+import java.util.Arrays;
+
+import util.ErrorCode;
 import game.prop.BaseProp;
 import game.prop.Gem;
 import game.prop.templet.BasePropTemplet;
@@ -10,7 +13,7 @@ import game.prop.templet.BasePropTemplet;
  * @author liukun
  * 2013-1-31 下午4:30:31
  */
-public class Equipment extends BaseProp{
+public class Equipment extends BaseProp implements IEquipment{
 	private final BasePropTemplet		templet;
 	private long						id;
 	private short						level = 1;
@@ -68,6 +71,19 @@ public class Equipment extends BaseProp{
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	
+	@Override
+	public String toString() {
+		return "Equipment [templet=" + templet.getTempletId() + ", id=" + id + ", level="
+				+ level + ", gems=" + Arrays.toString(gems) + "]";
+	}
+
+	@Override
+	public ErrorCode levelUp() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

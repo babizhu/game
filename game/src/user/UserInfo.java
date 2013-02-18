@@ -1,9 +1,8 @@
 package user;
 
-import game.award.AwardInfo;
 import game.award.AwardContent;
-import game.prop.equipment.Equipment;
-import game.prop.equipment.EquipmentManager;
+import game.award.AwardInfo;
+import game.prop.PropManager;
 import game.task.TaskManager;
 
 import java.io.IOException;
@@ -34,7 +33,7 @@ public class UserInfo {
 	/**
 	 * 道具管理器
 	 */
-	private	EquipmentManager							equipmentManager;
+	private	PropManager									propManager;
 	
 	/**
 	 * 任务管理器
@@ -476,11 +475,11 @@ public class UserInfo {
 		this.bagCapacity = bagCapacity;
 	}
 
-	public Equipment getEquipmentManager() {
-		if( equipmentManager == null ){
-			equipmentManager = new EquipmentManager( this );
+	public PropManager getPropManager() {
+		if( propManager == null ){
+			propManager = new PropManager( this );
 		}
-		return equipmentManager;
+		return propManager;
 	}
 	
 	public TaskManager getTaskManager(){
