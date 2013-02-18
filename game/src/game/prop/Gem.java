@@ -1,5 +1,7 @@
 package game.prop;
 
+import util.ErrorCode;
+import game.prop.equipment.IEquipment;
 import game.prop.templet.BasePropTemplet;
 
 /**
@@ -7,7 +9,7 @@ import game.prop.templet.BasePropTemplet;
  * @author Administrator
  * 2013-1-31 下午4:49:11
  */
-public class Gem implements IProp{
+public class Gem extends BaseProp implements IEquipment{
 
 	private	long		id;
 	
@@ -18,5 +20,11 @@ public class Gem implements IProp{
 
 	public long getId() {
 		return id;
+	}
+
+	@Override
+	public ErrorCode levelUp() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

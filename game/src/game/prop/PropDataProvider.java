@@ -74,7 +74,7 @@ public class PropDataProvider {
 	/**
 	 * 删除材料
 	 * @param templetId
-	 * @param result		这里应该为负值！！
+	 * @param result		当前拥有的材料数量	
 	 * @param uname
 	 * @return
 	 */
@@ -83,12 +83,13 @@ public class PropDataProvider {
 			//TODO:删除此材料
 		}
 		else{
-			return addStuff( templetId, result, uname, false );
+			return changeStuff( templetId, result, uname, false );
 		}
 		return ErrorCode.SUCCESS;
 	}
 	
-	public ErrorCode addStuff( short templetId, int count, String uname, boolean isNew ){
+	
+	public ErrorCode changeStuff( short templetId, int result, String uname, boolean isNew ){
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;	
 		String sql;
@@ -97,12 +98,12 @@ public class PropDataProvider {
 					+ "values (?, ?, ? )";
 		}
 		else{
-			sql = "update stuff_base set count = count+? where uname = ? and typeid=?";
+			sql = "update stuff_base set count = ? where uname = ? and typeid=?";
 		}
 		int i = 1;
 		try {
 			pst = con.prepareStatement( sql );
-			pst.setInt( i++, count );
+			pst.setInt( i++, result );
 			pst.setString( i++, uname );
 			pst.setShort( i++, templetId );
 			pst.executeUpdate();

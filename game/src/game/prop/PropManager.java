@@ -2,19 +2,20 @@ package game.prop;
 
 import game.prop.equipment.Equipment;
 import game.prop.equipment.EquipmentManager;
+import game.prop.equipment.IEquipment;
 import game.prop.stuff.StuffPropManager;
 import user.UserInfo;
 import util.ErrorCode;
 
 /**
- * 总的道具管理类
+ * 总的道具管理类,
  * @author liukun
  * 2013-1-31 下午3:06:06
  */
 public class PropManager {
 
-	private final EquipmentManager 	equipments;
-	private final StuffPropManager 	stuffs;
+	private final EquipmentManager 	equipmentManager;
+	private final StuffPropManager 	stuffManager;
 	
 	/**
 	 * 空闲的剩余格子数目
@@ -23,9 +24,9 @@ public class PropManager {
 	
 	public PropManager( UserInfo user ) {
 		super();
-		stuffs = new StuffPropManager( user.getName() );
-		equipments = new EquipmentManager( user.getName() );
-		freeGridCount = user.getBagCapacity() - equipments.getGridCount() - stuffs.getGridCount();
+		stuffManager = new StuffPropManager( user );
+		equipmentManager = new EquipmentManager( user );
+		freeGridCount = user.getBagCapacity() - equipmentManager.getGridCount() - stuffManager.getGridCount();
 	}
 
 
@@ -48,10 +49,10 @@ public class PropManager {
 	
 	private IpropManager getManager( PropUnit unit ){
 		if( unit.getTemplet().isEquipment() ){
-			return equipments;
+			return equipmentManager;
 		}
 		else{
-			return stuffs;
+			return stuffManager;
 		}
 	}
 
@@ -59,7 +60,7 @@ public class PropManager {
 		return freeGridCount;
 	}
 	public Equipment getEquipmentById(long propId) {
-		return equipments.getEquipmentById( propId );
+		return equipmentManager.getEquipmentById( propId );
 	}
 	
 	/**
@@ -67,8 +68,9 @@ public class PropManager {
 	 * @param propId
 	 * @return
 	 */
-	public ErrorCode levelUp( long propId ){
-		return equipments.levelUp( propId );
+	public ErrorCode levelUp( IEquipment equipment ){
+//		return equipmentManager.levelUp( propId );
+		return equipment.levelUp();
 		
 	}
 	

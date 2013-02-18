@@ -49,7 +49,7 @@ public class PartnerDataProvider {
 			pst.setLong( 1, pbo.getId() );
 			pst.setString( 2, pbo.getName() );
 			pst.setInt( 3, pbo.getLevel() );
-			pst.setString( 4, pbo.getEquipmentToStr() );
+			pst.setString( 4, pbo.getEquipmentStr() );
 			pst.setByte( 5, pbo.getPosition() );
 			pst.setString( 6, uname );
 			pst.setShort( 6, pbo.getTemplet().getTempletId() );
@@ -90,7 +90,7 @@ public class PartnerDataProvider {
 			pst = con.prepareStatement( sql );
 			pst.setString( 1, pbo.getName());
 			pst.setInt( 2, pbo.getLevel());
-			pst.setString( 3, pbo.getEquipmentToStr() );
+			pst.setString( 3, pbo.getEquipmentStr() );
 			pst.setByte( 4, pbo.getPosition() );
 			pst.setLong( 5, pbo.getId() );
 			pst.executeUpdate();

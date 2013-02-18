@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import user.UserInfo;
 import util.ErrorCode;
 
 public class StuffPropManager implements IpropManager  {
@@ -19,13 +20,13 @@ public class StuffPropManager implements IpropManager  {
 	/**
 	 * short for templetId,Short for count
 	 */
-	private final Map<Short,Integer> stuffs;	
-	private final PropDataProvider	db = PropDataProvider.getInstance();
-	private final String uname;	
+	private final Map<Short,Integer>	 	stuffs;	
+	private final PropDataProvider			db = PropDataProvider.getInstance();
+	private final UserInfo 					user;	
 
-	public StuffPropManager( String uname ) {
-		this.uname = uname;
-		stuffs = db.getAllStuffs( uname );
+	public StuffPropManager( UserInfo user ) {
+		this.user = user;
+		stuffs = db.getAllStuffs( user.getName() );
 	}
 
 	@Override	
@@ -63,7 +64,7 @@ public class StuffPropManager implements IpropManager  {
 		Integer count = stuffs.get( templetId );
 		boolean isNew = (count==null);
 		
-		ErrorCode code = db.addStuff( templetId, unit.getCount(), uname, isNew );
+		ErrorCode code = db.changeStuff( templetId, unit.getCount(), user.getName(), isNew );
 		if( code == ErrorCode.SUCCESS ){
 			if( !isNew ){
 				count += unit.getCount();
@@ -89,16 +90,17 @@ public class StuffPropManager implements IpropManager  {
 	
 	@Override	
 	/**
-	 * 移除物品，是否需要检测逻辑？
+	 * 移除材料
 	 * @param unit
 	 * @return
 	 */
 	public ErrorCode remove( PropUnit unit ){
 		short templetId = unit.getTemplet().getTempletId();
 		int result = stuffs.get( templetId ) - unit.getCount();
-//		boolean isDelete = ( result == 0 );
+		result = result > 0 ? result : 0;
 		
-		ErrorCode code = db.removeStuff( templetId, -result, uname );
+		
+		ErrorCode code = db.removeStuff( templetId, result, user.getName() );
 		if( code != ErrorCode.SUCCESS ){
 			return code;
 		}
