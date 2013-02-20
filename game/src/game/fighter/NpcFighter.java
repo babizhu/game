@@ -1,6 +1,6 @@
 package game.fighter;
 
-public class NpcFighter extends BaseFighter {
+public class NpcFighter extends FighterBase {
 
 
 	private Short			id;

@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.xsocket.connection.BlockingConnection;
 import org.xsocket.connection.IBlockingConnection;
 
-import util.BaseUtil;
+import util.UtilBase;
 import util.ErrorCode;
 import define.SystemCfg;
 
@@ -34,8 +34,8 @@ public class UserCreateEventTest extends BaseEventTest{
 
 	private ByteBuffer createContent(String name, String nickName, byte sex) {
 		ByteBuffer buf = createEmptyPackage(1024);
-		BaseUtil.encodeString( buf, name );
-		BaseUtil.encodeString( buf, nickName );
+		UtilBase.encodeString( buf, name );
+		UtilBase.encodeString( buf, nickName );
 		buf.put( sex );
 		return buf;
 	}

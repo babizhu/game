@@ -1,9 +1,9 @@
 package game.battle;
 
-import game.fighter.BaseFighter;
+import game.fighter.FighterBase;
 
 
-public abstract class BaseBuff {
+public abstract class BuffBase {
 
 	protected boolean								isRemove = false;
 	
@@ -15,7 +15,7 @@ public abstract class BaseBuff {
 	/**
 	 * 拥有此buff的玩家
 	 */
-	protected BaseFighter							self;
+	protected FighterBase							self;
 	
 	/**
 	 * 是否为减低buff，例如中毒效果
@@ -23,7 +23,7 @@ public abstract class BaseBuff {
 	protected boolean								isDeBuff = false;
 	
 	
-	public BaseBuff( BaseFighter fighter ) {
+	public BuffBase( FighterBase fighter ) {
 		this.self = fighter;
 	}
 	

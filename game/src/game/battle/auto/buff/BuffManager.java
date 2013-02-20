@@ -10,7 +10,7 @@
 */
 package game.battle.auto.buff;
 
-import game.battle.BaseBuff;
+import game.battle.BuffBase;
 import game.battle.BuffRunPoint;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class BuffManager {
 	
-	private List<BaseBuff>						buffs = new ArrayList<BaseBuff>();
+	private List<BuffBase>						buffs = new ArrayList<BuffBase>();
 	public BuffManager( ) {
 		super( );
 	}
@@ -27,7 +27,7 @@ public class BuffManager {
 	 * 清除该战士所有的负面buff效果
 	 */
 	public void removeDeBuff(  ){
-		for( BaseBuff buff : buffs ){
+		for( BuffBase buff : buffs ){
 			if( buff.isDeBuff() ){
 				buff.setRemove( true );
 			}
@@ -40,7 +40,7 @@ public class BuffManager {
 	 * @return
 	 * 		true	成功
 	 */
-	public boolean add( BaseBuff buff ){
+	public boolean add( BuffBase buff ){
 		buffs.add( buff );		//有可能需要考虑buff之间的兼容关系, 是一个很麻烦的高难度过程
 		//如果没问题，添加成功
 		if( true ){
@@ -66,7 +66,7 @@ public class BuffManager {
 	public int run( int damage, BuffRunPoint pt ){
 		
 		int tempDamage = damage;//一个buf所产生的临时伤害值
-		for( BaseBuff buf : buffs ){
+		for( BuffBase buf : buffs ){
 			
 			if( buf.getBuffRunPoint() == pt && !buf.isRemove() ){
 				tempDamage = buf.run( damage );
@@ -78,14 +78,14 @@ public class BuffManager {
 
 	public static void main(String[] args) {
 	
-		List<BaseBuff> list = new ArrayList<BaseBuff>();
+		List<BuffBase> list = new ArrayList<BuffBase>();
 		for( int i = 0; i < 10; i++ ){
-			BaseBuff buf = new B001( null );
+			BuffBase buf = new B001( null );
 			list.add( buf );			
 		}
 		
 		int i = 0;
-		for( BaseBuff buf : list ){
+		for( BuffBase buf : list ){
 			if( i++ == 5 ){
 				list.remove( i );
 				list.remove( buf );

@@ -29,10 +29,10 @@ public class TaskManager {
 	 * {@link test.PerfomanceTest}.
 	 * 
 	 * @param		Short				为任务的模板id
-	 * @param		BaseTask			所接任务
+	 * @param		TaskBase			所接任务
 	 * 
 	 */
-	private final ConcurrentHashMap<Short,BaseTask> 	tasks;
+	private final ConcurrentHashMap<Short,TaskBase> 	tasks;
 	private UserInfo									user;
 	private final TaskDataProvider 						db = TaskDataProvider.getInstance();	
 
@@ -49,7 +49,7 @@ public class TaskManager {
 	 * @return
 	 */
 	public ErrorCode acceptTask( short templetId ){
-		BaseTask task = tasks.get( templetId );
+		TaskBase task = tasks.get( templetId );
 		if( task == null ){
 			return ErrorCode.TASK_NOT_FOUND;
 		}
@@ -79,7 +79,7 @@ public class TaskManager {
 	 * @return
 	 */
 	public ErrorCode acceptAward( short templetId ){
-		BaseTask task = tasks.get( templetId );
+		TaskBase task = tasks.get( templetId );
 		if( task == null ){
 			return ErrorCode.TASK_NOT_FOUND;
 		}
@@ -108,7 +108,7 @@ public class TaskManager {
 	 * @return
 	 */
 	public ErrorCode doTask( TaskType type, Object obj ){
-		for( BaseTask t : tasks.values() ){
+		for( TaskBase t : tasks.values() ){
 			
 			synchronized ( t ) {				
 				if( t.getStatus() == TaskStatus.ACCEPT && t.getTemplet().getTaskType() == type ){
@@ -129,7 +129,7 @@ public class TaskManager {
 	 */
 	public void addFirstTask(  ){
 		BaseTaskTemplet templet = TaskTempletCfg.getTempletById( TaskTempletCfg.FIRST_TASK_ID );
-		BaseTask task = templet.createTask();
+		TaskBase task = templet.createTask();
 
 		ErrorCode code = db.add( task, user.getName() );
 		if( code == ErrorCode.SUCCESS ){
@@ -145,7 +145,7 @@ public class TaskManager {
 	 * 		true	命中任务
 	 * 		flase	未命中任务
 	 */
-	private boolean doTask( BaseTask task, Object obj ){
+	private boolean doTask( TaskBase task, Object obj ){
 		if( task.doTask( user, obj ) ){
 			if( task.getStatus() == TaskStatus.NO_REWARD ){
 				finishTask( task );
@@ -161,7 +161,7 @@ public class TaskManager {
 	 * 此方法应该为私有，避免对外发布。但为了test方便，暂时用缺省的安全机制
 	 * @return
 	 */
-	Map<Short,BaseTask> getTasks(){
+	Map<Short,TaskBase> getTasks(){
 		return tasks;
 	}
 	
@@ -170,7 +170,7 @@ public class TaskManager {
 	 * 
 	 * @param task			已完成的任务
 	 */
-	private void finishTask( BaseTask task ){
+	private void finishTask( TaskBase task ){
 		BaseTaskTemplet templet = task.getTemplet();
 		addSuccessorTask( templet );
 	}
@@ -186,7 +186,7 @@ public class TaskManager {
 		if( successor != null ){
 			 
 			for( BaseTaskTemplet s : successor ){
-				BaseTask newTask = s.createTask();
+				TaskBase newTask = s.createTask();
 				db.add( newTask, user.getName() );
 				tasks.putIfAbsent( s.getTempletId(), newTask );
 				//TODO 通知客户端
@@ -201,10 +201,10 @@ public class TaskManager {
 	 * 		task:	找到相关task返回此task，<br>
 	 * 		null:	未找到返回null
 	 */
-	public BaseTask getTaskCopyByTempletId( short templetId ) {
-		BaseTask task = tasks.get( templetId );
+	public TaskBase getTaskCopyByTempletId( short templetId ) {
+		TaskBase task = tasks.get( templetId );
 		if( task != null ){
-			BaseTask copyTask = task.getTemplet().createTask();
+			TaskBase copyTask = task.getTemplet().createTask();
 			synchronized (task) {
 				copyTask.copy( task );				
 				return copyTask;
@@ -226,7 +226,7 @@ public class TaskManager {
 		sb.append( ", tasks=[\n" );
 		for( Object key : key_arr ) {  
 		    
-			BaseTask t = tasks.get( key );
+			TaskBase t = tasks.get( key );
 			if( t == null ){
 				throw new IllegalArgumentException( "不存在的任务" ); 
 			}
@@ -244,7 +244,7 @@ public class TaskManager {
 	 * 获取玩家的所有的活动任务，代码先凑合用，需要修改，应该返回一个拷贝
 	 * @return
 	 */
-	public Map<Short, BaseTask> getAllActiveTasksCopy() {
+	public Map<Short, TaskBase> getAllActiveTasksCopy() {
 		// TODO Auto-generated method stub
 		return tasks;
 	}
@@ -252,7 +252,7 @@ public class TaskManager {
 	public static void main ( String[] args ) {
 		short templetId = 10000;
 		BaseTaskTemplet t = TaskTempletCfg.getTempletById( templetId );
-		BaseTask task = t.createTask();
+		TaskBase task = t.createTask();
 		task.parseParamFromStr( "" );
 		
 	}

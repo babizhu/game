@@ -12,7 +12,7 @@ import user.UserInfo;
  * 
  */
 
-public class MissionTask extends BaseTask {
+public class MissionTask extends TaskBase {
 
 	
 	public MissionTask(MissionTaskTemplet missionTaskTemplet) {

@@ -1,8 +1,8 @@
 package game.battle.auto.buff;
 
-import game.battle.BaseBuff;
+import game.battle.BuffBase;
 import game.battle.BuffRunPoint;
-import game.fighter.BaseFighter;
+import game.fighter.FighterBase;
 
 /**
  * 病入膏肓
@@ -11,7 +11,7 @@ import game.fighter.BaseFighter;
  * @author liukun
  * 2012-11-1 上午11:01:24
  */
-public class B003 extends BaseBuff {
+public class B003 extends BuffBase {
 
 	private static final int TURNS = 3;						//持续回合数
 	/**
@@ -19,7 +19,7 @@ public class B003 extends BaseBuff {
 	 */
 	private final int skillDamage;
 	
-	public B003( BaseFighter fighter, int damage ) {
+	public B003( FighterBase fighter, int damage ) {
 		super( fighter );
 		this.skillDamage = damage;
 		duration = TURNS;

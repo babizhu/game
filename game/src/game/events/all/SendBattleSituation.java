@@ -10,8 +10,8 @@ import game.battle.auto.AutoBattle;
 import game.battle.auto.Formation9;
 import game.battle.auto.ParseBattleSituation;
 import game.battle.formation.IFormation;
-import game.events.BaseEvent;
-import game.fighter.BaseFighter;
+import game.events.EventBase;
+import game.fighter.FighterBase;
 import game.fighter.cfg.NpcFighterTempletCfg;
 import game.mission.cfg.MissionTempletCfg;
 
@@ -20,14 +20,14 @@ import game.mission.cfg.MissionTempletCfg;
  * @author liukun
  * 2013-1-22 下午6:17:37
  */
-public class SendBattleSituation extends BaseEvent {
+public class SendBattleSituation extends EventBase {
 
 	IFormation aFormation;
 	IFormation dFormation;
 	
 	void init(){
-		List<BaseFighter> attackers = new ArrayList<BaseFighter>();		
-		BaseFighter fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 1 );
+		List<FighterBase> attackers = new ArrayList<FighterBase>();		
+		FighterBase fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 1 );
 		attackers.add( fighter );
 		fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 2 );
 		fighter.setPosition( (byte) 3 );

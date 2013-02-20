@@ -1,6 +1,6 @@
 package net;
 
-import game.events.BaseEvent;
+import game.events.EventBase;
 
 import java.io.IOException;
 import java.nio.BufferUnderflowException;
@@ -107,7 +107,7 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 	 * @return true 首尾包号正确 false 错误
 	 */
 	private boolean checkInputData( byte head, byte foot ) {
-		if (head != BaseEvent.HEAD || foot != BaseEvent.FOOT) {
+		if (head != EventBase.HEAD || foot != EventBase.FOOT) {
 			return false;
 		}
 		return true;

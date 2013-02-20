@@ -3,7 +3,7 @@
  */
 package game.events.all;
 
-import game.events.BaseEvent;
+import game.events.EventBase;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -24,7 +24,7 @@ import user.UserManager;
  * 
  * @author liukun 2012-9-2
  */
-public class DeadLockTestEvent extends BaseEvent {
+public class DeadLockTestEvent extends EventBase {
 	private static AtomicBoolean firstIn = new AtomicBoolean();
 	static{
 		firstIn.set( true );

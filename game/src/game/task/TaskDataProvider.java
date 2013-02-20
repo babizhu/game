@@ -36,9 +36,9 @@ class TaskDataProvider {
 	 * @return
 	 * 		DB_ERROR,USER_NOT_FOUND
 	 */
-	ConcurrentHashMap<Short,BaseTask> getActiveTasksByUser( String uname ) {
+	ConcurrentHashMap<Short,TaskBase> getActiveTasksByUser( String uname ) {
 		
-		ConcurrentHashMap<Short,BaseTask> map = new ConcurrentHashMap<Short, BaseTask>();
+		ConcurrentHashMap<Short,TaskBase> map = new ConcurrentHashMap<Short, TaskBase>();
 		
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;
@@ -53,7 +53,7 @@ class TaskDataProvider {
 			rs = pst.executeQuery();
 
 			while( rs.next() ){
-				BaseTask t = mapping( rs );
+				TaskBase t = mapping( rs );
 				map.put( t.getTemplet().getTempletId(), t );
 			}
 		} catch (SQLException e) {
@@ -66,11 +66,11 @@ class TaskDataProvider {
 		return map;
 	}
 	
-	private BaseTask mapping( ResultSet rs ) throws SQLException {
+	private TaskBase mapping( ResultSet rs ) throws SQLException {
 		
 		short templetId = rs.getShort( "templet_id" );
 		
-		BaseTask task = TaskTempletCfg.getTempletById(templetId ).createTask();
+		TaskBase task = TaskTempletCfg.getTempletById(templetId ).createTask();
 		task.setAcceptSec(rs.getInt( "accept_sec" ));
 		task.setDoneSec(rs.getInt("done_sec"));
 		task.setAcceptAwardSec(rs.getInt("accept_award_sec"));
@@ -90,7 +90,7 @@ class TaskDataProvider {
 	 * done_sec				字段缺省为0，不用写入<br>
 	 * @return
 	 */
-	ErrorCode add( BaseTask task, String uname ) {
+	ErrorCode add( TaskBase task, String uname ) {
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;								  
 		String sql = "insert into task_base (uname, templet_id, accept_sec, parm) "
@@ -121,7 +121,7 @@ class TaskDataProvider {
 	 * @return
 	 * 		DB_ERROR
 	 */
-	ErrorCode update( BaseTask task, String uname ) {
+	ErrorCode update( TaskBase task, String uname ) {
 		
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;	

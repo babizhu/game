@@ -3,7 +3,7 @@ package game.task;
 import game.task.templet.BaseTaskTemplet;
 import user.UserInfo;
 
-public class CustomTask extends BaseTask implements ITask {
+public class CustomTask extends TaskBase implements ITask {
 
 	public CustomTask( BaseTaskTemplet templet) {
 		super( templet );

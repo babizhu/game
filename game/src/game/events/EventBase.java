@@ -16,7 +16,7 @@ import util.ErrorCode;
  * @author liukun
  * 2012-8-26
  */
-public abstract class BaseEvent implements IEvent {
+public abstract class EventBase implements IEvent {
 	
 	//private final static Logger logger = LoggerFactory.getLogger( BasePackage.class ); 
 	public static final byte HEAD		= 127;
@@ -112,11 +112,11 @@ public abstract class BaseEvent implements IEvent {
 	 */
 	public static void main(String[] args) {
 		ByteBuffer buf = ByteBuffer.allocate( 1024 );
-		buf.put( BaseEvent.HEAD );
+		buf.put( EventBase.HEAD );
 		buf.putShort( EventManager.USER_CREATE.toNum() );
 		buf.putShort( (short) 4 );
 		buf.putInt( 88 );
-		buf.put( BaseEvent.FOOT );
+		buf.put( EventBase.FOOT );
 		
 		UserLoginEvent p = new UserLoginEvent();
 		System.out.println( buf );

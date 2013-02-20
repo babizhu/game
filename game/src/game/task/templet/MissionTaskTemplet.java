@@ -1,6 +1,6 @@
 package game.task.templet;
 
-import game.task.BaseTask;
+import game.task.TaskBase;
 import game.task.MissionTask;
 import game.task.enums.TaskType;
 
@@ -21,7 +21,7 @@ public class MissionTaskTemplet extends BaseTaskTemplet{
 	}
 
 	@Override
-	public BaseTask createTask() {
+	public TaskBase createTask() {
 		return new MissionTask( this );
 	}
 	

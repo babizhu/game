@@ -1,6 +1,6 @@
 package game.task.templet;
 
-import game.task.BaseTask;
+import game.task.TaskBase;
 import game.task.PropTask;
 import game.task.enums.TaskType;
 
@@ -9,7 +9,7 @@ public class PropTaskTemplet extends BaseTaskTemplet{
 	private int				propId;
 	private int				needCount;
 	@Override
-	public BaseTask createTask() {
+	public TaskBase createTask() {
 		return new PropTask( this );
 	}
 

@@ -10,7 +10,7 @@ import user.UserInfo;
  * @author liukun
  * 2012-8-22 下午02:49:05
  */
-public class UserPropertyTask extends BaseTask {
+public class UserPropertyTask extends TaskBase {
 
 	public UserPropertyTask(UserPropertyTaskTemplet templet) {
 		super(templet);

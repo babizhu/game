@@ -1,6 +1,6 @@
 package game.events.all;
 
-import game.events.BaseEvent;
+import game.events.EventBase;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -15,7 +15,7 @@ import util.ErrorCode;
  * @author liukun
  * 2012-8-31 上午10:58:21
  */
-public class SystemSendErrorCodeEvent extends BaseEvent {
+public class SystemSendErrorCodeEvent extends EventBase {
 
 	@Override
 	public void run(UserInfo user, ByteBuffer buf) throws IOException {

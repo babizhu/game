@@ -4,7 +4,7 @@ package game.battle.auto;
 import game.battle.BuffRunPoint;
 import game.battle.IBattleUtil;
 import game.battle.formula.Formula;
-import game.fighter.BaseFighter;
+import game.fighter.FighterBase;
 
 import java.util.Comparator;
 
@@ -23,9 +23,9 @@ public class AutoBattleUtil implements IBattleUtil {
 	/**
 	 * 出手顺序由速度确定
 	 */
-	private static final Comparator<BaseFighter> speedComparator = new Comparator<BaseFighter>(){
+	private static final Comparator<FighterBase> speedComparator = new Comparator<FighterBase>(){
 		@Override
-		public int compare( BaseFighter f1, BaseFighter f2 ) {
+		public int compare( FighterBase f1, FighterBase f2 ) {
 			return f2.getSpeed() - f1.getSpeed();
 		}
 	};
@@ -36,7 +36,7 @@ public class AutoBattleUtil implements IBattleUtil {
 	 * @param defender
 	 * @return
 	 */
-	private boolean isBlockAndCounterAttack( BaseFighter attacker, BaseFighter defender ) {
+	private boolean isBlockAndCounterAttack( FighterBase attacker, FighterBase defender ) {
 		int r = RandomUtil.getRandomInt( 0, 100 );//随机值
 		r = 50;//取消随机对测试的影响
 		float result = (float)(attacker.getBlock() + 500) / (defender.getUnBlock() + 500) - 1;
@@ -54,7 +54,7 @@ public class AutoBattleUtil implements IBattleUtil {
 	 * 			false		未命中
 	 * 
 	 */
-	private boolean isHit( BaseFighter attacker, BaseFighter defender ) {
+	private boolean isHit( FighterBase attacker, FighterBase defender ) {
 		int r = RandomUtil.getRandomInt( 0, 100 );//随机值
 		r = 50;//取消随机对测试的影响
 		float result = (float)(attacker.getHitRate() + 500) / (defender.getDodgeRate() + 500);
@@ -69,7 +69,7 @@ public class AutoBattleUtil implements IBattleUtil {
 	 * @param defender
 	 * @return 
 	 */
-	private byte calcCrit( BaseFighter attacker, BaseFighter defender ) {
+	private byte calcCrit( FighterBase attacker, FighterBase defender ) {
 		
 		byte crit = 1;//暴击加成
 		
@@ -92,7 +92,7 @@ public class AutoBattleUtil implements IBattleUtil {
 	 * @return
 	 */
 	@Override
-	public AttackInfo calcAttackInfo( BaseFighter attacker, BaseFighter defender, Formula formula, float[] arguments ) {
+	public AttackInfo calcAttackInfo( FighterBase attacker, FighterBase defender, Formula formula, float[] arguments ) {
 		
 		AttackInfo info = new AttackInfo();
 		boolean isHit = isHit(attacker, defender);
@@ -130,13 +130,13 @@ public class AutoBattleUtil implements IBattleUtil {
 	}
 
 	@Override
-	public int calcCounterAttackDamage(BaseFighter attacker, BaseFighter defender) {
+	public int calcCounterAttackDamage(FighterBase attacker, FighterBase defender) {
 		int damage = Formula.NormalAttackFormula.run( attacker, defender, null );
 
 		return (int) (damage * BLOCK_DAMAGE_RATE);
 	}
 	@Override
-	public Comparator<BaseFighter> getOrderComparator() {
+	public Comparator<FighterBase> getOrderComparator() {
 		return speedComparator;
 	}
 	

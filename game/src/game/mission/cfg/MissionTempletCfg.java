@@ -3,7 +3,7 @@ package game.mission.cfg;
 import game.battle.Pet;
 import game.battle.auto.Formation9;
 import game.battle.formation.IFormation;
-import game.fighter.BaseFighter;
+import game.fighter.FighterBase;
 import game.fighter.NpcFighter;
 import game.fighter.cfg.NpcFighterTempletCfg;
 
@@ -77,7 +77,7 @@ private static final Map<Short,MissionTemplet> missions = new HashMap<Short, Mis
 			if( content == null || content.isEmpty() ){
 				continue;
 			}
-			List<BaseFighter> fightersList = parseFighterList( content );
+			List<FighterBase> fightersList = parseFighterList( content );
 			Pet pet = null;
 			IFormation formation = new Formation9( fightersList, isLeft, pet );
 			
@@ -86,8 +86,8 @@ private static final Map<Short,MissionTemplet> missions = new HashMap<Short, Mis
 		return formations;
 	}
 	
-	private static List<BaseFighter> parseFighterList( String content ){
-		List<BaseFighter> list = new ArrayList<BaseFighter>();
+	private static List<FighterBase> parseFighterList( String content ){
+		List<FighterBase> list = new ArrayList<FighterBase>();
 		String[] fighterArr = content.split( "\\|" );
 		for( String s : fighterArr ){
 			Short fighterId = Short.parseShort( s.split( "," )[0] );

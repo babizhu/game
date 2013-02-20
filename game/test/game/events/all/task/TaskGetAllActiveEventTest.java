@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import game.events.EventManager;
 import game.events.all.BaseEventTest;
 import game.events.all.UserLoginEventTest;
-import game.task.BaseTask;
+import game.task.TaskBase;
 import game.task.cfg.TaskTempletCfg;
 import game.task.enums.TaskStatus;
 
@@ -19,7 +19,7 @@ import org.junit.Test;
 import org.xsocket.connection.BlockingConnection;
 import org.xsocket.connection.IBlockingConnection;
 
-import util.BaseUtil;
+import util.UtilBase;
 import util.ErrorCode;
 import define.SystemCfg;
 
@@ -58,10 +58,10 @@ public class TaskGetAllActiveEventTest extends BaseEventTest  {
 			assertEquals( 5, size );
 			for( int t = 0; t < size; t++ ){
 				short templetId = buf.getShort();
-				BaseTask task = TaskTempletCfg.getTempletById(templetId).createTask();
+				TaskBase task = TaskTempletCfg.getTempletById(templetId).createTask();
 				
 				task.setStatus( TaskStatus.fromNum( buf.get() ) );
-				task.parseParamFromStr( BaseUtil.decodeString(buf) );
+				task.parseParamFromStr( UtilBase.decodeString(buf) );
 				System.out.println( task );
 			}
 			System.out.println( i );

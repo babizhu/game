@@ -10,7 +10,7 @@ public enum FighterAttribute {
 	SUB_HP(1){
 
 		@Override
-		public void run(BaseFighter fighter, int numToChange) {
+		public void run(FighterBase fighter, int numToChange) {
 			throw new NoSuchMethodError( "No implent this method!——ENEMY_HP.run()" );
 		}
 		
@@ -18,7 +18,7 @@ public enum FighterAttribute {
 	ADD_HP(2) {
 		@Override
 		public
-		void run(BaseFighter fighter, int numToChange) {
+		void run(FighterBase fighter, int numToChange) {
 			
 			fighter.setHp( fighter.getHp() + numToChange );
 			
@@ -26,13 +26,13 @@ public enum FighterAttribute {
 	},SP(3) {
 		@Override
 		public
-		void run(BaseFighter fighter, int numToChange) {
+		void run(FighterBase fighter, int numToChange) {
 			fighter.setSp( fighter.getSp() + numToChange );
 			
 		}
 	};
 	
-	public abstract void run( BaseFighter fighter, int numToChange );
+	public abstract void run( FighterBase fighter, int numToChange );
 
 	private final byte number;
 	FighterAttribute( int n ) {

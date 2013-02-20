@@ -1,6 +1,6 @@
 package experiment;
 
-import game.task.BaseTask;
+import game.task.TaskBase;
 import game.task.DirectCountTask;
 
 import java.util.ArrayList;
@@ -18,8 +18,8 @@ import java.util.Map.Entry;
  */
 public class PerfomanceTest {
 
-	private static Map<Short,BaseTask> taskMap = new HashMap<Short,BaseTask>();
-	private static List<BaseTask> 	taskList = new ArrayList<BaseTask>();
+	private static Map<Short,TaskBase> taskMap = new HashMap<Short,TaskBase>();
+	private static List<TaskBase> 	taskList = new ArrayList<TaskBase>();
 	static int count = 10;
 	static void init()
 	{
@@ -40,8 +40,8 @@ public class PerfomanceTest {
 	static void test1(){
 		long begin = System.nanoTime();
 		for( int j = 0; j < 100000; j++ ){
-			for( Entry<Short, BaseTask> e : taskMap.entrySet() ){
-				BaseTask t = e.getValue();
+			for( Entry<Short, TaskBase> e : taskMap.entrySet() ){
+				TaskBase t = e.getValue();
 				int i = 0;
 				if( t.getAcceptAwardSec() == 10 ){
 					i++;
@@ -57,7 +57,7 @@ public class PerfomanceTest {
 	static void test2(){
 		long begin = System.nanoTime();
 		for( int j = 0; j < 100000; j++ ){
-			for( BaseTask t : taskList ){
+			for( TaskBase t : taskList ){
 				int i = 0;
 				if( t.getAcceptAwardSec() == 10 ){
 					i++;

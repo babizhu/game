@@ -1,9 +1,11 @@
 package game.partner;
 
-import java.util.List;
-import java.util.Map;
-
 import game.battle.formation.IFormation;
+import game.prop.PropManager;
+import game.prop.equipment.Equipment;
+
+import java.util.List;
+
 import user.UserInfo;
 import util.ErrorCode;
 
@@ -14,14 +16,17 @@ import util.ErrorCode;
  */
 public class PartnerManager {
 	private final List<PartnerBase>				partners;
-	private final UserInfo						user;
+//	private final UserInfo						user;
+	private final PropManager					propManager;
 	private IFormation							formation;
 	private PartnerDataProvider					db = PartnerDataProvider.getInstance();
 	
 	public PartnerManager(UserInfo user) {
 		super();
-		this.user = user;
+		//this.user = user;
+		propManager = user.getPropManager();
 		partners = db.getAll( user );
+		
 	}
 
 
@@ -31,8 +36,19 @@ public class PartnerManager {
 	 * @param equipmentId
 	 * @return
 	 */
-	ErrorCode dress( short parterId, long equipmentId ){
-		return null;
+	ErrorCode dress( short parterId, long propId ){
+		
+		PartnerBase p = getPartnerById( parterId );
+		if( p == null ){
+			return ErrorCode.PARTNER_NOT_FOUND;
+		}
+		
+		Equipment e = propManager.getEquipmentById(propId);
+		if( e == null ){
+			return ErrorCode.PROP_NOT_FOUNTD;
+		}
+
+		return p.dress( e );
 		
 	}
 	
@@ -55,6 +71,14 @@ public class PartnerManager {
 		
 	}
 
+	PartnerBase getPartnerById( long id ){
+		for( PartnerBase p : partners ){
+			if( p.getId() == id ){
+				return p;
+			}
+		}
+		return null;
+	}
 
 	public IFormation getFormation() {
 		if( formation == null ){

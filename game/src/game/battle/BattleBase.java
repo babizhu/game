@@ -6,6 +6,6 @@ package game.battle;
  * @author liukun
  * 2012-9-27 下午05:51:45
  */
-public abstract class BaseBattle implements IBattle{
+public abstract class BattleBase implements IBattle{
 
 }

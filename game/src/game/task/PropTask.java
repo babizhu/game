@@ -8,7 +8,7 @@ import user.UserInfo;
  * @author liukun
  *
  */
-public class PropTask extends BaseTask {
+public class PropTask extends TaskBase {
 
 	public PropTask( PropTaskTemplet templet) {
 		super( templet );

@@ -35,6 +35,7 @@
 		<templetId>18000</templetId>
 		<propType>EQUIPMENT</propType>
 		<name>五彩头盔</name>
+        <equipmentType>ARMET</equipmentType>
 		<requiredLevel>1</requiredLevel>
 		<stackCap>1</stackCap>
 		<buyBack>3000</buyBack>
@@ -49,7 +50,8 @@
 	<prop>
 		<templetId>19000</templetId>
 		<propType>EQUIPMENT</propType>
-		<name>五彩头盔</name>
+		<name>五彩挂坠</name>
+		 <equipmentType>NECKLACE</equipmentType>
 		<requiredLevel>1</requiredLevel>
 		<stackCap>1</stackCap>
 		<priceOfCash>100</priceOfCash>

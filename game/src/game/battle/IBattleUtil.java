@@ -2,7 +2,7 @@ package game.battle;
 
 import game.battle.auto.AttackInfo;
 import game.battle.formula.Formula;
-import game.fighter.BaseFighter;
+import game.fighter.FighterBase;
 
 import java.util.Comparator;
 
@@ -32,12 +32,12 @@ public interface IBattleUtil {
 	 * @param defender
 	 * @return
 	 */
-	int calcCounterAttackDamage( BaseFighter attacker, BaseFighter defender );
+	int calcCounterAttackDamage( FighterBase attacker, FighterBase defender );
 	
 	/**
 	 * 确定所有参战人员出手顺序的算法
 	 */
-	Comparator<BaseFighter> getOrderComparator();
+	Comparator<FighterBase> getOrderComparator();
 
 	/**
 	 * 根据公式计算伤害值
@@ -47,7 +47,7 @@ public interface IBattleUtil {
 	 * @param arguments
 	 * @return
 	 */
-	AttackInfo calcAttackInfo( BaseFighter attacker, BaseFighter defender,	Formula formula, float[] arguments );
+	AttackInfo calcAttackInfo( FighterBase attacker, FighterBase defender,	Formula formula, float[] arguments );
 
 
 	

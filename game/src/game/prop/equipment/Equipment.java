@@ -1,30 +1,34 @@
 package game.prop.equipment;
 
+import game.prop.Gem;
+import game.prop.ICalculateAddtion;
+import game.prop.PropBase;
+import game.prop.templet.EquipmentTemplet;
+import game.prop.templet.PropTempletBase;
+
 import java.util.Arrays;
 
 import util.ErrorCode;
-import game.prop.BaseProp;
-import game.prop.Gem;
-import game.prop.templet.BasePropTemplet;
 
 
 /**
- * 装备类
+ * 通常指可穿戴或配置的装备类，并且必须在相应位置出现的，比如刀只能放在武器的位置上
  * @author liukun
  * 2013-1-31 下午4:30:31
  */
-public class Equipment extends BaseProp implements IEquipment{
-	private final BasePropTemplet		templet;
+public class Equipment extends PropBase implements IEquipment, ICalculateAddtion{
+	private final EquipmentTemplet		templet;
 	private long						id;
 	private short						level = 1;
 	private Gem[]						gems = new Gem[0];
 	
-	public Equipment(BasePropTemplet templet ) {
+	
+	public Equipment(PropTempletBase templet ) {
 		super();
-		this.templet = templet;
+		this.templet = (EquipmentTemplet) templet;
 	}
 
-	public BasePropTemplet getTemplet() {
+	public EquipmentTemplet getTemplet() {
 		return templet;
 	}
 
@@ -85,5 +89,19 @@ public class Equipment extends BaseProp implements IEquipment{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void buildContent() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void calcAddtion() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 	
 }

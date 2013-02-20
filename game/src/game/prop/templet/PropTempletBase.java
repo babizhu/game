@@ -1,10 +1,12 @@
 package game.prop.templet;
 
 
+import game.prop.enums.PropType;
+
 import org.jdom2.Element;
 
 
-public abstract class BasePropTemplet {
+public abstract class PropTempletBase {
 	
 	/**
 	 * 道具模版id
@@ -143,6 +145,8 @@ public abstract class BasePropTemplet {
 	 * 判断此道具是否属于装备类（有唯一ID，不能叠加）
 	 * @return
 	 */
-	public abstract boolean isEquipment();
+	public abstract PropType getType();
+
+	
 
 }

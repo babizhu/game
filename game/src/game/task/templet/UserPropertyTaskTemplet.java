@@ -1,6 +1,6 @@
 package game.task.templet;
 
-import game.task.BaseTask;
+import game.task.TaskBase;
 import game.task.UserPropertyTask;
 import game.task.enums.TaskType;
 
@@ -22,7 +22,7 @@ public class UserPropertyTaskTemplet extends BaseTaskTemplet{
 	}
 
 	@Override
-	public BaseTask createTask() {
+	public TaskBase createTask() {
 		return new UserPropertyTask( this );
 	}
 	

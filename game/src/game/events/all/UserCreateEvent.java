@@ -3,7 +3,7 @@
  */
 package game.events.all;
 
-import game.events.BaseEvent;
+import game.events.EventBase;
 import game.events.EventDescrip;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ import util.ErrorCode;
 
 @EventDescrip(desc = "创建新玩家", structure = "")
 
-public class UserCreateEvent extends BaseEvent {
+public class UserCreateEvent extends EventBase {
 
 	@Override
 	public void run(UserInfo user, ByteBuffer buf) throws IOException {
@@ -31,8 +31,8 @@ public class UserCreateEvent extends BaseEvent {
 	}
 
 	public void run( INonBlockingConnection con, ByteBuffer buf ) throws IOException {
-		String name = util.BaseUtil.decodeString( buf );		//用户名
-		String nickName = util.BaseUtil.decodeString( buf );	//昵称
+		String name = util.UtilBase.decodeString( buf );		//用户名
+		String nickName = util.UtilBase.decodeString( buf );	//昵称
 		byte sex = buf.get();									//性别
 
 		UserInfo user = new UserInfo(con, name, nickName, sex );

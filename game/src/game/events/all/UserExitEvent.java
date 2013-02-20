@@ -8,7 +8,7 @@ import user.UserInfo;
 import game.events.*;
 
 @EventDescrip(desc = "玩家退出包")
-public class UserExitEvent extends BaseEvent {
+public class UserExitEvent extends EventBase {
 
 
 	@Override

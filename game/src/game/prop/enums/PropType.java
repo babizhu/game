@@ -15,7 +15,7 @@ public enum PropType {
 	 */
 	STUFF {
 		@Override
-		public BasePropTemplet create() {
+		public PropTempletBase create() {
 			return new StuffTemplet();
 		}
 	},
@@ -44,5 +44,5 @@ public enum PropType {
 	/**
 	 * @return
 	 */
-	public abstract BasePropTemplet create();
+	public abstract PropTempletBase create();
 }

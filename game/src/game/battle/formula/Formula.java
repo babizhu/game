@@ -1,7 +1,7 @@
 package game.battle.formula;
 
 import util.RandomUtil;
-import game.fighter.BaseFighter;
+import game.fighter.FighterBase;
 
 public enum Formula {
 	/**
@@ -11,7 +11,7 @@ public enum Formula {
 	NormalAttackFormula {
 		@Override
 		public
-		int run(BaseFighter attacker, BaseFighter defender, float[] arguments) {
+		int run(FighterBase attacker, FighterBase defender, float[] arguments) {
 			int r = RandomUtil.getRandomInt( 0, 40 );//伤害波动值，要求在-20~+20之间
 			r -= 20;
 			r = 0;//取消随机对测试的影响
@@ -30,7 +30,7 @@ public enum Formula {
 	SkillAttackFormula {
 		@Override
 		public
-		int run(BaseFighter attacker, BaseFighter defender, float[] arguments) {
+		int run(FighterBase attacker, FighterBase defender, float[] arguments) {
 			int r = RandomUtil.getRandomInt( 0, 40 );//伤害波动值，要求在-20~+20之间
 			r -= 20;
 			r = 0;//取消随机对测试的影响
@@ -51,7 +51,7 @@ public enum Formula {
 	HpFormula{
 
 		@Override
-		public int run( BaseFighter attacker, BaseFighter defender, float[] arguments ) {
+		public int run( FighterBase attacker, FighterBase defender, float[] arguments ) {
 			if( arguments[0] == 1 ){
 				return (int) (attacker.getHpMax() * arguments[1]);
 			}
@@ -66,12 +66,12 @@ public enum Formula {
 	DirectOutputFormula{
 
 		@Override
-		public int run(BaseFighter attacker, BaseFighter defender, float[] arguments) {
+		public int run(FighterBase attacker, FighterBase defender, float[] arguments) {
 			return (int) arguments[0];
 		}
 		
 	};
-	public abstract int run( BaseFighter attacker, BaseFighter defender, float[] arguments );
+	public abstract int run( FighterBase attacker, FighterBase defender, float[] arguments );
 	
 
 }

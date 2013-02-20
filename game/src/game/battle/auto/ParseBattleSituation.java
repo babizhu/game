@@ -3,7 +3,7 @@ package game.battle.auto;
 import game.battle.AttackType;
 import game.battle.formation.IFormation;
 import game.battle.skill.cfg.SkillTempletCfg;
-import game.fighter.BaseFighter;
+import game.fighter.FighterBase;
 import game.fighter.FighterAttribute;
 
 import java.nio.ByteBuffer;
@@ -17,7 +17,7 @@ public class ParseBattleSituation {
 	//BattleSituation 		situation;
 	ByteBuffer 				data;
 	
-	private IFormation getFriend( BaseFighter fighter ){
+	private IFormation getFriend( FighterBase fighter ){
 		return fighter.isLeft() ? attackers : defenders;
 	}
 	public ParseBattleSituation( IFormation aFormation, IFormation dFormation, BattleSituation situation ) {
@@ -28,13 +28,13 @@ public class ParseBattleSituation {
 		data.flip();
 	}
 
-	private BaseFighter getFighterByPos( byte pos ){
-		for( BaseFighter f : attackers.getAllFighters() ){
+	private FighterBase getFighterByPos( byte pos ){
+		for( FighterBase f : attackers.getAllFighters() ){
 			if( f.getPosition() == pos ){
 				return f;
 			}
 		}
-		for( BaseFighter f : defenders.getAllFighters() ){
+		for( FighterBase f : defenders.getAllFighters() ){
 			if( f.getPosition() == pos ){
 				return f;
 			}
@@ -45,7 +45,7 @@ public class ParseBattleSituation {
 	 * 解析战况信息
 	 */
 	public void parse( ) {
-		List<BaseFighter> all = new ArrayList<BaseFighter>();
+		List<FighterBase> all = new ArrayList<FighterBase>();
 		all.addAll( attackers.getAllFighters() );
 		all.addAll( defenders.getAllFighters() );
 		
@@ -92,7 +92,7 @@ public class ParseBattleSituation {
 		for( int i = 0; i < count; i++ ){
 			byte defenderPos = data.get();
 			output += defenderPos + "\t";
-			BaseFighter defender = getFighterByPos( defenderPos );
+			FighterBase defender = getFighterByPos( defenderPos );
 			byte effectCount = data.get();
 			boolean isHit = true;
 			for( int n = 0; n < effectCount; n++ ){
@@ -146,8 +146,8 @@ public class ParseBattleSituation {
 				+ damage + "\t" + counterAttackDamage );
 		
 		
-		BaseFighter attacker = getFighterByPos(attackerPos);
-		BaseFighter defender = getFighterByPos(defenderPos);		
+		FighterBase attacker = getFighterByPos(attackerPos);
+		FighterBase defender = getFighterByPos(defenderPos);		
 		if( info.isHit() ){
 			attacker.setSp( attacker.getSp() + AutoBattle.SP_TO_ADD );
 			if( info.getDamage() > 1 ){//防止不死之身之类的技能长久不结束

@@ -2,7 +2,7 @@ package game.shop;
 
 import game.award.AwardContent;
 import game.prop.cfg.PropTempletCfg;
-import game.prop.templet.BasePropTemplet;
+import game.prop.templet.PropTempletBase;
 import user.UserInfo;
 import util.ErrorCode;
 
@@ -22,7 +22,7 @@ public class ShopManager {
 	 * @return
 	 */
 	ErrorCode buy( UserInfo user, short templetId, short count, AwardContent buyType ){
-		BasePropTemplet t = PropTempletCfg.getTempletById( templetId );
+		PropTempletBase t = PropTempletCfg.getTempletById( templetId );
 		if( t == null ){
 			return ErrorCode.PROP_NOT_ENOUGH;
 		}

@@ -3,7 +3,7 @@
  */
 package game.events.all.task;
 
-import game.events.BaseEvent;
+import game.events.EventBase;
 import game.events.EventDescrip;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ import util.ErrorCode;
  */
 
 @EventDescrip(desc = "玩家完成任务后发送的领奖包")
-public class TaskAcceptAwardEvent  extends BaseEvent {
+public class TaskAcceptAwardEvent  extends EventBase {
 
 	/* (non-Javadoc)
 	 * @see game.packages.BasePackage#run(user.UserInfo, java.nio.ByteBuffer)

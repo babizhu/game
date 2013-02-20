@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
 
-import util.BaseUtil;
+import util.UtilBase;
 import util.ErrorCode;
 
 /**
@@ -454,8 +454,8 @@ public class UserInfo {
 		return "UserInfo[name=" + name + ", conn=" + connStr 
 				+ ", status=" + status + ", money=" + cash + ", strength="
 				+ strength + ", nickName=" + nickName
-				+ ", level=" + level + ", createTime=" + BaseUtil.secondsToDateStr( createTime )
-				+ ", lastLogoutTime=" + BaseUtil.secondsToDateStr( lastLogoutTime ) + ", loginCount="
+				+ ", level=" + level + ", createTime=" + UtilBase.secondsToDateStr( createTime )
+				+ ", lastLogoutTime=" + UtilBase.secondsToDateStr( lastLogoutTime ) + ", loginCount="
 				+ loginCount + ", sex=" + sex + ", isAdult=" + isAdult + "]";
 	}
 

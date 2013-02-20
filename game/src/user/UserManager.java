@@ -164,7 +164,7 @@ public class UserManager {
 	 */
 	public ErrorCode login( INonBlockingConnection con, ByteBuffer buf ) throws IOException {
 		
-		String name = util.BaseUtil.decodeString( buf );
+		String name = util.UtilBase.decodeString( buf );
 
 		UserInfo user = getUserByName( name );
 		if( user == null ){

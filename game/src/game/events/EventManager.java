@@ -55,9 +55,9 @@ public enum EventManager {
 	DEAD_LOCK_TEST						( 30000, 	new DeadLockTestEvent() ); 
 		
 	private final short 			number;
-	private final BaseEvent 		eventInstance;
+	private final EventBase 		eventInstance;
 	
-	EventManager( int value, BaseEvent eventInstance ) {
+	EventManager( int value, EventBase eventInstance ) {
 		if( value >= Short.MAX_VALUE || value < 0 ){
 			throw new IllegalArgumentException( "包号不符合规范：" + value );
 		}
@@ -77,7 +77,7 @@ public enum EventManager {
 		}
 	}
 	
-	public BaseEvent getEventInstance() {
+	public EventBase getEventInstance() {
 		return eventInstance;
 	}
 	public short toNum() {

@@ -1,5 +1,8 @@
 package game.prop.templet;
 
+import game.prop.enums.PropType;
+import game.prop.equipment.EquipmentType;
+
 import org.jdom2.Element;
 
 /***
@@ -7,19 +10,21 @@ import org.jdom2.Element;
  * @author liukun
  * 2012-10-12 下午12:10:54
  */
-public class EquipmentTemplet extends BasePropTemplet{
+public class EquipmentTemplet extends PropTempletBase{
 
 	/**
 	 * 每升一级的强化数值
 	 */
-	private int			upNum;
+	private int					upNum;
+	
+	private EquipmentType		equipmentType;
 	
 	public int getUpNum() {
 		return upNum;
 	}
 
-	public void setUpNum(int upNum) {
-		this.upNum = upNum;
+	public EquipmentType getEquipmentType() {
+		return equipmentType;
 	}
 
 	/* (non-Javadoc)
@@ -29,7 +34,8 @@ public class EquipmentTemplet extends BasePropTemplet{
 	public void parse(Element element) {
 		super.parse( element );
 		
-		setUpNum( Integer.parseInt( element.getChildText( "upNum" ) ) );
+		upNum = Integer.parseInt( element.getChildText( "upNum" ) );
+		equipmentType = EquipmentType.valueOf( element.getChildText( "equipmentType" ) );
 	}
 
 	@Override
@@ -40,10 +46,7 @@ public class EquipmentTemplet extends BasePropTemplet{
 	}
 
 	@Override
-	public boolean isEquipment() {
-		// TODO Auto-generated method stub
-		return true;
-
-	}
-	
+	public PropType getType() {
+		return PropType.EQUIPMENT;
+	}	
 }

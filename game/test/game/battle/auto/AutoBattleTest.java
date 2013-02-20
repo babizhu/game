@@ -1,7 +1,7 @@
 package game.battle.auto;
 
 import game.battle.formation.IFormation;
-import game.fighter.BaseFighter;
+import game.fighter.FighterBase;
 import game.fighter.cfg.NpcFighterTempletCfg;
 import game.mission.cfg.MissionTempletCfg;
 
@@ -20,8 +20,8 @@ public class AutoBattleTest {
 	IFormation dFormation;
 	
 	void init(){
-		List<BaseFighter> attackers = new ArrayList<BaseFighter>();		
-		BaseFighter fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 1 );
+		List<FighterBase> attackers = new ArrayList<FighterBase>();		
+		FighterBase fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 1 );
 		attackers.add( fighter );
 		fighter = NpcFighterTempletCfg.getNpcCloneById( (short) 2 );
 		fighter.setPosition( (byte) 3 );

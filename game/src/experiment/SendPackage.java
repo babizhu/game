@@ -1,13 +1,13 @@
 package experiment;
 
-import game.events.BaseEvent;
+import game.events.EventBase;
 import game.events.EventManager;
 
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
-import util.BaseUtil;
+import util.UtilBase;
 
 /**
  * 
@@ -19,7 +19,7 @@ public class SendPackage {
 	ByteBuffer login(){
 		String name = "bbzs";
 		ByteBuffer data = ByteBuffer.allocate( 10 );
-		BaseUtil.encodeString(data, name );
+		UtilBase.encodeString(data, name );
 		data.putInt(2);
 		data.flip();
 		return data;
@@ -38,11 +38,11 @@ public class SendPackage {
 		}
 		pack = ByteBuffer.allocate( 6 + data.limit() );//6 for 1(HEAD) + 2(PACKAGE NO) + 2(PACKAGE LEN) + 1(FOOT) = 6
 		
-		pack.put( BaseEvent.HEAD );
+		pack.put( EventBase.HEAD );
 		pack.putShort( packageNo );
 		pack.putShort( (short) data.limit() );
 		pack.put( data );
-		pack.put( BaseEvent.FOOT );
+		pack.put( EventBase.FOOT );
 		pack.flip();
 		
 		return pack;

@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
 import org.xsocket.connection.BlockingConnection;
 import org.xsocket.connection.IBlockingConnection;
 
-import util.BaseUtil;
+import util.UtilBase;
 import util.ErrorCode;
 import define.SystemCfg;
 
@@ -28,8 +28,8 @@ public class CUserCreateEventTest extends BaseEventTest {
 	 */
 	public ByteBuffer createContent( String name, String nickName ){
 		ByteBuffer buf = createEmptyEvent( 1024 );
-		BaseUtil.encodeString( buf, name );					//用户名
-		BaseUtil.encodeString( buf, nickName );				//昵称
+		UtilBase.encodeString( buf, name );					//用户名
+		UtilBase.encodeString( buf, nickName );				//昵称
 		buf.put( (byte) 1 );								//性别
 		return buf;
 	}

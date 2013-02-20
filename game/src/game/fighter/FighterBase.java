@@ -3,7 +3,7 @@ package game.fighter;
 import game.battle.auto.buff.BuffManager;
 import game.battle.skill.SkillTemplet;
 
-public class BaseFighter implements IFighter {
+public class FighterBase implements IFighter {
 
 	/**
 	 * 名字
@@ -122,7 +122,7 @@ public class BaseFighter implements IFighter {
 	 * 拷贝构造函数，通常用于战斗前的准备工作
 	 * @param f
 	 */
-	public BaseFighter( BaseFighter f ) {
+	public FighterBase( FighterBase f ) {
 		position = f.position;
 		level = f.level;
 		hp = f.hp;
@@ -145,7 +145,7 @@ public class BaseFighter implements IFighter {
 
 	}
 
-	public BaseFighter() {
+	public FighterBase() {
 	}
 
 ////	@Override

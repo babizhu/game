@@ -3,7 +3,7 @@ package game.battle.auto;
 import game.battle.Pet;
 import game.battle.formation.ChooseFighters;
 import game.battle.formation.IFormation;
-import game.fighter.BaseFighter;
+import game.fighter.FighterBase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,15 +18,15 @@ public class Formation9 implements IFormation{
 	private static final byte				TOTAL_COUNT = 9;
 	private static final int 				COUNT_PER_ROW = 3;
 	
-	private List<BaseFighter> 				fighters;
+	private List<FighterBase> 				fighters;
 	private Pet								pet;
 
 	/**
 	 * 按照位置从低到高进行排序，否则计算被攻击战士的时候可能出错
 	 */
-	public static final Comparator<BaseFighter> posComparator = new Comparator<BaseFighter>(){
+	public static final Comparator<FighterBase> posComparator = new Comparator<FighterBase>(){
 		@Override
-		public int compare( BaseFighter f1, BaseFighter f2 ) {
+		public int compare( FighterBase f1, FighterBase f2 ) {
 			return f1.getPosition() - f2.getPosition();
 		}
 	};
@@ -38,10 +38,10 @@ public class Formation9 implements IFormation{
 	 * @return
 	 */
 	public Formation9( IFormation formation ){
-		List<BaseFighter> oldList = formation.getAllFighters();
-		List<BaseFighter> clonesList = new ArrayList<BaseFighter>();
-		for( BaseFighter bf : oldList ){
-			BaseFighter clone = new BaseFighter( bf );
+		List<FighterBase> oldList = formation.getAllFighters();
+		List<FighterBase> clonesList = new ArrayList<FighterBase>();
+		for( FighterBase bf : oldList ){
+			FighterBase clone = new FighterBase( bf );
 			clonesList.add( clone );
 		}
 		
@@ -56,7 +56,7 @@ public class Formation9 implements IFormation{
 	 * 
 	 *	如有必要，请在调用处对 fightersList 进行克隆处理
 	 */
-	public Formation9( List<BaseFighter> fightersList, boolean isLeft, Pet pet ) {
+	public Formation9( List<FighterBase> fightersList, boolean isLeft, Pet pet ) {
 		if( fightersList == null || fightersList.size() == 0 ){
 			throw new IllegalArgumentException( (isLeft == true ? "攻方" : "守方") + "战士列表为空或者数量为0" );
 		}
@@ -70,7 +70,7 @@ public class Formation9 implements IFormation{
 		
 		fighters = fightersList;
 		if( !isLeft ){
-			for( BaseFighter bf : fighters ){
+			for( FighterBase bf : fighters ){
 				formatForDefender( bf );
 			}
 			//由于存在镜面翻转，这里需要重新排序
@@ -94,7 +94,7 @@ public class Formation9 implements IFormation{
 	 * 重新按照位置信息排序<br>
 	 * 这个代码就应该在这里执行，而不应该放到BaseBattle中，因为这个是和阵型密切相关的
 	 */
-	private void formatForDefender( BaseFighter fighter ){
+	private void formatForDefender( FighterBase fighter ){
 		fighter.setPosition( (byte) (fighter.getPosition() + TOTAL_COUNT) );
 		byte position = fighter.getPosition();
 		if( position % COUNT_PER_ROW == 0 ){
@@ -112,7 +112,7 @@ public class Formation9 implements IFormation{
 	 * @return
 	 */
 	public boolean isAllDie(){
-		for( BaseFighter f : fighters ){
+		for( FighterBase f : fighters ){
 			if( !f.isDie() ){
 				return false;
 			}
@@ -121,9 +121,9 @@ public class Formation9 implements IFormation{
 	}
 
 	@Override
-	public List<BaseFighter> getAllFighters() {
-		List<BaseFighter> ret = new ArrayList<BaseFighter>();
-		for( BaseFighter f : fighters ){
+	public List<FighterBase> getAllFighters() {
+		List<FighterBase> ret = new ArrayList<FighterBase>();
+		for( FighterBase f : fighters ){
 			if( !f.isDie() ){
 				ret.add( f );
 				
@@ -133,9 +133,9 @@ public class Formation9 implements IFormation{
 	}
 	
 	@Override
-	public BaseFighter getBaseDefender( BaseFighter attacker ) {
+	public FighterBase getBaseDefender( FighterBase attacker ) {
 		boolean defenderIsLeft = !attacker.isLeft(); 
-		List<BaseFighter> rowList = null;
+		List<FighterBase> rowList = null;
 		int row = getRow( attacker.getPosition() );
 		int[] rows = getAttackSequenceRow( row );
 		for( int i : rows ){
@@ -158,8 +158,8 @@ public class Formation9 implements IFormation{
 	 * @param row
 	 * @return
 	 */
-	private List<BaseFighter> getFightersByRow( BaseFighter attacker ) {
-		BaseFighter defender = getBaseDefender( attacker );
+	private List<FighterBase> getFightersByRow( FighterBase attacker ) {
+		FighterBase defender = getBaseDefender( attacker );
 		int row = getRow( defender.getPosition() );
 		return getFightersByRow( row );
 	}
@@ -169,9 +169,9 @@ public class Formation9 implements IFormation{
 	 * @param row
 	 * @return
 	 */
-	private List<BaseFighter> getFightersByRow( int row ) {
-		List<BaseFighter> ret = new ArrayList<BaseFighter>();
-		for( BaseFighter f : fighters ){
+	private List<FighterBase> getFightersByRow( int row ) {
+		List<FighterBase> ret = new ArrayList<FighterBase>();
+		for( FighterBase f : fighters ){
 			if( !f.isDie() && getRow( f.getPosition() ) == row ){
 				ret.add( f );
 				
@@ -185,8 +185,8 @@ public class Formation9 implements IFormation{
 	 * @param fighter
 	 * @return
 	 */
-	private List<BaseFighter> getFightersBySelf( BaseFighter fighter ) {
-		List<BaseFighter> ret = new ArrayList<BaseFighter>();
+	private List<FighterBase> getFightersBySelf( FighterBase fighter ) {
+		List<FighterBase> ret = new ArrayList<FighterBase>();
 		ret.add( fighter );
 		return ret;
 	}
@@ -196,8 +196,8 @@ public class Formation9 implements IFormation{
 	 * @param attacker
 	 * @return
 	 */
-	private List<BaseFighter> getFightersByNormal(BaseFighter attacker) {
-		List<BaseFighter> ret = new ArrayList<BaseFighter>();
+	private List<FighterBase> getFightersByNormal(FighterBase attacker) {
+		List<FighterBase> ret = new ArrayList<FighterBase>();
 		ret.add( getBaseDefender( attacker ) );
 		return ret;
 	}
@@ -206,10 +206,10 @@ public class Formation9 implements IFormation{
 	 * 找出血量最少的战士
 	 * @return
 	 */
-	private List<BaseFighter> getFighterByMinHp() {
-		List<BaseFighter> ret = new ArrayList<BaseFighter>();
-		BaseFighter minHp = null;
-		for( BaseFighter f : fighters ){
+	private List<FighterBase> getFighterByMinHp() {
+		List<FighterBase> ret = new ArrayList<FighterBase>();
+		FighterBase minHp = null;
+		for( FighterBase f : fighters ){
 			if( f.getHp() > 0 ){
 				if( minHp == null ){
 					minHp = f;
@@ -261,7 +261,7 @@ public class Formation9 implements IFormation{
 	}
 	
 	@Override
-	public List<BaseFighter> getFighterOnEffect( BaseFighter attacker, ChooseFighters type ) {
+	public List<FighterBase> getFighterOnEffect( FighterBase attacker, ChooseFighters type ) {
 		if( type == null ){
 			return null;
 		}
@@ -288,7 +288,7 @@ public class Formation9 implements IFormation{
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder( "{" );
-		for( BaseFighter f : fighters ){
+		for( FighterBase f : fighters ){
 			sb.append( f.toSimpleString() );
 			sb.append( "|" );
 		}
@@ -297,8 +297,8 @@ public class Formation9 implements IFormation{
 	}
 
 	public static void main(String[] args) {
-		BaseFighter f = new BaseFighter();
-		List<BaseFighter> fighters = new ArrayList<BaseFighter>();
+		FighterBase f = new FighterBase();
+		List<FighterBase> fighters = new ArrayList<FighterBase>();
 		fighters.add( f );
 		Formation9 ff = new Formation9(fighters, false, null);
 		System.out.println( ff.getFighterOnEffect( null, null ));

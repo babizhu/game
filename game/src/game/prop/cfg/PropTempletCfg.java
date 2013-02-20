@@ -1,7 +1,7 @@
 package game.prop.cfg;
 
 import game.prop.enums.PropType;
-import game.prop.templet.BasePropTemplet;
+import game.prop.templet.PropTempletBase;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class PropTempletCfg {
 	/**
 	 * short for templetId
 	 */
-	private static final Map<Short,BasePropTemplet> propTemplets = new HashMap<Short,BasePropTemplet>();
+	private static final Map<Short,PropTempletBase> propTemplets = new HashMap<Short,PropTempletBase>();
 	private static final String FILE = "resource/prop.xml";
 	static{
 		//init();		
@@ -46,14 +46,14 @@ public class PropTempletCfg {
 				Element element = (Element) taskList.get( i );
 				//System.out.println( element.getChildText( "name" ) );
 				PropType type = PropType.valueOf( element.getChildText( "propType" ) );
-				BasePropTemplet templet = type.create();
+				PropTempletBase templet = type.create();
 				templet.parse( element );
 				
 				/*******************关闭打印****************************
 							System.out.println( templet );
 				********************************************************/
 				
-				BasePropTemplet bpt = propTemplets.put( templet.getTempletId(), templet );
+				PropTempletBase bpt = propTemplets.put( templet.getTempletId(), templet );
 				if( bpt != null ){
 					throw new RuntimeException( "道具" + templet.getTempletId() + "重复了" );
 				}
@@ -73,7 +73,7 @@ public class PropTempletCfg {
 	 * @param templetId
 	 * @return
 	 */
-	public static BasePropTemplet getTempletById( short templetId ){
+	public static PropTempletBase getTempletById( short templetId ){
 		return propTemplets.get( templetId );
 	}
 	

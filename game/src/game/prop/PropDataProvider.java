@@ -3,7 +3,7 @@ package game.prop;
 
 import game.prop.cfg.PropTempletCfg;
 import game.prop.equipment.Equipment;
-import game.prop.templet.BasePropTemplet;
+import game.prop.templet.PropTempletBase;
 import game.util.GameUtil;
 
 import java.sql.Connection;
@@ -216,7 +216,7 @@ public class PropDataProvider {
 	}
 	 
 	private Equipment mappingEquipment( ResultSet rs ) throws SQLException {
-		BasePropTemplet templet = PropTempletCfg.getTempletById( rs.getShort("templet_id") );
+		PropTempletBase templet = PropTempletCfg.getTempletById( rs.getShort("templet_id") );
 		Equipment equipment  = new Equipment( templet );
 		
 		equipment.setId( rs.getLong( "id" ) );

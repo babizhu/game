@@ -1,8 +1,8 @@
 package game.battle.auto.buff;
 
-import game.battle.BaseBuff;
+import game.battle.BuffBase;
 import game.battle.BuffRunPoint;
-import game.fighter.BaseFighter;
+import game.fighter.FighterBase;
 
 /**
  * 头晕目眩
@@ -11,11 +11,11 @@ import game.fighter.BaseFighter;
  * @author liukun
  * 2012-11-1 上午11:01:24
  */
-public class B004 extends BaseBuff {
+public class B004 extends BuffBase {
 
 	private static final int TURNS = 1;						//持续回合数
 	
-	public B004( BaseFighter fighter ) {
+	public B004( FighterBase fighter ) {
 		super( fighter );
 		duration = TURNS;
 	}

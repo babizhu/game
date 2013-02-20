@@ -4,7 +4,7 @@
 package game.events;
 
 import static org.junit.Assert.*;
-import game.events.BaseEvent;
+import game.events.EventBase;
 import game.events.EventManager;
 import game.events.all.UserLoginEvent;
 
@@ -52,7 +52,7 @@ public class BaseEventTest {
 	}
 
 	/**
-	 * Test method for {@link game.events.BaseEvent#buildEmptyPackage(int)}.
+	 * Test method for {@link game.events.EventBase#buildEmptyPackage(int)}.
 	 */
 	@Test
 	public void testBuildEmptyPackage() {
@@ -60,24 +60,24 @@ public class BaseEventTest {
 		assertEquals( 5, buf.position() );//5 for HEAD(byte) + packageNo(short) + len(short)
 		buf.flip();
 		
-		assertEquals( BaseEvent.HEAD, buf.get() );
+		assertEquals( EventBase.HEAD, buf.get() );
 		assertEquals( event.getEventId(), buf.getShort() );
 		assertEquals( 0, buf.getShort() );
 
 	}
 
 	/**
-	 * Test method for {@link game.events.BaseEvent#toString(java.nio.ByteBuffer)}.
+	 * Test method for {@link game.events.EventBase#toString(java.nio.ByteBuffer)}.
 	 * 测试toString函数不会影响原ByteBuffer的任何属性
 	 */
 	@Test
 	public void testToStringByteBuffer() {
 		ByteBuffer buf = ByteBuffer.allocate( 1024 );
-		buf.put( BaseEvent.HEAD );
+		buf.put( EventBase.HEAD );
 		buf.putShort( EventManager.USER_CREATE.toNum() );
 		buf.putShort( (short) 4 );
 		buf.putInt( 88 );
-		buf.put( BaseEvent.FOOT );
+		buf.put( EventBase.FOOT );
 		
 		int limit = buf.limit();
 		int pos = buf.position();

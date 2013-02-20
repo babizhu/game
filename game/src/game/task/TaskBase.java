@@ -3,7 +3,7 @@ package game.task;
 import game.task.enums.TaskStatus;
 import game.task.templet.BaseTaskTemplet;
 import user.UserInfo;
-import util.BaseUtil;
+import util.UtilBase;
 import util.ErrorCode;
 import util.SystemTimer;
 
@@ -14,7 +14,7 @@ import util.SystemTimer;
  * @author liukun
  * 
  */
-public  class BaseTask implements ITask{
+public  class TaskBase implements ITask{
 	
 	
 	private BaseTaskTemplet	templet;
@@ -48,7 +48,7 @@ public  class BaseTask implements ITask{
 		return status;
 	}
 
-	public BaseTask(BaseTaskTemplet templet) {
+	public TaskBase(BaseTaskTemplet templet) {
 		this.status = TaskStatus.CAN_ACCEPT;
 		this.templet = templet;
 	}
@@ -118,15 +118,15 @@ public  class BaseTask implements ITask{
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " [ templetId=" + templet.getTempletId() + ", acceptSec=" + BaseUtil.secondsToDateStr( acceptSec )
-				+ ", doneSec=" + BaseUtil.secondsToDateStr( doneSec ) + ", acceptAwardSec="
-				+ BaseUtil.secondsToDateStr( acceptAwardSec ) + ", status=" + status + "]";
+		return getClass().getSimpleName() + " [ templetId=" + templet.getTempletId() + ", acceptSec=" + UtilBase.secondsToDateStr( acceptSec )
+				+ ", doneSec=" + UtilBase.secondsToDateStr( doneSec ) + ", acceptAwardSec="
+				+ UtilBase.secondsToDateStr( acceptAwardSec ) + ", status=" + status + "]";
 	}
 	
 	public static void main(String[] args) {
 	}
 
-	void copy( BaseTask t ) {
+	void copy( TaskBase t ) {
 		this.acceptAwardSec = t.acceptAwardSec;
 		this.acceptSec = t.acceptSec;
 		this.doneSec = t.doneSec;

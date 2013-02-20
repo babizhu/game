@@ -1,21 +1,24 @@
 package game.partner;
 
-import game.fighter.BaseFighter;
+import game.fighter.FighterBase;
 import game.prop.equipment.Equipment;
+import game.prop.equipment.EquipmentType;
+import game.prop.templet.EquipmentTemplet;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import user.UserInfo;
+import util.ErrorCode;
 
-public class PartnerBase extends BaseFighter{
+public class PartnerBase extends FighterBase{
 
-	private final PartnerTemplet		templet;
-	private long						id;
-	private String						name;
-	private byte						position;
-	private short						level;
-	private List<Equipment>				equipments = new ArrayList<Equipment>();
+	private final PartnerTemplet			templet;
+	private long							id;
+	private String							name;
+	private byte							position;
+	private short							level;
+	private Map<EquipmentType,Equipment>	equipments = new HashMap<EquipmentType, Equipment>();
 	
 	
 	public PartnerBase( PartnerTemplet templet) {
@@ -60,7 +63,7 @@ public class PartnerBase extends BaseFighter{
 			return "";
 		}
 		StringBuilder sb = new StringBuilder();
-		for( Equipment e : equipments ){
+		for( Equipment e : equipments.values() ){
 			sb.append( e.getId() );
 			sb.append( "," );
 		}
@@ -73,8 +76,31 @@ public class PartnerBase extends BaseFighter{
 			long id = Long.parseLong( s );
 			Equipment equipment = user.getPropManager().getEquipmentById( id );
 			equipment.setInBag( false );
-			equipments.add( equipment );
+			equipments.put( equipment.getTemplet().getEquipmentType(), equipment );
 		}		
+	}
+	
+	/**
+	 * 如果存在旧装备，那么应该把此装备放入背包，这样的话如何与客户端通信呢，解决方法一般为：
+	 * 1、主动刷新整个背包	：浪费资源
+	 * 2、告知背包某个物品进入了背包：实现难度太高
+	 * 
+	 * @param newEquipment
+	 * @return
+	 */
+	public ErrorCode dress( Equipment newEquipment ){
+		EquipmentTemplet t = (EquipmentTemplet) newEquipment.getTemplet();
+		if( getLevel() < t.getRequiredLevel() ){
+			return ErrorCode.PARTNER_LEVEL_NOT_ENOUGH;
+		}
+		
+		Equipment old = equipments.get( t.getEquipmentType() );
+		if( old != null ){
+			old.setInBag( true );			
+		}
+		
+		equipments.put( t.getEquipmentType(), newEquipment );
+		return ErrorCode.SUCCESS;
 	}
 	
 }

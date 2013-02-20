@@ -10,7 +10,7 @@ import user.UserInfo;
  * @author liukun
  * 2012-9-21 下午05:24:52
  */
-public class DirectTask extends BaseTask {
+public class DirectTask extends TaskBase {
 
 	
 	public DirectTask( DirectTaskTemplet templet ) {

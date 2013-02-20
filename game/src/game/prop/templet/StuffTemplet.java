@@ -1,8 +1,10 @@
 package game.prop.templet;
 
+import game.prop.enums.PropType;
+
 import org.jdom2.Element;
 
-public class StuffTemplet extends BasePropTemplet {
+public class StuffTemplet extends PropTempletBase {
 
 	@Override
 	public void parse(Element element) {
@@ -10,9 +12,8 @@ public class StuffTemplet extends BasePropTemplet {
 	}
 
 	@Override
-	public boolean isEquipment() {
-		return false;
+	public PropType getType() {
+		return PropType.STUFF;
 	}
-
 
 }

@@ -12,7 +12,7 @@ import user.UserInfo;
  * @author admin
  * 2012-9-21 下午12:01:33
  */
-public class DirectCountTask extends BaseTask {
+public class DirectCountTask extends TaskBase {
 
 	
 	/**
@@ -64,12 +64,12 @@ public class DirectCountTask extends BaseTask {
 	public static void main(String[] args) {
 		DirectCountTask t = new DirectCountTask(null);
 		Object ot = t;
-		BaseTask bt = (BaseTask) ot;
+		TaskBase bt = (TaskBase) ot;
 		System.out.println( t.getParam() );
 		System.out.println( bt.getParam() );
 	}
 	
-	public void copy( BaseTask t ) {
+	public void copy( TaskBase t ) {
 		super.copy(t);
 		this.count =(Integer) t.getParam();
 	}

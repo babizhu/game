@@ -13,19 +13,19 @@ public class BaseUtilTest {
 	@Test
 	public void testDecodeString() {
 		ByteBuffer buf = ByteBuffer.allocate(100);
-		BaseUtil.encodeString(buf, "content中文");
+		UtilBase.encodeString(buf, "content中文");
 		buf.flip();
-		assertEquals( "content中文", BaseUtil.decodeString( buf ) );
+		assertEquals( "content中文", UtilBase.decodeString( buf ) );
 		
 		buf.flip();
 		buf.putShort( (short) 10000 );
 		buf.flip();
-		BaseUtil.decodeString(buf);
+		UtilBase.decodeString(buf);
 	}
 
 	@Test
 	public void testIsWindowsOS() {
-		assertEquals( true, BaseUtil.isWindowsOS() );
+		assertEquals( true, UtilBase.isWindowsOS() );
 	}
 
 }

@@ -1,7 +1,7 @@
 package game.battle.auto;
 
 import game.battle.AttackType;
-import game.fighter.BaseFighter;
+import game.fighter.FighterBase;
 import game.fighter.FighterAttribute;
 
 import java.nio.ByteBuffer;
@@ -27,7 +27,7 @@ public class BattleSituation {
 	 * @param defender
 	 * @param info
 	 */
-	public void putNormalAttack( BaseFighter attacker, BaseFighter defender, AttackInfo info ) {
+	public void putNormalAttack( FighterBase attacker, FighterBase defender, AttackInfo info ) {
 		situation.put( AttackType.NORMAL_ATTACK.toNumber() ).put( attacker.getPosition() ).put( defender.getPosition() );
 		put( info );
 		
@@ -57,7 +57,7 @@ public class BattleSituation {
 	 * @param attacker
 	 * @param skillId
 	 */
-	public void putSkillAttackPrefix( BaseFighter attacker, byte skillId, byte count ) {
+	public void putSkillAttackPrefix( FighterBase attacker, byte skillId, byte count ) {
 		situation.put( AttackType.SKILL_ATTACK.toNumber() ).put( attacker.getPosition() ).put( skillId ).put( count );
 	}
 

@@ -3,9 +3,9 @@
  */
 package game.events.all.task;
 
-import game.events.BaseEvent;
+import game.events.EventBase;
 import game.events.EventDescrip;
-import game.task.BaseTask;
+import game.task.TaskBase;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -20,17 +20,17 @@ import user.UserInfo;
  */
 
 @EventDescrip(desc = "获取玩家的所有活动任务")
-public class TaskGetAllActiveEvent  extends BaseEvent {
+public class TaskGetAllActiveEvent  extends EventBase {
 
 	/* (non-Javadoc)
 	 * @see game.packages.BasePackage#run(user.UserInfo, java.nio.ByteBuffer)
 	 */
 	@Override
 	public void run(UserInfo user, ByteBuffer buf) throws IOException {
-		Map<Short,BaseTask> activeTasks = user.getTaskManager().getAllActiveTasksCopy();
+		Map<Short,TaskBase> activeTasks = user.getTaskManager().getAllActiveTasksCopy();
 		ByteBuffer buffer = buildEmptyPackage( 1024 );
 		buffer.put( (byte) activeTasks.size() );
-		for( BaseTask t : activeTasks.values() ){
+		for( TaskBase t : activeTasks.values() ){
 			TaskGetEvent.buildTaskBytes( t, buffer );	
 		}
 		

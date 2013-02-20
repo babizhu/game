@@ -14,5 +14,6 @@ public interface IEquipment{
 	 * @return
 	 */
 	ErrorCode levelUp();
+	
 
 }

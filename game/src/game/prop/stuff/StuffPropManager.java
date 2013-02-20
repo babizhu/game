@@ -5,7 +5,7 @@ import game.prop.IpropManager;
 import game.prop.PropDataProvider;
 import game.prop.PropUnit;
 import game.prop.cfg.PropTempletCfg;
-import game.prop.templet.BasePropTemplet;
+import game.prop.templet.PropTempletBase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,21 +31,22 @@ public class StuffPropManager implements IpropManager  {
 
 	@Override	
 	/**
-	 * 计算所需的格子
+	 * 计算为了加入此材料额外所需的格子
 	 * @param unit
 	 * @return
 	 */
 	public int calcNeedGridCount( PropUnit unit ){
-		Integer count = stuffs.get( unit.getTemplet().getTempletId() );
+		short templetId = unit.getTemplet().getTempletId();
+		Integer count = stuffs.get( templetId );
 		int needGrid = 0;
+		int stackCapacity = unit.getTemplet().getStackCapacity();
 		if( count != null ){
-			int stackCapacity = unit.getTemplet().getStackCapacity();
 			int oldGrid = (int) Math.ceil( (float)count / stackCapacity );
 			int newGrid = (int) Math.ceil( (float)(count+unit.getCount()) / stackCapacity );
 			needGrid = newGrid - oldGrid;
 		}
 		else{
-			needGrid = (int) Math.ceil( (float)unit.getCount() / unit.getTemplet().getStackCapacity() );
+			needGrid = (int) Math.ceil( (float)unit.getCount() / stackCapacity );
 		}
 		return needGrid;
 	}
@@ -127,7 +128,7 @@ public class StuffPropManager implements IpropManager  {
 	public int getGridCount() {
 		int count = 0;
 		for( Entry<Short,Integer> e : stuffs.entrySet() ){
-			BasePropTemplet t = PropTempletCfg.getTempletById( e.getKey() );
+			PropTempletBase t = PropTempletCfg.getTempletById( e.getKey() );
 			int stackCapacity = t.getStackCapacity();
 			count += (int) Math.ceil( (float)e.getValue() / stackCapacity );
 		}

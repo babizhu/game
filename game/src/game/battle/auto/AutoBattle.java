@@ -1,6 +1,6 @@
 package game.battle.auto;
 
-import game.battle.BaseBattle;
+import game.battle.BattleBase;
 import game.battle.BuffRunPoint;
 import game.battle.IBattleUtil;
 import game.battle.Pet;
@@ -8,7 +8,7 @@ import game.battle.formation.IFormation;
 import game.battle.formula.Formula;
 import game.battle.skill.SkillEffect;
 import game.battle.skill.SkillTemplet;
-import game.fighter.BaseFighter;
+import game.fighter.FighterBase;
 import game.fighter.FighterAttribute;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author liukun
  * 2012-9-27 下午05:52:32
  */
-public class AutoBattle extends BaseBattle {
+public class AutoBattle extends BattleBase {
 
 	private static final Logger 		logger = LoggerFactory.getLogger( AutoBattle.class );
 	private static final IBattleUtil	util = AutoBattleUtil.getInstance();
@@ -46,7 +46,7 @@ public class AutoBattle extends BaseBattle {
 	/**
 	 * 所有参战战士的列表
 	 */
-	private final List<BaseFighter>		allFighters = new ArrayList<BaseFighter>();
+	private final List<FighterBase>		allFighters = new ArrayList<FighterBase>();
 	
 	private int 						currentRound = 0;
 	
@@ -92,7 +92,7 @@ public class AutoBattle extends BaseBattle {
 	 * 			true：输入战士的阵形		false:相反的阵形
 	 * @return
 	 */
-	private IFormation getFormation( BaseFighter fighter, boolean isFriend ){
+	private IFormation getFormation( FighterBase fighter, boolean isFriend ){
 		if( isFriend ){
 			return fighter.isLeft() ?  attackers : defenders;
 		}
@@ -105,7 +105,7 @@ public class AutoBattle extends BaseBattle {
 		while( !isEnd ){
 			pet();
 			battleSituation.putRoundFlag();
-			for( BaseFighter currentAttacker : allFighters ){
+			for( FighterBase currentAttacker : allFighters ){
 				if( currentAttacker.isDie() ){
 					continue;
 				}
@@ -151,18 +151,18 @@ public class AutoBattle extends BaseBattle {
 	}
 	
 	
-	private boolean doSkillAttack( BaseFighter attacker, IFormation currentDefenderTeam ) {
+	private boolean doSkillAttack( FighterBase attacker, IFormation currentDefenderTeam ) {
 		
 		SkillTemplet templet = attacker.getSkillTemplet();
 		
-		List<BaseFighter> enemys = currentDefenderTeam.getFighterOnEffect( attacker, templet.getEnemys() );
-		List<BaseFighter> friends = getFormation( attacker, true ).getFighterOnEffect( attacker, templet.getFriends() );
+		List<FighterBase> enemys = currentDefenderTeam.getFighterOnEffect( attacker, templet.getEnemys() );
+		List<FighterBase> friends = getFormation( attacker, true ).getFighterOnEffect( attacker, templet.getFriends() );
 		byte count = (byte) ((enemys == null ? 0 : enemys.size()) + (friends == null ? 0 : friends.size()));
 		
 		battleSituation.putSkillAttackPrefix( attacker, templet.getId(), count );
 		
 		if( enemys != null ){
-			for( BaseFighter f : enemys ){
+			for( FighterBase f : enemys ){
 				battleSituation.putFighter( f.getPosition() );
 				if( doSkillEffect( attacker, f, templet.getEffectOnEnemy() ) )//此战士所在团队挂了
 				{
@@ -172,7 +172,7 @@ public class AutoBattle extends BaseBattle {
 		}
 		/*****************************************************************************************/
 		if( friends != null ){
-			for( BaseFighter f : friends ){
+			for( FighterBase f : friends ){
 				battleSituation.putFighter( f.getPosition() );
 				doSkillEffect( attacker, f, templet.getEffectOnFriend() );
 			}
@@ -191,7 +191,7 @@ public class AutoBattle extends BaseBattle {
 	 * 
 	 *	注意：所有的SkillEffect中，ENEMY_HP必须排在最前面，后面的其他伤害都依赖于ENEMY_HP是否命中
 	 */
-	private boolean doSkillEffect( BaseFighter attacker, BaseFighter defender, List<SkillEffect> effects ){
+	private boolean doSkillEffect( FighterBase attacker, FighterBase defender, List<SkillEffect> effects ){
 		boolean isHit = true;
 		battleSituation.putEffectCount( (byte) effects.size() );
 		for( SkillEffect se : effects ){
@@ -221,9 +221,9 @@ public class AutoBattle extends BaseBattle {
 	 * @param defenderTeam	当前的防守队伍
 	 * @return
 	 */
-	private boolean doNormalAttack( BaseFighter attacker, IFormation currentDefender ) {
+	private boolean doNormalAttack( FighterBase attacker, IFormation currentDefender ) {
 
-		BaseFighter defender = currentDefender.getBaseDefender( attacker );
+		FighterBase defender = currentDefender.getBaseDefender( attacker );
 		assert( defender != null );
 		
 		AttackInfo info = util.calcAttackInfo( attacker, defender, Formula.NormalAttackFormula, null );
@@ -258,7 +258,7 @@ public class AutoBattle extends BaseBattle {
 	 * @param defenderTeam
 	 * @return
 	 */
-	private boolean doBlockAndCounterAttack( BaseFighter attacker, BaseFighter defender ) {
+	private boolean doBlockAndCounterAttack( FighterBase attacker, FighterBase defender ) {
 		
 		int damage = util.calcCounterAttackDamage( attacker, defender );
 		battleSituation.putCounterAttackDamage( (int) damage );//伤害值
@@ -282,7 +282,7 @@ public class AutoBattle extends BaseBattle {
 	 * 			true			被攻击方全军覆没了<br>
 	 * 			false			被攻击方继续存活
 	 */
-	public boolean reduceHp( BaseFighter defender, int damage ){
+	public boolean reduceHp( FighterBase defender, int damage ){
 		defender.setHp( defender.getHp() - damage );
 		
 		if( defender.isDie() ){//被攻击战士已经挂了			

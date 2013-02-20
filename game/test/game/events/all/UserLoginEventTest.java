@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.xsocket.connection.BlockingConnection;
 import org.xsocket.connection.IBlockingConnection;
 
-import util.BaseUtil;
+import util.UtilBase;
 import util.ErrorCode;
 import define.SystemCfg;
 
@@ -193,7 +193,7 @@ public class UserLoginEventTest extends BaseEventTest {
 	 */
 	public ByteBuffer createContent( String name ){
 		ByteBuffer buf = createEmptyPackage(1024);
-		BaseUtil.encodeString( buf, name );
+		UtilBase.encodeString( buf, name );
 		return buf;
 	}
 

@@ -1,6 +1,6 @@
 package game.task.templet;
 
-import game.task.BaseTask;
+import game.task.TaskBase;
 import game.task.DirectTask;
 import game.task.enums.TaskType;
 
@@ -16,7 +16,7 @@ public class DirectTaskTemplet extends BaseTaskTemplet {
 	}
 	
 	@Override
-	public BaseTask createTask() {
+	public TaskBase createTask() {
 		return new DirectTask( this );
 	}
 

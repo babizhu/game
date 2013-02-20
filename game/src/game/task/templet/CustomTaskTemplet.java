@@ -1,6 +1,6 @@
 package game.task.templet;
 
-import game.task.BaseTask;
+import game.task.TaskBase;
 import game.task.CustomTask;
 
 /**
@@ -11,7 +11,7 @@ import game.task.CustomTask;
 public class CustomTaskTemplet extends BaseTaskTemplet {
 
 	@Override
-	public BaseTask createTask() {
+	public TaskBase createTask() {
 		return new CustomTask( this );
 	}
 

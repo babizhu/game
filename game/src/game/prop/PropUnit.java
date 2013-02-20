@@ -1,8 +1,9 @@
 package game.prop;
 
-
 import game.prop.cfg.PropTempletCfg;
-import game.prop.templet.BasePropTemplet;
+import game.prop.templet.PropTempletBase;
+
+
 
 
 /**
@@ -17,7 +18,9 @@ public class PropUnit {
 	 * 道具模板
 	 */
 
-	private final BasePropTemplet 	templet;
+	private final PropTempletBase 	templet;
+	
+	//private final short				templetId;
 
 	
 	/**
@@ -28,17 +31,18 @@ public class PropUnit {
 
 	
 	public PropUnit( short templetId, int count ){
-		BasePropTemplet templet = PropTempletCfg.getTempletById( templetId );
-		this.templet = templet;
+		//this.templetId = templetId;
+		this.templet = PropTempletCfg.getTempletById( templetId );
+//		 = templet;
 		this.count = count;
 		this.propId = 0;
 	}
 
-	public PropUnit( BasePropTemplet templet, int count, long propId ) {
-		this.templet = templet;
-		this.count = count;
-		this.propId = propId;
-	}
+//	public PropUnit( PropBaseTemplet templet, int count, long propId ) {
+////		this.templet = templet;
+//		this.count = count;
+//		this.propId = propId;
+//	}
 	
 
 
@@ -55,9 +59,13 @@ public class PropUnit {
 		return propId;
 	}
 
+//	public short getTempletId() {
+//		return templetId;
+//	}
 
 
-	public BasePropTemplet getTemplet() {
+
+	public PropTempletBase getTemplet() {
 		return templet;
 	}
 	

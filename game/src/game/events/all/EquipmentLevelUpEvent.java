@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import user.UserInfo;
-import game.events.BaseEvent;
+import game.events.EventBase;
 
 
 /**
@@ -12,7 +12,7 @@ import game.events.BaseEvent;
  * @author liukun
  * 2012-9-14 下午03:12:14
  */
-public class EquipmentLevelUpEvent  extends BaseEvent {
+public class EquipmentLevelUpEvent  extends EventBase {
 	
 	@Override
 	public void run(UserInfo user, ByteBuffer buf) throws IOException {

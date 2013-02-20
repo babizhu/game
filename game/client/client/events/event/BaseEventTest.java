@@ -1,6 +1,6 @@
 package client.events.event;
 
-import game.events.BaseEvent;
+import game.events.EventBase;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -25,7 +25,7 @@ public abstract class BaseEventTest {
 	ByteBuffer createEmptyEvent( int capacity ){
 		
 		ByteBuffer buff = ByteBuffer.allocate(capacity);
-		buff.put( BaseEvent.HEAD );
+		buff.put( EventBase.HEAD );
 		buff.putShort( getEventId() );
 		buff.putShort( (short) 0 );//长度占位符
 		return buff;
@@ -38,7 +38,7 @@ public abstract class BaseEventTest {
 	 */
 	public void sendPacket( IBlockingConnection conn, ByteBuffer buffer ){
 		buffer.putShort( 3, (short) (buffer.position() - 5) );//设置内容长度
-		buffer.put( BaseEvent.FOOT );				
+		buffer.put( EventBase.FOOT );				
 		buffer.flip();
 		
 //		IBlockingConnection conn = user.getConn();
@@ -61,7 +61,7 @@ public abstract class BaseEventTest {
 		short len = nbc.readShort();
 		byte[] data = nbc.readBytesByLength( len );
 		byte foot = nbc.readByte();
-		if( head != BaseEvent.HEAD && foot != BaseEvent.FOOT && packageNo != getEventId() ){
+		if( head != EventBase.HEAD && foot != EventBase.FOOT && packageNo != getEventId() ){
 			System.out.println( "error : head=" + head + ",packageNo=" + packageNo + ",foot=" + foot );
 			return null;
 		}
@@ -77,7 +77,7 @@ public abstract class BaseEventTest {
 	 * 		false		错误
 	 */
 	boolean checkInputData( byte head, byte foot ){
-		if( head != BaseEvent.HEAD || foot != BaseEvent.FOOT ){
+		if( head != EventBase.HEAD || foot != EventBase.FOOT ){
 			return false;
 		}
 		return true;

@@ -1,6 +1,6 @@
 package game.task.templet;
 
-import game.task.BaseTask;
+import game.task.TaskBase;
 import game.task.DirectCountTask;
 
 import game.task.enums.TaskType;
@@ -20,7 +20,7 @@ public class DirectCountTaskTemplet extends BaseTaskTemplet {
 	}
 	
 	@Override
-	public BaseTask createTask() {
+	public TaskBase createTask() {
 		return new DirectCountTask( this );
 	}
 

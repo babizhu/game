@@ -48,12 +48,16 @@ public class PropManager {
 	}
 	
 	private IpropManager getManager( PropUnit unit ){
-		if( unit.getTemplet().isEquipment() ){
+		switch( unit.getTemplet().getType() )
+		{
+		case STUFF:
+			return stuffManager;
+		case EQUIPMENT:
+			return equipmentManager;
+		default:
 			return equipmentManager;
 		}
-		else{
-			return stuffManager;
-		}
+		
 	}
 
 	public int	getFreeGridCount(){

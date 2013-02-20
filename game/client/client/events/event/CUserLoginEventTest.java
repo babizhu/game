@@ -11,7 +11,7 @@ import org.xsocket.connection.BlockingConnection;
 import org.xsocket.connection.IBlockingConnection;
 
 import user.UserInfo;
-import util.BaseUtil;
+import util.UtilBase;
 import util.ErrorCode;
 import define.SystemCfg;
 
@@ -28,7 +28,7 @@ public class CUserLoginEventTest extends BaseEventTest {
 	 */
 	public ByteBuffer createContent( String name ){
 		ByteBuffer buf = createEmptyEvent(1024);
-		BaseUtil.encodeString( buf, name );
+		UtilBase.encodeString( buf, name );
 		return buf;
 	}
 	
@@ -40,7 +40,7 @@ public class CUserLoginEventTest extends BaseEventTest {
 		ErrorCode code = ErrorCode.values()[buf.getShort()]; 
 	
 		if( code == ErrorCode.SUCCESS ){//成功登陆
-			user.setNickName( BaseUtil.decodeString(buf) );					//昵称
+			user.setNickName( UtilBase.decodeString(buf) );					//昵称
 			user.setSex( buf.get() );										//性别
 			user.setAdult( buf.get() == 1? true:false  );					//是否成年
 			user.setStrength( buf.getShort()  );							//体力

@@ -1,6 +1,6 @@
 package game.util;
 
-import game.events.BaseEvent;
+import game.events.EventBase;
 import game.events.IEvent;
 import game.events.EventDescrip;
 
@@ -147,11 +147,11 @@ public class PackageUtil {
 	/**
 	 * 打印所有的包情况，方便查询
 	 */
-	public static void printAllPakcets( BaseEvent[] packages ) {
+	public static void printAllPakcets( EventBase[] packages ) {
 		Formatter f = new Formatter(System.out);
 		f.format("%-15s %-127s %-150s \n", "包号", "类别", "功能说明");
 		f.format("%-15s %-127s %-150s \n", "－－", "－－", "－－－－");
-		for ( BaseEvent ap : packages ) {
+		for ( EventBase ap : packages ) {
 			if( ap != null ){
 				Class<?> c = ap.getClass();
 				EventDescrip desc = c.getAnnotation(EventDescrip.class);
@@ -164,22 +164,22 @@ public class PackageUtil {
 	}
 
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, SecurityException, NoSuchFieldException, IOException {
-		BaseEvent p1 = null;
+		EventBase p1 = null;
 		// String p = "PacketTest";
 		String s = "game.packages";// 包文件夹
 		List<Class<?>> list = getClasses(s);
 		int max = 1000;
-		final BaseEvent[] packets = new BaseEvent[max];// 不存在0号包
+		final EventBase[] packets = new EventBase[max];// 不存在0号包
 
 		// 生成所有包的实例数组，供后面调用
 		for (Class<?> c : list) {
 			if (!c.isInterface() && !c.getName().contains("Base")) {
 
-				p1 = (BaseEvent) c.newInstance();
+				p1 = (EventBase) c.newInstance();
 				// System.out.println( c.getName() + " ：" + p1.getPacketNo() );
 
 				int packetNo = p1.getEventId();
-				BaseEvent ip = packets[packetNo];
+				EventBase ip = packets[packetNo];
 				if( ip == null ) {
 					packets[packetNo] = p1;
 

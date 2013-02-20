@@ -3,7 +3,7 @@
  */
 package game.events.all.task;
 
-import game.events.BaseEvent;
+import game.events.EventBase;
 import game.events.EventDescrip;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ import util.ErrorCode;
  */
 
 @EventDescrip(desc = "玩家接任务")
-public class TaskAcceptEvent  extends BaseEvent {
+public class TaskAcceptEvent  extends EventBase {
 
 	/* (non-Javadoc)
 	 * @see game.packages.BasePackage#run(user.UserInfo, java.nio.ByteBuffer)

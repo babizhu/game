@@ -1,7 +1,7 @@
 package game.prop;
 
 
-public abstract class BaseProp implements IProp{
+public abstract class PropBase implements IProp{
 
 	
 	/**
@@ -17,5 +17,6 @@ public abstract class BaseProp implements IProp{
 	public void setInBag(boolean inBag) {
 		this.inBag = inBag;
 	}
+	
 	
 }
