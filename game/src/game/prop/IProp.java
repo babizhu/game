@@ -9,11 +9,4 @@ public interface IProp {
 	 * @return
 	 */
 	PropTempletBase	getTemplet( );
-	
-	/**
-	 * 构建用于网络传输的byteBuffer
-	 */
-	void buildContent();
-//	ErrorCode run( UserInfo user );
-
 }

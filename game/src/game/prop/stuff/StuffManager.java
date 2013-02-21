@@ -1,12 +1,13 @@
 package game.prop.stuff;
 
 
-import game.prop.IpropManager;
+import game.prop.IPropManager;
 import game.prop.PropDataProvider;
 import game.prop.PropUnit;
 import game.prop.cfg.PropTempletCfg;
 import game.prop.templet.PropTempletBase;
 
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,7 +15,7 @@ import java.util.Map.Entry;
 import user.UserInfo;
 import util.ErrorCode;
 
-public class StuffPropManager implements IpropManager  {
+public class StuffManager implements IPropManager  {
 
 	
 	/**
@@ -24,7 +25,7 @@ public class StuffPropManager implements IpropManager  {
 	private final PropDataProvider			db = PropDataProvider.getInstance();
 	private final UserInfo 					user;	
 
-	public StuffPropManager( UserInfo user ) {
+	public StuffManager( UserInfo user ) {
 		this.user = user;
 		stuffs = db.getAllStuffs( user.getName() );
 	}
@@ -36,7 +37,7 @@ public class StuffPropManager implements IpropManager  {
 	 * @return
 	 */
 	public int calcNeedGridCount( PropUnit unit ){
-		short templetId = unit.getTemplet().getTempletId();
+		short templetId = unit.getTemplet().getId();
 		Integer count = stuffs.get( templetId );
 		int needGrid = 0;
 		int stackCapacity = unit.getTemplet().getStackCapacity();
@@ -61,7 +62,7 @@ public class StuffPropManager implements IpropManager  {
 	 * 注意：这里没有考虑背包格子数目的问题
 	 */
 	public ErrorCode add( PropUnit unit ){
-		short templetId = unit.getTemplet().getTempletId();
+		short templetId = unit.getTemplet().getId();
 		Integer count = stuffs.get( templetId );
 		boolean isNew = (count==null);
 		
@@ -78,7 +79,7 @@ public class StuffPropManager implements IpropManager  {
 	@Override
 	public ErrorCode checkPropIsEnough( PropUnit unit ){
 		int needCount = unit.getCount();
-		short templetId = unit.getTemplet().getTempletId();
+		short templetId = unit.getTemplet().getId();
 		Integer c = stuffs.get( templetId );
 		if( c == null ){
 			return ErrorCode.PROP_NOT_FOUNTD;
@@ -96,7 +97,7 @@ public class StuffPropManager implements IpropManager  {
 	 * @return
 	 */
 	public ErrorCode remove( PropUnit unit ){
-		short templetId = unit.getTemplet().getTempletId();
+		short templetId = unit.getTemplet().getId();
 		int result = stuffs.get( templetId ) - unit.getCount();
 		result = result > 0 ? result : 0;
 		
@@ -135,5 +136,9 @@ public class StuffPropManager implements IpropManager  {
 		return count;
 	}
 
-	
+	@Override
+	public void buildTransformStream(ByteBuffer buf) {
+		// TODO Auto-generated method stub
+		
+	}
 }

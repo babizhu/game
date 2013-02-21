@@ -3,6 +3,7 @@ package game.prop;
 
 import game.prop.cfg.PropTempletCfg;
 import game.prop.equipment.Equipment;
+import game.prop.equipment.EquipmentBase;
 import game.prop.templet.PropTempletBase;
 import game.util.GameUtil;
 
@@ -29,9 +30,9 @@ import util.db.DatabaseUtil;
 public class PropDataProvider {
 	private final static Logger 		logger = LoggerFactory.getLogger(PropDataProvider.class);
 	private static PropDataProvider 	instance = new PropDataProvider();
-	private static AtomicLong			maxID;
+	private static AtomicLong			equipmentMaxID;
 	static{
-		maxID = new AtomicLong( GameUtil.buildIdWithDistrict( DatabaseUtil.getMaxId( "equipment_base", "id" ) ) );
+		equipmentMaxID = new AtomicLong( GameUtil.buildIdWithDistrict( DatabaseUtil.getMaxId( "equipment_base", "id" ) ) );
 	}
 	public static  PropDataProvider getInstance(){
 		return instance;
@@ -80,14 +81,32 @@ public class PropDataProvider {
 	 */
 	public ErrorCode removeStuff( short templetId, int result, String uname ){
 		if( result == 0 ){
-			//TODO:删除此材料
+			return removeStuff( templetId, uname );
 		}
 		else{
 			return changeStuff( templetId, result, uname, false );
 		}
-		return ErrorCode.SUCCESS;
 	}
 	
+	private ErrorCode removeStuff( short templetId, String uname ){
+		Connection con = DatabaseUtil.getConnection();
+		PreparedStatement pst = null;
+		String sql = "delete from stuff_base where uname = ? and templet_id=?";
+		try { 
+			
+			pst = con.prepareStatement( sql );
+			pst.setString( 1, uname );			
+			pst.setShort( 2, templetId );
+			pst.executeUpdate(); 
+			
+ 		} catch (SQLException e) {
+ 			logger.debug( e.getLocalizedMessage(), e );
+ 			return ErrorCode.DB_ERROR;
+		} finally { 
+			DatabaseUtil.close( null, pst, con );
+		}
+		return ErrorCode.SUCCESS;
+	}
 	
 	public ErrorCode changeStuff( short templetId, int result, String uname, boolean isNew ){
 		Connection con = DatabaseUtil.getConnection();
@@ -122,7 +141,7 @@ public class PropDataProvider {
 		String sql = "insert into equipment_base (id, uname, level, gem, templet_id) "
 				+ "values (?, ?, ?, ?,?)";
 		int i = 1;
-		long id = maxID.incrementAndGet();
+		long id = equipmentMaxID.incrementAndGet();
 		equipment.setId( id );
 		try {
 			pst = con.prepareStatement( sql );
@@ -130,7 +149,7 @@ public class PropDataProvider {
 			pst.setString( i++, uname );
 			pst.setShort( i++, equipment.getLevel() );
 			pst.setString( i++, equipment.getGemStr() );
-			pst.setShort( i++, equipment.getTemplet().getTempletId() );
+			pst.setShort( i++, equipment.getTemplet().getId() );
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			logger.debug( e.getLocalizedMessage(), e );
@@ -146,7 +165,7 @@ public class PropDataProvider {
 	 * 注意外层权限控制，不要删除到别人的道具了
 	 * @param equipment
 	 */
-	public ErrorCode removeEquipment( Equipment equipment ) { 
+	public ErrorCode removeEquipment( EquipmentBase equipment ) { 
 		Connection con = DatabaseUtil.getConnection();
 		PreparedStatement pst = null;
 		String sql = "delete from equipment_base where id = ?";

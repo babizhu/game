@@ -22,7 +22,7 @@ public enum PropType {
 	
 	/**
 	
-	 * 装备类道具，具备唯一id
+	 * 装备类道具，具备唯一id，可升级的，例如武器，宝石，勋章
 	 */
 	EQUIPMENT {
 		@Override

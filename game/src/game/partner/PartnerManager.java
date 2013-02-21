@@ -1,8 +1,9 @@
 package game.partner;
 
+import game.battle.auto.Formation9;
 import game.battle.formation.IFormation;
 import game.prop.PropManager;
-import game.prop.equipment.Equipment;
+import game.prop.equipment.EquipmentBase;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class PartnerManager {
 	private final List<PartnerBase>				partners;
 //	private final UserInfo						user;
 	private final PropManager					propManager;
-	private IFormation							formation;
+	//private IFormation							formation = null;
 	private PartnerDataProvider					db = PartnerDataProvider.getInstance();
 	
 	public PartnerManager(UserInfo user) {
@@ -36,20 +37,23 @@ public class PartnerManager {
 	 * @param equipmentId
 	 * @return
 	 */
-	ErrorCode dress( short parterId, long propId ){
+	ErrorCode dress( long parterId, long propId ){
 		
 		PartnerBase p = getPartnerById( parterId );
 		if( p == null ){
 			return ErrorCode.PARTNER_NOT_FOUND;
 		}
 		
-		Equipment e = propManager.getEquipmentById(propId);
+		EquipmentBase e = propManager.getEquipmentById( propId );
 		if( e == null ){
 			return ErrorCode.PROP_NOT_FOUNTD;
 		}
 
-		return p.dress( e );
-		
+		ErrorCode code = p.dress( e );
+//		if( code == ErrorCode.SUCCESS ){
+//			p.
+//		}
+		return code;
 	}
 	
 	/**
@@ -58,7 +62,7 @@ public class PartnerManager {
 	 * @param equipmentId
 	 * @return
 	 */
-	ErrorCode dressOff( short parterId, long equipmentId ){
+	ErrorCode dressOff( long parterId, long equipmentId ){
 		return null;
 		
 	}
@@ -71,7 +75,7 @@ public class PartnerManager {
 		
 	}
 
-	PartnerBase getPartnerById( long id ){
+	public PartnerBase getPartnerById( long id ){
 		for( PartnerBase p : partners ){
 			if( p.getId() == id ){
 				return p;
@@ -80,19 +84,13 @@ public class PartnerManager {
 		return null;
 	}
 
-	public IFormation getFormation() {
-		if( formation == null ){
-			buildFormation();
-		}
-		return formation;
+	public IFormation getFormation( boolean isLeft ) {
+		IFormation f = new Formation9( null, isLeft, null );
+		return f;
 	}
 
 
-	/**
-	 * 构建战斗团队
-	 */
-	private void buildFormation() {
-	}
+	
 	
 	
 

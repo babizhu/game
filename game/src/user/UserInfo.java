@@ -2,6 +2,7 @@ package user;
 
 import game.award.AwardContent;
 import game.award.AwardInfo;
+import game.partner.PartnerManager;
 import game.prop.PropManager;
 import game.task.TaskManager;
 
@@ -11,8 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xsocket.connection.INonBlockingConnection;
 
-import util.UtilBase;
 import util.ErrorCode;
+import util.UtilBase;
 
 /**
  * 用户基础信息类
@@ -25,6 +26,11 @@ import util.ErrorCode;
 public class UserInfo {
 	private final static Logger logger = LoggerFactory.getLogger( UserInfo.class ); 
 
+	/**
+	 * 伙伴管理器
+	 */
+	private PartnerManager 								partnerManager;
+	
 	/**
 	 * 包管理器
 	 */
@@ -100,6 +106,7 @@ public class UserInfo {
 	private boolean										isAdult					= true;
 
 	private short 										bagCapacity;
+
 	
 
 	
@@ -489,6 +496,13 @@ public class UserInfo {
 		return taskManager;
 	}
 
+	public PartnerManager getPartnerManager() {
+		if( partnerManager == null ){
+			partnerManager = new PartnerManager( this );
+		}
+		return partnerManager;
+	}
+
 	public static void main ( String[] args ) {
 //	long begin = System.nanoTime();
 //	for( int i = 0; i < 100000000; i++ ){
@@ -499,6 +513,7 @@ public class UserInfo {
 //	System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
 //		
 	}
+
 
 
 

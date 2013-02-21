@@ -54,7 +54,7 @@ public abstract class PropTempletBase {
 	 */
 	private int			priceOfCash;
 
-	public short getTempletId() {
+	public short getId() {
 		return templetId;
 	}
 
@@ -142,7 +142,7 @@ public abstract class PropTempletBase {
 	}
 
 	/**
-	 * 判断此道具是否属于装备类（有唯一ID，不能叠加）
+	 * 获取该道具的装备类型
 	 * @return
 	 */
 	public abstract PropType getType();

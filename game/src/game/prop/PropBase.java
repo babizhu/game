@@ -1,7 +1,11 @@
 package game.prop;
 
+import java.nio.ByteBuffer;
 
-public abstract class PropBase implements IProp{
+import game.ITransformStream;
+
+
+public abstract class PropBase implements IProp, ITransformStream{
 
 	
 	/**
@@ -18,5 +22,10 @@ public abstract class PropBase implements IProp{
 		this.inBag = inBag;
 	}
 	
+	@Override
+	public void buildTransformStream( ByteBuffer buf ){
+		buf.putShort( this.getTemplet().getId() );//模板id
+		
+	}
 	
 }

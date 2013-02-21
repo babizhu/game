@@ -19,6 +19,10 @@ public class EquipmentTemplet extends PropTempletBase{
 	
 	private EquipmentType		equipmentType;
 	
+	/**
+	 * {@link #upNum}
+	 * @return
+	 */
 	public int getUpNum() {
 		return upNum;
 	}

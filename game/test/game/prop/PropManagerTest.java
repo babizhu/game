@@ -2,7 +2,7 @@ package game.prop;
 
 import static org.junit.Assert.assertEquals;
 import game.prop.cfg.PropTempletCfg;
-import game.prop.equipment.Equipment;
+import game.prop.equipment.EquipmentBase;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -44,9 +44,9 @@ public class PropManagerTest {
 		PropManager pm = user.getPropManager();
 		assertEquals( 25, pm.getFreeGridCount() );
 		
-		Equipment e = pm.getEquipmentById( 4 );
+		EquipmentBase e = pm.getEquipmentById( 4 );
 		assertEquals( 1, e.getLevel() );
-		assertEquals( 18000, e.getTemplet().getTempletId() );
+		assertEquals( 18000, e.getTemplet().getId() );
 		
 	}
 
@@ -110,7 +110,7 @@ public class PropManagerTest {
 		UserInfo user = UserManager.getInstance().getUserByName(name );
 		PropManager pm = user.getPropManager();
 		long id = 1;
-		Equipment e = pm.getEquipmentById( id );
+		EquipmentBase e = pm.getEquipmentById( id );
 		assertEquals( 1, e.getLevel() );
 		System.out.println( e );
 	}
