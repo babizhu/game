@@ -14,7 +14,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 /**
- * 道具配置表
+ * 道具配置表，这会处理所有的道具类型
  * @author liukun
  * 2012-10-31 上午08:22:31
  */
@@ -49,13 +49,13 @@ public class PropTempletCfg {
 				PropTempletBase templet = type.create();
 				templet.parse( element );
 				
-				/*******************关闭打印****************************
+				/*******************关闭打印*****************************
 							System.out.println( templet );
 				********************************************************/
 				
-				PropTempletBase bpt = propTemplets.put( templet.getTempletId(), templet );
+				PropTempletBase bpt = propTemplets.put( templet.getId(), templet );
 				if( bpt != null ){
-					throw new RuntimeException( "道具" + templet.getTempletId() + "重复了" );
+					throw new RuntimeException( "道具" + templet.getId() + "重复了" );
 				}
 				
 			}

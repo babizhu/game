@@ -7,6 +7,7 @@ import game.prop.PropUnit;
 import game.prop.cfg.PropTempletCfg;
 import game.prop.templet.PropTempletBase;
 
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -36,7 +37,7 @@ public class StuffPropManager implements IpropManager  {
 	 * @return
 	 */
 	public int calcNeedGridCount( PropUnit unit ){
-		short templetId = unit.getTemplet().getTempletId();
+		short templetId = unit.getTemplet().getId();
 		Integer count = stuffs.get( templetId );
 		int needGrid = 0;
 		int stackCapacity = unit.getTemplet().getStackCapacity();
@@ -61,7 +62,7 @@ public class StuffPropManager implements IpropManager  {
 	 * 注意：这里没有考虑背包格子数目的问题
 	 */
 	public ErrorCode add( PropUnit unit ){
-		short templetId = unit.getTemplet().getTempletId();
+		short templetId = unit.getTemplet().getId();
 		Integer count = stuffs.get( templetId );
 		boolean isNew = (count==null);
 		
@@ -78,7 +79,7 @@ public class StuffPropManager implements IpropManager  {
 	@Override
 	public ErrorCode checkPropIsEnough( PropUnit unit ){
 		int needCount = unit.getCount();
-		short templetId = unit.getTemplet().getTempletId();
+		short templetId = unit.getTemplet().getId();
 		Integer c = stuffs.get( templetId );
 		if( c == null ){
 			return ErrorCode.PROP_NOT_FOUNTD;
@@ -96,7 +97,7 @@ public class StuffPropManager implements IpropManager  {
 	 * @return
 	 */
 	public ErrorCode remove( PropUnit unit ){
-		short templetId = unit.getTemplet().getTempletId();
+		short templetId = unit.getTemplet().getId();
 		int result = stuffs.get( templetId ) - unit.getCount();
 		result = result > 0 ? result : 0;
 		
@@ -135,5 +136,9 @@ public class StuffPropManager implements IpropManager  {
 		return count;
 	}
 
-	
+	@Override
+	public void buildTransformStream(ByteBuffer buf) {
+		// TODO Auto-generated method stub
+		
+	}
 }

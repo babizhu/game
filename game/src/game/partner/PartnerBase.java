@@ -1,24 +1,28 @@
 package game.partner;
 
+import game.ITransformStream;
 import game.fighter.FighterBase;
+import game.prop.ICalculateAddtion;
 import game.prop.equipment.Equipment;
+import game.prop.equipment.EquipmentBase;
 import game.prop.equipment.EquipmentType;
 import game.prop.templet.EquipmentTemplet;
 
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
 import user.UserInfo;
 import util.ErrorCode;
 
-public class PartnerBase extends FighterBase{
+public class PartnerBase extends FighterBase implements ICalculateAddtion, ITransformStream{
 
-	private final PartnerTemplet			templet;
-	private long							id;
-	private String							name;
-	private byte							position;
-	private short							level;
-	private Map<EquipmentType,Equipment>	equipments = new HashMap<EquipmentType, Equipment>();
+	private final PartnerTemplet				templet;
+	private long								id;
+	private String								name;
+	private byte								position;
+	private short								level;
+	private Map<EquipmentType,EquipmentBase>	equipments = new HashMap<EquipmentType, EquipmentBase>();
 	
 	
 	public PartnerBase( PartnerTemplet templet) {
@@ -63,7 +67,7 @@ public class PartnerBase extends FighterBase{
 			return "";
 		}
 		StringBuilder sb = new StringBuilder();
-		for( Equipment e : equipments.values() ){
+		for( EquipmentBase e : equipments.values() ){
 			sb.append( e.getId() );
 			sb.append( "," );
 		}
@@ -76,7 +80,7 @@ public class PartnerBase extends FighterBase{
 			long id = Long.parseLong( s );
 			Equipment equipment = user.getPropManager().getEquipmentById( id );
 			equipment.setInBag( false );
-			equipments.put( equipment.getTemplet().getEquipmentType(), equipment );
+			equipments.put( ((EquipmentTemplet) equipment.getTemplet()).getEquipmentType(), equipment );
 		}		
 	}
 	
@@ -88,19 +92,32 @@ public class PartnerBase extends FighterBase{
 	 * @param newEquipment
 	 * @return
 	 */
-	public ErrorCode dress( Equipment newEquipment ){
+	public ErrorCode dress( EquipmentBase newEquipment ){
 		EquipmentTemplet t = (EquipmentTemplet) newEquipment.getTemplet();
 		if( getLevel() < t.getRequiredLevel() ){
 			return ErrorCode.PARTNER_LEVEL_NOT_ENOUGH;
 		}
 		
-		Equipment old = equipments.get( t.getEquipmentType() );
+		EquipmentBase old = equipments.get( t.getEquipmentType() );
 		if( old != null ){
 			old.setInBag( true );			
 		}
 		
 		equipments.put( t.getEquipmentType(), newEquipment );
+		calcAddtion();
 		return ErrorCode.SUCCESS;
+	}
+
+	@Override
+	public void buildTransformStream(ByteBuffer buf) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void calcAddtion() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

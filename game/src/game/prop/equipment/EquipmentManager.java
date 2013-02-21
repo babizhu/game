@@ -4,13 +4,14 @@ import game.prop.IpropManager;
 import game.prop.PropDataProvider;
 import game.prop.PropUnit;
 
+import java.nio.ByteBuffer;
 import java.util.Map;
 
 import user.UserInfo;
 import util.ErrorCode;
 
 /**
- * 道具管理器
+ * 道具管理器，除了PropManager其余地方不要直接引用
  * @author liukun
  * 2013-1-31 下午2:17:20
  */
@@ -90,5 +91,13 @@ public class EquipmentManager implements IpropManager {
 		return ErrorCode.SUCCESS;
 	}
 
+	@Override
+	/**
+	 * 这里只处理保存在背包内的内容，装备到身上的不用处理
+	 */
+	public void buildTransformStream(ByteBuffer buf) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

@@ -54,7 +54,7 @@ public abstract class PropTempletBase {
 	 */
 	private int			priceOfCash;
 
-	public short getTempletId() {
+	public short getId() {
 		return templetId;
 	}
 

@@ -1,8 +1,10 @@
 package game.prop;
 
+
+import game.ITransformStream;
 import util.ErrorCode;
 
-public interface IpropManager {
+public interface IpropManager extends ITransformStream {
 
 	ErrorCode add( PropUnit unit );
 	ErrorCode remove( PropUnit unit );
@@ -26,4 +28,5 @@ public interface IpropManager {
 	 * @return
 	 */
 	ErrorCode checkPropIsEnough( PropUnit unit );
+	
 }

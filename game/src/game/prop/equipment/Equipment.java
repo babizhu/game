@@ -1,49 +1,27 @@
 package game.prop.equipment;
 
-import game.prop.Gem;
-import game.prop.ICalculateAddtion;
-import game.prop.PropBase;
-import game.prop.templet.EquipmentTemplet;
-import game.prop.templet.PropTempletBase;
-
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import util.ErrorCode;
 
+import game.prop.templet.EquipmentTemplet;
+import game.prop.templet.PropTempletBase;
 
-/**
- * 通常指可穿戴或配置的装备类，并且必须在相应位置出现的，比如刀只能放在武器的位置上
- * @author liukun
- * 2013-1-31 下午4:30:31
- */
-public class Equipment extends PropBase implements IEquipment, ICalculateAddtion{
+public class Equipment extends EquipmentBase{
+
 	private final EquipmentTemplet		templet;
-	private long						id;
-	private short						level = 1;
 	private Gem[]						gems = new Gem[0];
-	
-	
-	public Equipment(PropTempletBase templet ) {
-		super();
+
+	public Equipment(PropTempletBase templet) {
 		this.templet = (EquipmentTemplet) templet;
 	}
-
-	public EquipmentTemplet getTemplet() {
+	
+	@Override
+	public PropTempletBase getTemplet() {
 		return templet;
 	}
-
-	public long getId() {
-		return id;
-	}
-
-	public short getLevel() {
-		return level;
-	}
-
-	public void setLevel(short level) {
-		this.level = level;
-	}
-
+	
 	/**
 	 * 获取用逗号分割的宝石id字符串用于数据库存储
 	 * @return
@@ -68,31 +46,22 @@ public class Equipment extends PropBase implements IEquipment, ICalculateAddtion
 		String[] arr = str.split( "," );
 		gems = new Gem[arr.length];
 		for( int i = 0; i < arr.length; i++ ){
-			Gem g = new Gem();
-			gems[i] = g;
+//			Gem g = 
+//			gems[i] = g;
+			//TODO 这里要好好思考一下
 		}
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	
 	@Override
 	public String toString() {
-		return "Equipment [templet=" + templet.getTempletId() + ", id=" + id + ", level="
-				+ level + ", gems=" + Arrays.toString(gems) + "]";
+		return "Equipment " + super.toString() + ", gems=" + Arrays.toString(gems) + "]";
 	}
 
-	@Override
-	public ErrorCode levelUp() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public void buildContent() {
-		// TODO Auto-generated method stub
+	public void buildTransformStream( ByteBuffer buffer ) {
 		
 	}
 
@@ -102,6 +71,10 @@ public class Equipment extends PropBase implements IEquipment, ICalculateAddtion
 		
 	}
 
-	
-	
+	@Override
+	public ErrorCode levelUp() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -46,7 +46,7 @@ public class GameServer extends Server{
 	/**
 	 * 初始化系统配置文件
 	 */
-	private void readCfg(){
+	private void readAllCfg(){
 		PropTempletCfg.init();
 		TaskTempletCfg.init();
 		MissionTempletCfg.init();
@@ -63,7 +63,7 @@ public class GameServer extends Server{
         InetAddress address = InetAddress.getByName( "localhost" );
 		
 		GameServer server = new GameServer( address, SystemCfg.PORT, new GameHandler() );
-		server.readCfg();
+		server.readAllCfg();
 
 		
 		server.start();

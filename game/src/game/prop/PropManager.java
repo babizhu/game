@@ -1,9 +1,12 @@
 package game.prop;
 
+import game.partner.PartnerBase;
 import game.prop.equipment.Equipment;
+import game.prop.equipment.EquipmentBase;
 import game.prop.equipment.EquipmentManager;
-import game.prop.equipment.IEquipment;
 import game.prop.stuff.StuffPropManager;
+
+
 import user.UserInfo;
 import util.ErrorCode;
 
@@ -67,20 +70,22 @@ public class PropManager {
 		return equipmentManager.getEquipmentById( propId );
 	}
 	
+	
 	/**
 	 * 道具升级，可能会包括装备，宝石等，参数会根据实际需求进行调整
-	 * @param propId
+	 * @param partner		此装备所在的伙伴，如无，用null代替
+	 * @param equipment
 	 * @return
 	 */
-	public ErrorCode levelUp( IEquipment equipment ){
+	public ErrorCode levelUp( PartnerBase partner, EquipmentBase equipment ){
 //		return equipmentManager.levelUp( propId );
 		return equipment.levelUp();
 		
 	}
 	
 	public ErrorCode mix( long propId ){
-		return null;
-		
+		return null;		
 	}
+	
 		
 }

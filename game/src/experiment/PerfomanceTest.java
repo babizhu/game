@@ -44,7 +44,7 @@ public class PerfomanceTest {
 				TaskBase t = e.getValue();
 				int i = 0;
 				if( t.getAcceptAwardSec() == 10 ){
-					i++;
+					i = i * 4;
 				}
 			}
 		}
@@ -60,7 +60,7 @@ public class PerfomanceTest {
 			for( TaskBase t : taskList ){
 				int i = 0;
 				if( t.getAcceptAwardSec() == 10 ){
-					i++;
+					i = i * 4;
 				}
 			}
 		}
