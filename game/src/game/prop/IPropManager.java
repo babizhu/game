@@ -8,7 +8,7 @@ public interface IPropManager extends ITransformStream {
 
 	ErrorCode add( PropUnit unit );
 	ErrorCode remove( PropUnit unit );
-	//ErrorCode levelUp( EquipmentBase e );
+	
 	/**
 	 * 计算放入当前物品之后，额外所需要的格子数，不包括原来所占有的格子
 	 * @param unit		要放入的物品
