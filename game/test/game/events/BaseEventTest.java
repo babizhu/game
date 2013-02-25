@@ -5,8 +5,8 @@ package game.events;
 
 import static org.junit.Assert.*;
 import game.events.EventBase;
-import game.events.EventManager;
-import game.events.all.UserLoginEvent;
+import game.events.Event;
+import game.events.all.user.UserLoginEvent;
 
 import java.nio.ByteBuffer;
 
@@ -74,7 +74,7 @@ public class BaseEventTest {
 	public void testToStringByteBuffer() {
 		ByteBuffer buf = ByteBuffer.allocate( 1024 );
 		buf.put( EventBase.HEAD );
-		buf.putShort( EventManager.USER_CREATE.toNum() );
+		buf.putShort( Event.USER_CREATE.toNum() );
 		buf.putShort( (short) 4 );
 		buf.putInt( 88 );
 		buf.put( EventBase.FOOT );

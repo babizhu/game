@@ -196,22 +196,15 @@ public class TaskManager {
 	
 	/**
 	 * 返回一个copy供外层使用，确保hashMap内的数据不被发布到本类以外
+	 * 由于采用了新的同步方式（在发包处进行加锁），因此这里不用返回拷贝了2013-02-25
 	 * @param templetId
 	 * @return
 	 * 		task:	找到相关task返回此task，<br>
 	 * 		null:	未找到返回null
 	 */
-	public TaskBase getTaskCopyByTempletId( short templetId ) {
+	public TaskBase getTaskByTempletId( short templetId ) {
 		TaskBase task = tasks.get( templetId );
-		if( task != null ){
-			TaskBase copyTask = task.getTemplet().createTask();
-			synchronized (task) {
-				copyTask.copy( task );				
-				return copyTask;
-			}
-		}
-		
-		return null;
+		return task;
 	}
 	
 	/**
@@ -244,7 +237,7 @@ public class TaskManager {
 	 * 获取玩家的所有的活动任务，代码先凑合用，需要修改，应该返回一个拷贝
 	 * @return
 	 */
-	public Map<Short, TaskBase> getAllActiveTasksCopy() {
+	public Map<Short, TaskBase> getAllActiveTasks() {
 		// TODO Auto-generated method stub
 		return tasks;
 	}

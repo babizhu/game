@@ -1,6 +1,6 @@
 package game.events;
 
-import game.events.all.UserLoginEvent;
+import game.events.all.user.UserLoginEvent;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -102,8 +102,8 @@ public abstract class EventBase implements IEvent {
 	public short getEventId (){
 		return packageNo;
 	}
-	public void setPackageNo( short packageNo ){
-		this.packageNo = packageNo;
+	public void setEventId( short eventId ){
+		this.packageNo = eventId;
 	}
 	
 	/**
@@ -113,7 +113,7 @@ public abstract class EventBase implements IEvent {
 	public static void main(String[] args) {
 		ByteBuffer buf = ByteBuffer.allocate( 1024 );
 		buf.put( EventBase.HEAD );
-		buf.putShort( EventManager.USER_CREATE.toNum() );
+		buf.putShort( Event.USER_CREATE.toNum() );
 		buf.putShort( (short) 4 );
 		buf.putInt( 88 );
 		buf.put( EventBase.FOOT );

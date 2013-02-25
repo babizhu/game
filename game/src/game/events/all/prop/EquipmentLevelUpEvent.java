@@ -1,4 +1,4 @@
-package game.events.all;
+package game.events.all.prop;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -14,6 +14,7 @@ import game.events.EventBase;
  */
 public class EquipmentLevelUpEvent  extends EventBase {
 	
+	private static final int PACK_LEN = 1024;
 	@Override
 	public void run(UserInfo user, ByteBuffer buf) throws IOException {
 		//System.err.println( user.getCon().getId() + " " + this.getClass());
@@ -24,5 +25,10 @@ public class EquipmentLevelUpEvent  extends EventBase {
 //			e.printStackTrace();
 //		}
 		//System.err.println( user.getCon().getId() + " " + this.getClass() + " end " + System.nanoTime() );
+		ByteBuffer response = buildEmptyPackage( PACK_LEN );
+		synchronized (user) {
+			
+			sendPackage( user.getCon(), response );
+		}
 	}
 }

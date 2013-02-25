@@ -2,7 +2,7 @@ package game.events.all;
 
 
 import static org.junit.Assert.assertEquals;
-import game.events.EventManager;
+import game.events.Event;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -42,7 +42,7 @@ public class UserCreateEventTest extends BaseEventTest{
 
 	@Override
 	public short getEventId() {
-		return EventManager.USER_CREATE.toNum();
+		return Event.USER_CREATE.toNum();
 	}
 	
 	@Test

@@ -1,7 +1,7 @@
 package game.events.all;
 
 
-import game.events.EventManager;
+import game.events.Event;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -58,7 +58,7 @@ public class EquipmentLevelUpEventTest extends BaseEventTest {
 
 	@Override
 	public short getEventId() {
-		return EventManager.EQUIPMENT_LEVEL_UP.toNum();
+		return Event.EQUIPMENT_LEVEL_UP.toNum();
 	}
 
 }

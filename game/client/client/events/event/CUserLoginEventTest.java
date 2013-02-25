@@ -2,7 +2,7 @@ package client.events.event;
 
 
 
-import game.events.EventManager;
+import game.events.Event;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -69,7 +69,7 @@ public class CUserLoginEventTest extends BaseEventTest {
 
 	@Override
 	public short getEventId() {
-		return EventManager.USER_LOGIN.toNum();
+		return Event.USER_LOGIN.toNum();
 	}
 	
 	/**

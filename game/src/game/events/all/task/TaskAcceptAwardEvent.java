@@ -20,19 +20,23 @@ import util.ErrorCode;
 @EventDescrip(desc = "玩家完成任务后发送的领奖包")
 public class TaskAcceptAwardEvent  extends EventBase {
 
+	private static final int PACK_LEN = 16;
 	/* (non-Javadoc)
 	 * @see game.packages.BasePackage#run(user.UserInfo, java.nio.ByteBuffer)
 	 */
 	@Override
-	public void run(UserInfo user, ByteBuffer buf) throws IOException {
+	public void run( UserInfo user, ByteBuffer buf ) throws IOException {
 		short templetId = buf.getShort();
-		ErrorCode code = user.getTaskManager().acceptAward( templetId );
-		
-		ByteBuffer buffer = buildEmptyPackage( 16 );
-
-		buffer.putShort( (short) code.ordinal() );
-		buffer.putShort( templetId );
-		sendPackage( user.getCon(), buffer );
+		ByteBuffer response = buildEmptyPackage( PACK_LEN );
+		synchronized (user) {
+			
+			ErrorCode code = user.getTaskManager().acceptAward( templetId );
+			
+			
+			response.putShort( (short) code.ordinal() );
+			response.putShort( templetId );
+			sendPackage( user.getCon(), response );
+		}
 		
 	}
 

@@ -2,11 +2,15 @@ package game.events;
 
 
 import game.events.all.*;
-import game.events.all.battle.SendBattleSituation;
+import game.events.all.message.SendMsgEvent;
+import game.events.all.prop.EquipmentLevelUpEvent;
 import game.events.all.task.TaskAcceptAwardEvent;
 import game.events.all.task.TaskAcceptEvent;
 import game.events.all.task.TaskGetAllActiveEvent;
 import game.events.all.task.TaskGetEvent;
+import game.events.all.user.UserCreateEvent;
+import game.events.all.user.UserExitEvent;
+import game.events.all.user.UserLoginEvent;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -27,10 +31,10 @@ import user.UserInfo;
  * @author liukun
  * 2012-8-25
  */
-public enum EventManager {
+public enum Event {
 	
-
 	SYSTEM_SEND_ERROR_CODE				( 100, 		new SystemSendErrorCodeEvent() ),	
+	SYSTEM_SEND_MSG						( 99, 		new SendMsgEvent() ),
 	/*********************************系统保留******************************************/
 	
 	USER_LOGIN							( 201, 		new UserLoginEvent() ),
@@ -57,20 +61,20 @@ public enum EventManager {
 	private final short 			number;
 	private final EventBase 		eventInstance;
 	
-	EventManager( int value, EventBase eventInstance ) {
+	Event( int value, EventBase eventInstance ) {
 		if( value >= Short.MAX_VALUE || value < 0 ){
 			throw new IllegalArgumentException( "包号不符合规范：" + value );
 		}
 		this.number =  (short) value;
 		this.eventInstance = eventInstance;
-		this.eventInstance.setPackageNo( number );
+		this.eventInstance.setEventId( number );
 	}
-	private static final Map<Short, EventManager> numToEnum = new HashMap<Short, EventManager>();
+	private static final Map<Short, Event> numToEnum = new HashMap<Short, Event>();
 	
 	static{
-		for( EventManager a : values() ){
+		for( Event a : values() ){
 			
-			EventManager p = numToEnum.put( a.number, a );
+			Event p = numToEnum.put( a.number, a );
 			if( p != null ){
 				throw new RuntimeException( "通信包" + a.number + "重复了" );
 			}
@@ -83,7 +87,7 @@ public enum EventManager {
 	public short toNum() {
 		return number;
 	}
-	public static EventManager fromNum( short n ){
+	public static Event fromNum( short n ){
 		return numToEnum.get( n );
 	}
 	
@@ -105,7 +109,7 @@ public enum EventManager {
 		Formatter f = new Formatter( System.out );
 		f.format( "%-15s %-100s %-10s \n", "包号", "类别", "功能说明" );
 		f.format( "%-15s %-100s %-10s \n", "－－", "－－", "－－－－" );
-		for( EventManager p : values() ){
+		for( Event p : values() ){
 			
 			Class<?> c = p.eventInstance.getClass();
 			EventDescrip desc = c.getAnnotation(EventDescrip.class);
@@ -116,7 +120,7 @@ public enum EventManager {
 		}
 		System.out.println( "--------------------------HTML---------------------------------");
 		StringBuilder html = new StringBuilder( "<table><tr><td>包号</td><td>类别</td><td>功能说明</td></tr><tr>" );
-		for( EventManager p : values() ){
+		for( Event p : values() ){
 			
 			Class<?> c = p.eventInstance.getClass();
 			EventDescrip desc = c.getAnnotation(EventDescrip.class);

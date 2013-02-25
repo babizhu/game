@@ -3,7 +3,7 @@ package game.events.all.task;
 
 import static org.junit.Assert.assertEquals;
 
-import game.events.EventManager;
+import game.events.Event;
 import game.events.all.BaseEventTest;
 import game.events.all.UserLoginEventTest;
 import game.task.TaskBase;
@@ -70,7 +70,7 @@ public class TaskGetAllActiveEventTest extends BaseEventTest  {
 
 	@Override
 	public short getEventId() {
-		return EventManager.TASK_GET_ALL_ACTIVE.toNum();
+		return Event.TASK_GET_ALL_ACTIVE.toNum();
 	}
 
 }

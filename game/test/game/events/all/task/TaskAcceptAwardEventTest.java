@@ -2,7 +2,7 @@ package game.events.all.task;
 
 
 import static org.junit.Assert.assertEquals;
-import game.events.EventManager;
+import game.events.Event;
 import game.events.all.BaseEventTest;
 import game.events.all.UserLoginEventTest;
 import game.task.enums.TaskStatus;
@@ -118,6 +118,6 @@ public class TaskAcceptAwardEventTest  extends BaseEventTest{
 	@Override
 	public short getEventId() {
 		// TODO Auto-generated method stub
-		return EventManager.TASK_ACCEPT_AWARD.toNum();
+		return Event.TASK_ACCEPT_AWARD.toNum();
 	}
 }

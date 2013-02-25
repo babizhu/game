@@ -1,8 +1,10 @@
 package game.award;
 
+import game.ITransformStream;
+
 import java.nio.ByteBuffer;
 
-public class AwardInfo {
+public class AwardInfo implements ITransformStream {
 
 	private AwardContent 		award;
 	private short				propId;
@@ -52,12 +54,16 @@ public class AwardInfo {
 		this.number = number;
 	}
 	
-	public void buildBytes( ByteBuffer buffer ){
-		buffer.put( award.toNumber() );
+	
+
+	@Override
+	public void buildTransformStream(ByteBuffer buf) {
+		buf.put( award.toNumber() );
 		if( award == AwardContent.PROP ){
-			buffer.putShort( propId );
+			buf.putShort( propId );
 		}
-		buffer.putInt( number );
+		buf.putInt( number );
+		
 	}
 	
 }

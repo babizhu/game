@@ -5,7 +5,7 @@ package game.events;
 
 
 import static org.junit.Assert.assertEquals;
-import game.events.EventManager;
+import game.events.Event;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -53,7 +53,7 @@ public class EventTest {
 	@Test
 	public void testEvents(){
 		short errNumber = 1;
-		EventManager pack = EventManager.fromNum( errNumber );
+		Event pack = Event.fromNum( errNumber );
 		assertEquals( null, pack );
 	}
 

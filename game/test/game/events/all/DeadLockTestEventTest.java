@@ -4,7 +4,7 @@
 package game.events.all;
 
 
-import game.events.EventManager;
+import game.events.Event;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -114,6 +114,6 @@ public class DeadLockTestEventTest extends BaseEventTest {
 	 */
 	@Override
 	public short getEventId() {
-		return EventManager.DEAD_LOCK_TEST.toNum();
+		return Event.DEAD_LOCK_TEST.toNum();
 	}
 }

@@ -1,6 +1,6 @@
 package user;
 
-import game.events.EventManager;
+import game.events.Event;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -133,7 +133,7 @@ public class UserManager {
 	 * @return
 	 * @throws IOException 
 	 */
-	public ErrorCode packageRun( String name, EventManager pack, byte[] data ) throws IOException {
+	public ErrorCode packageRun( String name, Event pack, byte[] data ) throws IOException {
 
 		UserInfo user = getUserByName( name );
 		if( user == null ){

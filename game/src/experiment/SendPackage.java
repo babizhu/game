@@ -1,7 +1,7 @@
 package experiment;
 
 import game.events.EventBase;
-import game.events.EventManager;
+import game.events.Event;
 
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -74,7 +74,7 @@ public class SendPackage {
 
 	public static void main ( String[] args ) {
 		for( int i = 0; i < 1; i++ ){
-			new SendPackage().sendPackage( (short) EventManager.USER_LOGIN.toNum() );
+			new SendPackage().sendPackage( (short) Event.USER_LOGIN.toNum() );
 		}
 	}
 }

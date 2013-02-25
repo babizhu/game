@@ -22,19 +22,23 @@ import user.UserInfo;
 @EventDescrip(desc = "获取玩家的所有活动任务")
 public class TaskGetAllActiveEvent  extends EventBase {
 
+	private static final int PACK_LEN = 1024;
 	/* (non-Javadoc)
 	 * @see game.packages.BasePackage#run(user.UserInfo, java.nio.ByteBuffer)
 	 */
 	@Override
 	public void run(UserInfo user, ByteBuffer buf) throws IOException {
-		Map<Short,TaskBase> activeTasks = user.getTaskManager().getAllActiveTasksCopy();
-		ByteBuffer buffer = buildEmptyPackage( 1024 );
-		buffer.put( (byte) activeTasks.size() );
-		for( TaskBase t : activeTasks.values() ){
-			TaskGetEvent.buildTaskBytes( t, buffer );	
+		synchronized (user) {
+			
+			Map<Short,TaskBase> activeTasks = user.getTaskManager().getAllActiveTasks();
+			ByteBuffer response = buildEmptyPackage( PACK_LEN );
+			response.put( (byte) activeTasks.size() );
+			for( TaskBase t : activeTasks.values() ){
+				t.buildTransformStream(response);
+			}
+			
+			sendPackage( user.getCon(), response );
 		}
-		
-		sendPackage( user.getCon(), buffer );
 
 	}
 

@@ -1,5 +1,8 @@
 package game.task;
 
+import java.nio.ByteBuffer;
+
+import game.ITransformStream;
 import game.task.enums.TaskStatus;
 import game.task.templet.BaseTaskTemplet;
 import user.UserInfo;
@@ -14,7 +17,7 @@ import util.SystemTimer;
  * @author liukun
  * 
  */
-public  class TaskBase implements ITask{
+public  class TaskBase implements ITask, ITransformStream{
 	
 	
 	private BaseTaskTemplet	templet;
@@ -158,6 +161,15 @@ public  class TaskBase implements ITask{
 			return ErrorCode.TASK_HAS_ACCEPTED;
 		}  
 		return ErrorCode.SUCCESS;
+	}
+
+	@Override
+	public void buildTransformStream( ByteBuffer buf ) {
+		buf.putShort( getTemplet().getTempletId() );
+		buf.put( getStatus().toNum() );
+		String param = getParam() == null ? "" : getParam().toString();
+		UtilBase.encodeString( buf, param );
+		
 	}
 	
 

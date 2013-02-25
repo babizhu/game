@@ -16,7 +16,7 @@ import game.fighter.cfg.NpcFighterTempletCfg;
 import game.mission.cfg.MissionTempletCfg;
 
 /**
- * 和客户端进行通信测试
+ * 和客户端进行通信测试，专门用与测试的，不是正式的程序
  * @author liukun
  * 2013-1-22 下午6:17:37
  */

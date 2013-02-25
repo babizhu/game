@@ -1,6 +1,6 @@
 package user;
 
-import game.events.EventManager;
+import game.events.Event;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ class UserPackageManager {
 	/**
 	 * 接收的上一个包
 	 */
-	private EventManager						lastPack;
+	private Event						lastPack;
 	
 	/**
 	 * 上一次收包时间
@@ -41,7 +41,7 @@ class UserPackageManager {
 	 * @param packageNo
 	 * @return
 	 */
-	public synchronized boolean safeCheck( EventManager pack ){
+	public synchronized boolean safeCheck( Event pack ){
 		long current = SystemTimer.currentTimeMillis();
 		if( pack == lastPack && current - lastReceiveTime < MIN_INTERVAL_MILS ){
 			logger.debug( "packag:" + pack + current + "-" + lastReceiveTime  + "=" + (current - lastReceiveTime) );

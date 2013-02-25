@@ -1,4 +1,4 @@
-package game.events.all;
+package game.events.all.user;
 
 import game.events.EventBase;
 import game.events.EventDescrip;

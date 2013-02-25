@@ -2,7 +2,7 @@ package game.events.all;
 
 
 import static org.junit.Assert.assertEquals;
-import game.events.EventManager;
+import game.events.Event;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -200,6 +200,6 @@ public class UserLoginEventTest extends BaseEventTest {
 	@Override
 	public short getEventId() {
 //		return -1;
-		return EventManager.USER_LOGIN.toNum();
+		return Event.USER_LOGIN.toNum();
 	}
 }

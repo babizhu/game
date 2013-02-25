@@ -1,4 +1,4 @@
-package game.events.all;
+package game.events.all.user;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

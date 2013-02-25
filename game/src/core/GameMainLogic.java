@@ -1,8 +1,8 @@
 package core;
 
-import game.events.EventManager;
-import game.events.all.UserCreateEvent;
-import game.events.all.UserLoginEvent;
+import game.events.Event;
+import game.events.all.user.UserCreateEvent;
+import game.events.all.user.UserLoginEvent;
 
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ public final class GameMainLogic implements IGameLogic {
 	 * 处理客户端发送的包信息
 	 * 
 	 * @param con
-	 * @param packageNo
+	 * @param eventNo
 	 * @param data
 	 *            去除包头，包尾，包号，包长的附加信息的数据
 	 * 
@@ -43,35 +43,35 @@ public final class GameMainLogic implements IGameLogic {
 	 * @throws IOException
 	 */
 	@Override
-	public void packageRun( INonBlockingConnection con, short packageNo, byte[] data ) throws IOException {
+	public void packageRun( INonBlockingConnection con, short eventNo, byte[] data ) throws IOException {
 		
-		EventManager pack = EventManager.fromNum( packageNo );
+		Event event = Event.fromNum( eventNo );
 
 		ErrorCode code = ErrorCode.SUCCESS;
 
 		String name = (String) con.getAttachment();
-		logger.debug( (buildPrefixStr( con, name ) + "通信包：" + (pack == null ? packageNo : pack)) );
-		if( pack == null ) {
+		logger.debug( (buildPrefixStr( con, name ) + "通信包：" + (event == null ? eventNo : event)) );
+		if( event == null ) {
 			code = ErrorCode.PACKAGE_NOT_FOUND;
 		} else {
 			try{
 				ByteBuffer buf = ByteBuffer.wrap( data );
-				if( pack == EventManager.USER_LOGIN ){
+				if( event == Event.USER_LOGIN ){
 					if( name != null ){
 						code = ErrorCode.USER_HAS_LOGIN;
 					}
 					else{
-						UserLoginEvent p = (UserLoginEvent) EventManager.USER_LOGIN.getEventInstance();
+						UserLoginEvent p = (UserLoginEvent) Event.USER_LOGIN.getEventInstance();
 						p.run( con, buf );
 					}
 					
 				}
-				else if( pack == EventManager.USER_CREATE ){
+				else if( event == Event.USER_CREATE ){
 					if( name != null ){
 						code = ErrorCode.USER_HAS_LOGIN;
 					}
 					else{
-						UserCreateEvent p = (UserCreateEvent) EventManager.USER_CREATE.getEventInstance();
+						UserCreateEvent p = (UserCreateEvent) Event.USER_CREATE.getEventInstance();
 						p.run( con, buf );
 					}
 				}
@@ -80,7 +80,7 @@ public final class GameMainLogic implements IGameLogic {
 						code = ErrorCode.USER_NOT_LOGIN;
 					}
 					else{
-						code = UserManager.getInstance().packageRun( name, pack, data );
+						code = UserManager.getInstance().packageRun( name, event, data );
 					}
 				}
 			}
@@ -91,7 +91,7 @@ public final class GameMainLogic implements IGameLogic {
 
 		if (code != ErrorCode.SUCCESS) {
 		
-			logger.debug( buildPrefixStr( con, name ) + "错误码:[" + code + "] 包:" + pack + "[" + packageNo + "] " + name );
+			logger.debug( buildPrefixStr( con, name ) + "错误码:[" + code + "] 包:" + event + "[" + eventNo + "] " + name );
 		}
 	}
 	
