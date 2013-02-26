@@ -1,4 +1,4 @@
-package chat;
+package message;
 
 import game.events.Event;
 import game.events.all.message.SendMsgEvent;
@@ -26,7 +26,7 @@ public class ChatRoom implements IChat{
 		UtilBase.encodeString( msg, content );
 		SendMsgEvent p = (SendMsgEvent) Event.SYSTEM_SEND_MSG.getEventInstance();
 		for( UserInfo u : users ){
-			p.run( u, msg );
+			p.run( u, msg.asReadOnlyBuffer() );
 		}
 	}
 

@@ -45,7 +45,7 @@ public class TaskGetEvent extends EventBase {
 		
 		synchronized (user) {
 			
-			TaskBase task = user.getTaskManager().getTaskByTempletId(templetId);
+			TaskBase task = user.getTaskManager().getTaskByTempletId( templetId );
 			if( task != null ){
 				ByteBuffer response = buildEmptyPackage( PACK_LEN );
 				task.buildTransformStream( response );

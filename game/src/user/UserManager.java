@@ -54,7 +54,7 @@ public class UserManager {
 			user.setConClose();
 			return db.update(user);
 		}
-		return ErrorCode.UNKNOW_ERROR;
+		return ErrorCode.USER_INVALID_LOGIN;
 	}
 	
 	
@@ -68,7 +68,6 @@ public class UserManager {
 		if( code == ErrorCode.SUCCESS ){
 			user.getTaskManager().addFirstTask();
 		}
-//		doLogin( user );
 		return code;
 	}
 	
@@ -94,7 +93,7 @@ public class UserManager {
 	 * 			如果不存在则返回null
 	 * 
 	 */
-	public UserInfo getUserByName(String name) {
+	public UserInfo getUserByName( String name ) {
 		if( name == null ){
 			return null;
 		}
@@ -162,7 +161,7 @@ public class UserManager {
 	 * 
 	 * 外层保证玩家不会重复登陆（重复发送登陆包）
 	 */
-	public ErrorCode login( INonBlockingConnection con, ByteBuffer buf ) throws IOException {
+	public synchronized ErrorCode login( INonBlockingConnection con, ByteBuffer buf ) throws IOException {
 		
 		String name = util.UtilBase.decodeString( buf );
 
