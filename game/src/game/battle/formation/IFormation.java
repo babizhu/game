@@ -34,15 +34,4 @@ public interface IFormation {
 	 */
 	boolean isAllDie();
 	
-//	/**
-//	 * 对防守方进行一系列改造，包括
-//	 * 所有位置+9
-//	 * 镜面翻转
-//	 * 重新按照位置信息排序
-//	 * 对于mission里面的阵型而言，可以在读取配置表的时候，就执行此代码，避免每次战斗前反复执行
-//	 */
-//	void formatDefender( BaseFighter fighter );	
-	
-	
-	
 }

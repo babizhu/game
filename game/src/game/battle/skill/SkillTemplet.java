@@ -6,7 +6,7 @@ import game.battle.formula.Formula;
 import java.util.List;
 
 public class SkillTemplet {
-	private byte						id;
+	private final byte					id;
 	private String						name;
 	private String						desc;
 	
@@ -36,12 +36,11 @@ public class SkillTemplet {
 	private Formula						buffFormula;
 	private byte						buffId;
 
+	public SkillTemplet( byte id ) {
+		this.id = id;
+	}
 	public byte getId() {
 		return id;
-	}
-
-	public void setId(byte id) {
-		this.id = id;
 	}
 
 	public String getName() {

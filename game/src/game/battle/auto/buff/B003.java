@@ -14,6 +14,7 @@ import game.fighter.FighterBase;
 public class B003 extends BuffBase {
 
 	private static final int TURNS = 3;						//持续回合数
+	
 	/**
 	 * 要减的hp
 	 */

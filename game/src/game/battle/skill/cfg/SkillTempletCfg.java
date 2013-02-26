@@ -46,15 +46,16 @@ private static final Map<Byte,SkillTemplet> skillTemplets = new HashMap<Byte, Sk
 		try {
 			document = builder.build( FILE );
 			Element root = document.getRootElement();  
-			List<?> fighterList= root.getChildren( "skill" ); 
+			List<Element> fighterList= root.getChildren( "skill" ); 
 			
 			for( int i = 0; i < fighterList.size(); i++ ){
-				SkillTemplet templet = new SkillTemplet( );
 				Element element = (Element) fighterList.get( i );
-				templet.setId( Byte.parseByte( element.getChildText( "id" ) ) );
+				byte id = Byte.parseByte( element.getChildText( "id" ) );
+				SkillTemplet templet = new SkillTemplet( id );
 				templet.setName( element.getChildText( "name" ) );
 				templet.setDesc( element.getChildText( "desc" ) );
 				String enemy = element.getChildText( "enemy" );
+				
 				if( enemy != null && !enemy.isEmpty() ){
 					templet.setEnemy( ChooseFighters.valueOf( enemy ) );
 					templet.setEffectOnEnemy( parseSkillEffect( element.getChildText( "enemy_effect" ) ) );
@@ -111,7 +112,7 @@ private static final Map<Byte,SkillTemplet> skillTemplets = new HashMap<Byte, Sk
 	 * @return
 	 */
 	private static float[] parseArgument( String[] content ){
-		int magicNumber = 2;//2 for FighterAttribute和所需的公式
+		int magicNumber = 2;//2 for FighterAttribute and formula
 		int size = content.length - magicNumber;//2 for FighterAttribute和所需的公式
 		
 		float[] arguments = new float[size];

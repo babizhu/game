@@ -54,7 +54,7 @@ public class UserManager {
 			user.setConClose();
 			return db.update(user);
 		}
-		return ErrorCode.UNKNOW_ERROR;
+		return ErrorCode.USER_INVALID_LOGIN;
 	}
 	
 	
@@ -68,7 +68,6 @@ public class UserManager {
 		if( code == ErrorCode.SUCCESS ){
 			user.getTaskManager().addFirstTask();
 		}
-//		doLogin( user );
 		return code;
 	}
 	
@@ -80,7 +79,7 @@ public class UserManager {
 		StringBuilder sb = new StringBuilder( "online user[\n");
 		for( Entry<String, UserInfo> e : onlineUsers.entrySet() ){
 			sb.append( "[" );
-			sb.append( e.getValue() );
+			sb.append( e.getValue() + "|" + e.getKey() );
 			sb.append( "]\n" );
 		}
 		sb.append( "]" );
@@ -94,7 +93,7 @@ public class UserManager {
 	 * 			如果不存在则返回null
 	 * 
 	 */
-	public UserInfo getUserByName(String name) {
+	public UserInfo getByName( String name ) {
 		if( name == null ){
 			return null;
 		}
@@ -104,8 +103,7 @@ public class UserManager {
 			if( code != ErrorCode.SUCCESS ){
 				return null;
 			}
-			onlineUsers.putIfAbsent( name, user );
-			
+			onlineUsers.putIfAbsent( name, user );			
 		}
 		return onlineUsers.get( name );
 	}
@@ -116,12 +114,12 @@ public class UserManager {
 	 * @return
 	 * 
 	 */
-	public UserInfo getUserByNickName( String nickName ) {
+	public UserInfo getByNickName( String nickName ) {
 		String name = db.getNameByNickName( nickName );
 		if( name == null ){
 			return null;
 		}
-		return getUserByName( name );
+		return getByName( name );
 	}
 	
 	/**
@@ -133,9 +131,9 @@ public class UserManager {
 	 * @return
 	 * @throws IOException 
 	 */
-	public ErrorCode packageRun( String name, Event pack, byte[] data ) throws IOException {
+	public ErrorCode eventRun( String name, Event pack, byte[] data ) throws IOException {
 
-		UserInfo user = getUserByName( name );
+		UserInfo user = getByName( name );
 		if( user == null ){
 			return ErrorCode.USER_NOT_FOUND;
 		}
@@ -162,11 +160,11 @@ public class UserManager {
 	 * 
 	 * 外层保证玩家不会重复登陆（重复发送登陆包）
 	 */
-	public ErrorCode login( INonBlockingConnection con, ByteBuffer buf ) throws IOException {
+	public synchronized ErrorCode login( INonBlockingConnection con, ByteBuffer buf ) throws IOException {
 		
 		String name = util.UtilBase.decodeString( buf );
 
-		UserInfo user = getUserByName( name );
+		UserInfo user = getByName( name );
 		if( user == null ){
 			return ErrorCode.USER_NOT_FOUND;
 		}
@@ -235,7 +233,7 @@ public class UserManager {
 		begin = System.nanoTime();
 		String nickName = "巴比猪1";//真实存在的昵称
 		for( int i = 0; i < 1000; i++ ){
-			UserManager.getInstance().getUserByNickName(nickName);
+			UserManager.getInstance().getByNickName(nickName);
 		}
 		System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
 	}

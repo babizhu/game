@@ -10,7 +10,11 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 用于解析战况的，主要用于验证战斗模式是否正确
+ * @author Administrator
+ * 2013-2-28 下午3:29:17
+ */
 public class ParseBattleSituation {
 
 	IFormation 				attackers,defenders;

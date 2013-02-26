@@ -27,8 +27,7 @@ public enum FighterAttribute {
 		@Override
 		public
 		void run(FighterBase fighter, int numToChange) {
-			fighter.setSp( fighter.getSp() + numToChange );
-			
+			fighter.setSp( fighter.getSp() + numToChange );			
 		}
 	};
 	

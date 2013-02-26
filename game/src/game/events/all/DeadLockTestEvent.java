@@ -53,7 +53,7 @@ public class DeadLockTestEvent extends EventBase {
 			String otherName = name.equals("刘昆0") ? "刘昆1" : "刘昆0";
 			System.out.println(Thread.currentThread() + "\t" + user.getName()
 					+ "企图寻找" + otherName);
-			UserInfo user2 = UserManager.getInstance().getUserByName(otherName);
+			UserInfo user2 = UserManager.getInstance().getByName(otherName);
 			if (user2 == null) {
 				System.out.println("未找到user2,请找数据库中已有的用户名进行测试");
 				return;

@@ -50,15 +50,15 @@ public class UserManagerTest {
 	@Test
 	public void testGetUserByName() {
 		String name = "刘昆1";//真实存在的用户名
-		UserInfo user = UserManager.getInstance().getUserByName( name );
+		UserInfo user = UserManager.getInstance().getByName( name );
 		assertEquals( "巴比猪1", user.getNickName() );
 		
 		name = "不得不离去";//不存在的昵称
-		user = UserManager.getInstance().getUserByName( name );
+		user = UserManager.getInstance().getByName( name );
 		assertEquals( null, user );
 		
 		name = null;//null
-		user = UserManager.getInstance().getUserByName( name );
+		user = UserManager.getInstance().getByName( name );
 		assertEquals( null, user );
 		
 	}
@@ -66,19 +66,19 @@ public class UserManagerTest {
 	@Test
 	public void testGetUserByNickName() {
 		String nickName = null;//null昵称
-		UserInfo user = UserManager.getInstance().getUserByNickName(nickName);
+		UserInfo user = UserManager.getInstance().getByNickName(nickName);
 		assertEquals( user, null );
 		
 		nickName = "";//空白昵称
-		user = UserManager.getInstance().getUserByNickName(nickName);
+		user = UserManager.getInstance().getByNickName(nickName);
 		assertEquals( null, user );		
 		
 		nickName = "巴比猪1";//真实存在的昵称
-		user = UserManager.getInstance().getUserByNickName(nickName);
+		user = UserManager.getInstance().getByNickName(nickName);
 		assertEquals( "刘昆1", user.getName() );
 		
 		nickName = "不得不离去";//不存在的昵称
-		user = UserManager.getInstance().getUserByNickName(nickName);
+		user = UserManager.getInstance().getByNickName(nickName);
 		assertEquals( null, user );
 		
 	}

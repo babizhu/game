@@ -40,7 +40,7 @@ public class PropManagerTest {
 	@Test
 	public void testPropManager() {
 		String name = "bbz";
-		UserInfo user = UserManager.getInstance().getUserByName(name );
+		UserInfo user = UserManager.getInstance().getByName(name );
 		PropManager pm = user.getPropManager();
 		assertEquals( 25, pm.getFreeGridCount() );
 		
@@ -56,7 +56,7 @@ public class PropManagerTest {
 	@Test
 	public void testAdd() {
 		String name = "刘昆0";
-		UserInfo user = UserManager.getInstance().getUserByName(name );
+		UserInfo user = UserManager.getInstance().getByName(name );
 		PropManager pm = user.getPropManager();
 		
 		short templetId = 10000;
@@ -107,7 +107,7 @@ public class PropManagerTest {
 	@Test
 	public void testGetEquipmentById() {
 		String name = "bbz";
-		UserInfo user = UserManager.getInstance().getUserByName(name );
+		UserInfo user = UserManager.getInstance().getByName(name );
 		PropManager pm = user.getPropManager();
 		long id = 1;
 		EquipmentBase e = pm.getEquipmentById( id );

@@ -30,7 +30,7 @@ public class UserLoginEvent extends EventBase {
 		
 		if( code == ErrorCode.SUCCESS ){
 			String name = (String) con.getAttachment();
-			UserInfo user = UserManager.getInstance().getUserByName( name );
+			UserInfo user = UserManager.getInstance().getByName( name );
 			UtilBase.encodeString( buffer, user.getNickName() );	//昵称
 			buffer.put( user.getSex() );							//性别
 			buffer.put( (byte) (user.isAdult() ? 1 : 0)  );			//是否成年

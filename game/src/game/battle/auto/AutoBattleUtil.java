@@ -117,17 +117,6 @@ public class AutoBattleUtil implements IBattleUtil {
 
 		return info;
 	}
-	public static void main(String[] args) {
-		float r = 100f / 133;
-		System.out.println( r );
-		
-		r = (float)200 / 30;
-		System.out.println( r );
-		
-		int damage = 301;
-		damage *= BLOCK_DAMAGE_RATE;
-		System.out.println( damage);
-	}
 
 	@Override
 	public int calcCounterAttackDamage(FighterBase attacker, FighterBase defender) {
@@ -138,6 +127,18 @@ public class AutoBattleUtil implements IBattleUtil {
 	@Override
 	public Comparator<FighterBase> getOrderComparator() {
 		return speedComparator;
+	}
+
+	public static void main(String[] args) {
+		float r = 100f / 133;
+		System.out.println( r );
+		
+		r = (float)200 / 30;
+		System.out.println( r );
+		
+		int damage = 301;
+		damage *= BLOCK_DAMAGE_RATE;
+		System.out.println( damage);
 	}
 	
 }

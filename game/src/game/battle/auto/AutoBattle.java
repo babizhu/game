@@ -195,7 +195,7 @@ public class AutoBattle extends BattleBase {
 		boolean isHit = true;
 		battleSituation.putEffectCount( (byte) effects.size() );
 		for( SkillEffect se : effects ){
-			if( se.getAttribute() == FighterAttribute.SUB_HP ){//和其他属性不同，技能攻击需要特殊处理
+			if( se.getAttribute() == FighterAttribute.SUB_HP ){//和其他属性不同，技能攻击HP的需要特殊处理
 				AttackInfo info = util.calcAttackInfo( attacker, defender, se.getFormula(), se.getArguments() );
 				battleSituation.putSkillInfo( se.getAttribute(), info );
 				

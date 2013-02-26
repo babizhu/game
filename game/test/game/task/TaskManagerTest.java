@@ -109,7 +109,7 @@ public class TaskManagerTest {
 		manager.doTask( TaskType.DIRECT , 10001 );//直接完成10001号任务，开启一个可接新任务10003
 		code = manager.acceptTask( (short) 10003 );//接10003任务，目前程序设定是开启的同时即完成该道具收集任务，并开启后继任务10004
 		assertEquals( ErrorCode.SUCCESS, code );
-		assertEquals( TaskStatus.NO_REWARD, manager.getTaskByTempletId((short) 10003).getStatus() );//检测该任务是否完成
+		assertEquals( TaskStatus.NO_REWARD, manager.getByTempletId((short) 10003).getStatus() );//检测该任务是否完成
 		
 		user.setLevel( TaskTempletCfg.getTempletById( (short) 10004 ).getRequiredLevel() );//赋值合适的用户等级
 		manager.acceptTask( (short) 10004 );//顺便接10004任务，方便TaskAcceptPackageTest类测试
@@ -121,20 +121,20 @@ public class TaskManagerTest {
 		/********************************************************测试DIRECT_COUNT任务************************************************/
 		manager.acceptTask( (short) 10005 );
 		manager.doTask( TaskType.DIRECT_COUNT, 10005 );//做一次任务
-		assertEquals( TaskStatus.ACCEPT, manager.getTaskByTempletId( (short) 10005 ).getStatus() );
+		assertEquals( TaskStatus.ACCEPT, manager.getByTempletId( (short) 10005 ).getStatus() );
 		
 
-		int count = (Integer) manager.getTaskByTempletId( (short) 10005 ).getParam();
+		int count = (Integer) manager.getByTempletId( (short) 10005 ).getParam();
 		assertEquals( 1, count );
 		
 		for( int i = 0; i < 9; i++ ){
 			manager.doTask( TaskType.DIRECT_COUNT, 10005 );//循环做剩下的9次任务
 		}
-		assertEquals( TaskStatus.NO_REWARD, manager.getTaskByTempletId( (short) 10005 ).getStatus() );//任务已经完成
+		assertEquals( TaskStatus.NO_REWARD, manager.getByTempletId( (short) 10005 ).getStatus() );//任务已经完成
 		code = manager.doTask( TaskType.DIRECT_COUNT, 10005 );//做第11次任务,已经无法找到此任务，
 		assertEquals( ErrorCode.TASK_NOT_FOUND, code );
 		
-		count = (Integer) manager.getTaskByTempletId( (short) 10005 ).getParam();
+		count = (Integer) manager.getByTempletId( (short) 10005 ).getParam();
 
 		assertEquals( 10, count );
 		/********************************************************测试DIRECT_COUNT任务************************************************/
@@ -165,7 +165,7 @@ public class TaskManagerTest {
 		//System.out.println( manager );
 		manager.doTask( TaskType.DIRECT, 10002 );
 		
-		assertEquals( TaskStatus.NO_REWARD, manager.getTaskByTempletId((short) 10002).getStatus() );//检测该任务是否完成
+		assertEquals( TaskStatus.NO_REWARD, manager.getByTempletId((short) 10002).getStatus() );//检测该任务是否完成
 		
 	}
 

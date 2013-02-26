@@ -202,7 +202,7 @@ public class TaskManager {
 	 * 		task:	找到相关task返回此task，<br>
 	 * 		null:	未找到返回null
 	 */
-	public TaskBase getTaskByTempletId( short templetId ) {
+	public TaskBase getByTempletId( short templetId ) {
 		TaskBase task = tasks.get( templetId );
 		return task;
 	}

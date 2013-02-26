@@ -8,24 +8,7 @@ import java.util.Comparator;
 
 public interface IBattleUtil {
 
-//
-//	/**
-//	 * 计算普通攻击的各种信息情况
-//	 * @param attacker
-//	 * @param defender
-//	 * @return
-//	 */
-//	AttackInfo normalAttack(BaseFighter attacker, BaseFighter defender );
-//
-//	/**
-//	 * 计算技能伤害
-//	 * @param attacker
-//	 * @param defender
-//	 * @param formula
-//	 * @return
-//	 */
-//	AttackInfo skillAttack(BaseFighter attacker, BaseFighter defender, IFormula formula );
-//	
+
 	/**
 	 * 计算反击的伤害
 	 * @param attacker
