@@ -103,6 +103,7 @@ public class UserManager {
 			if( code != ErrorCode.SUCCESS ){
 				return null;
 			}
+			
 			onlineUsers.putIfAbsent( name, user );			
 		}
 		return onlineUsers.get( name );
