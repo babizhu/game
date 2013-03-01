@@ -1,4 +1,4 @@
-package game.battle;
+package game.battle.buff;
 
 import game.fighter.FighterBase;
 

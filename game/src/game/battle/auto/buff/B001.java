@@ -1,7 +1,7 @@
 package game.battle.auto.buff;
 
-import game.battle.BuffBase;
-import game.battle.BuffRunPoint;
+import game.battle.buff.BuffBase;
+import game.battle.buff.BuffRunPoint;
 import game.fighter.FighterBase;
 
 

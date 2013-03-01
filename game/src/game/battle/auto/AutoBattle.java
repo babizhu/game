@@ -1,9 +1,9 @@
 package game.battle.auto;
 
 import game.battle.BattleBase;
-import game.battle.BuffRunPoint;
 import game.battle.IBattleUtil;
 import game.battle.Pet;
+import game.battle.buff.BuffRunPoint;
 import game.battle.formation.IFormation;
 import game.battle.formula.Formula;
 import game.battle.skill.SkillEffect;

@@ -1,8 +1,8 @@
 package game.battle.auto;
 
 
-import game.battle.BuffRunPoint;
 import game.battle.IBattleUtil;
+import game.battle.buff.BuffRunPoint;
 import game.battle.formula.Formula;
 import game.fighter.FighterBase;
 

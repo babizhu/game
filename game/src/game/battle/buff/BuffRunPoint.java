@@ -1,4 +1,4 @@
-package game.battle;
+package game.battle.buff;
 
 /**
  * buf起作用时候的时间点
