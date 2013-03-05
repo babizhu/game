@@ -7,7 +7,7 @@ import game.task.enums.TaskProperty;
 import game.task.enums.TaskType;
 
 
-public abstract class BaseTaskTemplet implements ITaskTemplet {
+public abstract class TaskTempletBase implements ITaskTemplet {
 
 	/**
 	 * 接此任务所需要的等级
@@ -43,7 +43,7 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 	/**
 	 * 本任务完成后，要开启的后继任务，如果不存在则为null
 	 */
-	BaseTaskTemplet[]	successorTemplet;
+	TaskTempletBase[]	successorTemplet;
 	
 	/**
 	 * 判断此任务是否应该接了之后立刻检测是否完成
@@ -84,7 +84,7 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 		this.taskType = type;
 	}
 
-	public BaseTaskTemplet[] getSuccessorTemplet() {
+	public TaskTempletBase[] getSuccessorTemplet() {
 		return successorTemplet;
 	}
 
@@ -93,10 +93,10 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 	 */
 	public void buildSuccessorTemplet() {
 		if( successorTempletId != null ){
-			successorTemplet = new BaseTaskTemplet[successorTempletId.length];
+			successorTemplet = new TaskTempletBase[successorTempletId.length];
 			int i = 0;
 			for( short s : successorTempletId ){
-				BaseTaskTemplet t = TaskTempletCfg.getTempletById( s );
+				TaskTempletBase t = TaskTempletCfg.getTempletById( s );
 				if( t == null ){
 					throw new IllegalArgumentException( "模板id为" + s + "的后继任务无法找到" );
 				}
@@ -175,7 +175,7 @@ public abstract class BaseTaskTemplet implements ITaskTemplet {
 			return null;
 		}
 		StringBuilder sb = new StringBuilder( "[" );
-		for( BaseTaskTemplet t : successorTemplet ){
+		for( TaskTempletBase t : successorTemplet ){
 			sb.append( t.name + "," );
 		}
 		String s = sb.toString();

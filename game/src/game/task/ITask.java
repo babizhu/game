@@ -1,6 +1,6 @@
 package game.task;
 
-import game.task.templet.BaseTaskTemplet;
+import game.task.templet.TaskTempletBase;
 import user.UserInfo;
 import util.ErrorCode;
 
@@ -36,7 +36,7 @@ public interface ITask {
 	 * 返回此任务关联的模板
 	 * @return
 	 */
-	BaseTaskTemplet	getTemplet();
+	TaskTempletBase	getTemplet();
 	
 	/**
 	 * 还原数据库保存的任务的额外参数信息<br>

@@ -8,7 +8,7 @@ import game.task.CustomTask;
  * @author liukun
  *
  */
-public class CustomTaskTemplet extends BaseTaskTemplet {
+public class CustomTaskTemplet extends TaskTempletBase {
 
 	@Override
 	public TaskBase createTask() {

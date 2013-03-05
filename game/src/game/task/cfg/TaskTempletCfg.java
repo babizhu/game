@@ -2,7 +2,7 @@ package game.task.cfg;
 
 import game.task.enums.TaskProperty;
 import game.task.enums.TaskType;
-import game.task.templet.BaseTaskTemplet;
+import game.task.templet.TaskTempletBase;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ import org.jdom2.input.SAXBuilder;
  *
  */
 public class TaskTempletCfg {
-	private static final Map<Short,BaseTaskTemplet> taskTemplets = new HashMap<Short, BaseTaskTemplet>();
+	private static final Map<Short,TaskTempletBase> taskTemplets = new HashMap<Short, TaskTempletBase>();
 	
 	static{
 		
@@ -52,7 +52,7 @@ public class TaskTempletCfg {
 				Element element = (Element) taskList.get( i );
 				//System.out.println( element.getChildText( "name" ) );
 				TaskType type = TaskType.valueOf( element.getChildText( "taskType" ) );
-				BaseTaskTemplet templet = type.createNewTemplet();
+				TaskTempletBase templet = type.createNewTemplet();
 				templet.setTempletId( Short.parseShort( element.getChildText( "templetId" ) ) );
 				templet.setSuccessorTempletId( element.getChildText( "successor" ) );
 				templet.setName( element.getChildText( "name" ) );
@@ -72,7 +72,7 @@ public class TaskTempletCfg {
 							System.out.println( templet );
 				********************************************************/
 				
-				BaseTaskTemplet bt = taskTemplets.put( templet.getTempletId(), templet );
+				TaskTempletBase bt = taskTemplets.put( templet.getTempletId(), templet );
 				if( bt != null ){
 					throw new RuntimeException( "任务" + templet.getTempletId() + "重复了" );
 				}
@@ -93,7 +93,7 @@ public class TaskTempletCfg {
 	 * 所有任务模板从配置表读取后，才能初始化后继任务，否则后继任务因为尚未被初始化为空会出问题
 	 */
 	private static void buildSuccessorTemplet(){
-		for( Entry<Short, BaseTaskTemplet> e : taskTemplets.entrySet() ){
+		for( Entry<Short, TaskTempletBase> e : taskTemplets.entrySet() ){
 			e.getValue().buildSuccessorTemplet();
 		}
 	}
@@ -102,7 +102,7 @@ public class TaskTempletCfg {
 	 * @param templetId
 	 * @return
 	 */
-	public static BaseTaskTemplet getTempletById( short templetId ){
+	public static TaskTempletBase getTempletById( short templetId ){
 		return taskTemplets.get( templetId );
 	}
 	public static void main(String[] args) {

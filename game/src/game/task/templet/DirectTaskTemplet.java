@@ -9,7 +9,7 @@ import game.task.enums.TaskType;
  * @author liukun
  *
  */
-public class DirectTaskTemplet extends BaseTaskTemplet {
+public class DirectTaskTemplet extends TaskTempletBase {
 
 	public DirectTaskTemplet() {
 		this.setTaskType( TaskType.DIRECT );

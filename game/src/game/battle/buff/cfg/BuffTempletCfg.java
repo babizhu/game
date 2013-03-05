@@ -1,5 +1,6 @@
 package game.battle.buff.cfg;
 
+import game.battle.buff.templet.BuffTempletBase;
 import game.battle.formation.ChooseFighters;
 import game.battle.formula.Formula;
 import game.battle.skill.SkillEffect;
@@ -25,19 +26,19 @@ import org.jdom2.input.SAXBuilder;
  */
 public class BuffTempletCfg {
 	
-private static final Map<Byte,SkillTemplet> skillTemplets = new HashMap<Byte, SkillTemplet>();
+private static final Map<Byte,BuffTempletBase> buffTemplets = new HashMap<Byte, BuffTempletBase>();
 	
 	/**
-	 * 此配置表必须先于NpcFighterTempletCfg初始化（每个npc都有相应的技能），因此无需提前手动调用
+	 * 
 	 */
 	static{
 		init();		
 	}
-	private static final String FILE = "resource/skill.xml";
+	private static final String FILE = "resource/buff.xml";
 	
 		
 	/**
-	 * 通过配置表读取Npc战士模板
+	 * 通过配置表读取buff模版
 	 */
 	private static void init(){
 		
@@ -51,7 +52,7 @@ private static final Map<Byte,SkillTemplet> skillTemplets = new HashMap<Byte, Sk
 			for( int i = 0; i < fighterList.size(); i++ ){
 				Element element = (Element) fighterList.get( i );
 				byte id = Byte.parseByte( element.getChildText( "id" ) );
-				SkillTemplet templet = new SkillTemplet( id );
+				BuffTempletBase templet = new BuffTempletBase( id );
 				templet.setName( element.getChildText( "name" ) );
 				templet.setDesc( element.getChildText( "desc" ) );
 				String enemy = element.getChildText( "enemy" );
@@ -71,7 +72,7 @@ private static final Map<Byte,SkillTemplet> skillTemplets = new HashMap<Byte, Sk
 					System.out.println( templet );
 				 ********************************************************/
 	
-				SkillTemplet temp = skillTemplets.put( templet.getId(), templet );
+				BuffTempletBase temp = buffTemplets.put( templet.getId(), templet );
 				if( temp != null ){
 					throw new RuntimeException( "技能" + templet.getId() + "重复了" );
 				}
@@ -127,14 +128,14 @@ private static final Map<Byte,SkillTemplet> skillTemplets = new HashMap<Byte, Sk
 	 * @param templetId
 	 * @return
 	 */
-	public static SkillTemplet getSkillTempletById( byte templetId ){
-		return skillTemplets.get( templetId );
+	public static BuffTempletBase getSkillTempletById( byte templetId ){
+		return buffTemplets.get( templetId );
 	}
 
 
 	public static void main(String[] args) {
 		
-		for( SkillTemplet t : skillTemplets.values() ){
+		for( BuffTempletBase t : buffTemplets.values() ){
 			
 			System.out.println( t );
 		}

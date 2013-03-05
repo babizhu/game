@@ -1,5 +1,6 @@
 package game.battle.buff;
 
+import game.battle.buff.templet.BuffTempletBase;
 import game.fighter.FighterBase;
 
 
@@ -7,24 +8,24 @@ public abstract class BuffBase {
 
 	protected boolean								isRemove = false;
 	
-	/**
-	 * 持续时间，在回合制中指回合数
-	 */
-	protected int									duration;									
+	BuffTempletBase									templet;
 	
 	/**
 	 * 拥有此buff的玩家
 	 */
-	protected FighterBase							self;
+	protected FighterBase							receiver;
 	
 	/**
-	 * 是否为减低buff，例如中毒效果
+	 * 发送buff的人
 	 */
-	protected boolean								isDeBuff = false;
+	protected FighterBase							sender;
 	
 	
-	public BuffBase( FighterBase fighter ) {
-		this.self = fighter;
+	
+	
+	public BuffBase( FighterBase receiver, FighterBase sender ) {
+		this.receiver = receiver;
+		this.sender = sender;
 	}
 	
 	/**
@@ -53,7 +54,7 @@ public abstract class BuffBase {
 	 * 通常用于主动消除此buff的效果，慎用！
 	 * @param isRemove
 	 */
-	public void setRemove(boolean isRemove) {
+	public void setRemove( boolean isRemove ) {
 		this.isRemove = isRemove;
 	}
 
@@ -70,11 +71,6 @@ public abstract class BuffBase {
 	protected void stop() {
 		isRemove = true;
 	}
-
-	public boolean isDeBuff() {
-		return isDeBuff;
-	}
-
-
+	
 	
 }

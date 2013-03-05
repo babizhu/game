@@ -3,7 +3,7 @@ package game.task;
 import game.task.cfg.TaskTempletCfg;
 import game.task.enums.TaskStatus;
 import game.task.enums.TaskType;
-import game.task.templet.BaseTaskTemplet;
+import game.task.templet.TaskTempletBase;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -128,7 +128,7 @@ public class TaskManager {
 	 * @param		任务模板
 	 */
 	public void addFirstTask(  ){
-		BaseTaskTemplet templet = TaskTempletCfg.getTempletById( TaskTempletCfg.FIRST_TASK_ID );
+		TaskTempletBase templet = TaskTempletCfg.getTempletById( TaskTempletCfg.FIRST_TASK_ID );
 		TaskBase task = templet.createTask();
 
 		ErrorCode code = db.add( task, user.getName() );
@@ -171,7 +171,7 @@ public class TaskManager {
 	 * @param task			已完成的任务
 	 */
 	private void finishTask( TaskBase task ){
-		BaseTaskTemplet templet = task.getTemplet();
+		TaskTempletBase templet = task.getTemplet();
 		addSuccessorTask( templet );
 	}
 	
@@ -180,12 +180,12 @@ public class TaskManager {
 	 * @param templet
 	 * 
 	 */
-	private void addSuccessorTask( BaseTaskTemplet templet ){
+	private void addSuccessorTask( TaskTempletBase templet ){
 		
-		BaseTaskTemplet[] successor = templet.getSuccessorTemplet();
+		TaskTempletBase[] successor = templet.getSuccessorTemplet();
 		if( successor != null ){
 			 
-			for( BaseTaskTemplet s : successor ){
+			for( TaskTempletBase s : successor ){
 				TaskBase newTask = s.createTask();
 				db.add( newTask, user.getName() );
 				tasks.putIfAbsent( s.getTempletId(), newTask );
@@ -244,7 +244,7 @@ public class TaskManager {
 	
 	public static void main ( String[] args ) {
 		short templetId = 10000;
-		BaseTaskTemplet t = TaskTempletCfg.getTempletById( templetId );
+		TaskTempletBase t = TaskTempletCfg.getTempletById( templetId );
 		TaskBase task = t.createTask();
 		task.parseParamFromStr( "" );
 		

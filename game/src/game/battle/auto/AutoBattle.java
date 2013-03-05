@@ -18,7 +18,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * 自动回合制的战斗模式
  * @author liukun
@@ -74,22 +73,15 @@ public class AutoBattle extends BattleBase {
 	private void init(){		
 		
 		allFighters.addAll( attackers.getAllFighters() );
-		allFighters.addAll( defenders.getAllFighters() );
-		
+		allFighters.addAll( defenders.getAllFighters() );		
 		Collections.sort( allFighters, util.getOrderComparator() );
 	}
-//	private IFormation getFriends( BaseFighter fighter ){
-//		return fighter.isLeft() ?  attackers : defenders;
-//	}
-//	private IFormation getEnemys( BaseFighter fighter ){
-//		return fighter.isLeft() ?  defenders : attackers;
-//	}
 
 	/**
 	 * 根据传入的战士获取相应的阵形
 	 * @param fighter
 	 * @param isFriend	
-	 * 			true：输入战士的阵形		false:相反的阵形
+	 * 			true：输入战士这一边的阵形		false:输入战士敌对的阵形
 	 * @return
 	 */
 	private IFormation getFormation( FighterBase fighter, boolean isFriend ){
@@ -123,13 +115,12 @@ public class AutoBattle extends BattleBase {
 				//混乱的状态
 				if( currentAttacker.isHunluan() ){
 					currentDefenders = getFormation( currentAttacker, true );
-				}else{
-					
+				}else{					
 					currentDefenders = getFormation( currentAttacker, false );
 				}
 				
 				if( currentAttacker.getSp() >= SKILL_ATTACK_NEED_SP ){
-					if( doSkillAttack( currentAttacker, currentDefenders  ) ){
+					if( doSkillAttacks( currentAttacker, currentDefenders  ) ){
 						isEnd = true;
 						break;
 					}
@@ -151,7 +142,7 @@ public class AutoBattle extends BattleBase {
 	}
 	
 	
-	private boolean doSkillAttack( FighterBase attacker, IFormation currentDefenderTeam ) {
+	private boolean doSkillAttacks( FighterBase attacker, IFormation currentDefenderTeam ) {
 		
 		SkillTemplet templet = attacker.getSkillTemplet();
 		
@@ -164,7 +155,7 @@ public class AutoBattle extends BattleBase {
 		if( enemys != null ){
 			for( FighterBase f : enemys ){
 				battleSituation.putFighter( f.getPosition() );
-				if( doSkillEffect( attacker, f, templet.getEffectOnEnemy() ) )//此战士所在团队挂了
+				if( doSkillAttack( attacker, f, templet.getEffectOnEnemy() ) )//此战士所在团队挂了
 				{
 					return true;
 				}
@@ -174,7 +165,7 @@ public class AutoBattle extends BattleBase {
 		if( friends != null ){
 			for( FighterBase f : friends ){
 				battleSituation.putFighter( f.getPosition() );
-				doSkillEffect( attacker, f, templet.getEffectOnFriend() );
+				doSkillAttack( attacker, f, templet.getEffectOnFriend() );
 			}
 		}
 		return false;		
@@ -191,7 +182,7 @@ public class AutoBattle extends BattleBase {
 	 * 
 	 *	注意：所有的SkillEffect中，ENEMY_HP必须排在最前面，后面的其他伤害都依赖于ENEMY_HP是否命中
 	 */
-	private boolean doSkillEffect( FighterBase attacker, FighterBase defender, List<SkillEffect> effects ){
+	private boolean doSkillAttack( FighterBase attacker, FighterBase defender, List<SkillEffect> effects ){
 		boolean isHit = true;
 		battleSituation.putEffectCount( (byte) effects.size() );
 		for( SkillEffect se : effects ){
@@ -251,15 +242,13 @@ public class AutoBattle extends BattleBase {
 
 	
 	/**
-
 	 * 格挡并反击流程，不用考虑命中与暴击，同样也没考虑防御者身上的buff，暂时先这样，有需求在修改
 	 * @param attacker
 	 * @param defender
 	 * @param defenderTeam
 	 * @return
 	 */
-	private boolean doBlockAndCounterAttack( FighterBase attacker, FighterBase defender ) {
-		
+	private boolean doBlockAndCounterAttack( FighterBase attacker, FighterBase defender ) {		
 		int damage = util.calcCounterAttackDamage( attacker, defender );
 		battleSituation.putCounterAttackDamage( (int) damage );//伤害值
 		return reduceHp( defender, damage );

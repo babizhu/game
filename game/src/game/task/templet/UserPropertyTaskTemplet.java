@@ -9,7 +9,7 @@ import game.task.enums.TaskType;
  * @author liukun
  *
  */
-public class UserPropertyTaskTemplet extends BaseTaskTemplet{ 
+public class UserPropertyTaskTemplet extends TaskTempletBase{ 
 	/**
 	 * 任务id
 	 */

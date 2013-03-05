@@ -11,7 +11,7 @@ import game.task.enums.TaskType;
  * @author liukun
  *
  */
-public class DirectCountTaskTemplet extends BaseTaskTemplet {
+public class DirectCountTaskTemplet extends TaskTempletBase {
 	
 	private int			needCount;
 	

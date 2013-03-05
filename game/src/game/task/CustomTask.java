@@ -1,11 +1,11 @@
 package game.task;
 
-import game.task.templet.BaseTaskTemplet;
+import game.task.templet.TaskTempletBase;
 import user.UserInfo;
 
 public class CustomTask extends TaskBase implements ITask {
 
-	public CustomTask( BaseTaskTemplet templet) {
+	public CustomTask( TaskTempletBase templet) {
 		super( templet );
 	}
 
@@ -19,7 +19,7 @@ public class CustomTask extends TaskBase implements ITask {
 	}
 
 	@Override
-	public BaseTaskTemplet getTemplet() {
+	public TaskTempletBase getTemplet() {
 		return null;
 	}
 }
