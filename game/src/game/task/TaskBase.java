@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 import game.ITransformStream;
 import game.task.enums.TaskStatus;
-import game.task.templet.BaseTaskTemplet;
+import game.task.templet.TaskTempletBase;
 import user.UserInfo;
 import util.UtilBase;
 import util.ErrorCode;
@@ -20,7 +20,7 @@ import util.SystemTimer;
 public  class TaskBase implements ITask, ITransformStream{
 	
 	
-	private BaseTaskTemplet	templet;
+	private TaskTempletBase	templet;
 	/**
 	 * 任务流水id
 	 */
@@ -51,7 +51,7 @@ public  class TaskBase implements ITask, ITransformStream{
 		return status;
 	}
 
-	public TaskBase(BaseTaskTemplet templet) {
+	public TaskBase(TaskTempletBase templet) {
 		this.status = TaskStatus.CAN_ACCEPT;
 		this.templet = templet;
 	}
@@ -140,7 +140,7 @@ public  class TaskBase implements ITask, ITransformStream{
 	}
 
 	@Override
-	public BaseTaskTemplet getTemplet() {
+	public TaskTempletBase getTemplet() {
 		return templet;
 
 	}

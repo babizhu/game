@@ -4,7 +4,7 @@ import game.task.TaskBase;
 import game.task.PropTask;
 import game.task.enums.TaskType;
 
-public class PropTaskTemplet extends BaseTaskTemplet{
+public class PropTaskTemplet extends TaskTempletBase{
 
 	private int				propId;
 	private int				needCount;

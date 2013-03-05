@@ -3,7 +3,7 @@ package game.task.cfg;
 import static org.junit.Assert.*;
 import game.task.enums.TaskProperty;
 import game.task.enums.TaskType;
-import game.task.templet.BaseTaskTemplet;
+import game.task.templet.TaskTempletBase;
 
 import org.junit.Test;
 
@@ -13,13 +13,13 @@ public class TaskTempletCfgTest {
 	public void testGetTempletById() {
 //		long begin = System.nanoTime();
 //		for( int i = 0; i < 10000000; i++ ){
-		BaseTaskTemplet t = TaskTempletCfg.getTempletById( (short) 10 );
+		TaskTempletBase t = TaskTempletCfg.getTempletById( (short) 10 );
 		assertNull( t );//不存在的任务模板
 		t = TaskTempletCfg.getTempletById( (short) 10000 );
 		assertEquals( t.getName(), "寻找刘老爷" );
 		assertEquals( t.getTaskType(), TaskType.DIRECT );
 		
-		BaseTaskTemplet successor = TaskTempletCfg.getTempletById( (short) 10001 );
+		TaskTempletBase successor = TaskTempletCfg.getTempletById( (short) 10001 );
 		assertEquals( successor, t.getSuccessorTemplet()[0] );//测试后继任务
 		
 		t = TaskTempletCfg.getTempletById( (short) 10001 );

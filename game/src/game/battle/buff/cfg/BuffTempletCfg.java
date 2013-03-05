@@ -1,5 +1,6 @@
 package game.battle.buff.cfg;
 
+import game.battle.buff.templet.BuffTempletBase;
 import game.battle.formation.ChooseFighters;
 import game.battle.formula.Formula;
 import game.battle.skill.SkillEffect;
@@ -25,19 +26,19 @@ import org.jdom2.input.SAXBuilder;
  */
 public class BuffTempletCfg {
 	
-private static final Map<Byte,SkillTemplet> skillTemplets = new HashMap<Byte, SkillTemplet>();
+private static final Map<Byte,BuffTempletBase> skillTemplets = new HashMap<Byte, BuffTempletBase>();
 	
 	/**
-	 * 此配置表必须先于NpcFighterTempletCfg初始化（每个npc都有相应的技能），因此无需提前手动调用
+	 * 
 	 */
 	static{
 		init();		
 	}
-	private static final String FILE = "resource/skill.xml";
+	private static final String FILE = "resource/buff.xml";
 	
 		
 	/**
-	 * 通过配置表读取Npc战士模板
+	 * 通过配置表读取buff模版
 	 */
 	private static void init(){
 		

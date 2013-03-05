@@ -1,6 +1,6 @@
 package game.task.enums;
 
-import game.task.templet.BaseTaskTemplet;
+import game.task.templet.TaskTempletBase;
 import game.task.templet.DirectCountTaskTemplet;
 import game.task.templet.DirectTaskTemplet;
 import game.task.templet.MissionTaskTemplet;
@@ -18,7 +18,7 @@ public enum TaskType {
 	 */
 	DIRECT {
 		@Override
-		public BaseTaskTemplet createNewTemplet() {
+		public TaskTempletBase createNewTemplet() {
 			return new DirectTaskTemplet();
 		}
 	},
@@ -29,7 +29,7 @@ public enum TaskType {
 	 */
 	COUNT {
 		@Override
-		public BaseTaskTemplet createNewTemplet() {
+		public TaskTempletBase createNewTemplet() {
 			return null;
 		}
 	},
@@ -39,7 +39,7 @@ public enum TaskType {
 	 */
 	PROP {
 		@Override
-		public BaseTaskTemplet createNewTemplet() {
+		public TaskTempletBase createNewTemplet() {
 			return new PropTaskTemplet();
 		}
 	},
@@ -50,7 +50,7 @@ public enum TaskType {
 	MISSION{
 
 		@Override
-		public BaseTaskTemplet createNewTemplet() {
+		public TaskTempletBase createNewTemplet() {
 			return new MissionTaskTemplet();
 		}
 		
@@ -62,7 +62,7 @@ public enum TaskType {
 	DIRECT_COUNT{
 
 		@Override
-		public BaseTaskTemplet createNewTemplet() {
+		public TaskTempletBase createNewTemplet() {
 			return new DirectCountTaskTemplet();
 		}
 		
@@ -73,10 +73,10 @@ public enum TaskType {
 	 */
 	CUSTOM {
 		@Override
-		public BaseTaskTemplet createNewTemplet() {
+		public TaskTempletBase createNewTemplet() {
 			return null;
 		}
 	};
 
-	 public abstract BaseTaskTemplet createNewTemplet();
+	 public abstract TaskTempletBase createNewTemplet();
 }

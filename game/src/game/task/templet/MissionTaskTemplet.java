@@ -9,7 +9,7 @@ import game.task.enums.TaskType;
  * @author liukun
  *
  */
-public class MissionTaskTemplet extends BaseTaskTemplet{ 
+public class MissionTaskTemplet extends TaskTempletBase{ 
 	/**
 	 * 任务id
 	 */
