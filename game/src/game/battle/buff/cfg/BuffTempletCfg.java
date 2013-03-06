@@ -35,7 +35,7 @@ private static final Map<Byte,BuffTempletBase> buffTemplets = new HashMap<Byte, 
 		init();		
 	}
 	private static final String FILE = "resource/buff.xml";
-	
+
 		
 	/**
 	 * 通过配置表读取buff模版
