@@ -29,6 +29,14 @@ public enum FighterAttribute {
 		void run(FighterBase fighter, int numToChange) {
 			fighter.setSp( fighter.getSp() + numToChange );			
 		}
+	},PHY_ATTACK(4){
+
+		@Override
+		public void run(FighterBase fighter, int numToChange) {
+			fighter.setPhyAttack( fighter.getPhyAttack() + numToChange );
+			
+		}
+		
 	};
 	
 	public abstract void run( FighterBase fighter, int numToChange );

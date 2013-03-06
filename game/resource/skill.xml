@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--技能配置表-->
-<!--注意：所有的SkillEffect中，ENEMY_HP必须排在最前面，后面的其他伤害都依赖于ENEMY_HP是否命中-->
+<!--注意：所有的SkillEffect中，SUB_HP必须排在最前面，后面的其他伤害都依赖于ENEMY_HP是否命中-->
 <!--注意：ADD_HP仅处理加血的情况，所有存在减血情况请采用SUB_HP-->
 <skills xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<skill>

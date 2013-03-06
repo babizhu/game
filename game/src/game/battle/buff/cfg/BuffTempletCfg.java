@@ -26,7 +26,7 @@ import org.jdom2.input.SAXBuilder;
  */
 public class BuffTempletCfg {
 	
-private static final Map<Byte,BuffTempletBase> skillTemplets = new HashMap<Byte, BuffTempletBase>();
+private static final Map<Byte,BuffTempletBase> buffTemplets = new HashMap<Byte, BuffTempletBase>();
 	
 	/**
 	 * 
@@ -35,7 +35,7 @@ private static final Map<Byte,BuffTempletBase> skillTemplets = new HashMap<Byte,
 		init();		
 	}
 	private static final String FILE = "resource/buff.xml";
-	
+
 		
 	/**
 	 * 通过配置表读取buff模版
@@ -47,12 +47,12 @@ private static final Map<Byte,BuffTempletBase> skillTemplets = new HashMap<Byte,
 		try {
 			document = builder.build( FILE );
 			Element root = document.getRootElement();  
-			List<Element> fighterList= root.getChildren( "skill" ); 
+			List<Element> fighterList= root.getChildren( "buff" ); 
 			
 			for( int i = 0; i < fighterList.size(); i++ ){
 				Element element = (Element) fighterList.get( i );
 				byte id = Byte.parseByte( element.getChildText( "id" ) );
-				SkillTemplet templet = new SkillTemplet( id );
+				BuffTempletBase templet = new BuffTempletBase( id );
 				templet.setName( element.getChildText( "name" ) );
 				templet.setDesc( element.getChildText( "desc" ) );
 				String enemy = element.getChildText( "enemy" );
@@ -72,7 +72,7 @@ private static final Map<Byte,BuffTempletBase> skillTemplets = new HashMap<Byte,
 					System.out.println( templet );
 				 ********************************************************/
 	
-				SkillTemplet temp = skillTemplets.put( templet.getId(), templet );
+				BuffTempletBase temp = buffTemplets.put( templet.getId(), templet );
 				if( temp != null ){
 					throw new RuntimeException( "技能" + templet.getId() + "重复了" );
 				}
@@ -128,14 +128,14 @@ private static final Map<Byte,BuffTempletBase> skillTemplets = new HashMap<Byte,
 	 * @param templetId
 	 * @return
 	 */
-	public static SkillTemplet getSkillTempletById( byte templetId ){
-		return skillTemplets.get( templetId );
+	public static BuffTempletBase getSkillTempletById( byte templetId ){
+		return buffTemplets.get( templetId );
 	}
 
 
 	public static void main(String[] args) {
 		
-		for( SkillTemplet t : skillTemplets.values() ){
+		for( BuffTempletBase t : buffTemplets.values() ){
 			
 			System.out.println( t );
 		}

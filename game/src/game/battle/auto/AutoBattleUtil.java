@@ -108,7 +108,7 @@ public class AutoBattleUtil implements IBattleUtil {
 		if( isBlock ){
 			damage *= BLOCK_DAMAGE_RATE;
 		}
-		info.setCrit(crit);
+		info.setCrit( crit );
 		info.SetBlock( isBlock );
 		info.SetHit( isHit );
 		
