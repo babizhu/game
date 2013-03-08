@@ -132,7 +132,6 @@ private static final Map<Byte,BuffTempletBase> buffTemplets = new HashMap<Byte, 
 		return buffTemplets.get( templetId );
 	}
 
-
 	public static void main(String[] args) {
 		
 		for( BuffTempletBase t : buffTemplets.values() ){
