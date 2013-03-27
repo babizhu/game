@@ -113,7 +113,7 @@ public class AutoBattle extends BattleBase {
 				
 				IFormation currentDefenders;
 				//混乱的状态
-				if( currentAttacker.isHunluan() ){
+				if( currentAttacker.isChaos() ){
 					currentDefenders = getFormation( currentAttacker, true );
 				}else{					
 					currentDefenders = getFormation( currentAttacker, false );
@@ -180,7 +180,7 @@ public class AutoBattle extends BattleBase {
 	 * 				true	此战士挂了
 	 * 				false	此战士未死
 	 * 
-	 *	注意：所有的SkillEffect中，ENEMY_HP必须排在最前面，后面的其他伤害都依赖于ENEMY_HP是否命中
+	 *	注意：所有的SkillEffect中，ENEMY_HP必须排在最前面，后面的其他技能效果都依赖于ENEMY_HP是否命中
 	 */
 	private boolean doSkillAttack( FighterBase attacker, FighterBase defender, List<SkillEffect> effects ){
 		boolean isHit = true;

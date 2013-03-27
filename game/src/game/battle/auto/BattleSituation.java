@@ -48,8 +48,6 @@ public class BattleSituation {
 		if( info.isHit() ){
 			situation.putInt( info.getDamage() );
 		}
-		
-
 	}
 
 	/**

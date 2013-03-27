@@ -101,7 +101,7 @@ public class FighterBase implements IFighter {
 	 * 前端是否好做自己打自己的动画
 	 * 
 	 */
-	private boolean				isHunluan		= false;
+	private boolean				isChaos		= false;
 	
 	/*
 	 * 是否处于战场的左边
@@ -382,16 +382,16 @@ public class FighterBase implements IFighter {
 	
 	
 
-	public boolean isHunluan() {
-		return isHunluan;
+	public boolean isChaos() {
+		return isChaos;
 	}
 
 	/**
-	 * @see #isHunluan
+	 * @see #isChaos
 	 * @param isHunluan
 	 */
-	public void setHunluan(boolean isHunluan) {
-		this.isHunluan = isHunluan;
+	public void setChaos(boolean isHunluan) {
+		this.isChaos = isHunluan;
 	}
 
 	@Override
@@ -403,7 +403,7 @@ public class FighterBase implements IFighter {
 				+ ", hitRate=" + hitRate + ", dodgeRate=" + dodgeRate
 				+ ", crit=" + crit + ", unCrit=" + unCrit + ", block=" + block
 				+ ", unBlock=" + unBlock + ", skillTemplet=" + skillTemplet
-				+ ", isCanHit=" + isCanHit + ", isHunluan=" + isHunluan
+				+ ", isCanHit=" + isCanHit + ", isHunluan=" + isChaos
 				+ ", isLeft=" + isLeft + ", buffManager=" + buffManager + "]";
 	}
 

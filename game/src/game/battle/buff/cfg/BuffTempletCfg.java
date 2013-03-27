@@ -20,19 +20,19 @@ import org.jdom2.input.SAXBuilder;
 
 
 /**
- * 从配置表中初始化Npc Fighter模板
+ * 从配置表中初始化Buff模板
  * @author liukun
  *
  */
 public class BuffTempletCfg {
 	
-private static final Map<Byte,BuffTempletBase> buffTemplets = new HashMap<Byte, BuffTempletBase>();
+	private static final Map<Byte,BuffTempletBase> buffTemplets = new HashMap<Byte, BuffTempletBase>();
 	
 	/**
 	 * 
 	 */
 	static{
-		init();		
+		init();
 	}
 	private static final String FILE = "resource/buff.xml";
 
@@ -52,30 +52,30 @@ private static final Map<Byte,BuffTempletBase> buffTemplets = new HashMap<Byte, 
 			for( int i = 0; i < fighterList.size(); i++ ){
 				Element element = (Element) fighterList.get( i );
 				byte id = Byte.parseByte( element.getChildText( "id" ) );
-				BuffTempletBase templet = new BuffTempletBase( id );
-				templet.setName( element.getChildText( "name" ) );
-				templet.setDesc( element.getChildText( "desc" ) );
-				String enemy = element.getChildText( "enemy" );
-				
-				if( enemy != null && !enemy.isEmpty() ){
-					templet.setEnemy( ChooseFighters.valueOf( enemy ) );
-					templet.setEffectOnEnemy( parseSkillEffect( element.getChildText( "enemy_effect" ) ) );
-				}
-				
-				String friend = element.getChildText( "friend" );
-				if( friend != null && !friend.isEmpty() ){
-					templet.setFriend( ChooseFighters.valueOf( friend ) );
-					templet.setEffectOnFriend( parseSkillEffect( element.getChildText( "friend_effect" ) ) );
-				}
+//				BuffTempletBase templet = new BuffTempletBase( id );
+//				templet.setName( element.getChildText( "name" ) );
+//				templet.setDesc( element.getChildText( "desc" ) );
+//				String enemy = element.getChildText( "enemy" );
+//				
+//				if( enemy != null && !enemy.isEmpty() ){
+//					templet.setEnemy( ChooseFighters.valueOf( enemy ) );
+//					templet.setEffectOnEnemy( parseSkillEffect( element.getChildText( "enemy_effect" ) ) );
+//				}
+//				
+//				String friend = element.getChildText( "friend" );
+//				if( friend != null && !friend.isEmpty() ){
+//					templet.setFriend( ChooseFighters.valueOf( friend ) );
+//					templet.setEffectOnFriend( parseSkillEffect( element.getChildText( "friend_effect" ) ) );
+//				}
 				
 				/*******************关闭打印****************************
 					System.out.println( templet );
 				 ********************************************************/
 	
-				BuffTempletBase temp = buffTemplets.put( templet.getId(), templet );
-				if( temp != null ){
-					throw new RuntimeException( "技能" + templet.getId() + "重复了" );
-				}
+//				BuffTempletBase temp = buffTemplets.put( templet.getId(), templet );
+//				if( temp != null ){
+//					throw new RuntimeException( "技能" + templet.getId() + "重复了" );
+//				}
 				
 			}
 		} catch (JDOMException e) {
@@ -134,10 +134,21 @@ private static final Map<Byte,BuffTempletBase> buffTemplets = new HashMap<Byte, 
 
 	public static void main(String[] args) {
 		
-		for( BuffTempletBase t : buffTemplets.values() ){
-			
-			System.out.println( t );
+//		for( BuffTempletBase t : buffTemplets.values() ){
+//			
+//			System.out.println( t );
+//		}
+		
+		try{
+			int i = 0/0;
 		}
+		catch( Exception e ){
+			throw new IllegalArgumentException();
+		}
+		finally{
+			System.out.println( 33333 );
+		}
+		
 		
 	}
 

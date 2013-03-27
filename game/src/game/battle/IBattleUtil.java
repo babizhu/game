@@ -32,7 +32,4 @@ public interface IBattleUtil {
 	 */
 	AttackInfo calcAttackInfo( FighterBase attacker, FighterBase defender,	Formula formula, float[] arguments );
 
-
-	
-
 }

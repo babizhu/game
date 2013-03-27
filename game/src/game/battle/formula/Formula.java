@@ -56,8 +56,7 @@ public enum Formula {
 				return (int) (attacker.getHpMax() * arguments[1]);
 			}
 			return (int) (defender.getHpMax() * arguments[1]);
-		}
-		
+		}		
 	},
 	/**
 	 * 输入多少返回多少<br>
@@ -72,6 +71,4 @@ public enum Formula {
 		
 	};
 	public abstract int run( FighterBase attacker, FighterBase defender, float[] arguments );
-	
-
 }
