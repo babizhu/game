@@ -18,7 +18,7 @@ import util.UtilBase;
 /**
  * 用户基础信息类
  * 
- * 线程安全
+ * 线程安全？
  * 
  * @author liukun
  * 2012-9-11 下午02:24:20
@@ -135,22 +135,22 @@ public class UserInfo {
 	public synchronized void setLevel ( short level ) {
 		this.level = level;
 	}
-	/**
-	 * 修改体力
-	 * @param change		增加为正数，减少为负数
-	 * @param funcName
-	* @return 					< 0		体力扣除失败
-	 * 							>=0		当前拥有的体力
-	 */	
-	synchronized int changeStrength( int change, String funcName ){
-		if( strength + change < 0 ){
-			logger.debug( name + "拥有体力：" + strength + "欲扣除体力：" + change + "，出现负数，调用函数为" + funcName );
-			return -1;
-		}
-		strength += change;
-		buildLog( AwardContent.STRENGTH, change, strength, funcName );
-		return strength;
-	}
+//	/**
+//	 * 修改体力
+//	 * @param change		增加为正数，减少为负数
+//	 * @param funcName
+//	* @return 					< 0		体力扣除失败
+//	 * 							>=0		当前拥有的体力
+//	 */	
+//	synchronized int changeStrength( int change, String funcName ){
+//		if( strength + change < 0 ){
+//			logger.debug( name + "拥有体力：" + strength + "欲扣除体力：" + change + "，出现负数，调用函数为" + funcName );
+//			return -1;
+//		}
+//		strength += change;
+//		buildLog( AwardContent.STRENGTH, change, strength, funcName );
+//		return strength;
+//	}
 
 	
 	
@@ -160,7 +160,6 @@ public class UserInfo {
 	/**
 	 * 修改玩家的金币数量
 	 * @param change			增加为正数，减少为负数
-	 * @param funcName			调用的函数
 	 * 
 	 * @return 					-1		扣除失败<br>
 	 * 							>=0		当前拥有的现金<br>
@@ -181,7 +180,7 @@ public class UserInfo {
 //      StackTraceElement[] ele = thr.getStackTrace();
 //      String func = ele[2].getMethodName();
 //      System.out.println(func);
-
+ 
 //		buildLog( AwardType.CASH, change, cash, funcName );
 		return cash;
 	}
@@ -220,29 +219,35 @@ public class UserInfo {
 	/**
 	 * 玩家涉及到属性的更改操作
 	 * @param type
-	 * @param number
+	 * @param change
 	 * @param funcName
 	 * @return
 	 * 		>=0	:返回此属性的当前值
 	 * 		-1	:扣除失败，余值不足
 	 * 		
 	 */
-	public int changeAward( AwardContent type, int number, String funcName ){
+	public int changeAward( AwardContent type, int change, String funcName ){
 		int result = 0;
 		switch( type ){
 		case CASH:
-			result = this.setCash( number );
+			result = this.setCash( change );
 			break;
 		default:
 			throw new IllegalArgumentException( type + "属性不存在相应函数" );
 		}
 		if( result == -1 ){
-			logger.debug( name + "奖励类型：" + type + "欲改变数值：" + number + "，出现负数，调用函数为" + funcName );
+			logger.debug( name + "奖励类型：" + type + "欲改变数值：" + change + "，出现负数，调用函数为" + funcName );
 		}
-		buildLog( type, number, result, funcName );
+		buildLog( type, change, result, funcName );
 		return result;
 	}
 	
+	/**
+	 * 是{@link #changeAward(AwardContent, int, String)}的语法糖，希望后期根据代码的实际情况能和此函数进行一次精简，去掉一个相对较少使用的版本
+	 * @param award
+	 * @param funcName
+	 * @return
+	 */
 	public ErrorCode getAward( AwardInfo award, String funcName ){
 		int result = 0;
 		switch( award.getAward() ){
@@ -505,13 +510,13 @@ public class UserInfo {
 
 	public static void main ( String[] args ) {
 //	long begin = System.nanoTime();
-//	for( int i = 0; i < 100000000; i++ ){
-//		UserInfo user = new UserInfo(null, "bbz");
-//		user.changeMoney(i, "");
-//	}
-//	
-//	System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
-//		
+	for( int i = 0; i < 1; i++ ){
+		UserInfo user = new UserInfo(null, "bbz");
+		user.changeAward( AwardContent.CASH, 100, "test" );
+	}
+	System.out.println( UserInfo.class );
+	//System.out.println("用时" + (System.nanoTime() - begin) / 1000000000f + "秒");
+		
 	}
 
 

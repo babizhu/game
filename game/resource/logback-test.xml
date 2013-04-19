@@ -17,11 +17,28 @@
 		</encoder>
 
 	</appender>
+	
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>e:\myApp.log</file>
 
- <logger name="user" level="debug" /> 
+		<!-- encoders 作用是将logger事件转换成字节数组，并将字节数组写入到输出流 -->
 
+		<encoder>
 
-	<root level="debug">    <!-- root logger，定义级别为debug -->
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符 -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} %m%n</pattern>
+			<!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -[%M]- %m%n</pattern> -->
+
+		</encoder>
+
+	</appender>
+
+ <logger name="user.UserInfo" level="info" >
+  	<appender-ref ref="FILE" />    <!--将名为STDOUT的appender添加到root logger下 -->
+  </logger>
+<logger name="net" level="info" />
+
+	<root level="error">    <!-- root logger，定义级别为debug -->
 		<appender-ref ref="STDOUT" />    <!--将名为STDOUT的appender添加到root logger下 -->
 	</root>
 

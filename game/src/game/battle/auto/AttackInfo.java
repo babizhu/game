@@ -49,7 +49,7 @@ public class AttackInfo {
 	 * @param data
 	 * @param damage
 	 */
-	public AttackInfo(byte data ) {
+	public AttackInfo( byte data ) {
 		super();
 		this.data = data;
 	}
@@ -127,7 +127,7 @@ public class AttackInfo {
 	 */
 	void setCrit( int crit ){
 		if( crit > 7 || crit < 1 ){
-			throw new IllegalArgumentException( crit+"" );
+			throw new IllegalArgumentException( "无效的暴击值:" + crit );
 		}
 		data &= ~CRIT;
 		data |= crit; 

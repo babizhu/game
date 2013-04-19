@@ -112,12 +112,8 @@ public class AutoBattle extends BattleBase {
 				}
 				
 				IFormation currentDefenders;
-				//混乱的状态
-				if( currentAttacker.isChaos() ){
-					currentDefenders = getFormation( currentAttacker, true );
-				}else{					
-					currentDefenders = getFormation( currentAttacker, false );
-				}
+				//考虑混乱的状态
+				currentDefenders = getFormation( currentAttacker, currentAttacker.isChaos() );
 				
 				if( currentAttacker.getSp() >= SKILL_ATTACK_NEED_SP ){
 					if( doSkillAttacks( currentAttacker, currentDefenders  ) ){

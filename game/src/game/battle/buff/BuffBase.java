@@ -21,8 +21,6 @@ public abstract class BuffBase {
 	protected FighterBase							sender;
 	
 	
-	
-	
 	public BuffBase( FighterBase receiver, FighterBase sender ) {
 		this.receiver = receiver;
 		this.sender = sender;
@@ -40,7 +38,9 @@ public abstract class BuffBase {
 	 * 获取该buff的运行时间点
 	 * @return
 	 */
-	public abstract BuffRunPoint getBuffRunPoint();
+	public BuffRunPoint getBuffRunPoint(){
+		return templet.getRunPoint();
+	}
 
 	/**
 	 * 如果持续回合数到0，或者此buff被另外的方式强制清除，皆返回已经移除
@@ -72,5 +72,8 @@ public abstract class BuffBase {
 		isRemove = true;
 	}
 	
+	public BuffTempletBase getTemplet() {
+		return templet;
+	}
 	
 }

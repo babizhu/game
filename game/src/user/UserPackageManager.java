@@ -15,13 +15,13 @@ import util.SystemTimer;
  */
 class UserPackageManager {
 
-	private final static Logger 			logger = LoggerFactory.getLogger( UserPackageManager.class ); 
+	private final static Logger 		logger = LoggerFactory.getLogger( UserPackageManager.class ); 
 
 	/**
 	 * 接收相同包号两个包之间允许的最短时间间隔，如果小于这个值则认定客户端有刷包嫌疑，丢弃这个包
 	 * 单位	毫秒
 	 */
-	private static final long 				MIN_INTERVAL_MILS = 0;
+	private static final long 			MIN_INTERVAL_MILS = 0;
 	
 
 	/**
@@ -32,7 +32,7 @@ class UserPackageManager {
 	/**
 	 * 上一次收包时间
 	 */
-	private	long							lastReceiveTime = 0;
+	private	long						lastReceiveTime = 0;
 
 	/**
 	 * 检查玩家是否存在断时间内恶意刷大量包的情况<br>

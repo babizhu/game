@@ -28,7 +28,7 @@ public class BuffManager {
 	 */
 	public void removeDeBuff(  ){
 		for( BuffBase buff : buffs ){
-			if( buff.isDeBuff() ){
+			if( buff.getTemplet().isDebuff() ){
 				buff.setRemove( true );
 			}
 		}
