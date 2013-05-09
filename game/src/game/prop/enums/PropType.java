@@ -31,9 +31,9 @@ public enum PropType {
 		}
 	},
 	/**
-	 * 升级用的大礼包道具，不具备唯一id
+	 * 礼包类道具，不具备唯一id
 	 */
-	LEVEL_UP_GIFT_PACK{
+	GIFT_PACK{
 		@Override
 		public LevelUpGiftPackTemplet create() {
 			return new LevelUpGiftPackTemplet();

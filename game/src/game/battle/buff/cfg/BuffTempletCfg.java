@@ -1,10 +1,8 @@
 package game.battle.buff.cfg;
 
 import game.battle.buff.templet.BuffTempletBase;
-import game.battle.formation.ChooseFighters;
 import game.battle.formula.Formula;
 import game.battle.skill.SkillEffect;
-import game.battle.skill.SkillTemplet;
 import game.fighter.FighterAttribute;
 
 import java.io.IOException;
@@ -52,8 +50,8 @@ public class BuffTempletCfg {
 			for( int i = 0; i < fighterList.size(); i++ ){
 				Element element = (Element) fighterList.get( i );
 				byte id = Byte.parseByte( element.getChildText( "id" ) );
-//				BuffTempletBase templet = new BuffTempletBase( id );
-//				templet.setName( element.getChildText( "name" ) );
+				BuffTempletBase templet = new BuffTempletBase( id );
+				templet.setName( element.getChildText( "name" ) );
 //				templet.setDesc( element.getChildText( "desc" ) );
 //				String enemy = element.getChildText( "enemy" );
 //				
@@ -139,15 +137,7 @@ public class BuffTempletCfg {
 //			System.out.println( t );
 //		}
 		
-		try{
-			int i = 0/0;
-		}
-		catch( Exception e ){
-			throw new IllegalArgumentException();
-		}
-		finally{
-			System.out.println( 33333 );
-		}
+	
 		
 		
 	}

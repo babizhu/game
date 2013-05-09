@@ -105,5 +105,7 @@ public class UtilBase {
 		buf.flip();
 		System.out.println(decodeString(buf));
 		isWindowsOS();
+		
+		System.out.println( secondsToDateStr( 1366363078 ) );
 	}
 }

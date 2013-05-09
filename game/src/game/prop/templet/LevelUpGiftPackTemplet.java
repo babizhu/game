@@ -31,7 +31,7 @@ public class LevelUpGiftPackTemplet extends PropTempletBase {
 
 	@Override
 	public PropType getType() {
-		return PropType.LEVEL_UP_GIFT_PACK;
+		return PropType.GIFT_PACK;
 	}
 
 }

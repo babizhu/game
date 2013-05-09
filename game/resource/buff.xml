@@ -5,7 +5,7 @@
 <buffs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<buff>
 		<id>1</id>
-		<round>2</round><!--持续回合数-->
+		<duration_round>2</duration_round><!--持续回合数-->
 		<name>落井下石</name>
 		<desc>攻击对方血量最少的战士，同时降低战士20SP，对己方所有战士增加100血</desc>
 		<receiver_effect>ADD_HP,DirectOutputFormula,100</receiver_effect>

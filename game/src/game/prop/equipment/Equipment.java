@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import util.ErrorCode;
 
+
 public class Equipment extends EquipmentBase{
 
 	private final EquipmentTemplet		templet;

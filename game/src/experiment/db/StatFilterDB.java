@@ -5,8 +5,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+
+import javax.management.JMException;
 
 import util.db.DatabaseUtil;
 
@@ -31,15 +34,16 @@ public class StatFilterDB {
 		JMXUtils.register( "com.alibaba.dragoon:type=JdbcTraceManager", JdbcTraceManager.getInstance() );
 		for (int i = 0; i < 1000; ++i) {
 			Connection con = DatabaseUtil.getConnection();
-//			Statement stmt = con.createStatement();
-//			ResultSet rs = stmt.executeQuery("SELECT 1");
-//			rs.next();
-//			rs.close();
-			Thread.sleep(100);
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT 1");
+			rs.next();
+			Thread.sleep(1000);
 			System.err.println( JdbcStatManager.getInstance().getConnectionstat().getConnectCount() );
-			System.err.println( JdbcStatManager.getInstance().getConnectionstat().getActiveMax() );
-//			stmt.close();
+			System.err.println( JdbcStatManager.getInstance().getConnectionstat().getAliveTotal() );
+			rs.close();
+			stmt.close();
 			con.close();
+		
 		}
 	}
 	static void func2(){

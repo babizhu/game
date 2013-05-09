@@ -23,12 +23,13 @@ public class BuffManager {
 		super( );
 	}
 	
+	
 	/**
 	 * 清除该战士所有的负面buff效果
 	 */
 	public void removeDeBuff(  ){
 		for( BuffBase buff : buffs ){
-			if( buff.getTemplet().isDebuff() ){
+			if( buff.getTemplet().isDeBuff() ){
 				buff.setRemove( true );
 			}
 		}
