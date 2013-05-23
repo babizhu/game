@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import user.UserInfo;
-import game.battle.auto.AutoBattle;
-import game.battle.auto.Formation9;
-import game.battle.auto.ParseBattleSituation;
+import game.battle.auto.web.Formation9;
+import game.battle.auto.web.ParseBattleSituation;
+import game.battle.auto.web.WebAutoBattle;
 import game.battle.formation.IFormation;
+
 import game.events.EventBase;
 import game.fighter.FighterBase;
 import game.fighter.cfg.NpcFighterTempletCfg;
@@ -44,7 +45,7 @@ public class SendBattleSituation extends EventBase {
 		
 		init();
 		
-		AutoBattle battle = new AutoBattle( aFormation, dFormation );
+		WebAutoBattle battle = new WebAutoBattle( aFormation, dFormation );
 		battle.run();
 		ByteBuffer buffer = buildEmptyPackage( 2048 );
 		ByteBuffer content = battle.getBattleSituation().getData().asReadOnlyBuffer();

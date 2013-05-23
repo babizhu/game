@@ -1,4 +1,4 @@
-package game.battle.auto;
+package game.battle.auto.web;
 
 import game.battle.Pet;
 import game.battle.formation.ChooseFighters;

@@ -1,8 +1,8 @@
 package game.mission.cfg;
 
 import game.battle.Pet;
-import game.battle.auto.Formation9;
 import game.battle.formation.IFormation;
+import game.battle.auto.web.Formation9;
 import game.fighter.FighterBase;
 import game.fighter.NpcFighter;
 import game.fighter.cfg.NpcFighterTempletCfg;

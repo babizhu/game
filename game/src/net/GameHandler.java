@@ -78,6 +78,8 @@ public class GameHandler implements IDataHandler, IConnectHandler,
 				if (dataLength < 0 || dataLength > PACKAGE_LEN) {
 					System.err.println( "网络错误，dataLength = " + dataLength );
 					con.close();
+					
+					return true;
 				}
 				data = con.readBytesByLength(dataLength);
 				foot = con.readByte();

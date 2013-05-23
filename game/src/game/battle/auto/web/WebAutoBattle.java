@@ -1,4 +1,4 @@
-package game.battle.auto;
+package game.battle.auto.web;
 
 import game.battle.BattleBase;
 import game.battle.IBattleUtil;
@@ -19,14 +19,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 自动回合制的战斗模式
+ * 页游自动回合制的战斗模式
  * @author liukun
  * 2012-9-27 下午05:52:32
  */
-public class AutoBattle extends BattleBase {
+public class WebAutoBattle extends BattleBase {
 
-	private static final Logger 		logger = LoggerFactory.getLogger( AutoBattle.class );
-	private static final IBattleUtil	util = AutoBattleUtil.getInstance();
+	private static final Logger 		logger = LoggerFactory.getLogger( WebAutoBattle.class );
+	private static final IBattleUtil	util = WebAutoBattleUtil.getInstance();
 
 	private static final int 			SKILL_ATTACK_NEED_SP = 1000;
 	public static final int 			SP_TO_ADD = 50;		
@@ -59,7 +59,7 @@ public class AutoBattle extends BattleBase {
 	 */
 	private BattleSituation				battleSituation = new BattleSituation( 1024 );	
 
-	public AutoBattle( IFormation attackers, IFormation defenders ) {
+	public WebAutoBattle( IFormation attackers, IFormation defenders ) {
 		super();		
 		this.attackers = attackers;
 		this.defenders = defenders;

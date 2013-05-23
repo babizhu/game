@@ -60,9 +60,9 @@ public class GameServer extends Server{
         System.out.println( UtilBase.secondsToDateStr( SystemTimer.currentTimeSecond() ) + " game version: " + SystemCfg.VERSION );        
 		
         
-        InetAddress address = InetAddress.getByName( "localhost" );
+        InetAddress address = InetAddress.getByName( "192.168.1.15" );
 		
-		GameServer server = new GameServer( address, SystemCfg.PORT, new GameHandler() );
+		GameServer server = new GameServer( null, SystemCfg.PORT, new GameHandler() );
 		server.readAllCfg();
 
 		

@@ -1,6 +1,5 @@
 package game.fighter;
 
-import game.battle.auto.buff.BuffManager;
 import game.battle.skill.SkillTemplet;
 
 public class FighterBase implements IFighter {
@@ -108,15 +107,8 @@ public class FighterBase implements IFighter {
 	 */
 	private boolean				isLeft			= true;
 	
-	private BuffManager			buffManager;
+	
 
-	/**
-	 * 每次开战前必须进行的初始化工作
-	 * @param battle
-	 */
-	public void initForBattle(){
-		buffManager = new BuffManager();
-	}
 	
 	/**
 	 * 拷贝构造函数，通常用于战斗前的准备工作
@@ -141,8 +133,6 @@ public class FighterBase implements IFighter {
 		skillTemplet = f.skillTemplet;
 		name = f.name;
 		isLeft = f.isLeft;
-		initForBattle();
-
 	}
 
 	public FighterBase() {
@@ -240,9 +230,6 @@ public class FighterBase implements IFighter {
 		this.phyAttack = phyAttack;
 	}
 
-	public BuffManager getBm() {
-		return buffManager;
-	}
 	
 	/**
 	 * 物防
@@ -404,7 +391,7 @@ public class FighterBase implements IFighter {
 				+ ", crit=" + crit + ", unCrit=" + unCrit + ", block=" + block
 				+ ", unBlock=" + unBlock + ", skillTemplet=" + skillTemplet
 				+ ", isCanHit=" + isCanHit + ", isHunluan=" + isChaos
-				+ ", isLeft=" + isLeft + ", buffManager=" + buffManager + "]";
+				+ ", isLeft=" + isLeft + "]";
 	}
 
 	public String toSimpleString() {

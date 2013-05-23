@@ -77,7 +77,7 @@ public class CUserLoginEventTest extends BaseEventTest {
 	 * @throws IOException 
 	 */
 	void test() throws IOException{
-		IBlockingConnection nbc = new BlockingConnection( "localhost", SystemCfg.PORT );
+		IBlockingConnection nbc = new BlockingConnection( "192.168.1.15", SystemCfg.PORT );
 		/***************************************************发包参数***********************************************/
 		String name = "刘昆0";
 		/***************************************************发包参数***********************************************/

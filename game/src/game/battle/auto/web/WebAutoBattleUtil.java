@@ -1,4 +1,4 @@
-package game.battle.auto;
+package game.battle.auto.web;
 
 
 import game.battle.IBattleUtil;
@@ -10,12 +10,12 @@ import java.util.Comparator;
 
 import util.RandomUtil;
 
-public class AutoBattleUtil implements IBattleUtil {
+public class WebAutoBattleUtil implements IBattleUtil {
 
 	private static final float 			BLOCK_DAMAGE_RATE = 0.5f;
 	
-	private static final IBattleUtil 	INSTANCE = new AutoBattleUtil();
-	private AutoBattleUtil() {}
+	private static final IBattleUtil 	INSTANCE = new WebAutoBattleUtil();
+	private WebAutoBattleUtil() {}
 	public static final IBattleUtil getInstance(){
 		return INSTANCE;
 	}

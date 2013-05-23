@@ -1,7 +1,7 @@
 package game.partner;
 
-import game.battle.auto.Formation9;
 import game.battle.formation.IFormation;
+import game.battle.auto.web.Formation9;
 import game.prop.PropManager;
 import game.prop.equipment.EquipmentBase;
 

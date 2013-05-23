@@ -1,6 +1,6 @@
 package game.battle;
 
-import game.battle.auto.AttackInfo;
+import game.battle.auto.web.AttackInfo;
 import game.battle.formula.Formula;
 import game.fighter.FighterBase;
 

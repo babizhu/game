@@ -23,13 +23,12 @@ public class BuffManager {
 		super( );
 	}
 	
-	
 	/**
 	 * 清除该战士所有的负面buff效果
 	 */
 	public void removeDeBuff(  ){
 		for( BuffBase buff : buffs ){
-			if( buff.getTemplet().isDeBuff() ){
+			if( buff.getTemplet().isDebuff() ){
 				buff.setRemove( true );
 			}
 		}
@@ -79,18 +78,18 @@ public class BuffManager {
 
 	public static void main(String[] args) {
 	
-		List<BuffBase> list = new ArrayList<BuffBase>();
-		for( int i = 0; i < 10; i++ ){
-			BuffBase buf = new B001( null );
-			list.add( buf );			
-		}
-		
-		int i = 0;
-		for( BuffBase buf : list ){
-			if( i++ == 5 ){
-				list.remove( i );
-				list.remove( buf );
-			}			
-		}
+//		List<BuffBase> list = new ArrayList<BuffBase>();
+//		for( int i = 0; i < 10; i++ ){
+//			BuffBase buf = new B001( null );
+//			list.add( buf );			
+//		}
+//		
+//		int i = 0;
+//		for( BuffBase buf : list ){
+//			if( i++ == 5 ){
+//				list.remove( i );
+//				list.remove( buf );
+//			}			
+//		}
 	}
 }

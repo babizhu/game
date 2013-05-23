@@ -1,4 +1,4 @@
-package game.battle.auto;
+package game.battle.auto.web;
 
 import game.battle.AttackType;
 import game.battle.formation.IFormation;
@@ -153,9 +153,9 @@ public class ParseBattleSituation {
 		FighterBase attacker = getFighterByPos(attackerPos);
 		FighterBase defender = getFighterByPos(defenderPos);		
 		if( info.isHit() ){
-			attacker.setSp( attacker.getSp() + AutoBattle.SP_TO_ADD );
+			attacker.setSp( attacker.getSp() + WebAutoBattle.SP_TO_ADD );
 			if( info.getDamage() > 1 ){//防止不死之身之类的技能长久不结束
-				defender.setSp( defender.getSp() + AutoBattle.SP_TO_ADD );
+				defender.setSp( defender.getSp() + WebAutoBattle.SP_TO_ADD );
 			}
 		
 			defender.setHp( defender.getHp() - damage );

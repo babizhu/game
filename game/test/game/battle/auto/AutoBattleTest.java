@@ -1,6 +1,9 @@
 package game.battle.auto;
 
 import game.battle.formation.IFormation;
+import game.battle.web.AutoBattle;
+import game.battle.web.Formation9;
+import game.battle.web.ParseBattleSituation;
 import game.fighter.FighterBase;
 import game.fighter.cfg.NpcFighterTempletCfg;
 import game.mission.cfg.MissionTempletCfg;

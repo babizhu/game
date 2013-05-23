@@ -1,6 +1,6 @@
 package game.battle;
 
-import game.battle.auto.BattleSituation;
+import game.battle.auto.web.BattleSituation;
 
 
 public interface IBattle {
